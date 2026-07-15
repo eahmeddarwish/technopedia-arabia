@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-/** Lightweight animated PCB traces on canvas — mobile-friendly, cheap. */
+/** Lightweight animated PCB traces + abstract tech shapes (Arduino / RPi / Python). */
 export function PCBBackground() {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
@@ -13,10 +13,10 @@ export function PCBBackground() {
     let raf = 0;
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     type Node = { x: number; y: number };
-    type Trace = { pts: Node[]; progress: number; speed: number; hue: number };
+    type Trace = { pts: Node[]; progress: number; speed: number; kind: "trace" | "arduino" | "rpi" | "python" };
 
     let traces: Trace[] = [];
     let pads: Node[] = [];
@@ -24,7 +24,7 @@ export function PCBBackground() {
     const rand = (a: number, b: number) => a + Math.random() * (b - a);
     const snap = (v: number, grid = 24) => Math.round(v / grid) * grid;
 
-    function buildTrace(): Trace {
+    function randomTrace(): Trace {
       const startX = snap(rand(0, width));
       const startY = snap(rand(0, height));
       const pts: Node[] = [{ x: startX, y: startY }];
@@ -40,7 +40,64 @@ export function PCBBackground() {
         horiz = !horiz;
       }
       pads.push(pts[0], pts[pts.length - 1]);
-      return { pts, progress: 0, speed: rand(0.003, 0.008), hue: 120 };
+      return { pts, progress: 0, speed: rand(0.003, 0.008), kind: "trace" };
+    }
+
+    // Abstract line-art shapes (not exact logos): rectangle outlines + accent pins
+    function arduinoShape(): Trace {
+      const w = rand(180, 260);
+      const h = w * 0.55;
+      const cx = rand(w, width - w);
+      const cy = rand(h, height - h);
+      const l = cx - w / 2, r = cx + w / 2, t = cy - h / 2, b = cy + h / 2;
+      const pts: Node[] = [
+        { x: l, y: t }, { x: r, y: t }, { x: r, y: b }, { x: l, y: b }, { x: l, y: t },
+        // side pins (short zig)
+        { x: l, y: t + 12 }, { x: l - 10, y: t + 12 },
+        { x: l - 10, y: t + 28 }, { x: l, y: t + 28 },
+        { x: l, y: t + 44 }, { x: l - 10, y: t + 44 },
+      ];
+      pads.push({ x: r, y: t }, { x: l, y: b });
+      return { pts, progress: 0, speed: rand(0.004, 0.007), kind: "arduino" };
+    }
+
+    function rpiShape(): Trace {
+      const w = rand(180, 240);
+      const h = w * 0.65;
+      const cx = rand(w, width - w);
+      const cy = rand(h, height - h);
+      const l = cx - w / 2, r = cx + w / 2, t = cy - h / 2, b = cy + h / 2;
+      const pts: Node[] = [
+        { x: l, y: t }, { x: r, y: t }, { x: r, y: b }, { x: l, y: b }, { x: l, y: t },
+      ];
+      // GPIO row as pads
+      for (let i = 0; i < 10; i++) pads.push({ x: l + 14 + i * 14, y: t + 10 });
+      return { pts, progress: 0, speed: rand(0.004, 0.007), kind: "rpi" };
+    }
+
+    function pythonShape(): Trace {
+      // two interlocking rounded rectangles (approx with polyline)
+      const s = rand(90, 140);
+      const cx = rand(s * 2, width - s * 2);
+      const cy = rand(s * 2, height - s * 2);
+      const pts: Node[] = [
+        // top blob
+        { x: cx - s, y: cy - s }, { x: cx + s * 0.2, y: cy - s },
+        { x: cx + s * 0.2, y: cy }, { x: cx + s, y: cy },
+        { x: cx + s, y: cy + s * 0.6 }, { x: cx - s * 0.2, y: cy + s * 0.6 },
+        { x: cx - s * 0.2, y: cy - s * 0.3 }, { x: cx - s, y: cy - s * 0.3 },
+        { x: cx - s, y: cy - s },
+      ];
+      pads.push({ x: cx - s * 0.6, y: cy - s * 0.7 }, { x: cx + s * 0.6, y: cy + s * 0.3 });
+      return { pts, progress: 0, speed: rand(0.003, 0.006), kind: "python" };
+    }
+
+    function buildOne(): Trace {
+      const r = Math.random();
+      if (r < 0.75) return randomTrace();
+      if (r < 0.85) return arduinoShape();
+      if (r < 0.93) return rpiShape();
+      return pythonShape();
     }
 
     function resize() {
@@ -53,7 +110,7 @@ export function PCBBackground() {
       const target = Math.min(14, Math.max(6, Math.floor((width * height) / 60000)));
       traces = [];
       pads = [];
-      for (let i = 0; i < target; i++) traces.push(buildTrace());
+      for (let i = 0; i < target; i++) traces.push(buildOne());
     }
 
     function drawTrace(t: Trace) {
@@ -80,9 +137,10 @@ export function PCBBackground() {
           break;
         }
       }
-      ctx!.strokeStyle = "rgba(57,255,20,0.35)";
-      ctx!.lineWidth = 1.2;
-      ctx!.shadowColor = "rgba(57,255,20,0.55)";
+      const isShape = t.kind !== "trace";
+      ctx!.strokeStyle = isShape ? "rgba(255,122,26,0.42)" : "rgba(255,122,26,0.32)";
+      ctx!.lineWidth = isShape ? 1.4 : 1.1;
+      ctx!.shadowColor = "rgba(255,122,26,0.5)";
       ctx!.shadowBlur = 6;
       ctx!.stroke();
       ctx!.shadowBlur = 0;
@@ -92,7 +150,7 @@ export function PCBBackground() {
       for (const p of pads) {
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
-        ctx!.fillStyle = "rgba(57,255,20,0.55)";
+        ctx!.fillStyle = "rgba(255,122,26,0.6)";
         ctx!.fill();
       }
     }
@@ -106,11 +164,9 @@ export function PCBBackground() {
       for (const t of traces) {
         t.progress += t.speed * (dt / 16.67);
         if (t.progress >= 1) {
-          // rebuild occasionally
           if (Math.random() < 0.02) {
             const idx = traces.indexOf(t);
-            const fresh = buildTrace();
-            traces[idx] = fresh;
+            traces[idx] = buildOne();
           } else {
             t.progress = 1;
           }
@@ -126,7 +182,6 @@ export function PCBBackground() {
     window.addEventListener("resize", onResize);
     if (!reduce) raf = requestAnimationFrame(loop);
     else {
-      // static frame
       traces.forEach((t) => (t.progress = 1));
       ctx.clearRect(0, 0, width, height);
       drawPads();
