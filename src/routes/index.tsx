@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import { PCBBackground } from "@/components/PCBBackground";
 import { Terminal } from "@/components/Terminal";
 import {
@@ -14,11 +15,19 @@ import {
   Brain,
   PlayCircle,
   Heart,
+  Building2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Home,
 });
+
+/** Isolates inline English/technical terms inside RTL Arabic text. */
+function LTR({ children }: { children: ReactNode }) {
+  return (
+    <span style={{ direction: "ltr", unicodeBidi: "isolate" }}>{children}</span>
+  );
+}
 
 const NAV = [
   { href: "#about", label: "عني" },
@@ -41,22 +50,22 @@ const TECH = [
 
 const PROJECTS = [
   {
-    title: "نظام رؤية آلية بـ OpenCV",
-    desc: "معالجة صور فورية للكشف عن الأشكال والألوان لتطبيقات صناعية باستخدام Python و OpenCV.",
+    title: "نظام رؤية آلية",
+    desc: "معالجة صور فورية للكشف عن الأشكال والألوان لتطبيقات صناعية.",
     tags: ["Python", "OpenCV", "ML"],
   },
   {
-    title: "تحكم ذكي بمنزل عبر Arduino",
-    desc: "منظومة أتمتة منزلية تعتمد على Arduino ومستشعرات متعددة مع واجهة تحكم لاسلكية.",
+    title: "تحكم ذكي بمنزل",
+    desc: "منظومة أتمتة منزلية تعتمد على مستشعرات متعددة مع واجهة تحكم لاسلكية.",
     tags: ["Arduino", "C++", "IoT"],
   },
   {
-    title: "بوابة تعلّم آلي على Raspberry Pi",
-    desc: "نموذج تصنيف يعمل مباشرة على Raspberry Pi لمعالجة بيانات المستشعرات محلياً دون سحابة.",
+    title: "بوابة تعلّم آلي على الطرف",
+    desc: "نموذج تصنيف يعمل مباشرة على الجهاز لمعالجة بيانات المستشعرات محلياً.",
     tags: ["Raspberry Pi", "ML", "Edge AI"],
   },
   {
-    title: "تصميم دوائر رقمية تعليمية",
+    title: "دوائر رقمية تعليمية",
     desc: "سلسلة مشاريع تعليمية لتصميم دوائر منطقية رقمية مع شرح تفصيلي للطلاب.",
     tags: ["Digital Design", "Education"],
   },
@@ -68,17 +77,19 @@ const VIDEOS = [
   { title: "الذكاء الاصطناعي وتطبيقاته", meta: "محاضرة" },
 ];
 
+const AVATAR = "https://engdarwish.com/assets/images/avatar.jpg";
+
 function Home() {
   return (
     <div className="relative min-h-screen bg-background text-foreground">
       <Header />
       <main>
         <Hero />
+        <Support />
         <About />
         <Projects />
         <Videos />
         <CV />
-        <Support />
       </main>
       <Footer />
     </div>
@@ -91,10 +102,10 @@ function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
         <a href="#top" className="group flex items-center gap-2">
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md border border-border font-mono text-[color:var(--neon)] transition group-hover:neon-border">
-            {"</>"}
+            <LTR>{"</>"}</LTR>
           </span>
           <span className="hidden text-sm font-semibold sm:inline">
-            Technopedia <span className="text-[color:var(--neon)]">Arabia</span>
+            <LTR>Technopedia <span className="text-[color:var(--neon)]">Arabia</span></LTR>
           </span>
         </a>
         <nav className="hidden items-center gap-6 md:flex">
@@ -114,13 +125,13 @@ function Header() {
             className="hairline rounded-md px-3 py-1.5 font-mono text-xs text-muted-foreground transition hover:text-[color:var(--neon)]"
             aria-label="Toggle language"
           >
-            AR / EN
+            <LTR>AR / EN</LTR>
           </button>
           <a
             href="#cv"
             className="hidden rounded-md border border-[color:var(--neon)] px-3 py-1.5 font-mono text-xs text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground sm:inline-flex"
           >
-            resume.pdf
+            <LTR>resume.pdf</LTR>
           </a>
         </div>
       </div>
@@ -135,15 +146,21 @@ function Hero() {
         <PCBBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background" />
       </div>
-      <div className="relative mx-auto grid max-w-6xl gap-10 px-5 py-24 md:py-32 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+      <div className="relative mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:py-20 md:py-24 lg:grid-cols-[1.2fr_1fr] lg:items-center">
         <div className="fade-up">
-          <p className="mb-4 font-mono text-sm text-[color:var(--neon)]">
-            &gt; مرحباً، اسمي
-          </p>
-          <h1 className="text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
-            أحمد درويش.
-          </h1>
-          <h2 className="mt-3 text-2xl font-bold text-muted-foreground sm:text-3xl md:text-4xl">
+          <div className="mb-6 flex items-center gap-4">
+            <img
+              src={AVATAR}
+              alt="أحمد درويش"
+              className="h-16 w-16 rounded-full border-2 border-[color:var(--neon)] object-cover shadow-[0_0_18px_color-mix(in_oklab,var(--neon)_35%,transparent)] sm:h-20 sm:w-20"
+              loading="eager"
+            />
+            <div>
+              <p className="font-mono text-sm text-[color:var(--neon)]">&gt; مرحباً، اسمي</p>
+              <h1 className="text-3xl font-black leading-tight sm:text-4xl">أحمد درويش.</h1>
+            </div>
+          </div>
+          <h2 className="mt-1 text-2xl font-bold text-muted-foreground sm:text-3xl md:text-4xl">
             أبني حلول تقنية بين البرمجة، الأنظمة المدمجة، والذكاء الاصطناعي.
           </h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -190,8 +207,8 @@ function Hero() {
 
 function SectionHeader({ n, title }: { n: string; title: string }) {
   return (
-    <div className="mb-10 flex items-center gap-4">
-      <span className="font-mono text-sm text-[color:var(--neon)]">{n}.</span>
+    <div className="mb-8 flex items-center gap-4">
+      <span className="font-mono text-sm text-[color:var(--neon)]"><LTR>{n}.</LTR></span>
       <h2 className="text-2xl font-black sm:text-3xl">{title}</h2>
       <span className="h-px flex-1 bg-border" />
     </div>
@@ -200,8 +217,8 @@ function SectionHeader({ n, title }: { n: string; title: string }) {
 
 function About() {
   return (
-    <section id="about" className="mx-auto max-w-5xl px-5 py-24">
-      <SectionHeader n="01" title="عني" />
+    <section id="about" className="mx-auto max-w-5xl px-5 py-12 sm:py-14">
+      <SectionHeader n="02" title="عني" />
       <div className="grid gap-10 md:grid-cols-[1.4fr_1fr]">
         <div className="space-y-4 text-base leading-loose text-muted-foreground">
           <p>
@@ -213,21 +230,29 @@ function About() {
           <p>
             بجانب العمل الهندسي، أنا محاضر ومدرّب تعليمي أشارك المعرفة عبر
             دورات وفيديوهات وشروحات مبسّطة تحت مظلة{" "}
-            <span className="text-foreground">Technopedia Arabia</span>.
+            <span className="text-foreground"><LTR>Technopedia Arabia</LTR></span>.
           </p>
+
+          <h3 className="!mt-8 text-lg font-bold text-foreground">
+            قصة الاسم والشعار
+          </h3>
+          <p>
+            [هنا نص عن قصة الاسم والشعار — سيتم استبداله بالنص الحقيقي من أحمد]
+          </p>
+
           <p>هذه بعض التقنيات التي أعمل بها يومياً:</p>
           <ul className="grid grid-cols-2 gap-x-4 gap-y-2 pt-2 font-mono text-sm">
             {TECH.map((t) => (
               <li key={t} className="flex items-center gap-2">
                 <span className="text-[color:var(--neon)]">▸</span>
-                <span className="text-foreground">{t}</span>
+                <span className="text-foreground"><LTR>{t}</LTR></span>
               </li>
             ))}
           </ul>
         </div>
         <div className="grid gap-4">
           <Stat icon={<Cpu className="h-5 w-5" />} value="+20" label="سنة خبرة" />
-          <Stat icon={<Cog className="h-5 w-5" />} value="+50" label="مشروع تقني" />
+          <Stat icon={<Cog className="h-5 w-5" />} value="+200" label="مشروع تقني" />
           <Stat icon={<Brain className="h-5 w-5" />} value="AI" label="متخصص في التعلّم الآلي" />
         </div>
       </div>
@@ -242,7 +267,7 @@ function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; la
         {icon}
       </div>
       <div className="min-w-0">
-        <div className="font-mono text-2xl font-bold text-[color:var(--neon)]">{value}</div>
+        <div className="font-mono text-2xl font-bold text-[color:var(--neon)]"><LTR>{value}</LTR></div>
         <div className="truncate text-sm text-muted-foreground">{label}</div>
       </div>
     </div>
@@ -251,8 +276,8 @@ function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; la
 
 function Projects() {
   return (
-    <section id="projects" className="mx-auto max-w-6xl px-5 py-24">
-      <SectionHeader n="02" title="مشاريع مختارة" />
+    <section id="projects" className="mx-auto max-w-6xl px-5 py-12 sm:py-14">
+      <SectionHeader n="03" title="مشاريع مختارة" />
       <div className="grid gap-6 sm:grid-cols-2">
         {PROJECTS.map((p) => (
           <article key={p.title} className="card-tech card-tech-hover flex flex-col gap-4 p-6">
@@ -267,7 +292,7 @@ function Projects() {
             <ul className="mt-auto flex flex-wrap gap-2 font-mono text-xs text-muted-foreground">
               {p.tags.map((t) => (
                 <li key={t} className="rounded-full border border-border px-2.5 py-1">
-                  {t}
+                  <LTR>{t}</LTR>
                 </li>
               ))}
             </ul>
@@ -285,8 +310,8 @@ function Projects() {
 
 function Videos() {
   return (
-    <section id="videos" className="mx-auto max-w-6xl px-5 py-24">
-      <SectionHeader n="03" title="فيديوهات وشروحات" />
+    <section id="videos" className="mx-auto max-w-6xl px-5 py-12 sm:py-14">
+      <SectionHeader n="04" title="فيديوهات وشروحات" />
       <div className="grid gap-6 sm:grid-cols-3">
         {VIDEOS.map((v) => (
           <a
@@ -313,11 +338,11 @@ function Videos() {
 
 function CV() {
   return (
-    <section id="cv" className="mx-auto max-w-4xl px-5 py-24">
-      <SectionHeader n="04" title="السيرة الذاتية" />
+    <section id="cv" className="mx-auto max-w-4xl px-5 py-12 sm:py-14">
+      <SectionHeader n="05" title="السيرة الذاتية" />
       <div className="card-tech flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-lg font-bold">حمّل السيرة الذاتية بصيغة PDF</h3>
+          <h3 className="text-lg font-bold">حمّل السيرة الذاتية بصيغة <LTR>PDF</LTR></h3>
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
             نظرة تفصيلية على الخبرات والمشاريع والدورات التي قدّمها المهندس أحمد درويش.
           </p>
@@ -327,7 +352,7 @@ function CV() {
           className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-3 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
         >
           <Download className="h-4 w-4" />
-          تحميل CV.pdf
+          <LTR>تحميل CV.pdf</LTR>
         </a>
       </div>
     </section>
@@ -336,26 +361,48 @@ function CV() {
 
 function Support() {
   return (
-    <section id="support" className="mx-auto max-w-4xl px-5 py-24">
-      <SectionHeader n="05" title="ادعم العمل" />
+    <section id="support" className="mx-auto max-w-4xl px-5 py-12 sm:py-14">
+      <SectionHeader n="01" title="ادعم العمل" />
       <div className="card-tech p-8">
         <div className="flex items-start gap-4">
           <div className="grid h-11 w-11 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
             <Heart className="h-5 w-5" />
           </div>
-          <div className="min-w-0">
-            <h3 className="text-lg font-bold">تبرّع بنكي</h3>
+          <div className="min-w-0 flex-1">
+            <h3 className="text-lg font-bold">دعمك يصنع فرقاً حقيقياً</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              دعمك يساعد على إنتاج محتوى تعليمي مجاني ومشاريع مفتوحة المصدر في
-              مجالات الأنظمة المدمجة والذكاء الاصطناعي.
+              كل تبرّع يترجَم مباشرةً إلى محتوى تعليمي أكثر: دروس جديدة، مشاريع
+              عملية مفتوحة المصدر، وشروحات تصل لطلاب عرب لا يجدون هذا المحتوى
+              بلغتهم. دعمك = طالب جديد يتعلّم البرمجة والأنظمة المدمجة والذكاء
+              الاصطناعي مجّاناً.
             </p>
+
             <div className="mt-6 grid gap-3 font-mono text-sm">
-              <Row label="اسم المستفيد" value="Ahmed Darwish" />
-              <Row label="البنك" value="—" />
-              <Row label="IBAN" value="—" />
+              <BankRow label="IBAN" value="[IBAN — بيانات حقيقية قريباً]" />
+              <BankRow label="SWIFT" value="[SWIFT — بيانات حقيقية قريباً]" />
             </div>
+
+            <div className="mt-6">
+              <button
+                type="button"
+                disabled
+                title="قريباً"
+                aria-disabled="true"
+                className="group inline-flex cursor-not-allowed items-center gap-3 rounded-md border border-border bg-secondary/40 px-5 py-3 opacity-60"
+              >
+                <span className="font-mono text-sm font-bold">
+                  <span className="text-[#003087]">Pay</span>
+                  <span className="text-[#009cde]">Pal</span>
+                </span>
+                <span className="text-sm text-muted-foreground">ادعم عبر PayPal</span>
+                <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+                  قريباً
+                </span>
+              </button>
+            </div>
+
             <p className="mt-6 text-xs text-muted-foreground">
-              للتواصل بخصوص التبرع أو الرعاية عبر البريد أو الواتساب أدناه.
+              للتواصل بخصوص الرعاية أو الدعم المؤسسي عبر البريد أو الواتساب أدناه.
             </p>
           </div>
         </div>
@@ -364,10 +411,15 @@ function Support() {
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function BankRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 rounded-md border border-border bg-secondary/40 px-4 py-3">
-      <span className="min-w-0 truncate text-muted-foreground">{label}</span>
+    <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-md border border-border bg-secondary/40 px-4 py-3">
+      <span className="grid h-8 w-8 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
+        <Building2 className="h-4 w-4" />
+      </span>
+      <span className="min-w-0 truncate text-muted-foreground">
+        <LTR>{label}</LTR>
+      </span>
       <span className="shrink-0 text-[color:var(--neon)]">{value}</span>
     </div>
   );
@@ -385,7 +437,7 @@ function Footer() {
           <a href="mailto:contact@engdarwish.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]"><Mail className="h-5 w-5" /></a>
         </div>
         <p className="font-mono text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Technopedia Arabia · صُمّم وبُرمج بحبّ
+          <LTR>© {new Date().getFullYear()} Technopedia Arabia</LTR> · صُمّم وبُرمج بحبّ
         </p>
       </div>
     </footer>
