@@ -68,7 +68,7 @@
   html, body { background-color: var(--color-background); color: var(--color-foreground); }
   body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
   code, pre, .font-mono { font-family: var(--font-mono); }
-  ::selection { background: var(--neon); color: #001a00; }
+  ::selection { background: var(--neon); color: #1a0a00; }
 }
 
 @utility neon-text {
