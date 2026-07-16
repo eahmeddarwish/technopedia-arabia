@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { PCBBackground } from "@/components/PCBBackground";
 import { Terminal } from "@/components/Terminal";
+import logoUrl from "@/assets/logo.png";
 import {
   Github,
   Linkedin,
@@ -100,11 +101,13 @@ function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
-        <a href="#top" className="group flex items-center gap-2">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md border border-border font-mono text-[color:var(--neon)] transition group-hover:neon-border">
-            <LTR>{"</>"}</LTR>
-          </span>
-          <span className="hidden text-sm font-semibold sm:inline">
+        <a href="#top" className="group flex min-w-0 items-center gap-2.5">
+          <img
+            src={logoUrl}
+            alt="Technopedia Arabia"
+            className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11"
+          />
+          <span className="hidden truncate text-base font-bold sm:inline">
             <LTR>Technopedia <span className="text-[color:var(--neon)]">Arabia</span></LTR>
           </span>
         </a>
@@ -113,23 +116,23 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              className="text-sm text-muted-foreground transition hover:text-[color:var(--neon)]"
+              className="text-base text-muted-foreground transition hover:text-[color:var(--neon)]"
             >
               {n.label}
             </a>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
-            className="hairline rounded-md px-3 py-1.5 font-mono text-xs text-muted-foreground transition hover:text-[color:var(--neon)]"
+            className="hairline rounded-md px-3 py-1.5 font-mono text-sm text-muted-foreground transition hover:text-[color:var(--neon)]"
             aria-label="Toggle language"
           >
             <LTR>AR / EN</LTR>
           </button>
           <a
             href="#cv"
-            className="hidden rounded-md border border-[color:var(--neon)] px-3 py-1.5 font-mono text-xs text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground sm:inline-flex"
+            className="hidden rounded-md border border-[color:var(--neon)] px-3 py-1.5 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground sm:inline-flex"
           >
             <LTR>resume.pdf</LTR>
           </a>
@@ -155,45 +158,45 @@ function Hero() {
               className="h-16 w-16 rounded-full border-2 border-[color:var(--neon)] object-cover shadow-[0_0_18px_color-mix(in_oklab,var(--neon)_35%,transparent)] sm:h-20 sm:w-20"
               loading="eager"
             />
-            <div>
+            <div className="min-w-0">
               <p className="font-mono text-sm text-[color:var(--neon)]">&gt; مرحباً، اسمي</p>
-              <h1 className="text-3xl font-black leading-tight sm:text-4xl">أحمد درويش.</h1>
+              <h1 className="text-4xl font-black leading-tight sm:text-5xl">أحمد درويش.</h1>
             </div>
           </div>
           <h2 className="mt-1 text-2xl font-bold text-muted-foreground sm:text-3xl md:text-4xl">
             أبني حلول تقنية بين البرمجة، الأنظمة المدمجة، والذكاء الاصطناعي.
           </h2>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
             مهندس برمجيات وأنظمة مدمجة بخبرة 20+ سنة، ومحاضر تعليمي.
             شعاري: <span className="neon-text">«رقمنة عالمك تبدأ هنا»</span>.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#projects"
-              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-3 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
+              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-3 font-mono text-base text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
             >
-              <ArrowUpLeft className="h-4 w-4 rtl:rotate-90" />
+              <ArrowUpLeft className="h-5 w-5 rtl:rotate-90" />
               استعرض المشاريع
             </a>
             <a
               href="#support"
-              className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 font-mono text-sm text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-foreground"
+              className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 font-mono text-base text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-foreground"
             >
               ادعم العمل
             </a>
           </div>
           <div className="mt-8 flex items-center gap-4 text-muted-foreground">
             <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]">
-              <Github className="h-5 w-5" />
+              <Github className="h-6 w-6" />
             </a>
             <a href="https://linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]">
-              <Linkedin className="h-5 w-5" />
+              <Linkedin className="h-6 w-6" />
             </a>
             <a href="https://wa.me/0" aria-label="WhatsApp" className="transition hover:text-[color:var(--neon)]">
-              <MessageCircle className="h-5 w-5" />
+              <MessageCircle className="h-6 w-6" />
             </a>
             <a href="mailto:contact@engdarwish.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]">
-              <Mail className="h-5 w-5" />
+              <Mail className="h-6 w-6" />
             </a>
           </div>
         </div>
@@ -208,8 +211,8 @@ function Hero() {
 function SectionHeader({ n, title }: { n: string; title: string }) {
   return (
     <div className="mb-8 flex items-center gap-4">
-      <span className="font-mono text-sm text-[color:var(--neon)]"><LTR>{n}.</LTR></span>
-      <h2 className="text-2xl font-black sm:text-3xl">{title}</h2>
+      <span className="font-mono text-base text-[color:var(--neon)]"><LTR>{n}.</LTR></span>
+      <h2 className="text-3xl font-black sm:text-4xl">{title}</h2>
       <span className="h-px flex-1 bg-border" />
     </div>
   );
