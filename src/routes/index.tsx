@@ -416,14 +416,14 @@ function Support() {
 
 function BankRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-md border border-border bg-secondary/40 px-4 py-3">
-      <span className="grid h-8 w-8 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
+    <div className="flex flex-wrap items-center gap-3 rounded-md border border-border bg-secondary/40 px-4 py-3">
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
         <Building2 className="h-4 w-4" />
       </span>
-      <span className="min-w-0 truncate text-muted-foreground">
+      <span className="shrink-0 text-muted-foreground">
         <LTR>{label}</LTR>
       </span>
-      <span className="shrink-0 text-[color:var(--neon)]">{value}</span>
+      <span className="min-w-0 flex-1 break-words text-[color:var(--neon)]">{value}</span>
     </div>
   );
 }
