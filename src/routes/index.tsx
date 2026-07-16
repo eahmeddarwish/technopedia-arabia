@@ -1,7 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { useState } from "react";
 import { PCBBackground } from "@/components/PCBBackground";
 import { Terminal } from "@/components/Terminal";
+import { ProjectCard } from "@/components/ProjectCard";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { PROJECTS, VIDEOS } from "@/data/projects";
 import logoUrl from "@/assets/logo.png";
 import {
   Github,
@@ -17,6 +21,8 @@ import {
   PlayCircle,
   Heart,
   Building2,
+  Copy,
+  Check,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -49,36 +55,11 @@ const TECH = [
   "Git / GitHub",
 ];
 
-const PROJECTS = [
-  {
-    title: "نظام رؤية آلية",
-    desc: "معالجة صور فورية للكشف عن الأشكال والألوان لتطبيقات صناعية.",
-    tags: ["Python", "OpenCV", "ML"],
-  },
-  {
-    title: "تحكم ذكي بمنزل",
-    desc: "منظومة أتمتة منزلية تعتمد على مستشعرات متعددة مع واجهة تحكم لاسلكية.",
-    tags: ["Arduino", "C++", "IoT"],
-  },
-  {
-    title: "بوابة تعلّم آلي على الطرف",
-    desc: "نموذج تصنيف يعمل مباشرة على الجهاز لمعالجة بيانات المستشعرات محلياً.",
-    tags: ["Raspberry Pi", "ML", "Edge AI"],
-  },
-  {
-    title: "دوائر رقمية تعليمية",
-    desc: "سلسلة مشاريع تعليمية لتصميم دوائر منطقية رقمية مع شرح تفصيلي للطلاب.",
-    tags: ["Digital Design", "Education"],
-  },
-];
-
-const VIDEOS = [
-  { title: "مقدمة في الأنظمة المدمجة", meta: "دورة تعليمية" },
-  { title: "البرمجة بلغة Python للمبتدئين", meta: "سلسلة عملية" },
-  { title: "الذكاء الاصطناعي وتطبيقاته", meta: "محاضرة" },
-];
-
 const AVATAR = "https://engdarwish.com/assets/images/avatar.jpg";
+const CV_PDF = "https://engdarwish.com/assets/cv/Ahmed_Darwish_CV.pdf";
+
+const FEATURED_PROJECTS = PROJECTS.filter((p) => p.featured);
+const PROJECTS_COUNT = PROJECTS.length;
 
 function Home() {
   return (
@@ -123,6 +104,7 @@ function Header() {
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2">
+          <ThemeToggle />
           <button
             type="button"
             className="hairline rounded-md px-3 py-1.5 font-mono text-sm text-muted-foreground transition hover:text-[color:var(--neon)]"
@@ -131,7 +113,9 @@ function Header() {
             <LTR>AR / EN</LTR>
           </button>
           <a
-            href="#cv"
+            href={CV_PDF}
+            target="_blank"
+            rel="noreferrer"
             className="hidden rounded-md border border-[color:var(--neon)] px-3 py-1.5 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground sm:inline-flex"
           >
             <LTR>resume.pdf</LTR>
@@ -167,7 +151,7 @@ function Hero() {
             أبني حلول تقنية بين البرمجة، الأنظمة المدمجة، والذكاء الاصطناعي.
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            مهندس برمجيات وأنظمة مدمجة بخبرة 20+ سنة، ومحاضر تعليمي.
+            مهندس كهرباء ومحاضر تعليمي بخبرة 20+ سنة.
             شعاري: <span className="neon-text">«رقمنة عالمك تبدأ هنا»</span>.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -189,13 +173,13 @@ function Hero() {
             <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]">
               <Github className="h-6 w-6" />
             </a>
-            <a href="https://linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]">
+            <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]">
               <Linkedin className="h-6 w-6" />
             </a>
-            <a href="https://wa.me/0" aria-label="WhatsApp" className="transition hover:text-[color:var(--neon)]">
+            <a href="https://wa.me/96551105252" aria-label="WhatsApp" className="transition hover:text-[color:var(--neon)]">
               <MessageCircle className="h-6 w-6" />
             </a>
-            <a href="mailto:contact@engdarwish.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]">
+            <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]">
               <Mail className="h-6 w-6" />
             </a>
           </div>
@@ -225,25 +209,21 @@ function About() {
       <div className="grid gap-10 md:grid-cols-[1.4fr_1fr]">
         <div className="space-y-4 text-base leading-loose text-muted-foreground">
           <p>
-            أنا <span className="text-foreground">أحمد درويش</span> — مهندس
-            برمجيات وأنظمة مدمجة وذكاء اصطناعي بأكثر من{" "}
-            <span className="text-[color:var(--neon)]">20 سنة</span> من الخبرة
-            العملية في تصميم وتنفيذ حلول تقنية متكاملة.
+            أنا <span className="text-foreground">أحمد درويش</span> — مهندس كهرباء
+            ومحاضر تعليمي بخبرة تتجاوز{" "}
+            <span className="text-[color:var(--neon)]">20 عاماً</span> تجمع بين
+            هندسة الأنظمة المدمجة والتعليم التقني. متخصص في{" "}
+            <LTR>Arduino</LTR> و <LTR>Raspberry Pi</LTR> والتصميم القائم على
+            المتحكمات الدقيقة، بمهارات برمجة قوية في <LTR>Python</LTR> و{" "}
+            <LTR>C++</LTR> لأنظمة إنترنت الأشياء والأتمتة.
           </p>
           <p>
-            بجانب العمل الهندسي، أنا محاضر ومدرّب تعليمي أشارك المعرفة عبر
-            دورات وفيديوهات وشروحات مبسّطة تحت مظلة{" "}
-            <span className="text-foreground"><LTR>Technopedia Arabia</LTR></span>.
+            نفذت أكثر من 100 مشروع فريلانس، ولدي أكثر من 16 عاماً في تصميم
+            المناهج وتوجيه الطلاب على المستويين المتوسط والجامعي — أشارك المعرفة
+            تحت مظلة <span className="text-foreground"><LTR>Technopedia Arabia</LTR></span>.
           </p>
 
-          <h3 className="!mt-8 text-lg font-bold text-foreground">
-            قصة الاسم والشعار
-          </h3>
-          <p>
-            [هنا نص عن قصة الاسم والشعار — سيتم استبداله بالنص الحقيقي من أحمد]
-          </p>
-
-          <p>هذه بعض التقنيات التي أعمل بها يومياً:</p>
+          <p className="!mt-6">هذه بعض التقنيات التي أعمل بها يومياً:</p>
           <ul className="grid grid-cols-2 gap-x-4 gap-y-2 pt-2 font-mono text-sm">
             {TECH.map((t) => (
               <li key={t} className="flex items-center gap-2">
@@ -255,7 +235,7 @@ function About() {
         </div>
         <div className="grid gap-4">
           <Stat icon={<Cpu className="h-5 w-5" />} value="+20" label="سنة خبرة" />
-          <Stat icon={<Cog className="h-5 w-5" />} value="+200" label="مشروع تقني" />
+          <Stat icon={<Cog className="h-5 w-5" />} value={`+${PROJECTS_COUNT}`} label="مشروع تقني" />
           <Stat icon={<Brain className="h-5 w-5" />} value="AI" label="متخصص في التعلّم الآلي" />
         </div>
       </div>
@@ -281,31 +261,18 @@ function Projects() {
   return (
     <section id="projects" className="mx-auto max-w-6xl px-5 py-12 sm:py-14">
       <SectionHeader n="03" title="مشاريع مختارة" />
-      <div className="grid gap-6 sm:grid-cols-2">
-        {PROJECTS.map((p) => (
-          <article key={p.title} className="card-tech card-tech-hover flex flex-col gap-4 p-6">
-            <div className="flex items-center justify-between">
-              <div className="grid h-10 w-10 place-items-center rounded-md border border-border text-[color:var(--neon)]">
-                <Cpu className="h-5 w-5" />
-              </div>
-              <Github className="h-4 w-4 text-muted-foreground transition hover:text-[color:var(--neon)]" />
-            </div>
-            <h3 className="text-lg font-bold">{p.title}</h3>
-            <p className="text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
-            <ul className="mt-auto flex flex-wrap gap-2 font-mono text-xs text-muted-foreground">
-              {p.tags.map((t) => (
-                <li key={t} className="rounded-full border border-border px-2.5 py-1">
-                  <LTR>{t}</LTR>
-                </li>
-              ))}
-            </ul>
-          </article>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {FEATURED_PROJECTS.map((p) => (
+          <ProjectCard key={p.id} p={p} />
         ))}
       </div>
-      <div className="mt-8 text-center">
-        <a href="#" className="font-mono text-sm text-[color:var(--neon)] hover:underline">
-          عرض جميع المشاريع ←
-        </a>
+      <div className="mt-10 text-center">
+        <Link
+          to="/projects"
+          className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-2.5 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
+        >
+          عرض جميع المشاريع ({PROJECTS_COUNT}) ←
+        </Link>
       </div>
     </section>
   );
@@ -315,24 +282,26 @@ function Videos() {
   return (
     <section id="videos" className="mx-auto max-w-6xl px-5 py-12 sm:py-14">
       <SectionHeader n="04" title="فيديوهات وشروحات" />
-      <div className="grid gap-6 sm:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {VIDEOS.map((v) => (
-          <a
+          <div
             key={v.title}
-            href="#"
-            className="card-tech card-tech-hover group block overflow-hidden"
+            className="card-tech group relative block overflow-hidden opacity-95"
           >
             <div className="relative aspect-video overflow-hidden bg-secondary">
               <div className="absolute inset-0 grid place-items-center">
-                <PlayCircle className="h-12 w-12 text-[color:var(--neon)] opacity-80 transition group-hover:scale-110" />
+                <PlayCircle className="h-12 w-12 text-[color:var(--neon)] opacity-70" />
               </div>
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.6))]" />
+              <span className="absolute right-3 top-3 rounded-full border border-[color:var(--neon-dim)] bg-background/80 px-2.5 py-1 font-mono text-[10px] text-[color:var(--neon)]">
+                قريباً
+              </span>
             </div>
             <div className="p-4">
-              <h3 className="text-sm font-bold">{v.title}</h3>
-              <p className="mt-1 font-mono text-xs text-muted-foreground">{v.meta}</p>
+              <h3 className="text-sm font-bold leading-snug">{v.title}</h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{v.desc}</p>
             </div>
-          </a>
+          </div>
         ))}
       </div>
     </section>
@@ -345,18 +314,28 @@ function CV() {
       <SectionHeader n="05" title="السيرة الذاتية" />
       <div className="card-tech flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-lg font-bold">حمّل السيرة الذاتية بصيغة <LTR>PDF</LTR></h3>
+          <h3 className="text-lg font-bold">تصفّح السيرة الذاتية الكاملة</h3>
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
-            نظرة تفصيلية على الخبرات والمشاريع والدورات التي قدّمها المهندس أحمد درويش.
+            الخبرات، المهارات، والشهادات في صفحة واحدة — أو حمّلها بصيغة <LTR>PDF</LTR>.
           </p>
         </div>
-        <a
-          href="#"
-          className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-3 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
-        >
-          <Download className="h-4 w-4" />
-          <LTR>تحميل CV.pdf</LTR>
-        </a>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            to="/cv"
+            className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-3 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
+          >
+            عرض <LTR>CV</LTR>
+          </Link>
+          <a
+            href={CV_PDF}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 font-mono text-sm text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-foreground"
+          >
+            <Download className="h-4 w-4" />
+            <LTR>تحميل CV.pdf</LTR>
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -380,9 +359,21 @@ function Support() {
               الاصطناعي مجّاناً.
             </p>
 
-            <div className="mt-6 grid gap-3 font-mono text-sm">
-              <BankRow label="IBAN" value="[IBAN — بيانات حقيقية قريباً]" />
-              <BankRow label="SWIFT" value="[SWIFT — بيانات حقيقية قريباً]" />
+            <div className="mt-6 grid gap-3 text-sm">
+              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
+                <div className="mb-1 font-mono text-xs text-muted-foreground">اسم البنك</div>
+                <div className="font-medium">البنك الوطني الكويتي — <LTR>NBK</LTR></div>
+              </div>
+              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
+                <div className="mb-1 font-mono text-xs text-muted-foreground">اسم صاحب الحساب</div>
+                <div className="font-medium" dir="ltr">AHMED MOHAMED MOHAMED DARWISH</div>
+              </div>
+              <BankRow label="IBAN" value="KW06 NBOK 0000 0000 0000 2022 6953 69" copyValue="KW06NBOK0000000000002022695369" />
+              <BankRow label="SWIFT" value="NBOKKWKWXXX" copyValue="NBOKKWKWXXX" />
+              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
+                <div className="mb-1 font-mono text-xs text-muted-foreground">العملة</div>
+                <div className="font-medium"><LTR>KWD</LTR> — دينار كويتي</div>
+              </div>
             </div>
 
             <div className="mt-6">
@@ -414,16 +405,39 @@ function Support() {
   );
 }
 
-function BankRow({ label, value }: { label: string; value: string }) {
+function BankRow({ label, value, copyValue }: { label: string; value: string; copyValue: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(copyValue);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {}
+  }
+
   return (
     <div className="flex flex-wrap items-center gap-3 rounded-md border border-border bg-secondary/40 px-4 py-3">
       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
         <Building2 className="h-4 w-4" />
       </span>
-      <span className="shrink-0 text-muted-foreground">
+      <span className="shrink-0 font-mono text-muted-foreground">
         <LTR>{label}</LTR>
       </span>
-      <span className="min-w-0 flex-1 break-words text-[color:var(--neon)]">{value}</span>
+      <span className="min-w-0 flex-1 break-all font-mono text-[color:var(--neon)]" dir="ltr">
+        {value}
+      </span>
+      <button
+        type="button"
+        onClick={copy}
+        aria-label={`نسخ ${label}`}
+        className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-border text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-[color:var(--neon)]"
+      >
+        {copied ? <Check className="h-4 w-4 text-[color:var(--neon)]" /> : <Copy className="h-4 w-4" />}
+      </button>
+      {copied && (
+        <span className="font-mono text-xs text-[color:var(--neon)]">تم النسخ</span>
+      )}
     </div>
   );
 }
@@ -440,10 +454,10 @@ function Footer() {
         </div>
         <div className="flex items-center gap-5 text-muted-foreground">
           <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]"><Github className="h-5 w-5" /></a>
-          <a href="https://linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]"><Linkedin className="h-5 w-5" /></a>
-          <a href="https://wa.me/0" aria-label="WhatsApp" className="transition hover:text-[color:var(--neon)]"><MessageCircle className="h-5 w-5" /></a>
-          <a href="tel:+0" aria-label="Phone" className="transition hover:text-[color:var(--neon)]"><Phone className="h-5 w-5" /></a>
-          <a href="mailto:contact@engdarwish.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]"><Mail className="h-5 w-5" /></a>
+          <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]"><Linkedin className="h-5 w-5" /></a>
+          <a href="https://wa.me/96551105252" aria-label="WhatsApp" className="transition hover:text-[color:var(--neon)]"><MessageCircle className="h-5 w-5" /></a>
+          <a href="tel:+96551105252" aria-label="Phone" className="transition hover:text-[color:var(--neon)]"><Phone className="h-5 w-5" /></a>
+          <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]"><Mail className="h-5 w-5" /></a>
         </div>
         <p className="font-mono text-xs text-muted-foreground">
           <LTR>© {new Date().getFullYear()} Technopedia Arabia</LTR> · صُمّم وبُرمج بحبّ

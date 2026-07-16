@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Hero background: particle network (moving dots + connecting lines) layered
- * with abstract line-art shapes drawn progressively (Arduino, Raspberry Pi,
- * WiFi, Robot). Amber accent, low opacity, cheap on CPU.
+ * Hero background: particle network + abstract line-art shapes.
+ * Reads accent color from CSS var --neon-rgb so it adapts to light/dark theme.
  */
 export function PCBBackground() {
   const ref = useRef<HTMLCanvasElement | null>(null);
@@ -13,6 +12,19 @@ export function PCBBackground() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    const getRGB = () => {
+      const v = getComputedStyle(document.documentElement)
+        .getPropertyValue("--neon-rgb")
+        .trim();
+      return v || "255, 122, 26";
+    };
+    let rgb = getRGB();
+    const themeObserver = new MutationObserver(() => {
+      rgb = getRGB();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
 
     let raf = 0;
     let width = 0;
@@ -144,7 +156,7 @@ export function PCBBackground() {
 
     function drawParticles() {
       // dots
-      ctx!.fillStyle = "rgba(255,122,26,0.55)";
+      ctx!.fillStyle = `rgba(${rgb},0.55)`;
       for (const p of particles) {
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, 1.4, 0, Math.PI * 2);
@@ -160,7 +172,7 @@ export function PCBBackground() {
           const d2 = dx * dx + dy * dy;
           if (d2 < max * max) {
             const alpha = (1 - Math.sqrt(d2) / max) * 0.35;
-            ctx!.strokeStyle = `rgba(255,122,26,${alpha.toFixed(3)})`;
+            ctx!.strokeStyle = `rgba(${rgb},${alpha.toFixed(3)})`;
             ctx!.lineWidth = 0.6;
             ctx!.beginPath();
             ctx!.moveTo(a.x, a.y);
@@ -196,9 +208,9 @@ export function PCBBackground() {
           break;
         }
       }
-      ctx!.strokeStyle = "rgba(255,122,26,0.42)";
+      ctx!.strokeStyle = `rgba(${rgb},0.42)`;
       ctx!.lineWidth = 1.4;
-      ctx!.shadowColor = "rgba(255,122,26,0.5)";
+      ctx!.shadowColor = `rgba(${rgb},0.5)`;
       ctx!.shadowBlur = 6;
       ctx!.stroke();
       ctx!.shadowBlur = 0;
@@ -208,7 +220,7 @@ export function PCBBackground() {
       for (const p of pads) {
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
-        ctx!.fillStyle = "rgba(255,122,26,0.6)";
+        ctx!.fillStyle = `rgba(${rgb},0.6)`;
         ctx!.fill();
       }
     }
@@ -269,7 +281,9 @@ export function PCBBackground() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
+      themeObserver.disconnect();
     };
+
   }, []);
 
   return (
