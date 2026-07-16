@@ -59,9 +59,37 @@
   --input: oklch(0.28 0.012 250);
   --ring: oklch(0.78 0.17 55);
   --neon: #ff7a1a;
+  --neon-rgb: 255, 122, 26;
   --neon-dim: color-mix(in oklab, #ff7a1a 30%, transparent);
   --shadow-neon: 0 0 24px color-mix(in oklab, #ff7a1a 28%, transparent);
 }
+
+/* Light theme — matches engdarwish.com original palette */
+html.light {
+  --background: #faf7f2;
+  --foreground: #171b21;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #171b21;
+  --popover: #ffffff;
+  --popover-foreground: #171b21;
+  --primary: #f97316;
+  --primary-foreground: #ffffff;
+  --secondary: #f2ede4;
+  --secondary-foreground: #171b21;
+  --muted: #f2ede4;
+  --muted-foreground: #5b6577;
+  --accent: #f97316;
+  --accent-foreground: #ffffff;
+  --border: rgba(20, 25, 33, 0.10);
+  --input: rgba(20, 25, 33, 0.10);
+  --ring: #f97316;
+  --neon: #f97316;
+  --neon-rgb: 249, 115, 22;
+  --neon-dim: color-mix(in oklab, #f97316 18%, transparent);
+  --shadow-neon: 0 0 18px color-mix(in oklab, #f97316 22%, transparent);
+}
+
 
 @layer base {
   * { border-color: var(--color-border); }

@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Hero background: particle network (moving dots + connecting lines) layered
- * with abstract line-art shapes drawn progressively (Arduino, Raspberry Pi,
- * WiFi, Robot). Amber accent, low opacity, cheap on CPU.
+ * Hero background: particle network + abstract line-art shapes.
+ * Reads accent color from CSS var --neon-rgb so it adapts to light/dark theme.
  */
 export function PCBBackground() {
   const ref = useRef<HTMLCanvasElement | null>(null);
@@ -13,6 +12,19 @@ export function PCBBackground() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    const getRGB = () => {
+      const v = getComputedStyle(document.documentElement)
+        .getPropertyValue("--neon-rgb")
+        .trim();
+      return v || "255, 122, 26";
+    };
+    let rgb = getRGB();
+    const themeObserver = new MutationObserver(() => {
+      rgb = getRGB();
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
 
     let raf = 0;
     let width = 0;
