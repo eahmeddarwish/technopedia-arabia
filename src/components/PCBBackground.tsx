@@ -1,6 +1,10 @@
 import { useEffect, useRef } from "react";
 
-/** Lightweight animated PCB traces + abstract tech shapes (Arduino / RPi / Python). */
+/**
+ * Hero background: particle network (moving dots + connecting lines) layered
+ * with abstract line-art shapes drawn progressively (Arduino, Raspberry Pi,
+ * WiFi, Robot). Amber accent, low opacity, cheap on CPU.
+ */
 export function PCBBackground() {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
@@ -16,43 +20,30 @@ export function PCBBackground() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     type Node = { x: number; y: number };
-    type Trace = { pts: Node[]; progress: number; speed: number; kind: "trace" | "arduino" | "rpi" | "python" };
+    type Shape = {
+      pts: Node[];
+      progress: number;
+      speed: number;
+      kind: "arduino" | "rpi" | "wifi" | "robot";
+    };
+    type Particle = { x: number; y: number; vx: number; vy: number };
 
-    let traces: Trace[] = [];
+    let shapes: Shape[] = [];
     let pads: Node[] = [];
+    let particles: Particle[] = [];
+    let linkDist = 120;
 
     const rand = (a: number, b: number) => a + Math.random() * (b - a);
-    const snap = (v: number, grid = 24) => Math.round(v / grid) * grid;
 
-    function randomTrace(): Trace {
-      const startX = snap(rand(0, width));
-      const startY = snap(rand(0, height));
-      const pts: Node[] = [{ x: startX, y: startY }];
-      const segs = 3 + Math.floor(Math.random() * 4);
-      let x = startX;
-      let y = startY;
-      let horiz = Math.random() > 0.5;
-      for (let i = 0; i < segs; i++) {
-        const len = snap(rand(40, 160));
-        if (horiz) x += Math.random() > 0.5 ? len : -len;
-        else y += Math.random() > 0.5 ? len : -len;
-        pts.push({ x, y });
-        horiz = !horiz;
-      }
-      pads.push(pts[0], pts[pts.length - 1]);
-      return { pts, progress: 0, speed: rand(0.003, 0.008), kind: "trace" };
-    }
-
-    // Abstract line-art shapes (not exact logos): rectangle outlines + accent pins
-    function arduinoShape(): Trace {
+    // ---------- Abstract shapes ----------
+    function arduinoShape(): Shape {
       const w = rand(180, 260);
       const h = w * 0.55;
-      const cx = rand(w, width - w);
-      const cy = rand(h, height - h);
+      const cx = rand(w, Math.max(w + 1, width - w));
+      const cy = rand(h, Math.max(h + 1, height - h));
       const l = cx - w / 2, r = cx + w / 2, t = cy - h / 2, b = cy + h / 2;
       const pts: Node[] = [
         { x: l, y: t }, { x: r, y: t }, { x: r, y: b }, { x: l, y: b }, { x: l, y: t },
-        // side pins (short zig)
         { x: l, y: t + 12 }, { x: l - 10, y: t + 12 },
         { x: l - 10, y: t + 28 }, { x: l, y: t + 28 },
         { x: l, y: t + 44 }, { x: l - 10, y: t + 44 },
@@ -61,59 +52,127 @@ export function PCBBackground() {
       return { pts, progress: 0, speed: rand(0.004, 0.007), kind: "arduino" };
     }
 
-    function rpiShape(): Trace {
+    function rpiShape(): Shape {
       const w = rand(180, 240);
       const h = w * 0.65;
-      const cx = rand(w, width - w);
-      const cy = rand(h, height - h);
+      const cx = rand(w, Math.max(w + 1, width - w));
+      const cy = rand(h, Math.max(h + 1, height - h));
       const l = cx - w / 2, r = cx + w / 2, t = cy - h / 2, b = cy + h / 2;
       const pts: Node[] = [
         { x: l, y: t }, { x: r, y: t }, { x: r, y: b }, { x: l, y: b }, { x: l, y: t },
       ];
-      // GPIO row as pads
       for (let i = 0; i < 10; i++) pads.push({ x: l + 14 + i * 14, y: t + 10 });
       return { pts, progress: 0, speed: rand(0.004, 0.007), kind: "rpi" };
     }
 
-    function pythonShape(): Trace {
-      // two interlocking rounded rectangles (approx with polyline)
-      const s = rand(90, 140);
-      const cx = rand(s * 2, width - s * 2);
-      const cy = rand(s * 2, height - s * 2);
+    // WiFi: three arcs + a base dot, approximated as polyline arcs
+    function wifiShape(): Shape {
+      const cx = rand(80, Math.max(81, width - 80));
+      const cy = rand(80, Math.max(81, height - 80));
+      const pts: Node[] = [];
+      // three arcs of increasing radius, sampled left-to-right along top
+      const radii = [22, 44, 66];
+      for (const r of radii) {
+        const steps = 14;
+        for (let i = 0; i <= steps; i++) {
+          const a = Math.PI + (Math.PI * i) / steps; // top half (π..2π)
+          pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
+        }
+        // jump back to center via pad (rendered as pad only)
+        pads.push({ x: cx - r, y: cy });
+      }
+      pads.push({ x: cx, y: cy + 6 });
+      return { pts, progress: 0, speed: rand(0.005, 0.009), kind: "wifi" };
+    }
+
+    // Simple robot: square head, two eye pads, antenna dot
+    function robotShape(): Shape {
+      const s = rand(60, 90);
+      const cx = rand(s * 2, Math.max(s * 2 + 1, width - s * 2));
+      const cy = rand(s * 2, Math.max(s * 2 + 1, height - s * 2));
+      const l = cx - s, r = cx + s, t = cy - s, b = cy + s;
       const pts: Node[] = [
-        // top blob
-        { x: cx - s, y: cy - s }, { x: cx + s * 0.2, y: cy - s },
-        { x: cx + s * 0.2, y: cy }, { x: cx + s, y: cy },
-        { x: cx + s, y: cy + s * 0.6 }, { x: cx - s * 0.2, y: cy + s * 0.6 },
-        { x: cx - s * 0.2, y: cy - s * 0.3 }, { x: cx - s, y: cy - s * 0.3 },
-        { x: cx - s, y: cy - s },
+        // antenna
+        { x: cx, y: t - 22 }, { x: cx, y: t },
+        // head
+        { x: l, y: t }, { x: r, y: t }, { x: r, y: b }, { x: l, y: b }, { x: l, y: t },
+        // mouth line
+        { x: cx - s * 0.5, y: b - s * 0.35 }, { x: cx + s * 0.5, y: b - s * 0.35 },
       ];
-      pads.push({ x: cx - s * 0.6, y: cy - s * 0.7 }, { x: cx + s * 0.6, y: cy + s * 0.3 });
-      return { pts, progress: 0, speed: rand(0.003, 0.006), kind: "python" };
+      // eyes + antenna tip
+      pads.push(
+        { x: cx - s * 0.45, y: cy - s * 0.15 },
+        { x: cx + s * 0.45, y: cy - s * 0.15 },
+        { x: cx, y: t - 24 }
+      );
+      return { pts, progress: 0, speed: rand(0.004, 0.008), kind: "robot" };
     }
 
-    function buildOne(): Trace {
+    function buildOne(): Shape {
       const r = Math.random();
-      if (r < 0.75) return randomTrace();
-      if (r < 0.85) return arduinoShape();
-      if (r < 0.93) return rpiShape();
-      return pythonShape();
+      if (r < 0.28) return arduinoShape();
+      if (r < 0.55) return rpiShape();
+      if (r < 0.8) return wifiShape();
+      return robotShape();
     }
 
-    function resize() {
-      const rect = canvas!.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-      canvas!.width = Math.floor(width * dpr);
-      canvas!.height = Math.floor(height * dpr);
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const target = Math.min(14, Math.max(6, Math.floor((width * height) / 60000)));
-      traces = [];
-      pads = [];
-      for (let i = 0; i < target; i++) traces.push(buildOne());
+    // ---------- Particles ----------
+    function seedParticles() {
+      const small = width < 640;
+      const density = small ? 9000 : 6500;
+      const count = Math.max(24, Math.min(90, Math.floor((width * height) / density)));
+      linkDist = small ? 90 : 130;
+      particles = new Array(count).fill(0).map(() => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: rand(-0.18, 0.18),
+        vy: rand(-0.18, 0.18),
+      }));
     }
 
-    function drawTrace(t: Trace) {
+    function stepParticles(dt: number) {
+      const k = dt / 16.67;
+      for (const p of particles) {
+        p.x += p.vx * k;
+        p.y += p.vy * k;
+        if (p.x < 0) { p.x = 0; p.vx *= -1; }
+        else if (p.x > width) { p.x = width; p.vx *= -1; }
+        if (p.y < 0) { p.y = 0; p.vy *= -1; }
+        else if (p.y > height) { p.y = height; p.vy *= -1; }
+      }
+    }
+
+    function drawParticles() {
+      // dots
+      ctx!.fillStyle = "rgba(255,122,26,0.55)";
+      for (const p of particles) {
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, 1.4, 0, Math.PI * 2);
+        ctx!.fill();
+      }
+      // links
+      const max = linkDist;
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < max * max) {
+            const alpha = (1 - Math.sqrt(d2) / max) * 0.35;
+            ctx!.strokeStyle = `rgba(255,122,26,${alpha.toFixed(3)})`;
+            ctx!.lineWidth = 0.6;
+            ctx!.beginPath();
+            ctx!.moveTo(a.x, a.y);
+            ctx!.lineTo(b.x, b.y);
+            ctx!.stroke();
+          }
+        }
+      }
+    }
+
+    // ---------- Shape draw ----------
+    function drawShape(t: Shape) {
       const totalLen = t.pts.reduce((acc, p, i) => {
         if (i === 0) return 0;
         const prev = t.pts[i - 1];
@@ -137,9 +196,8 @@ export function PCBBackground() {
           break;
         }
       }
-      const isShape = t.kind !== "trace";
-      ctx!.strokeStyle = isShape ? "rgba(255,122,26,0.42)" : "rgba(255,122,26,0.32)";
-      ctx!.lineWidth = isShape ? 1.4 : 1.1;
+      ctx!.strokeStyle = "rgba(255,122,26,0.42)";
+      ctx!.lineWidth = 1.4;
       ctx!.shadowColor = "rgba(255,122,26,0.5)";
       ctx!.shadowBlur = 6;
       ctx!.stroke();
@@ -155,23 +213,42 @@ export function PCBBackground() {
       }
     }
 
+    function resize() {
+      const rect = canvas!.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas!.width = Math.floor(width * dpr);
+      canvas!.height = Math.floor(height * dpr);
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const small = width < 640;
+      const target = small ? 4 : Math.min(8, Math.max(4, Math.floor((width * height) / 120000)));
+      shapes = [];
+      pads = [];
+      for (let i = 0; i < target; i++) shapes.push(buildOne());
+      seedParticles();
+    }
+
     let last = performance.now();
     function loop(now: number) {
       const dt = Math.min(50, now - last);
       last = now;
       ctx!.clearRect(0, 0, width, height);
+
+      stepParticles(dt);
+      drawParticles();
+
       drawPads();
-      for (const t of traces) {
+      for (const t of shapes) {
         t.progress += t.speed * (dt / 16.67);
         if (t.progress >= 1) {
-          if (Math.random() < 0.02) {
-            const idx = traces.indexOf(t);
-            traces[idx] = buildOne();
+          if (Math.random() < 0.015) {
+            const idx = shapes.indexOf(t);
+            shapes[idx] = buildOne();
           } else {
             t.progress = 1;
           }
         }
-        drawTrace(t);
+        drawShape(t);
       }
       raf = requestAnimationFrame(loop);
     }
@@ -182,10 +259,11 @@ export function PCBBackground() {
     window.addEventListener("resize", onResize);
     if (!reduce) raf = requestAnimationFrame(loop);
     else {
-      traces.forEach((t) => (t.progress = 1));
+      shapes.forEach((t) => (t.progress = 1));
       ctx.clearRect(0, 0, width, height);
+      drawParticles();
       drawPads();
-      traces.forEach(drawTrace);
+      shapes.forEach(drawShape);
     }
 
     return () => {
@@ -198,7 +276,7 @@ export function PCBBackground() {
     <canvas
       ref={ref}
       aria-hidden
-      className="pointer-events-none absolute inset-0 h-full w-full opacity-70"
+      className="pointer-events-none absolute inset-0 h-full w-full opacity-80"
     />
   );
 }

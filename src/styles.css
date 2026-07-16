@@ -66,8 +66,17 @@
 @layer base {
   * { border-color: var(--color-border); }
   html, body { background-color: var(--color-background); color: var(--color-foreground); }
-  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
-  code, pre, .font-mono { font-family: var(--font-mono); }
+  html { font-size: 17px; }
+  @media (min-width: 640px) { html { font-size: 18px; } }
+  body {
+    font-family: var(--font-sans);
+    font-family: "Cairo", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6, p, a, button, span, li, label, input, textarea, select {
+    font-family: "Cairo", ui-sans-serif, system-ui, sans-serif;
+  }
+  code, pre, .font-mono, [class*="font-mono"] { font-family: "JetBrains Mono", ui-monospace, monospace; }
   ::selection { background: var(--neon); color: #1a0a00; }
 }
 
