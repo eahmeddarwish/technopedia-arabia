@@ -156,7 +156,7 @@ export function PCBBackground() {
 
     function drawParticles() {
       // dots
-      ctx!.fillStyle = "rgba(255,122,26,0.55)";
+      ctx!.fillStyle = `rgba(${rgb},0.55)`;
       for (const p of particles) {
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, 1.4, 0, Math.PI * 2);
@@ -172,7 +172,7 @@ export function PCBBackground() {
           const d2 = dx * dx + dy * dy;
           if (d2 < max * max) {
             const alpha = (1 - Math.sqrt(d2) / max) * 0.35;
-            ctx!.strokeStyle = `rgba(255,122,26,${alpha.toFixed(3)})`;
+            ctx!.strokeStyle = `rgba(${rgb},${alpha.toFixed(3)})`;
             ctx!.lineWidth = 0.6;
             ctx!.beginPath();
             ctx!.moveTo(a.x, a.y);
@@ -208,9 +208,9 @@ export function PCBBackground() {
           break;
         }
       }
-      ctx!.strokeStyle = "rgba(255,122,26,0.42)";
+      ctx!.strokeStyle = `rgba(${rgb},0.42)`;
       ctx!.lineWidth = 1.4;
-      ctx!.shadowColor = "rgba(255,122,26,0.5)";
+      ctx!.shadowColor = `rgba(${rgb},0.5)`;
       ctx!.shadowBlur = 6;
       ctx!.stroke();
       ctx!.shadowBlur = 0;
@@ -220,7 +220,7 @@ export function PCBBackground() {
       for (const p of pads) {
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
-        ctx!.fillStyle = "rgba(255,122,26,0.6)";
+        ctx!.fillStyle = `rgba(${rgb},0.6)`;
         ctx!.fill();
       }
     }
