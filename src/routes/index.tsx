@@ -432,6 +432,12 @@ function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-5 py-10 text-center">
+        <div className="flex items-center gap-2">
+          <img src={logoUrl} alt="Technopedia Arabia" className="h-9 w-9 object-contain" />
+          <span className="text-base font-bold">
+            <LTR>Technopedia <span className="text-[color:var(--neon)]">Arabia</span></LTR>
+          </span>
+        </div>
         <div className="flex items-center gap-5 text-muted-foreground">
           <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]"><Github className="h-5 w-5" /></a>
           <a href="https://linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]"><Linkedin className="h-5 w-5" /></a>
