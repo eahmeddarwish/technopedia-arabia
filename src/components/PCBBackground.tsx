@@ -281,7 +281,9 @@ export function PCBBackground() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
+      themeObserver.disconnect();
     };
+
   }, []);
 
   return (
