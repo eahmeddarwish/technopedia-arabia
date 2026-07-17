@@ -104,6 +104,13 @@ function Header() {
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2">
+          <div className="hidden items-center gap-3 pr-1 text-muted-foreground sm:flex">
+            <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]"><Github className="h-4 w-4" /></a>
+            <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]"><Linkedin className="h-4 w-4" /></a>
+            <a href="https://wa.me/96551105252" aria-label="WhatsApp" className="transition hover:text-[color:var(--neon)]"><MessageCircle className="h-4 w-4" /></a>
+            <a href="tel:+96551105252" aria-label="Phone" className="transition hover:text-[color:var(--neon)]"><Phone className="h-4 w-4" /></a>
+            <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]"><Mail className="h-4 w-4" /></a>
+          </div>
           <ThemeToggle />
           <button
             type="button"
