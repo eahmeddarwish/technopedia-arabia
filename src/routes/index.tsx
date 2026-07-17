@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { useState } from "react";
 import { PCBBackground } from "@/components/PCBBackground";
 import { Terminal } from "@/components/Terminal";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -20,9 +19,6 @@ import {
   Brain,
   PlayCircle,
   Heart,
-  Building2,
-  Copy,
-  Check,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -41,7 +37,7 @@ const NAV = [
   { href: "#projects", label: "المشاريع" },
   { href: "#videos", label: "الفيديوهات" },
   { href: "#cv", label: "السيرة الذاتية" },
-  { href: "#support", label: "دعم" },
+  { href: "/support", label: "دعم" },
 ];
 
 const TECH = [
@@ -104,6 +100,13 @@ function Header() {
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2">
+          <div className="hidden items-center gap-3 pr-1 text-muted-foreground sm:flex">
+            <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]"><Github className="h-4 w-4" /></a>
+            <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[color:var(--neon)]"><Linkedin className="h-4 w-4" /></a>
+            <a href="https://wa.me/96551105252" aria-label="WhatsApp" className="transition hover:text-[color:var(--neon)]"><MessageCircle className="h-4 w-4" /></a>
+            <a href="tel:+96551105252" aria-label="Phone" className="transition hover:text-[color:var(--neon)]"><Phone className="h-4 w-4" /></a>
+            <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email" className="transition hover:text-[color:var(--neon)]"><Mail className="h-4 w-4" /></a>
+          </div>
           <ThemeToggle />
           <button
             type="button"
@@ -139,7 +142,7 @@ function Hero() {
             <img
               src={AVATAR}
               alt="أحمد درويش"
-              className="h-16 w-16 rounded-full border-2 border-[color:var(--neon)] object-cover shadow-[0_0_18px_color-mix(in_oklab,var(--neon)_35%,transparent)] sm:h-20 sm:w-20"
+              className="h-20 w-20 rounded-full border-2 border-[color:var(--neon)] object-cover shadow-[0_0_18px_color-mix(in_oklab,var(--neon)_35%,transparent)] [.light_&]:shadow-[0_12px_28px_-8px_rgba(15,23,42,0.35)] sm:h-24 sm:w-24"
               loading="eager"
             />
             <div className="min-w-0">
@@ -162,12 +165,12 @@ function Hero() {
               <ArrowUpLeft className="h-5 w-5 rtl:rotate-90" />
               استعرض المشاريع
             </a>
-            <a
-              href="#support"
+            <Link
+              to="/support"
               className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 font-mono text-base text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-foreground"
             >
               ادعم العمل
-            </a>
+            </Link>
           </div>
           <div className="mt-8 flex items-center gap-4 text-muted-foreground">
             <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]">
@@ -234,9 +237,9 @@ function About() {
           </ul>
         </div>
         <div className="grid gap-4">
-          <Stat icon={<Cpu className="h-5 w-5" />} value="+20" label="سنة خبرة" />
-          <Stat icon={<Cog className="h-5 w-5" />} value={`+${PROJECTS_COUNT}`} label="مشروع تقني" />
-          <Stat icon={<Brain className="h-5 w-5" />} value="AI" label="متخصص في التعلّم الآلي" />
+          <Stat icon={<Cpu className="h-7 w-7" />} value="+20" label="سنة خبرة" />
+          <Stat icon={<Cog className="h-7 w-7" />} value={`+${PROJECTS_COUNT}`} label="مشروع تقني" />
+          <Stat icon={<Brain className="h-7 w-7" />} value="AI" label="متخصص في التعلّم الآلي" />
         </div>
       </div>
     </section>
@@ -245,13 +248,13 @@ function About() {
 
 function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
   return (
-    <div className="card-tech card-tech-hover flex items-center gap-4 p-5">
-      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
+    <div className="card-tech card-tech-hover flex items-center gap-5 p-7">
+      <div className="grid h-14 w-14 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
         {icon}
       </div>
       <div className="min-w-0">
-        <div className="font-mono text-2xl font-bold text-[color:var(--neon)]"><LTR>{value}</LTR></div>
-        <div className="truncate text-sm text-muted-foreground">{label}</div>
+        <div className="font-mono text-3xl font-bold text-[color:var(--neon)]"><LTR>{value}</LTR></div>
+        <div className="truncate text-base text-muted-foreground">{label}</div>
       </div>
     </div>
   );
@@ -345,59 +348,29 @@ function Support() {
   return (
     <section id="support" className="mx-auto max-w-4xl px-5 py-12 sm:py-14">
       <SectionHeader n="01" title="ادعم العمل" />
-      <div className="card-tech p-8">
+      <div className="card-tech p-6 sm:p-8">
         <div className="flex items-start gap-4">
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
-            <Heart className="h-5 w-5" />
+          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
+            <Heart className="h-6 w-6" />
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="text-lg font-bold">دعمك يصنع فرقاً حقيقياً</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              كل تبرّع يترجَم مباشرةً إلى محتوى تعليمي أكثر: دروس جديدة، مشاريع
-              عملية مفتوحة المصدر، وشروحات تصل لطلاب عرب لا يجدون هذا المحتوى
-              بلغتهم. دعمك = طالب جديد يتعلّم البرمجة والأنظمة المدمجة والذكاء
-              الاصطناعي مجّاناً.
+            <h3 className="text-xl font-bold">دعمك يصنع فرقاً حقيقياً</h3>
+            <p className="mt-3 text-base leading-loose text-muted-foreground">
+              في كل مرة حد يدعم <LTR>Technopedia Arabia</LTR>، هو مش بس بيحوّل
+              مبلغ — هو بيفتح باب لطالب عربي جديد يوصله شرح مجاني ومشروع عملي
+              كان ممكن يفضل بعيد عنه بسبب اللغة أو التكلفة. أنا مش بجمع تبرعات
+              لمشروع تجاري، أنا بشارك معرفة اشتغلت عليها بسنين خبرة حقيقية،
+              ولسه مستمر أضيف وأطوّر عشان أي حد يحب التقنية يلاقي طريقه فيها من
+              غير عوائق. دعمك — مهما كان حجمه — بيبقى جزء حقيقي من الرحلة دي.
             </p>
-
-            <div className="mt-6 grid gap-3 text-sm">
-              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
-                <div className="mb-1 font-mono text-xs text-muted-foreground">اسم البنك</div>
-                <div className="font-medium">البنك الوطني الكويتي — <LTR>NBK</LTR></div>
-              </div>
-              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
-                <div className="mb-1 font-mono text-xs text-muted-foreground">اسم صاحب الحساب</div>
-                <div className="font-medium" dir="ltr">AHMED MOHAMED MOHAMED DARWISH</div>
-              </div>
-              <BankRow label="IBAN" value="KW06 NBOK 0000 0000 0000 2022 6953 69" copyValue="KW06NBOK0000000000002022695369" />
-              <BankRow label="SWIFT" value="NBOKKWKWXXX" copyValue="NBOKKWKWXXX" />
-              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
-                <div className="mb-1 font-mono text-xs text-muted-foreground">العملة</div>
-                <div className="font-medium"><LTR>KWD</LTR> — دينار كويتي</div>
-              </div>
-            </div>
-
             <div className="mt-6">
-              <button
-                type="button"
-                disabled
-                title="قريباً"
-                aria-disabled="true"
-                className="group inline-flex cursor-not-allowed items-center gap-3 rounded-md border border-border bg-secondary/40 px-5 py-3 opacity-60"
+              <Link
+                to="/support"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-3 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
               >
-                <span className="font-mono text-sm font-bold">
-                  <span className="text-[#003087]">Pay</span>
-                  <span className="text-[#009cde]">Pal</span>
-                </span>
-                <span className="text-sm text-muted-foreground">ادعم عبر PayPal</span>
-                <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
-                  قريباً
-                </span>
-              </button>
+                تفاصيل الدعم ←
+              </Link>
             </div>
-
-            <p className="mt-6 text-xs text-muted-foreground">
-              للتواصل بخصوص الرعاية أو الدعم المؤسسي عبر البريد أو الواتساب أدناه.
-            </p>
           </div>
         </div>
       </div>
@@ -405,42 +378,6 @@ function Support() {
   );
 }
 
-function BankRow({ label, value, copyValue }: { label: string; value: string; copyValue: string }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(copyValue);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
-    } catch {}
-  }
-
-  return (
-    <div className="flex flex-wrap items-center gap-3 rounded-md border border-border bg-secondary/40 px-4 py-3">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
-        <Building2 className="h-4 w-4" />
-      </span>
-      <span className="shrink-0 font-mono text-muted-foreground">
-        <LTR>{label}</LTR>
-      </span>
-      <span className="min-w-0 flex-1 break-all font-mono text-[color:var(--neon)]" dir="ltr">
-        {value}
-      </span>
-      <button
-        type="button"
-        onClick={copy}
-        aria-label={`نسخ ${label}`}
-        className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-border text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-[color:var(--neon)]"
-      >
-        {copied ? <Check className="h-4 w-4 text-[color:var(--neon)]" /> : <Copy className="h-4 w-4" />}
-      </button>
-      {copied && (
-        <span className="font-mono text-xs text-[color:var(--neon)]">تم النسخ</span>
-      )}
-    </div>
-  );
-}
 
 function Footer() {
   return (

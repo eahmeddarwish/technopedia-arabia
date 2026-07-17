@@ -131,8 +131,8 @@ export function PCBBackground() {
     // ---------- Particles ----------
     function seedParticles() {
       const small = width < 640;
-      const density = small ? 9000 : 6500;
-      const count = Math.max(24, Math.min(90, Math.floor((width * height) / density)));
+      const density = small ? 15000 : 11000;
+      const count = Math.max(14, Math.min(54, Math.floor((width * height) / density)));
       linkDist = small ? 90 : 130;
       particles = new Array(count).fill(0).map(() => ({
         x: Math.random() * width,
@@ -233,7 +233,7 @@ export function PCBBackground() {
       canvas!.height = Math.floor(height * dpr);
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       const small = width < 640;
-      const target = small ? 4 : Math.min(8, Math.max(4, Math.floor((width * height) / 120000)));
+      const target = small ? 2 : Math.min(4, Math.max(2, Math.floor((width * height) / 240000)));
       shapes = [];
       pads = [];
       for (let i = 0; i < target; i++) shapes.push(buildOne());
