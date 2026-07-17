@@ -352,59 +352,29 @@ function Support() {
   return (
     <section id="support" className="mx-auto max-w-4xl px-5 py-12 sm:py-14">
       <SectionHeader n="01" title="ادعم العمل" />
-      <div className="card-tech p-8">
+      <div className="card-tech p-6 sm:p-8">
         <div className="flex items-start gap-4">
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
-            <Heart className="h-5 w-5" />
+          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
+            <Heart className="h-6 w-6" />
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="text-lg font-bold">دعمك يصنع فرقاً حقيقياً</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              كل تبرّع يترجَم مباشرةً إلى محتوى تعليمي أكثر: دروس جديدة، مشاريع
-              عملية مفتوحة المصدر، وشروحات تصل لطلاب عرب لا يجدون هذا المحتوى
-              بلغتهم. دعمك = طالب جديد يتعلّم البرمجة والأنظمة المدمجة والذكاء
-              الاصطناعي مجّاناً.
+            <h3 className="text-xl font-bold">دعمك يصنع فرقاً حقيقياً</h3>
+            <p className="mt-3 text-base leading-loose text-muted-foreground">
+              في كل مرة حد يدعم <LTR>Technopedia Arabia</LTR>، هو مش بس بيحوّل
+              مبلغ — هو بيفتح باب لطالب عربي جديد يوصله شرح مجاني ومشروع عملي
+              كان ممكن يفضل بعيد عنه بسبب اللغة أو التكلفة. أنا مش بجمع تبرعات
+              لمشروع تجاري، أنا بشارك معرفة اشتغلت عليها بسنين خبرة حقيقية،
+              ولسه مستمر أضيف وأطوّر عشان أي حد يحب التقنية يلاقي طريقه فيها من
+              غير عوائق. دعمك — مهما كان حجمه — بيبقى جزء حقيقي من الرحلة دي.
             </p>
-
-            <div className="mt-6 grid gap-3 text-sm">
-              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
-                <div className="mb-1 font-mono text-xs text-muted-foreground">اسم البنك</div>
-                <div className="font-medium">البنك الوطني الكويتي — <LTR>NBK</LTR></div>
-              </div>
-              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
-                <div className="mb-1 font-mono text-xs text-muted-foreground">اسم صاحب الحساب</div>
-                <div className="font-medium" dir="ltr">AHMED MOHAMED MOHAMED DARWISH</div>
-              </div>
-              <BankRow label="IBAN" value="KW06 NBOK 0000 0000 0000 2022 6953 69" copyValue="KW06NBOK0000000000002022695369" />
-              <BankRow label="SWIFT" value="NBOKKWKWXXX" copyValue="NBOKKWKWXXX" />
-              <div className="rounded-md border border-border bg-secondary/40 px-4 py-3">
-                <div className="mb-1 font-mono text-xs text-muted-foreground">العملة</div>
-                <div className="font-medium"><LTR>KWD</LTR> — دينار كويتي</div>
-              </div>
-            </div>
-
             <div className="mt-6">
-              <button
-                type="button"
-                disabled
-                title="قريباً"
-                aria-disabled="true"
-                className="group inline-flex cursor-not-allowed items-center gap-3 rounded-md border border-border bg-secondary/40 px-5 py-3 opacity-60"
+              <Link
+                to="/support"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--neon)] px-5 py-3 font-mono text-sm text-[color:var(--neon)] transition hover:bg-[color:var(--neon)] hover:text-primary-foreground"
               >
-                <span className="font-mono text-sm font-bold">
-                  <span className="text-[#003087]">Pay</span>
-                  <span className="text-[#009cde]">Pal</span>
-                </span>
-                <span className="text-sm text-muted-foreground">ادعم عبر PayPal</span>
-                <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
-                  قريباً
-                </span>
-              </button>
+                تفاصيل الدعم ←
+              </Link>
             </div>
-
-            <p className="mt-6 text-xs text-muted-foreground">
-              للتواصل بخصوص الرعاية أو الدعم المؤسسي عبر البريد أو الواتساب أدناه.
-            </p>
           </div>
         </div>
       </div>
