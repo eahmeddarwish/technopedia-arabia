@@ -169,12 +169,12 @@ function Hero() {
               <ArrowUpLeft className="h-5 w-5 rtl:rotate-90" />
               استعرض المشاريع
             </a>
-            <a
-              href="#support"
+            <Link
+              to="/support"
               className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-3 font-mono text-base text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-foreground"
             >
               ادعم العمل
-            </a>
+            </Link>
           </div>
           <div className="mt-8 flex items-center gap-4 text-muted-foreground">
             <a href="https://github.com/eahmeddarwish" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[color:var(--neon)]">
