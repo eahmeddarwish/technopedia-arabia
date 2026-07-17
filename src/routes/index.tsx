@@ -3,9 +3,7 @@ import type { ReactNode } from "react";
 import { PCBBackground } from "@/components/PCBBackground";
 import { Terminal } from "@/components/Terminal";
 import { ProjectCard } from "@/components/ProjectCard";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { PROJECTS, VIDEOS } from "@/data/projects";
-import logoUrl from "@/assets/logo.png";
 import {
   Github,
   Linkedin,
