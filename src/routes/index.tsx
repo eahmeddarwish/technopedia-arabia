@@ -41,7 +41,7 @@ const NAV = [
   { href: "#projects", label: "المشاريع" },
   { href: "#videos", label: "الفيديوهات" },
   { href: "#cv", label: "السيرة الذاتية" },
-  { href: "#support", label: "دعم" },
+  { href: "/support", label: "دعم" },
 ];
 
 const TECH = [
