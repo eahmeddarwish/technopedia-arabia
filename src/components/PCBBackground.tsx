@@ -131,8 +131,8 @@ export function PCBBackground() {
     // ---------- Particles ----------
     function seedParticles() {
       const small = width < 640;
-      const density = small ? 9000 : 6500;
-      const count = Math.max(24, Math.min(90, Math.floor((width * height) / density)));
+      const density = small ? 15000 : 11000;
+      const count = Math.max(14, Math.min(54, Math.floor((width * height) / density)));
       linkDist = small ? 90 : 130;
       particles = new Array(count).fill(0).map(() => ({
         x: Math.random() * width,
