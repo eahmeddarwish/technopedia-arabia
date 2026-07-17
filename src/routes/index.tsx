@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { useState } from "react";
 import { PCBBackground } from "@/components/PCBBackground";
 import { Terminal } from "@/components/Terminal";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -20,9 +19,6 @@ import {
   Brain,
   PlayCircle,
   Heart,
-  Building2,
-  Copy,
-  Check,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
