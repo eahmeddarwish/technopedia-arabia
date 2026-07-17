@@ -241,9 +241,9 @@ function About() {
           </ul>
         </div>
         <div className="grid gap-4">
-          <Stat icon={<Cpu className="h-5 w-5" />} value="+20" label="سنة خبرة" />
-          <Stat icon={<Cog className="h-5 w-5" />} value={`+${PROJECTS_COUNT}`} label="مشروع تقني" />
-          <Stat icon={<Brain className="h-5 w-5" />} value="AI" label="متخصص في التعلّم الآلي" />
+          <Stat icon={<Cpu className="h-7 w-7" />} value="+20" label="سنة خبرة" />
+          <Stat icon={<Cog className="h-7 w-7" />} value={`+${PROJECTS_COUNT}`} label="مشروع تقني" />
+          <Stat icon={<Brain className="h-7 w-7" />} value="AI" label="متخصص في التعلّم الآلي" />
         </div>
       </div>
     </section>
@@ -252,13 +252,13 @@ function About() {
 
 function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
   return (
-    <div className="card-tech card-tech-hover flex items-center gap-4 p-5">
-      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
+    <div className="card-tech card-tech-hover flex items-center gap-5 p-7">
+      <div className="grid h-14 w-14 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
         {icon}
       </div>
       <div className="min-w-0">
-        <div className="font-mono text-2xl font-bold text-[color:var(--neon)]"><LTR>{value}</LTR></div>
-        <div className="truncate text-sm text-muted-foreground">{label}</div>
+        <div className="font-mono text-3xl font-bold text-[color:var(--neon)]"><LTR>{value}</LTR></div>
+        <div className="truncate text-base text-muted-foreground">{label}</div>
       </div>
     </div>
   );
