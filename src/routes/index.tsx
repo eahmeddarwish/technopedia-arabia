@@ -139,7 +139,7 @@ function Hero() {
             <img
               src={AVATAR}
               alt="أحمد درويش"
-              className="h-20 w-20 rounded-full border-2 border-[color:var(--neon)] object-cover shadow-[0_0_18px_color-mix(in_oklab,var(--neon)_35%,transparent)] light:shadow-[0_10px_28px_-8px_rgba(15,23,42,0.35)] sm:h-24 sm:w-24"
+              className="h-20 w-20 rounded-full border-2 border-[color:var(--neon)] object-cover shadow-[0_0_18px_color-mix(in_oklab,var(--neon)_35%,transparent)] [.light_&]:shadow-[0_12px_28px_-8px_rgba(15,23,42,0.35)] sm:h-24 sm:w-24"
               loading="eager"
             />
             <div className="min-w-0">
