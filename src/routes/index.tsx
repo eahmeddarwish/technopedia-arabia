@@ -382,42 +382,6 @@ function Support() {
   );
 }
 
-function BankRow({ label, value, copyValue }: { label: string; value: string; copyValue: string }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(copyValue);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
-    } catch {}
-  }
-
-  return (
-    <div className="flex flex-wrap items-center gap-3 rounded-md border border-border bg-secondary/40 px-4 py-3">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-[color:var(--neon-dim)] text-[color:var(--neon)]">
-        <Building2 className="h-4 w-4" />
-      </span>
-      <span className="shrink-0 font-mono text-muted-foreground">
-        <LTR>{label}</LTR>
-      </span>
-      <span className="min-w-0 flex-1 break-all font-mono text-[color:var(--neon)]" dir="ltr">
-        {value}
-      </span>
-      <button
-        type="button"
-        onClick={copy}
-        aria-label={`نسخ ${label}`}
-        className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-border text-muted-foreground transition hover:border-[color:var(--neon)] hover:text-[color:var(--neon)]"
-      >
-        {copied ? <Check className="h-4 w-4 text-[color:var(--neon)]" /> : <Copy className="h-4 w-4" />}
-      </button>
-      {copied && (
-        <span className="font-mono text-xs text-[color:var(--neon)]">تم النسخ</span>
-      )}
-    </div>
-  );
-}
 
 function Footer() {
   return (
