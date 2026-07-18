@@ -13,8 +13,9 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // Inside a Lovable build the nitro preset is forced to Cloudflare; the `preset` override
 // below applies only outside the Lovable environment (e.g. a GitHub Actions build).
 export default defineConfig({
+  // Skip nitro entirely — we don't need a server bundle for a static GitHub Pages deploy.
+  nitro: false,
   tanstackStart: {
-    server: { entry: "server" },
     spa: {
       enabled: true,
     },
