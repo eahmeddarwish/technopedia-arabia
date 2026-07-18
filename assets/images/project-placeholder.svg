@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" fill="none">
+  <defs>
+    <linearGradient id="pGrad" x1="0" y1="0" x2="600" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0d1420"/>
+      <stop offset="1" stop-color="#182238"/>
+    </linearGradient>
+    <linearGradient id="pLine" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="360" fill="url(#pGrad)"/>
+  <g opacity="0.5" stroke="url(#pLine)" stroke-width="1.5">
+    <path d="M0 90 H600"/><path d="M0 180 H600"/><path d="M0 270 H600"/>
+    <path d="M150 0 V360"/><path d="M300 0 V360"/><path d="M450 0 V360"/>
+  </g>
+  <rect x="230" y="140" width="140" height="80" rx="10" fill="rgba(249,115,22,0.08)" stroke="url(#pLine)" stroke-width="2"/>
+  <circle cx="300" cy="180" r="16" fill="url(#pLine)"/>
+  <text x="300" y="255" font-family="Space Grotesk, Arial, sans-serif" font-size="16" fill="#8b98a9" text-anchor="middle" letter-spacing="1">PROJECT IMAGE PLACEHOLDER</text>
+</svg>

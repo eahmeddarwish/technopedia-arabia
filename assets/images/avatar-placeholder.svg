@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <radialGradient id="avBg" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#182238"/>
+      <stop offset="1" stop-color="#070b14"/>
+    </radialGradient>
+    <linearGradient id="avGrad" x1="0" y1="0" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#avBg)"/>
+  <circle cx="200" cy="200" r="188" stroke="url(#avGrad)" stroke-width="3" stroke-dasharray="6 10" opacity="0.5"/>
+  <circle cx="200" cy="165" r="70" fill="none" stroke="url(#avGrad)" stroke-width="4"/>
+  <path d="M75 340 C75 255 130 235 200 235 C270 235 325 255 325 340" fill="none" stroke="url(#avGrad)" stroke-width="4" stroke-linecap="round"/>
+  <text x="200" y="385" font-family="Space Grotesk, Arial, sans-serif" font-size="14" fill="#8b98a9" text-anchor="middle" letter-spacing="2">REPLACE WITH YOUR PHOTO</text>
+</svg>
