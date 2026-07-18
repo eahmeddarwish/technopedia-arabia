@@ -11,13 +11,13 @@
 const videosData = [
   {
     id: "how-to-arduino",
-    youtubeId: "jNQXAC9IVRw", // TODO: replace with your real video ID
+    youtubeId: "gB7_gSdMNRM", // TODO: replace with your real video ID
     title: {
-      ar: "How To: Arduino — دليلك الشامل للبدء",
-      en: "How To: Arduino — Your Complete Beginner's Guide",
+      ar: "Arduino UNO, 2, 3 ... الجزء 1",
+      en: "Arduino UNO, Two, Three ... Part 1",
     },
     desc: {
-      ar: "شرح كامل لأساسيات أردوينو: الهاردوير، بيئة البرمجة، وأول مشروع عملي خطوة بخطوة.",
+      ar: "سنسير معاً لنعرف أساسيات الأردوينو: المكونات وبرنامج البرمجة وأول مشروع خطوة بخطوة",
       en: "A full walkthrough of Arduino fundamentals: hardware, the IDE, and your first hands-on project step by step.",
     },
   },
