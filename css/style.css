@@ -367,6 +367,20 @@ html[dir="rtl"] .timeline { padding-inline-start: 26px; }
 
 /* ---------- Support / Donation ---------- */
 .support-card { max-width: 620px; margin-inline: auto; padding: 34px; }
+.quick-support { max-width: 620px; margin-inline: auto; padding: 30px; text-align: center; }
+.quick-support-desc { font-size: 14px; color: var(--text-muted); margin: 10px 0 22px; }
+.quick-support-buttons { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.quick-support-buttons .btn { flex: 1 1 220px; }
+.support-divider {
+  max-width: 620px; margin: 30px auto; text-align: center; position: relative;
+  font-size: 13px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+}
+.support-divider::before, .support-divider::after {
+  content: ""; position: absolute; top: 50%; width: calc(50% - 90px); height: 1px; background: var(--surface-border);
+}
+.support-divider::before { left: 0; }
+.support-divider::after { right: 0; }
+
 .bank-details { display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
 .bank-row {
   display: flex; align-items: center; justify-content: space-between; gap: 14px;
