@@ -97,6 +97,7 @@ const translations = {
     "support.quickTitle": "طرق دعم سريعة",
     "support.quickDesc": "أسهل طريقة تدعم بيها فوراً — بطاقة ائتمان أو حساب PayPal، من غير تحويل بنكي.",
     "support.kofiBtn": "ادعمني عبر Ko-fi",
+    "support.paypalBtn": "ادعمني عبر PayPal",
     "support.bmcBtn": "اشترِ لي قهوة",
     "support.orBank": "أو تحويل بنكي مباشر",
 
@@ -198,6 +199,7 @@ const translations = {
     "support.quickTitle": "Quick Support",
     "support.quickDesc": "The fastest way to support instantly — credit card or PayPal, no bank transfer needed.",
     "support.kofiBtn": "Support me on Ko-fi",
+    "support.paypalBtn": "Support me on PayPal",
     "support.bmcBtn": "Buy me a coffee",
     "support.orBank": "Or direct bank transfer",
 
