@@ -1,6 +1,6 @@
 /* ==========================================================================
    TECHNOPEDIA ARABIA — lightweight particle network background
-   Pure canvas, no external libs. Respects prefers-reduced-motion.
+   Pure canvas, no external libs. Mouse-reactive. Respects prefers-reduced-motion.
    ========================================================================== */
 
 (function () {
@@ -11,10 +11,11 @@
   const ctx = canvas.getContext("2d");
   let particles = [];
   let width, height, dpr;
-  let mouse = { x: null, y: null };
+  let mouse = { x: null, y: null, active: false };
   const isTouch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
   const COUNT_DIVISOR = isTouch ? 24000 : 15000;
   const LINK_DIST = 130;
+  const MOUSE_RADIUS = 150;
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -27,8 +28,8 @@
   }
 
   const PALETTE = [
-    { r: 249, g: 115, b: 22 },  // orange
-    { r: 22, g: 163, b: 74 },   // green
+    { r: 249, g: 115, b: 22 },  // orange (accent)
+    { r: 37, g: 99, b: 235 },   // blue (accent-2)
   ];
 
   function createParticle() {
@@ -48,6 +49,20 @@
     for (const p of particles) {
       p.x += p.vx;
       p.y += p.vy;
+
+      // gentle mouse interaction — nearby particles drift away from the cursor
+      if (mouse.active && !isTouch) {
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const radius = MOUSE_RADIUS * dpr;
+        if (dist < radius && dist > 0.01) {
+          const force = (1 - dist / radius) * 0.55;
+          p.x += (dx / dist) * force;
+          p.y += (dy / dist) * force;
+        }
+      }
+
       if (p.x < 0 || p.x > width) p.vx *= -1;
       if (p.y < 0 || p.y > height) p.vy *= -1;
 
@@ -78,10 +93,34 @@
       }
     }
 
+    // draw a soft glow at the cursor position for extra liveliness
+    if (mouse.active && !isTouch) {
+      const glow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, MOUSE_RADIUS * dpr);
+      glow.addColorStop(0, "rgba(249,115,22,0.08)");
+      glow.addColorStop(1, "rgba(249,115,22,0)");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, MOUSE_RADIUS * dpr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
     if (!reduceMotion) requestAnimationFrame(step);
   }
 
   window.addEventListener("resize", resize, { passive: true });
+  window.addEventListener(
+    "mousemove",
+    (e) => {
+      mouse.x = e.clientX * dpr;
+      mouse.y = e.clientY * dpr;
+      mouse.active = true;
+    },
+    { passive: true }
+  );
+  window.addEventListener("mouseleave", () => {
+    mouse.active = false;
+  });
+
   resize();
 
   if (!reduceMotion) {

@@ -1,9 +1,10 @@
 /* ==========================================================================
    TECHNOPEDIA ARABIA — core interactions
-   Mobile nav, scroll reveal, card tilt, counters, copy-to-clipboard, modal.
+   Mobile nav, scroll reveal, card tilt, counters, copy-to-clipboard, modal, theme.
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+  initThemeToggle();
   initMobileNav();
   initActiveNav();
   initScrollReveal();
@@ -14,6 +15,46 @@ document.addEventListener("DOMContentLoaded", () => {
   initReadingProgress();
   initSmartNavbar();
 });
+
+/* ---------------- Theme toggle (light default) ---------------- */
+const THEME_STORAGE_KEY = "ta_theme";
+
+function getStoredTheme() {
+  try {
+    const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === "light" || stored === "dark") return stored;
+  } catch (e) {
+    /* localStorage unavailable */
+  }
+  return "light";
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+}
+
+function setTheme(theme) {
+  applyTheme(theme);
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (e) {
+    /* localStorage unavailable */
+  }
+}
+
+function initThemeToggle() {
+  applyTheme(getStoredTheme());
+  const btn = document.querySelector(".theme-toggle");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    setTheme(current === "dark" ? "light" : "dark");
+  });
+}
+
+if (typeof window !== "undefined") {
+  window.setTheme = setTheme;
+}
 
 /* ---------------- Mobile nav drawer ---------------- */
 function initMobileNav() {
