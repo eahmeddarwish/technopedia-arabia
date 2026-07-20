@@ -466,3 +466,76 @@ html[lang="ar"] [data-i18n-en-only] { display: none; }
   .glass { background: #fff; border: 1px solid #ddd; box-shadow: none; }
   .cv-shell { grid-template-columns: 1fr; }
 }
+
+#cv-side {
+  text-align: center;
+}
+
+#cv-side .header-social,
+#cv-side .sidebar-socials {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+#cv-side svg, 
+#cv-side img,
+#cv-side a svg {
+  width: 24px !important;
+  height: 24px !important;
+  display: inline-block;
+  fill: #555;
+  transition: all 0.3s ease;
+}
+
+#cv-side a:hover svg, 
+#cv-side a:hover img {
+  fill: #f97316 !important; /* اللون البرتقالي الخاص بك */
+  transform: translateY(-3px);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.project-card {
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  cursor: pointer;
+  text-align: right;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  border-color: #f97316;
+}
+
+.project-content {
+  padding: 20px;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.tech-tags span {
+  background: #fff3ec;
+  color: #f97316;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
