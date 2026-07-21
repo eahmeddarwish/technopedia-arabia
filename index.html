@@ -1,565 +1,806 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Technopedia Arabia — Ahmed Darwish</title>
-<meta name="description" content="Technopedia Arabia — بورتفوليو أحمد درويش، مهندس أنظمة مدمجة ومحاضر تعليمي بخبرة 16+ عاماً. مشاريع Python وArduino وRaspberry Pi، فيديوهات تعليمية، وسيرة ذاتية.">
-<meta name="keywords" content="Embedded Systems, Arduino, Raspberry Pi, Python, Machine Learning, AI, IoT, Digital Circuit Design, هندسة أنظمة مدمجة, أردوينو, رازبيري باي, ذكاء اصطناعي, بايثون, تعليم تقني">
+<meta name="description" content="أحمد درويش — مهندس أنظمة مدمجة وذكاء اصطناعي ومحاضر تقني بخبرة 16+ عاماً. مشاريع Python وArduino وRaspberry Pi حيّة، بكود مفتوح المصدر.">
+<meta name="keywords" content="Embedded Systems, Arduino, Raspberry Pi, Python, Machine Learning, AI, IoT, أنظمة مدمجة, ذكاء اصطناعي, أحمد درويش">
+<meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14181f" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Technopedia Arabia — Ahmed Darwish">
-<meta property="og:description" content="Technopedia Arabia — بورتفوليو أحمد درويش، مهندس أنظمة مدمجة ومحاضر تعليمي بخبرة 16+ عاماً. مشاريع Python وArduino وRaspberry Pi، فيديوهات تعليمية، وسيرة ذاتية.">
+<meta property="og:description" content="مهندس أنظمة مدمجة وذكاء اصطناعي. مشاريع حيّة بكود مفتوح المصدر، ومحتوى تعليمي عربي.">
 <meta property="og:image" content="https://engdarwish.com/assets/images/avatar.jpg">
-<meta property="og:url" content="https://engdarwish.com/index.html">
-<meta property="og:locale" content="ar_AR">
+<meta property="og:url" content="https://engdarwish.com/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Technopedia Arabia — Ahmed Darwish">
-<meta name="twitter:description" content="Technopedia Arabia — بورتفوليو أحمد درويش، مهندس أنظمة مدمجة ومحاضر تعليمي بخبرة 16+ عاماً. مشاريع Python وArduino وRaspberry Pi، فيديوهات تعليمية، وسيرة ذاتية.">
 <meta name="twitter:image" content="https://engdarwish.com/assets/images/avatar.jpg">
-
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/enhancements.css">
-<script>
-  // Apply the stored theme before first paint to avoid a light/dark flash.
-  (function () {
-    try {
-      var t = localStorage.getItem("ta_theme");
-      document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
-    } catch (e) {
-      document.documentElement.setAttribute("data-theme", "light");
-    }
-  })();
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Ahmed Darwish",
-  "url": "https://engdarwish.com",
-  "image": "https://engdarwish.com/assets/images/avatar.jpg",
-  "jobTitle": "Embedded Systems Engineer & Educator",
-  "description": "Electrical Engineer and Educator with 16+ years of experience in embedded systems (Arduino, Raspberry Pi) and technical education.",
-  "email": "mailto:e_ahmeddarwish@hotmail.com",
-  "sameAs": [
-    "https://github.com/eahmeddarwish",
-    "https://www.linkedin.com/in/engahmeddarwish"
-  ],
-  "knowsAbout": [
-    "Arduino",
-    "Raspberry Pi",
-    "Embedded Systems",
-    "IoT",
-    "Python",
-    "C++",
-    "Circuit Design",
-    "Robotics"
-  ]
-}
+{"@context":"https://schema.org","@type":"Person","name":"Ahmed Darwish","url":"https://engdarwish.com","image":"https://engdarwish.com/assets/images/avatar.jpg","jobTitle":"Embedded Systems & AI Engineer","description":"Electrical engineer and educator with 16+ years in embedded systems (Arduino, Raspberry Pi) and technical education.","email":"mailto:e_ahmeddarwish@hotmail.com","sameAs":["https://github.com/eahmeddarwish","https://www.linkedin.com/in/engahmeddarwish"],"knowsAbout":["Arduino","Raspberry Pi","Embedded Systems","IoT","Python","C++","Machine Learning","Computer Vision"]}
 </script>
+<script>
+  /* pre-paint theme: default light, respect saved choice — no flash */
+  (function(){var m='light';try{var t=localStorage.getItem('ta_theme');if(t==='dark'||t==='light'){m=t;}else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){m='dark';}}catch(e){}document.documentElement.setAttribute('data-theme',m);})();
+</script>
+<style>
+/* ==========================================================================
+   TECHNOPEDIA ARABIA — self-contained home (dark-tech, light default)
+   نظام تصميم مستقل بالكامل: مايعتمدش على style.css أو main.js أو i18n.js
+   ========================================================================== */
+:root{
+  --bg:#faf7f2; --bg-soft:#f2eee4; --surface:#ffffff; --card:#ffffff;
+  --text:#141922; --muted:#54607a; --dim:#8892a6;
+  --border:rgba(20,25,33,.12); --border-soft:rgba(20,25,33,.07);
+  --neon:#f97316; --neon-2:#16a34a; --neon-rgb:249,115,22;
+  --neon-soft:rgba(249,115,22,.12); --neon-line:rgba(249,115,22,.28);
+  --shadow:0 18px 50px -24px rgba(20,25,33,.28);
+  --radius:14px; --radius-lg:22px; --radius-sm:10px;
+  --header-h:66px; --maxw:1160px;
+  --font:'Cairo',ui-sans-serif,system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.16,.84,.44,1);
+}
+html[data-theme="dark"]{
+  --bg:#14181f; --bg-soft:#1a1f28; --surface:#1c2230; --card:#191e29;
+  --text:#f3f6fa; --muted:#a7b1c2; --dim:#7b8697;
+  --border:rgba(255,255,255,.11); --border-soft:rgba(255,255,255,.06);
+  --neon:#ff8a2b; --neon-2:#34d17f; --neon-rgb:255,138,43;
+  --neon-soft:rgba(255,138,43,.14); --neon-line:rgba(255,138,43,.34);
+  --shadow:0 24px 60px -28px rgba(0,0,0,.7);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--font);font-size:17px;line-height:1.75;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+@media (min-width:640px){body{font-size:18px}}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3,h4{font-family:var(--font);line-height:1.2;margin:0;font-weight:800}
+::selection{background:var(--neon);color:#1a0a00}
+.mono{font-family:var(--mono)}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.container{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:22px}
+.neon{color:var(--neon)}
+.is-hidden{display:none!important}
+
+/* reading progress + bg canvas */
+.reading-progress{position:fixed;top:0;inset-inline:0;height:3px;transform:scaleX(0);transform-origin:right;background:linear-gradient(90deg,var(--neon),var(--neon-2));z-index:100;transition:transform .1s linear}
+html[dir="ltr"] .reading-progress{transform-origin:left}
+#bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.5;pointer-events:none}
+html[data-theme="dark"] #bg-canvas{opacity:.35}
+body>*:not(#bg-canvas){position:relative;z-index:1}
+
+/* ---------- section + numbered head ---------- */
+.section{padding:74px 0}
+.section--tight{padding:54px 0}
+.section-head{display:flex;align-items:center;gap:16px;margin-bottom:34px}
+.section-head .n{font-family:var(--mono);font-size:15px;color:var(--neon);font-weight:700}
+.section-head h2{font-size:clamp(24px,3.2vw,34px);font-weight:900;white-space:nowrap}
+.section-head .line{height:1px;flex:1;background:var(--border)}
+.eyebrow{font-family:var(--mono);font-size:13px;color:var(--neon);letter-spacing:.04em;margin-bottom:10px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:12px 22px;border-radius:var(--radius-sm);font-weight:700;font-size:15px;
+  border:1px solid transparent;transition:all .25s var(--ease);white-space:nowrap}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--neon);color:#fff;border-color:var(--neon)}
+html[data-theme="dark"] .btn-primary{color:#1a0a00}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(var(--neon-rgb),.6)}
+.btn-outline{border-color:var(--neon);color:var(--neon);font-family:var(--mono)}
+.btn-outline:hover{background:var(--neon);color:#fff}
+html[data-theme="dark"] .btn-outline:hover{color:#1a0a00}
+.btn-ghost{border-color:var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--neon);color:var(--text)}
+.btn-sm{padding:9px 16px;font-size:13.5px}
+
+/* ---------- header ---------- */
+.site-header{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-soft)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;height:var(--header-h)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand img{height:38px;width:38px;object-fit:contain;flex-shrink:0;transition:filter .4s var(--ease)}
+html[data-theme="dark"] .brand img{filter:brightness(0) saturate(100%) invert(62%) sepia(69%) saturate(1500%) hue-rotate(346deg) brightness(103%)}
+.brand-name{font-weight:800;font-size:17px;white-space:nowrap}
+.brand-name .neon{font-weight:900}
+.brand-name small{display:block;font-size:11px;color:var(--dim);font-weight:500}
+.nav-links{display:flex;align-items:center;gap:26px}
+.nav-links a{font-size:15.5px;color:var(--muted);font-weight:600;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--neon)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.hdr-social{display:flex;align-items:center;gap:4px}
+.hdr-social a{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:var(--muted);border:1px solid transparent;transition:all .2s}
+.hdr-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-2px)}
+.hdr-social svg{width:16px;height:16px}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--border);color:var(--text);background:var(--surface);transition:all .2s var(--ease);flex-shrink:0}
+.icon-btn:hover{border-color:var(--neon);color:var(--neon);transform:translateY(-2px)}
+.icon-btn svg{width:18px;height:18px}
+.theme-toggle .i-moon{display:none}
+html[data-theme="dark"] .theme-toggle .i-sun{display:none}
+html[data-theme="dark"] .theme-toggle .i-moon{display:block}
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;font-family:var(--mono)}
+.lang-toggle button{padding:7px 11px;font-size:12.5px;font-weight:700;color:var(--muted)}
+.lang-toggle button.active{background:var(--neon);color:#fff}
+html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
+/* prominent support button (point 2) */
+.support-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:100px;
+  font-weight:800;font-size:14.5px;color:#fff;
+  background:linear-gradient(120deg,var(--neon),#fb5f7a);
+  box-shadow:0 8px 22px -8px rgba(var(--neon-rgb),.75);position:relative;overflow:hidden}
+.support-cta svg{width:16px;height:16px}
+.support-cta::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#fff;opacity:0;transition:opacity .25s}
+.support-cta:hover::after{opacity:.12}
+.support-cta:hover{transform:translateY(-2px)}
+.nav-toggle{display:none;width:40px;height:40px;place-items:center;border-radius:10px;border:1px solid var(--border);color:var(--text)}
+.nav-toggle svg{width:20px;height:20px}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:46px;align-items:center}
+.hero-eyebrow{font-family:var(--mono);font-size:15px;color:var(--neon);margin-bottom:14px}
+.hero h1{font-size:clamp(38px,6vw,62px);font-weight:900;line-height:1.05;letter-spacing:-.01em}
+.hero .role{font-size:clamp(19px,2.6vw,26px);font-weight:700;color:var(--muted);margin-top:10px}
+.hero .role b{color:var(--neon);font-weight:800}
+.hero-slogan{font-size:clamp(17px,2.2vw,21px);font-weight:700;margin-top:18px;
+  background:linear-gradient(90deg,var(--neon),var(--neon-2));-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+.hero-desc{color:var(--muted);margin-top:16px;max-width:38ch;font-size:16.5px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+/* social row: icons on the (inline) start, label after — point 6 */
+.hero-social{display:flex;align-items:center;gap:8px;margin-top:26px;color:var(--muted)}
+.hero-social .lbl{font-family:var(--mono);font-size:12.5px;color:var(--dim)}
+.hero-social a{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--border);transition:all .2s}
+.hero-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-3px)}
+.hero-social svg{width:18px;height:18px}
+
+/* hero visual: avatar (static ring, NO spinning ellipse) + tidy badges + terminal */
+.hero-visual{position:relative;display:flex;flex-direction:column;align-items:center;gap:20px}
+.avatar-wrap{position:relative;width:min(280px,72vw)}
+.avatar-frame{position:relative;width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;
+  border:2px solid var(--neon);box-shadow:0 0 0 6px var(--neon-soft),var(--shadow)}
+.avatar-frame img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:100px;
+  background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);font-size:12.5px;font-weight:700;white-space:nowrap;font-family:var(--mono)}
+.badge svg{width:15px;height:15px;color:var(--neon)}
+.badge.b1{top:6%;inset-inline-start:-14%}
+.badge.b2{top:46%;inset-inline-end:-18%}
+.badge.b3{bottom:4%;inset-inline-start:-8%}
+/* animated terminal card */
+.terminal{width:100%;max-width:360px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);direction:ltr;text-align:left}
+.term-bar{display:flex;align-items:center;gap:7px;padding:9px 13px;background:var(--bg-soft);border-bottom:1px solid var(--border-soft)}
+.term-bar .d{width:10px;height:10px;border-radius:50%}
+.term-bar .d.r{background:#ef4444}.term-bar .d.y{background:#f59e0b}.term-bar .d.g{background:var(--neon-2)}
+.term-bar .t{margin-inline-start:8px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+.term-body{padding:15px;font-family:var(--mono);font-size:12.5px;line-height:1.85;min-height:150px}
+.term-body .line .p{color:var(--neon)}
+.term-body .out{color:var(--muted)}
+.caret::after{content:"▎";color:var(--neon);animation:blink 1s steps(1) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.scroll-hint{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--dim);font-size:12px;font-family:var(--mono);margin-top:34px}
+.scroll-hint i{width:5px;height:9px;border-radius:3px;background:var(--neon);animation:sd 1.6s infinite}
+@keyframes sd{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
+
+/* ---------- support band (point 13) — full width, emotional, icons on left ---------- */
+.support-band{background:linear-gradient(120deg,var(--neon-soft),transparent 60%),var(--card);
+  border-block:1px solid var(--border);border-radius:0}
+.support-inner{display:grid;grid-template-columns:1.4fr .9fr;gap:36px;align-items:center;padding:44px 0}
+.support-copy h2{font-size:clamp(22px,3vw,30px);font-weight:900;margin-bottom:14px}
+.support-copy h2 .heart{color:var(--neon)}
+.support-copy p{color:var(--muted);font-size:16px;line-height:1.9;margin:0}
+.support-pays{display:flex;flex-direction:column;gap:12px}
+.pay{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--radius);
+  border:1px solid var(--border);background:var(--surface);transition:all .25s var(--ease)}
+.pay:hover{border-color:var(--neon);transform:translateY(-2px);box-shadow:var(--shadow)}
+.pay-ic{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;font-size:20px;
+  background:var(--neon-soft);color:var(--neon)}
+.pay-ic svg{width:22px;height:22px}
+.pay-txt{min-width:0}
+.pay-txt b{display:block;font-size:15px;font-weight:800}
+.pay-txt span{font-size:12.5px;color:var(--dim)}
+.pay .go{margin-inline-start:auto;color:var(--dim);flex-shrink:0}
+.pay .go svg{width:18px;height:18px}
+
+/* ---------- about + tech ecosystem merged (points 8+9) ---------- */
+.about-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:start}
+.about-copy p{color:var(--muted);margin:0 0 16px;font-size:16.5px;line-height:1.95}
+.about-copy strong{color:var(--text)}
+.about-copy .neon{color:var(--neon);font-weight:700}
+.tech-title{font-family:var(--mono);font-size:13px;color:var(--dim);margin:22px 0 12px}
+.tech-chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{font-family:var(--mono);font-size:13px;padding:7px 13px;border-radius:9px;border:1px solid var(--border);
+  color:var(--text);background:var(--surface);transition:all .2s}
+.chip:hover{border-color:var(--neon);color:var(--neon)}
+.impact-cards{display:grid;gap:14px}
+.impact-card{display:flex;align-items:center;gap:16px;padding:20px;border-radius:var(--radius);
+  background:linear-gradient(180deg,var(--surface),var(--card));border:1px solid var(--border);transition:all .25s var(--ease)}
+.impact-card:hover{border-color:var(--neon);transform:translateY(-3px);box-shadow:var(--shadow)}
+.impact-ic{width:52px;height:52px;flex-shrink:0;display:grid;place-items:center;border-radius:12px;
+  border:1px solid var(--neon-line);color:var(--neon)}
+.impact-ic svg{width:26px;height:26px}
+.impact-card b{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--neon);line-height:1;display:block}
+.impact-card span{font-size:14.5px;color:var(--muted)}
+
+/* ---------- projects (point 10): 3 cards + half-width CTA box ---------- */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.proj-card{display:flex;flex-direction:column;background:linear-gradient(180deg,var(--surface),var(--card));
+  border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .3s var(--ease)}
+.proj-card:hover{border-color:var(--neon);transform:translateY(-4px);
+  box-shadow:0 0 0 1px var(--neon-line),0 22px 50px -26px rgba(var(--neon-rgb),.5)}
+.proj-media{aspect-ratio:16/9;overflow:hidden;background:var(--bg-soft);border-bottom:1px solid var(--border-soft)}
+.proj-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.proj-card:hover .proj-media img{transform:scale(1.05)}
+.proj-body{padding:20px;display:flex;flex-direction:column;gap:11px;flex:1}
+.proj-body h3{font-size:18px;font-weight:800}
+.proj-body p{color:var(--muted);font-size:14.5px;margin:0;flex:1}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px}
+.proj-tags span{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:7px;background:var(--neon-soft);color:var(--neon)}
+.proj-links{display:flex;gap:10px;margin-top:4px}
+.proj-links a{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--muted);display:inline-flex;align-items:center;gap:5px;transition:color .2s}
+.proj-links a:hover{color:var(--neon)}
+.proj-links svg{width:15px;height:15px}
+.proj-more{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;padding:30px;
+  border:1px dashed var(--neon-line);border-radius:var(--radius-lg);background:var(--neon-soft)}
+.proj-more h3{font-size:22px;font-weight:900}
+.proj-more p{color:var(--muted);font-size:15px;margin:0}
+
+/* ---------- contact (point 14): attractive + dropdown ---------- */
+.contact-card{max-width:680px;margin-inline:auto;background:linear-gradient(180deg,var(--surface),var(--card));
+  border:1px solid var(--border);border-radius:var(--radius-lg);padding:38px;box-shadow:var(--shadow)}
+.contact-head{text-align:center;margin-bottom:26px}
+.contact-head h2{font-size:clamp(22px,3vw,30px);font-weight:900}
+.contact-head p{color:var(--muted);margin-top:8px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13.5px;font-weight:700;color:var(--muted);margin-bottom:7px}
+.field select,.field input,.field textarea{width:100%;padding:13px 15px;border-radius:var(--radius-sm);
+  border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:var(--font);font-size:15.5px;transition:border-color .2s}
+.field select:focus,.field input:focus,.field textarea:focus{outline:none;border-color:var(--neon)}
+.field textarea{resize:vertical;min-height:110px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.contact-card .btn-primary{width:100%;margin-top:6px;padding:14px}
+
+/* ---------- footer (point 15): big logo, name, links, rights at bottom ---------- */
+.site-footer{border-top:1px solid var(--border);background:var(--bg-soft);margin-top:20px}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding:50px 0 34px}
+.f-brand .brand{gap:12px;margin-bottom:14px}
+.f-brand .brand img{height:52px;width:52px}
+.f-brand .brand-name{font-size:22px}
+.f-brand p{color:var(--muted);font-size:15px;max-width:34ch;margin:0 0 16px}
+.f-social{display:flex;gap:8px}
+.f-social a{width:40px;height:40px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--border);color:var(--muted);transition:all .2s}
+.f-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-3px)}
+.f-social svg{width:19px;height:19px}
+.f-col h4{font-size:16px;font-weight:800;margin-bottom:14px}
+.f-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.f-col a{color:var(--muted);font-size:15px;transition:color .2s}
+.f-col a:hover{color:var(--neon)}
+.f-col p{color:var(--muted);font-size:15px;margin:0 0 8px}
+.footer-bottom{border-top:1px solid var(--border);padding:20px 0;text-align:center;color:var(--dim);font-size:14px;font-family:var(--mono)}
+
+/* ---------- mobile bottom app-bar (app-shell feel) ---------- */
+.app-bar{display:none;position:fixed;inset-inline:0;bottom:0;z-index:70;
+  background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);padding:8px 6px calc(8px + env(safe-area-inset-bottom))}
+.app-bar-inner{display:flex;justify-content:space-around;align-items:center}
+.app-bar a,.app-bar button{display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:10.5px;color:var(--muted);font-weight:700;padding:4px 10px;border-radius:10px;min-width:56px}
+.app-bar a.active{color:var(--neon)}
+.app-bar svg{width:21px;height:21px}
+.app-bar .ab-support{color:var(--neon)}
+
+/* ---------- reveal + a11y ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:2px solid var(--neon);outline-offset:3px;border-radius:8px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-visual{order:-1}
+  .support-inner{grid-template-columns:1fr;gap:26px}
+  .about-grid{grid-template-columns:1fr;gap:30px}
+}
+@media (max-width:860px){
+  .nav-links,.hdr-social,.header-actions .lang-toggle,.header-actions .btn-resume{display:none}
+  .nav-toggle{display:grid}
+  .proj-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+  .f-brand{grid-column:1/-1}
+  .app-bar{display:block}
+  body{padding-bottom:74px}
+  .site-header{--header-h:60px}
+}
+@media (max-width:560px){
+  .container{padding-inline:16px}
+  .section{padding:52px 0}
+  .hero{padding:34px 0 20px}
+  .badge.b1,.badge.b2,.badge.b3{position:static;box-shadow:none;margin:0}
+  .badges-mobile{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px}
+  .field-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;text-align:center}
+  .f-brand p{margin-inline:auto}.f-social{justify-content:center}
+  .f-col ul{align-items:center}
+  .support-cta{padding:8px 14px;font-size:13px}
+}
+/* hide the absolutely-positioned badges on small screens, show inline row instead */
+.badges-mobile{display:none}
+@media (max-width:560px){.avatar-wrap .badge{display:none}}
+</style>
 </head>
 <body>
-
 <div class="reading-progress" aria-hidden="true"></div>
-<canvas id="bg-canvas"></canvas>
-<div class="grain-overlay"></div>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <!-- ===== Header ===== -->
 <header class="site-header">
-  <div class="container">
-    <a href="index.html" class="brand">
-      <img src="assets/images/logo.png" alt="Technopedia Arabia logo" width="40" height="40">
-      <span>Technopedia Arabia<small data-i18n="hero.role1">مهندس أنظمة مدمجة</small></span>
+  <div class="container header-inner">
+    <a href="index.html" class="brand" aria-label="Technopedia Arabia">
+      <img src="assets/images/logo.png" alt="Technopedia Arabia" width="38" height="38">
+      <span class="brand-name">Technopedia <span class="neon">Arabia</span>
+        <small data-i18n="brand.tag">مهندس أنظمة مدمجة & AI</small></span>
     </a>
-    <nav class="nav-links">
-      <a href="index.html" class="active" data-i18n="nav.home">الرئيسية</a>
-      <a href="support.html" data-i18n="nav.support" class="nav-cta">ادعمني</a>
-      <a href="index.html#about" data-i18n="nav.about">عني</a>
-      <a href="projects.html" data-i18n="nav.projects">المشاريع</a>
-      <a href="videos.html" data-i18n="nav.videos">الفيديوهات</a>
+
+    <nav class="nav-links" aria-label="التنقل الرئيسي">
+      <a href="#about" data-i18n="nav.about">عني</a>
+      <a href="#projects" data-i18n="nav.projects">المشاريع</a>
+      <a href="#contact" data-i18n="nav.contact">تواصل</a>
       <a href="cv.html" data-i18n="nav.cv">السيرة الذاتية</a>
     </nav>
-    <div class="nav-right">
-      <div class="header-social">
-          <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
-          <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
-          <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5 8.5 8.5 0 0 1 21 11.5z"/><path d="M9 9c0 3 3 6 6 6"/></svg></a>
-          <a href="tel:+96551105252" aria-label="Phone" title="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
-          <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email (Hotmail)" title="Email (Hotmail)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
-          <a href="mailto:eahmeddarwish@gmail.com" aria-label="Email (Gmail)" title="Email (Gmail)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
-        </div>
-      <button type="button" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+
+    <div class="header-actions">
+      <div class="hdr-social">
+        <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
+        <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+        <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5z"/></svg></a>
+        <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
+      </div>
+      <button type="button" class="icon-btn theme-toggle" aria-label="تبديل الوضع الليلي" title="تبديل الوضع">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <div class="lang-toggle">
-        <button type="button" data-lang="ar">AR</button>
+      <div class="lang-toggle" role="group" aria-label="اللغة">
+        <button type="button" data-lang="ar" class="active">AR</button>
         <button type="button" data-lang="en">EN</button>
       </div>
-      <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span></button>
+      <a href="support.html" class="support-cta" data-i18n="nav.support">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.3-9.3-8.2C.9 10 1.9 6.2 5 5.1c2-.7 4 .1 5 1.9 1-1.8 3-2.6 5-1.9 3.1 1.1 4.1 4.9 2.3 7.7C18.7 16.7 12 21 12 21z"/></svg>
+        ادعمني
+      </a>
     </div>
   </div>
 </header>
 
-<div class="mobile-drawer">
-  <a href="index.html" data-i18n="nav.home">الرئيسية</a>
-  <a href="support.html" data-i18n="nav.support" class="nav-cta">ادعمني</a>
-  <a href="index.html#about" data-i18n="nav.about">عني</a>
-  <a href="projects.html" data-i18n="nav.projects">المشاريع</a>
-  <a href="videos.html" data-i18n="nav.videos">الفيديوهات</a>
-  <a href="cv.html" data-i18n="nav.cv">السيرة الذاتية</a>
-  <div class="header-social mobile-social">
-      <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
-      <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
-      <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5 8.5 8.5 0 0 1 21 11.5z"/><path d="M9 9c0 3 3 6 6 6"/></svg></a>
-  </div>
-</div>
-
 <!-- ===== Hero ===== -->
 <section class="hero" id="home">
-  <div class="container">
+  <div class="container hero-grid">
     <div class="hero-text">
-      <div class="hero-eyebrow">
-        <span data-i18n="hero.eyebrow">مرحباً، أنا</span>
-      </div>
+      <p class="hero-eyebrow mono" data-i18n="hero.eyebrow">&gt; مرحباً، أنا</p>
       <h1 data-i18n="hero.name">أحمد درويش</h1>
-      <div class="role">
-        <span data-i18n="hero.role1">مهندس برمجيات</span>
-        <span data-i18n="hero.roleAnd">و</span>
-        <span class="grad-text" data-i18n="hero.role2">ذكاء اصطناعي</span>
-      </div>
-      <p class="hero-slogan" data-i18n="hero.slogan">رقمنة عالمك تبدأ هنا</p>
-      <p class="hero-desc" data-i18n="hero.desc">أبني حلول تقنية عملية تجمع بين البرمجة والأنظمة المدمجة والذكاء الاصطناعي.</p>
+      <p class="role"><span data-i18n="hero.role1">مهندس أنظمة مدمجة</span> <span data-i18n="hero.and">و</span> <b data-i18n="hero.role2">ذكاء اصطناعي</b></p>
+      <p class="hero-slogan" data-i18n="hero.slogan">«رقمنة عالمك تبدأ هنا»</p>
+      <p class="hero-desc" data-i18n="hero.desc">أبني حلولاً عملية تجمع بين البرمجة والأنظمة المدمجة والذكاء الاصطناعي، وأشارك المعرفة منذ أكثر من 16 عاماً.</p>
       <div class="hero-cta">
-        <a href="projects.html" class="btn btn-primary" data-i18n="hero.ctaProjects">شاهد مشاريعي</a>
-        <a href="assets/cv/Ahmed_Darwish_CV.pdf" class="btn btn-ghost" data-i18n="hero.ctaCV" download>تحميل السيرة الذاتية</a>
+        <a href="#projects" class="btn btn-primary" data-i18n="hero.ctaProjects">شاهد مشاريعي</a>
+        <a href="cv.html" class="btn btn-outline" data-i18n="hero.ctaCV">السيرة الذاتية</a>
+      </div>
+      <div class="hero-social">
+        <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
+        <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+        <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5z"/></svg></a>
+        <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
+        <span class="lbl" data-i18n="hero.findme">تلاقيني هنا</span>
       </div>
     </div>
+
     <div class="hero-visual">
-      <div class="avatar-ring"></div>
-      <div class="avatar-frame">
-        <img src="assets/images/avatar.jpg" alt="أحمد درويش — مهندس أنظمة مدمجة وذكاء اصطناعي" width="360" height="360" fetchpriority="high">
+      <div class="avatar-wrap">
+        <div class="avatar-frame">
+          <img src="assets/images/avatar.jpg" alt="أحمد درويش" width="280" height="280" fetchpriority="high">
+        </div>
+        <span class="badge b1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg> <span data-i18n="badge.projects">+150 مشروع</span></span>
+        <span class="badge b2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> <span data-i18n="badge.years">16+ سنة خبرة</span></span>
+        <span class="badge b3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg> Arduino • RPi</span>
       </div>
-    <div class="hero-code-card">
-      <div class="code-window-header">
-        <span class="code-dot red"></span>
-        <span class="code-dot yellow"></span>
-        <span class="code-dot green"></span>
-        <span class="code-window-title">ahmed_darwish.py</span>
+      <div class="badges-mobile">
+        <span class="badge"><span data-i18n="badge.projects">+150 مشروع</span></span>
+        <span class="badge"><span data-i18n="badge.years">16+ سنة خبرة</span></span>
+        <span class="badge">Arduino • RPi</span>
       </div>
-    <pre><code>class TechnopediaArabia:
-    focus = "Embedded AI & IoT"
-    experience = "16+ Years"
-    mission = "Empowering Arab Engineers"</code></pre>
-  </div>
-      <div class="floating-badge glass badge-1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg>
-        <span data-i18n="hero.badge1">+150 مشروع</span>
-      </div>
-      <div class="floating-badge glass badge-2">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        <span data-i18n="hero.badge2">Python • AI</span>
-      </div>
-      <div class="floating-badge glass badge-3">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg>
-        <span data-i18n="hero.badge3">Arduino • RPi</span>
+      <div class="terminal" id="terminal" dir="ltr" aria-hidden="true">
+        <div class="term-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">ahmed@technopedia: ~</span></div>
+        <div class="term-body" id="term-body"></div>
       </div>
     </div>
   </div>
-  <div class="scroll-hint"><span data-i18n="hero.scroll">مرر لأسفل</span><span class="dot"></span></div>
+  <div class="container"><div class="scroll-hint"><span data-i18n="hero.scroll">مرّر لأسفل</span><i></i></div></div>
 </section>
 
-<!-- ===== About ===== -->
+<!-- ===== Support band (point 13) ===== -->
+<section class="support-band" id="support">
+  <div class="container support-inner">
+    <div class="support-copy reveal">
+      <div class="eyebrow mono" data-i18n="support.eyebrow">// ادعم الرسالة</div>
+      <h2><span data-i18n="support.title">كن شريكاً في صناعة الأثر</span> <span class="heart">♥</span></h2>
+      <p data-i18n="support.body">كل مرة حد يدعم Technopedia Arabia، هو مش بس بيحوّل مبلغ — هو بيفتح باب لطالب عربي جديد يوصله شرح مجاني ومشروع عملي كان ممكن يفضل بعيد عنه بسبب اللغة أو التكلفة. المحتوى ده اشتغلت عليه بسنين خبرة حقيقية، ولسه مستمر أضيف وأطوّر. دعمك — مهما كان حجمه — بيبقى جزء حقيقي من الرحلة دي.</p>
+    </div>
+    <div class="support-pays reveal">
+      <a class="pay" href="https://ko-fi.com/eng_ahmeddarwish" target="_blank" rel="noopener">
+        <span class="pay-ic">☕</span>
+        <span class="pay-txt"><b>Ko-fi</b><span data-i18n="pay.kofi">دعم سريع بأي مبلغ</span></span>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></span>
+      </a>
+      <a class="pay" href="https://buymeacoffee.com/eng_ahmeddarwish" target="_blank" rel="noopener">
+        <span class="pay-ic">🍕</span>
+        <span class="pay-txt"><b>Buy Me a Coffee</b><span data-i18n="pay.bmc">ادعم بكوباية قهوة</span></span>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></span>
+      </a>
+      <a class="pay" href="support.html">
+        <span class="pay-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M4 10h16M5 10V7l7-4 7 4v3M6 21v-8M10 21v-8M14 21v-8M18 21v-8"/></svg></span>
+        <span class="pay-txt"><b data-i18n="pay.bank">تحويل بنكي مباشر</b><span data-i18n="pay.bankSub">IBAN / SWIFT عبر NBK</span></span>
+        <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== About + Tech ecosystem merged (points 8+9) ===== -->
 <section class="section" id="about">
   <div class="container">
+    <div class="section-head reveal"><span class="n mono">01</span><h2 data-i18n="about.title">الأثر والمنظومة التقنية</h2><span class="line"></span></div>
     <div class="about-grid">
-      <div class="reveal">
-        <div class="stats-row">
-          <div class="stat-card glass"><b data-counter="16" data-suffix="+">0</b><span data-i18n="about.stat2">عاماً من الابتكار</span></div>
-          <div class="stat-card glass"><b data-counter="250" data-suffix="+">0</b><span data-i18n="about.stat3">مهندس وطالب تم توجيههم</span></div>
-          <div class="stat-card glass"><b data-counter="150" data-suffix="+">0</b><span data-i18n="about.stat1">مشروع هندسي متكامل</span></div>
-        </div>
-        <div class="gh-pulse glass" id="gh-pulse" hidden>
-          <div class="gh-pulse-head">
-            <span class="gh-dot" aria-hidden="true"></span>
-            <span>بيانات حيّة مباشرة من GitHub</span>
-          </div>
-          <div class="gh-pulse-stats">
-            <div><b id="gh-repos">—</b><span>مستودع عام</span></div>
-            <div><b id="gh-stars">—</b><span>نجمة</span></div>
-            <div><b id="gh-last">—</b><span>آخر نشاط برمجي</span></div>
-          </div>
-          <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" class="gh-pulse-link">@eahmeddarwish</a>
+      <div class="about-copy reveal">
+        <p><strong data-i18n="about.lead">أحوّل الأفكار المعقدة إلى أنظمة مدمجة ذكية،</strong> <span data-i18n="about.p1">وأبني جسوراً بين عتاد الهاردوير وخوارزميات الذكاء الاصطناعي. بخبرة تتجاوز <span class="neon">16 عاماً</span> تجمع بين الهندسة والتعليم التقني، نفّذت أكثر من 150 مشروعاً ووجّهت أكثر من 250 مهندساً وطالباً تحت مظلة Technopedia Arabia.</span></p>
+        <div class="tech-title mono" data-i18n="about.techTitle">// التقنيات اللي بشتغل بها يومياً</div>
+        <div class="tech-chips">
+          <span class="chip">Python</span><span class="chip">TensorFlow</span><span class="chip">PyTorch</span>
+          <span class="chip">OpenCV</span><span class="chip">YOLOv5</span><span class="chip">Arduino / C++</span>
+          <span class="chip">Raspberry Pi</span><span class="chip">Embedded Systems</span>
+          <span class="chip">Digital Circuit Design</span><span class="chip">Git / GitHub</span>
         </div>
       </div>
-      <div class="reveal reveal-delay-1 about-copy">
-        <div class="eyebrow" data-i18n="about.eyebrow">نبذة عني</div>
-        <h2 data-i18n="about.title">من أنا</h2>
-        <p>
-          <strong class="about-lead">أحوّل الأفكار المعقدة إلى أنظمة مدمجة ذكية، وأبني جسوراً بين عتاد الهاردوير وخوارزميات الذكاء الاصطناعي.</strong>
-          <span>بخبرة تتجاوز 16 عاماً، أجمع بين الشغف الهندسي والرسالة الأكاديمية. لا يقتصر دوري على تصميم اللوحات الإلكترونية، بل يمتد لقيادة المعامل التقنية لتمكين الجيل القادم.</span>
-        </p>
-      </div>
-    </div>
-
-    <div class="reveal reveal-delay-2" style="margin-top:60px; text-align:center;">
-      <h3 style="margin-bottom:22px;" data-i18n="about.skillsTitle">التقنيات والأدوات</h3>
-      <div class="pill-cloud">
-        <span class="pill">Python</span>
-        <span class="pill" dir="ltr">C/C++ &amp; Arduino</span>
-        <span class="pill">Raspberry Pi</span>
-        <span class="pill">OpenCV</span>
-        <span class="pill">Machine Learning</span>
-        <span class="pill">Embedded Systems</span>
-        <span class="pill">Digital Circuit Design</span>
-        <span class="pill">Git / GitHub</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="section evolved-achievements" id="impact">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">الأثر والقيادة</div>
-      <h2>Impact & Milestones</h2>
-    </div>
-    <div class="bento-achievements-grid">
-      <div class="achievement-card card-large glass reveal">
-        <div class="achievement-badge">Educational Leadership</div>
-        <div class="achievement-icon">🎓</div>
-        <div class="achievement-content">
-          <h3>تمكين الجيل القادم من المهندسين</h3>
-          <p>توجيه ومساعدة أكثر من <strong>250 مهندس وطالب</strong> على مدار 16+ عاماً في الأنظمة المدمجة والذكاء الاصطناعي.</p>
+      <div class="impact-cards">
+        <div class="impact-card reveal">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
+          <div><b class="mono">16+</b><span data-i18n="impact.years">عاماً من الخبرة الهندسية</span></div>
         </div>
-      </div>
-      <div class="achievement-card card-stat glass reveal reveal-delay-1">
-        <div class="achievement-icon">💻</div>
-        <div class="achievement-content"><h3>150+ مشروع هندسي</h3><p>مشاريع مفتوحة المصدر منشورة على GitHub وHugging Face.</p></div>
-      </div>
-      <div class="achievement-card card-stat glass reveal reveal-delay-2">
-        <div class="achievement-icon">🚀</div>
-        <div class="achievement-content"><h3>تطبيقات AI منشورة فعليًا</h3><p>نماذج تعمل حيًا للجمهور، مش مجرد Demo محلي.</p></div>
-      </div>
-      <div class="achievement-card card-wide glass reveal">
-        <div class="achievement-badge">Community</div>
-        <div class="achievement-icon">🌍</div>
-        <div class="achievement-content"><h3>تأسيس Technopedia Arabia</h3><p>منصة تسد الفجوة بين الصناعة العالمية والمحتوى التقني العربي.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Why Work With Me ===== -->
-<section class="section section--tight why-work-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">المنظومة التقنية</div>
-      <h2>لماذا تعمل معي؟</h2>
-    </div>
-    <div class="bento-skills-grid">
-      <div class="skill-bento-card card-large glass reveal">
-        <div class="card-metric-badge">AI & ML</div>
-        <div class="skill-group-header">
-          <div class="skill-group-icon">🤖</div>
-          <div><h3>الذكاء الاصطناعي والتعلم العميق</h3><span class="expertise-tag core">Core Expertise</span></div>
+        <div class="impact-card reveal">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg></span>
+          <div><b class="mono">150+</b><span data-i18n="impact.projects">مشروع هندسي متكامل</span></div>
         </div>
-        <p class="skill-group-desc">نماذج مدرّبة من الصفر ومُصدَّرة للإنتاج — من الفكرة للنشر الفعلي على Hugging Face Spaces.</p>
-        <div class="categorized-chips">
-          <div class="chip-category-group">
-            <span class="chip-cat-title">Frameworks</span>
-            <div class="chips-row">
-              <span class="tech-chip-item">Python</span>
-              <span class="tech-chip-item">TensorFlow</span>
-              <span class="tech-chip-item">PyTorch</span>
-              <span class="tech-chip-item">OpenCV</span>
-              <span class="tech-chip-item">YOLOv5</span>
-              <span class="tech-chip-item">ONNX</span>
-            </div>
-          </div>
+        <div class="impact-card reveal">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5"/></svg></span>
+          <div><b class="mono">250+</b><span data-i18n="impact.mentored">مهندس وطالب تم توجيههم</span></div>
         </div>
-      </div>
-
-      <div class="skill-bento-card card-wide glass reveal reveal-delay-1">
-        <div class="card-metric-badge">Embedded</div>
-        <div class="skill-group-header">
-          <div class="skill-group-icon">🔌</div>
-          <div><h3>الأنظمة المدمجة وتصميم الدوائر</h3><span class="expertise-tag core">Core Expertise</span></div>
-        </div>
-        <p class="skill-group-desc">من الدائرة الإلكترونية لبرمجة المتحكم.</p>
-        <div class="chips-row mt-auto">
-          <span class="tech-chip-item">Arduino</span>
-          <span class="tech-chip-item">Raspberry Pi</span>
-          <span class="tech-chip-item">C / C++</span>
-          <span class="tech-chip-item">Digital Circuit Design</span>
-        </div>
-      </div>
-
-      <div class="skill-bento-card card-tall glass reveal">
-        <div class="card-metric-badge">IoT</div>
-        <div class="skill-group-header">
-          <div class="skill-group-icon">📡</div>
-          <div><h3>إنترنت الأشياء والاتصالات</h3><span class="expertise-tag advanced">Advanced</span></div>
-        </div>
-        <p class="skill-group-desc">اتصال الأجهزة بالبيانات الحية.</p>
-        <div class="chips-row mt-auto">
-          <span class="tech-chip-item">Flask</span>
-          <span class="tech-chip-item">RTL-SDR</span>
-          <span class="tech-chip-item">REST APIs</span>
-          <span class="tech-chip-item">Real-time Data</span>
-        </div>
-      </div>
-
-      <div class="skill-bento-card glass reveal reveal-delay-1">
-        <div class="card-metric-badge">Tools</div>
-        <div class="skill-group-header">
-          <div class="skill-group-icon">🛠️</div>
-          <div><h3>البرمجة والأدوات</h3><span class="expertise-tag advanced">Advanced</span></div>
-        </div>
-        <div class="chips-row mt-auto">
-          <span class="tech-chip-item">JavaScript</span>
-          <span class="tech-chip-item">WebAssembly</span>
-          <span class="tech-chip-item">Git / GitHub</span>
-        </div>
-      </div>
-
-      <div class="skill-bento-card glass reveal reveal-delay-2">
-        <div class="card-metric-badge">250+ Mentored</div>
-        <div class="skill-group-header">
-          <div class="skill-group-icon">🎓</div>
-          <div><h3>التعليم ونقل المعرفة</h3><span class="expertise-tag community">Community</span></div>
-        </div>
-        <div class="chips-row mt-auto">
-          <span class="tech-chip-item">Mentoring</span>
-          <span class="tech-chip-item">Curriculum Design</span>
+        <div class="impact-card reveal">
+          <span class="impact-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 4-2 6H7c0-2-2-3-2-6a7 7 0 0 1 7-7z"/><path d="M9 21h6M10 18h4"/></svg></span>
+          <div><b class="mono">AI</b><span data-i18n="impact.ai">نماذج منشورة حيّة للجمهور</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Featured Projects ===== -->
+<!-- ===== Projects (point 10) ===== -->
 <section class="section section--tight" id="projects">
   <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow" data-i18n="projects.eyebrow">أعمالي</div>
-      <h2 data-i18n="projects.title">مشاريع مختارة</h2>
-      <p data-i18n="projects.desc">مجموعة من مشاريعي في البرمجة والأنظمة المدمجة والذكاء الاصطناعي.</p>
-    </div>
-    <div class="grid grid-3" id="featured-projects-grid"></div>
-    <div class="section-cta reveal">
-      <a href="projects.html" class="btn btn-ghost" data-i18n="projects.viewAll">عرض كل المشاريع</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== LIVE LAB — كل حاجة هنا شغالة فعليًا ===== -->
-<section class="section live-lab" id="live-lab">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">مش سكرين شوت</div>
-      <h2>المعمل الحي</h2>
-      <p>كل حاجة تحت دي بتشتغل فعليًا — دلوقتي، في متصفحك انت. مفيش فيديوهات ومفيش صور ثابتة.</p>
-    </div>
-
-    <div class="lab-primary glass reveal">
-      <div class="lab-primary-info">
-        <div class="lab-live-dot"><span aria-hidden="true"></span> LIVE — يشتغل داخل متصفحك</div>
-        <h3>Visual Trigger Studio</h3>
-        <p class="lab-lead">نموذج <strong>CLIP</strong> للرؤية الحاسوبية بيشتغل جوّه متصفحك مباشرة عبر <strong>WebAssembly</strong> — من غير سيرفر ومن غير عتاد. ارفع صورة مرجعية لأي حاجة، وجّه الكاميرا عليها، والنظام هيتعرّف عليها وينفّذ الفعل اللي انت حددته.</p>
-        <ul class="lab-facts">
-          <li><b>0</b><span>سيرفر</span></li>
-          <li><b>0</b><span>عتاد إضافي</span></li>
-          <li><b>WASM</b><span>محرك التشغيل</span></li>
-        </ul>
-        <p class="lab-privacy">مفيش ولا صورة واحدة بتطلع من جهازك. الاستدلال كله محلي، والبيانات محفوظة في متصفحك بس.</p>
-        <div class="lab-actions">
-          <button type="button" class="btn btn-primary" id="lab-launch" data-src="https://eahmeddarwish.github.io/visual-trigger-studio/">شغّله دلوقتي</button>
-          <a href="https://eahmeddarwish.github.io/visual-trigger-studio/" target="_blank" rel="noopener" class="btn btn-ghost">افتح في تبويب منفصل</a>
-          <a href="https://github.com/eahmeddarwish/visual-trigger-studio" target="_blank" rel="noopener" class="btn btn-ghost">الكود</a>
+    <div class="section-head reveal"><span class="n mono">02</span><h2 data-i18n="projects.title">مشاريع مختارة</h2><span class="line"></span></div>
+    <div class="proj-grid">
+      <article class="proj-card reveal">
+        <div class="proj-media"><img src="assets/images/drone-detection-yolov5.png" alt="Drone Detection YOLOv5" loading="lazy" width="480" height="270"></div>
+        <div class="proj-body">
+          <h3 data-i18n="proj.drone.t">كشف وتتبّع الطائرات المسيّرة</h3>
+          <p data-i18n="proj.drone.d">نظام يكشف الطائرات المسيّرة لحظيًا ويتتبعها بكاميرا على موتورات Pan/Tilt، شغّال بالكامل على Raspberry Pi 4 بدون GPU.</p>
+          <div class="proj-tags"><span>YOLOv5</span><span>Raspberry Pi</span><span>ONNX</span><span>PID</span></div>
+          <div class="proj-links">
+            <a href="https://huggingface.co/spaces/engdarwish/drone-detection-demo" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg> <span data-i18n="proj.demo">تجربة حية</span></a>
+            <a href="https://github.com/eahmeddarwish/drone-detection-yolov5" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg> <span data-i18n="proj.code">الكود</span></a>
+          </div>
         </div>
-      </div>
-      <div class="lab-primary-stage" id="lab-stage">
-        <div class="lab-stage-idle">
-          <div class="lab-stage-frame" aria-hidden="true"></div>
-          <p>اضغط <strong>«شغّله دلوقتي»</strong> ليتحمّل النموذج ويشتغل هنا مباشرة.</p>
-          <small>النموذج بيتحمّل بس لما تطلبه — مش بيأثر على سرعة الصفحة.</small>
+      </article>
+
+      <article class="proj-card reveal">
+        <div class="proj-media"><img src="assets/images/Visual-Trigger.png" alt="Visual Trigger Studio" loading="lazy" width="480" height="270"></div>
+        <div class="proj-body">
+          <h3 data-i18n="proj.vts.t">استوديو المشغّلات البصرية</h3>
+          <p data-i18n="proj.vts.d">نموذج CLIP للرؤية الحاسوبية يعمل داخل المتصفح عبر WebAssembly — يتعرّف على أي صورة مرجعية وينفّذ فعلاً تختاره، بدون سيرفر أو عتاد.</p>
+          <div class="proj-tags"><span>CLIP</span><span>WebAssembly</span><span>Computer Vision</span></div>
+          <div class="proj-links">
+            <a href="https://eahmeddarwish.github.io/visual-trigger-studio/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg> <span data-i18n="proj.demo">تجربة حية</span></a>
+            <a href="https://github.com/eahmeddarwish/visual-trigger-studio" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg> <span data-i18n="proj.code">الكود</span></a>
+          </div>
         </div>
-      </div>
-    </div>
+      </article>
 
-    <div class="lab-grid">
-      <div class="lab-card glass reveal">
-        <span class="lab-tag">مدرَّب من الصفر · بدون Transfer Learning</span>
-        <h4>Age &amp; Gender CNN</h4>
-        <p>شبكتان CNN مدرَّبتان من الصفر على قاعدة UTKFace. الأرقام دي مقاسة على اختبار دفعي من 5000 صورة:</p>
-        <div class="metric-list">
-          <div class="metric"><span>تصنيف الجنس</span><div class="metric-bar"><i style="width:91.4%"></i></div><b>91.4%</b></div>
-          <div class="metric"><span>الفئة العمرية (±5 سنين)</span><div class="metric-bar"><i style="width:78.6%"></i></div><b>78.6%</b></div>
-          <div class="metric metric-weak"><span>العمر الدقيق</span><div class="metric-bar"><i style="width:29%"></i></div><b>29%</b></div>
+      <article class="proj-card reveal">
+        <div class="proj-media"><img src="assets/images/universal-market-predictor-deluxe.png" alt="Universal Market Predictor" loading="lazy" width="480" height="270"></div>
+        <div class="proj-body">
+          <h3 data-i18n="proj.ump.t">متنبئ الأسواق الشامل — Deluxe</h3>
+          <p data-i18n="proj.ump.d">نموذج LSTM واحد يتنبأ بأي سهم أو عملة رقمية على مدى 1/3/7 أيام، مع اختبار دلالة إحصائية يوضّح هل فيه ميزة تنبؤية حقيقية أم لا.</p>
+          <div class="proj-tags"><span>TensorFlow</span><span>LSTM</span><span>Gradio</span></div>
+          <div class="proj-links">
+            <a href="https://huggingface.co/spaces/engdarwish/universal-market-predictor-deluxe" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg> <span data-i18n="proj.demo">تجربة حية</span></a>
+            <a href="https://github.com/eahmeddarwish/universal-market-predictor-deluxe" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg> <span data-i18n="proj.code">الكود</span></a>
+          </div>
         </div>
-        <p class="lab-honest">الرقم الأخير ضعيف — ومنشور بقصد. النموذج كمان حسّاس للإضاءة. الهندسة الحقيقية بتنشر حدودها مش بتخبّيها.</p>
-        <a href="https://github.com/eahmeddarwish/age-gender-ai-detection" target="_blank" rel="noopener" class="lab-link">الكود والتوثيق الكامل</a>
-      </div>
+      </article>
 
-      <div class="lab-card glass reveal reveal-delay-1">
-        <span class="lab-tag">إشارات راديو حقيقية · 1090MHz</span>
-        <h4>ADS-B Flight Tracker</h4>
-        <p>استقبال إشارات ADS-B الحقيقية من الطائرات عبر RTL-SDR و dump1090، وعرضها على لوحة رادار حية. النسخة الكاملة بتشتغل على عتاد فعلي.</p>
-        <a href="https://engdarwish-adsb-flight-tracker.static.hf.space" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">افتح الرادار</a>
-      </div>
-
-      <div class="lab-card glass reveal reveal-delay-2">
-        <span class="lab-tag">رؤية حاسوبية · قياس فيزيائي</span>
-        <h4>Pendulum Gravity Lab</h4>
-        <p>تتبّع بندول من فيديو بالـ OpenCV واستخراج عجلة الجاذبية الأرضية من الحركة — تجربة فيزياء كلاسيكية بأدوات رؤية حاسوبية.</p>
-        <a href="https://huggingface.co/spaces/engdarwish/pendulum-gravity-lab" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">جرّبه</a>
-      </div>
-
-      <div class="lab-card glass reveal reveal-delay-1">
-        <span class="lab-tag">YOLOv5 · كشف الأجسام</span>
-        <h4>Drone Detection</h4>
-        <p>نموذج YOLOv5 مدرَّب على كشف الطائرات المسيّرة في الصور والفيديو، منشور كتطبيق تفاعلي شغال.</p>
-        <a href="https://huggingface.co/spaces/engdarwish/drone-detection-demo" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">جرّبه</a>
+      <div class="proj-more reveal">
+        <div class="eyebrow mono" data-i18n="projects.moreEyebrow">// الأرشيف الكامل</div>
+        <h3 data-i18n="projects.moreTitle">في مشاريع أكتر بكتير</h3>
+        <p data-i18n="projects.moreDesc">من الأنظمة المدمجة والروبوتات إلى نماذج الذكاء الاصطناعي — كل المشاريع بتجربة حية وكود مفتوح.</p>
+        <a href="projects.html" class="btn btn-primary" data-i18n="projects.moreBtn">عرض كل المشاريع ←</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== CV Summary ===== -->
-<section class="section section--tight" id="cv">
+<!-- ===== Contact (point 14) ===== -->
+<section class="section section--tight" id="contact">
   <div class="container">
-    <div class="glass reveal" style="padding:50px; text-align:center; max-width:720px; margin-inline:auto;">
-      <div class="eyebrow" data-i18n="cv.eyebrow">مسيرتي المهنية</div>
-      <h2 data-i18n="cv.title">سيرتي الذاتية</h2>
-      <p data-i18n="cv.desc">نظرة سريعة على خبراتي، مهاراتي، وشهاداتي.</p>
-      <div class="hero-cta" style="justify-content:center; margin-top:10px;">
-        <a href="cv.html" class="btn btn-primary" data-i18n="cv.viewFull">عرض السيرة كاملة</a>
-        <a href="assets/cv/Ahmed_Darwish_CV.pdf" class="btn btn-ghost" data-cv-download data-i18n="cv.download" download>تحميل PDF</a>
+    <div class="contact-card reveal">
+      <div class="contact-head">
+        <div class="eyebrow mono" data-i18n="contact.eyebrow">// لنبدأ الحوار</div>
+        <h2 data-i18n="contact.title">لنصنع شيئاً معاً</h2>
+        <p data-i18n="contact.sub">عندك فكرة، مشروع، أو دعوة؟ اختَر نوع الرسالة واكتبلي.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Support teaser ===== -->
-<section class="section section--tight" id="support">
-  <div class="container">
-    <div class="glass reveal" style="padding:50px; text-align:center; max-width:780px; margin-inline:auto;">
-      <div class="eyebrow" data-i18n="support.eyebrow">ادعمني</div>
-      <h2 style="font-size: 2.2rem; margin-bottom: 20px;">كن شريكاً في صناعة الأثر 🚀</h2>
-      <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 30px; font-size: 1.05rem;">
-        لأكثر من 16 عاماً، أخذت على عاتقي تفكيك أعقد المفاهيم الهندسية وإتاحتها كمصادر مفتوحة. هذا المحتوى يستهلك آلاف الساعات وتكاليف مستمرة. دعمك ليس مجرد مبلغ؛ بل هو رسالة تقول: <strong>"استمر، نحن نؤمن بما تفعل"</strong>.
-      </p>
-      <div class="hero-cta" style="justify-content:center; margin-top:10px; gap: 15px; flex-wrap: wrap;">
-        <a href="https://ko-fi.com/eng_ahmeddarwish" target="_blank" class="btn btn-primary btn-pulse" style="background: #FF5E5B; border-color: #FF5E5B;">☕ ادعمني عبر Ko-fi</a>
-        <a href="https://buymeacoffee.com/eng_ahmeddarwish" target="_blank" class="btn btn-ghost" style="background: #FFDD00; color: #000; border-color: #FFDD00;">🍕 ادعمني عبر Buy Me a Coffee</a>
-      </div>
-      <div class="section-cta reveal" style="margin-top:22px;">
-        <a href="support.html" class="btn btn-ghost">طرق دعم أخرى (تحويل بنكي / PayPal)</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Contact ===== -->
-<section class="section section--tight" id="get-in-touch">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow">لنصنع شيئاً معاً</div>
-      <h2>هل لديك فكرة تريد تحويلها إلى واقع؟</h2>
-    </div>
-
-    <div class="conversation-paths-grid reveal">
-      <button type="button" class="path-card active" data-path="project" data-placeholder="أخبرني عن تفاصيل مشروعك التقني...">
-        <span>أملك مشروعاً تقنياً</span>
-      </button>
-      <button type="button" class="path-card" data-path="learn" data-placeholder="ما الذي تود تعلمه أو التطور فيه؟">
-        <span>أريد أن أتعلم</span>
-      </button>
-      <button type="button" class="path-card" data-path="collab" data-placeholder="ما طبيعة التعاون الذي تقترحه؟">
-        <span>تعاون استراتيجي</span>
-      </button>
-      <button type="button" class="path-card" data-path="speaking" data-placeholder="أخبرني عن تفاصيل الحدث والموعد...">
-        <span>دعوة لمؤتمر أو ورشة</span>
-      </button>
-    </div>
-
-    <form class="minimal-contact-form glass reveal" style="padding:36px;" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <input type="hidden" id="selected-path-input" name="inquiry_type" value="project">
-      <div class="form-row">
-        <div>
-          <label for="user-name">الاسم</label>
-          <input type="text" id="user-name" name="name" required>
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="field">
+          <label for="c-type" data-i18n="contact.type">نوع الرسالة</label>
+          <select id="c-type" name="inquiry_type">
+            <option value="project" data-i18n="contact.opt1">عندي مشروع تقني</option>
+            <option value="learn" data-i18n="contact.opt2">أريد أن أتعلّم</option>
+            <option value="collab" data-i18n="contact.opt3">تعاون استراتيجي</option>
+            <option value="speaking" data-i18n="contact.opt4">دعوة لمؤتمر أو ورشة</option>
+          </select>
         </div>
-        <div>
-          <label for="user-email">البريد الإلكتروني</label>
-          <input type="email" id="user-email" name="email" required>
+        <div class="field-row">
+          <div class="field"><label for="c-name" data-i18n="contact.name">الاسم</label><input type="text" id="c-name" name="name" required></div>
+          <div class="field"><label for="c-email" data-i18n="contact.email">البريد الإلكتروني</label><input type="email" id="c-email" name="email" required></div>
         </div>
-      </div>
-      <div>
-        <label for="user-message">تفاصيل الرسالة</label>
-        <textarea id="user-message" name="message" rows="4" placeholder="أخبرني عن تفاصيل مشروعك التقني..." required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary" style="margin-top:6px;">إرسال</button>
-    </form>
+        <div class="field"><label for="c-msg" data-i18n="contact.msg">تفاصيل الرسالة</label><textarea id="c-msg" name="message" required></textarea></div>
+        <button type="submit" class="btn btn-primary" data-i18n="contact.send">إرسال الرسالة</button>
+      </form>
+    </div>
   </div>
 </section>
 
-<!-- ===== Footer ===== -->
-<footer class="site-footer custom-footer">
+<!-- ===== Footer (point 15) ===== -->
+<footer class="site-footer">
   <div class="container">
-    <div class="footer-grid-wrapper">
-      <div class="footer-col-brand">
+    <div class="footer-top">
+      <div class="f-brand">
         <a href="index.html" class="brand">
-          <img src="assets/images/logo.png" alt="Technopedia Arabia logo" width="40" height="40">
-          <span>Technopedia Arabia</span>
+          <img src="assets/images/logo.png" alt="Technopedia Arabia" width="52" height="52">
+          <span class="brand-name">Technopedia <span class="neon">Arabia</span></span>
         </a>
-        <p data-i18n="footer.tagline">أبني تقنية تستحق المشاركة لتحويل الأفكار إلى واقع ذكي.</p>
-        <div class="footer-social-icons">
-          <a href="https://github.com/eahmeddarwish" target="_blank" aria-label="GitHub"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
-          <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+        <p data-i18n="footer.tagline">أبني تقنية تستحق المشاركة، وأحوّل الأفكار المعقدة إلى واقع ذكي.</p>
+        <div class="f-social">
+          <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.3-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1 .8-.2 1.6-.3 2.5-.3.8 0 1.7.1 2.5.3 1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 22 12.2C22 6.6 17.5 2 12 2z"/></svg></a>
+          <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0zM7.5 8H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-6.3c0-1.5 0-3.5-2.1-3.5s-2.4 1.6-2.4 3.3V24h-5z"/></svg></a>
+          <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5z"/></svg></a>
+          <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
         </div>
       </div>
-      <div class="footer-col-links">
-        <h4 data-i18n="footer.quickLinks">روابط سريعة</h4>
+      <div class="f-col">
+        <h4 data-i18n="footer.links">روابط سريعة</h4>
         <ul>
-          <li><a href="index.html" data-i18n="nav.home">الرئيسية</a></li>
+          <li><a href="#home" data-i18n="nav.home">الرئيسية</a></li>
           <li><a href="projects.html" data-i18n="nav.projects">المشاريع</a></li>
           <li><a href="cv.html" data-i18n="nav.cv">السيرة الذاتية</a></li>
           <li><a href="support.html" data-i18n="nav.support">ادعمني</a></li>
         </ul>
       </div>
-      <div class="footer-col-tech">
-        <h4 data-i18n="footer.techTitle">الخبرات والتقنيات</h4>
-        <p>Embedded Systems, Python, AI, Arduino, Raspberry Pi, IoT & Digital Circuit Design.</p>
-      </div>
-      <div class="footer-col-contact">
-        <h4 data-i18n="footer.contactTitle">تواصل مباشر</h4>
+      <div class="f-col">
+        <h4 data-i18n="footer.contact">تواصل مباشر</h4>
         <p data-i18n="footer.location">الكويت</p>
-        <a href="mailto:e_ahmeddarwish@hotmail.com">e_ahmeddarwish@hotmail.com</a>
+        <p><a href="mailto:e_ahmeddarwish@hotmail.com" class="ltr">e_ahmeddarwish@hotmail.com</a></p>
+        <p><a href="https://wa.me/96541005052" class="ltr">+965 5110 5252</a></p>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© <span data-year></span> Technopedia Arabia — <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></span>
-      <a href="index.html" data-i18n="footer.backHome">العودة للرئيسية</a>
-    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">© <span id="year"></span> Technopedia Arabia — <span data-i18n="footer.rights">جميع الحقوق محفوظة</span></div>
   </div>
 </footer>
 
-<script src="js/i18n.js"></script>
-<script src="js/particles.js"></script>
-<script src="js/projects-data.js"></script>
-<script src="js/videos-data.js"></script>
-<script src="js/cv-data.js"></script>
-<script src="js/projects-render.js"></script>
-<script src="js/videos-render.js"></script>
-<script src="js/main.js" defer></script>
-<script src="js/enhancements.js" defer></script>
+<!-- ===== Mobile app-bar (app-shell) ===== -->
+<nav class="app-bar" aria-label="تنقل الموبايل">
+  <div class="container app-bar-inner">
+    <a href="#home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span data-i18n="nav.home">الرئيسية</span></a>
+    <a href="#projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg><span data-i18n="nav.projects">المشاريع</span></a>
+    <a href="support.html" class="ab-support"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.3-9.3-8.2C.9 10 1.9 6.2 5 5.1c2-.7 4 .1 5 1.9 1-1.8 3-2.6 5-1.9 3.1 1.1 4.1 4.9 2.3 7.7C18.7 16.7 12 21 12 21z"/></svg><span data-i18n="nav.support">ادعمني</span></a>
+    <button type="button" class="ab-lang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg><span class="ab-lang-lbl">EN</span></button>
+    <button type="button" class="ab-theme"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span data-i18n="nav.theme">الوضع</span></button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+
+  /* ---------- THEME ---------- */
+  function currentTheme(){ return root.getAttribute("data-theme") === "dark" ? "dark" : "light"; }
+  function setTheme(t){ root.setAttribute("data-theme", t); try{ localStorage.setItem("ta_theme", t); }catch(e){} }
+  function toggleTheme(){ setTheme(currentTheme()==="dark" ? "light" : "dark"); }
+  document.querySelectorAll(".theme-toggle, .ab-theme").forEach(function(b){ b.addEventListener("click", toggleTheme); });
+  /* follow system changes only while user hasn't chosen manually */
+  try{
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    mq.addEventListener("change", function(e){
+      var saved; try{ saved = localStorage.getItem("ta_theme"); }catch(_){}
+      if(saved!=="dark" && saved!=="light"){ root.setAttribute("data-theme", e.matches?"dark":"light"); }
+    });
+  }catch(e){}
+
+  /* ---------- LANGUAGE (self-contained i18n) ---------- */
+  var EN = {
+    "brand.tag":"Embedded Systems & AI Engineer",
+    "nav.about":"About","nav.projects":"Projects","nav.contact":"Contact","nav.cv":"Résumé",
+    "nav.support":"Support me","nav.home":"Home","nav.theme":"Theme",
+    "hero.eyebrow":"&gt; Hi, I'm","hero.name":"Ahmed Darwish",
+    "hero.role1":"Embedded Systems","hero.and":"&amp;","hero.role2":"AI Engineer",
+    "hero.slogan":"«Your world goes digital, right here»",
+    "hero.desc":"I build practical solutions across software, embedded systems and AI — and I’ve been sharing the knowledge for 16+ years.",
+    "hero.ctaProjects":"View my work","hero.ctaCV":"Résumé","hero.findme":"find me","hero.scroll":"scroll down",
+    "badge.projects":"+150 projects","badge.years":"16+ years",
+    "support.eyebrow":"// back the mission","support.title":"Be a partner in the impact",
+    "support.body":"Every time someone supports Technopedia Arabia, they’re not just sending money — they’re opening a door for another Arab student to reach a free explainer and a hands-on project that language or cost might have kept out of reach. This content is built on years of real engineering experience, and it keeps growing. Your support — any size — becomes a real part of the journey.",
+    "pay.kofi":"Quick support, any amount","pay.bmc":"Support with a coffee",
+    "pay.bank":"Direct bank transfer","pay.bankSub":"IBAN / SWIFT via NBK",
+    "about.title":"Impact & Tech Ecosystem",
+    "about.lead":"I turn complex ideas into smart embedded systems,",
+    "about.p1":"bridging hardware and AI algorithms. With 16+ years spanning engineering and technical education, I’ve shipped 150+ projects and mentored 250+ engineers and students under Technopedia Arabia.",
+    "about.techTitle":"// tech I work with daily",
+    "impact.years":"years of engineering","impact.projects":"complete engineering projects",
+    "impact.mentored":"engineers & students mentored","impact.ai":"live models, public and running",
+    "projects.title":"Selected Projects",
+    "proj.drone.t":"Drone Detection & Tracking","proj.drone.d":"Detects drones in real time and physically tracks them with a Pan/Tilt camera — running entirely on a Raspberry Pi 4 with no GPU.",
+    "proj.vts.t":"Visual Trigger Studio","proj.vts.d":"A CLIP vision model running inside the browser via WebAssembly — recognizes any reference image and fires an action you choose, no server or hardware.",
+    "proj.ump.t":"Universal Market Predictor — Deluxe","proj.ump.d":"One shared LSTM predicts any stock or crypto over 1/3/7 days, with a statistical significance test that shows whether there’s real predictive edge.",
+    "proj.demo":"Live demo","proj.code":"Code",
+    "projects.moreEyebrow":"// full archive","projects.moreTitle":"There’s a lot more",
+    "projects.moreDesc":"From embedded systems and robotics to AI models — every project ships with a live demo and open code.",
+    "projects.moreBtn":"View all projects →",
+    "contact.eyebrow":"// start the conversation","contact.title":"Let’s build something together",
+    "contact.sub":"Got an idea, a project, or an invitation? Pick a type and write to me.",
+    "contact.type":"Message type","contact.opt1":"I have a tech project","contact.opt2":"I want to learn",
+    "contact.opt3":"Strategic collaboration","contact.opt4":"Conference or workshop invite",
+    "contact.name":"Name","contact.email":"Email","contact.msg":"Message details","contact.send":"Send message",
+    "footer.tagline":"I build technology worth sharing, turning complex ideas into smart reality.",
+    "footer.links":"Quick links","footer.contact":"Get in touch","footer.location":"Kuwait","footer.rights":"All rights reserved"
+  };
+  var AR = {};
+  var nodes = document.querySelectorAll("[data-i18n]");
+  nodes.forEach(function(el){ AR[el.getAttribute("data-i18n")] = el.innerHTML; });
+
+  function applyLang(lang){
+    var map = lang==="en" ? EN : AR;
+    nodes.forEach(function(el){
+      var k = el.getAttribute("data-i18n");
+      if(map[k]!=null) el.innerHTML = map[k];
+    });
+    root.setAttribute("lang", lang);
+    root.setAttribute("dir", lang==="en" ? "ltr" : "rtl");
+    document.querySelectorAll(".lang-toggle button").forEach(function(b){
+      b.classList.toggle("active", b.getAttribute("data-lang")===lang);
+    });
+    var abl = document.querySelector(".ab-lang-lbl");
+    if(abl) abl.textContent = lang==="en" ? "ع" : "EN";
+    try{ localStorage.setItem("ta_lang", lang); }catch(e){}
+  }
+  document.querySelectorAll(".lang-toggle button").forEach(function(b){
+    b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
+  });
+  var ablang = document.querySelector(".ab-lang");
+  if(ablang) ablang.addEventListener("click", function(){ applyLang(root.getAttribute("lang")==="en" ? "ar" : "en"); });
+  try{ var sl = localStorage.getItem("ta_lang"); if(sl==="en") applyLang("en"); }catch(e){}
+
+  /* ---------- YEAR ---------- */
+  var y = document.getElementById("year"); if(y) y.textContent = new Date().getFullYear();
+
+  /* ---------- TERMINAL typing ---------- */
+  var termBody = document.getElementById("term-body");
+  if(termBody){
+    var LINES = [
+      {cmd:"whoami", out:["Ahmed Darwish — Embedded & AI Engineer"]},
+      {cmd:"cat mission.txt", out:["16+ years building & teaching tech","Turning hardware + AI into real products"]},
+      {cmd:"ls skills/", out:["python  arduino  raspberry-pi  opencv  ml  embedded"]}
+    ];
+    var li=0, ci=0, html="";
+    function render(active){
+      var s=html;
+      s += '<div class="line"><span class="p">$</span> <span class="'+(active?"caret":"")+'">'+(active||"")+'</span></div>';
+      termBody.innerHTML = s;
+    }
+    function step(){
+      if(li>=LINES.length) return;
+      var cur=LINES[li].cmd;
+      if(ci<=cur.length){ render(cur.slice(0,ci)); ci++; setTimeout(step,55); }
+      else{
+        html += '<div class="line"><span class="p">$</span> '+cur+'</div>';
+        LINES[li].out.forEach(function(o){ html += '<div class="out">'+o+'</div>'; });
+        li++; ci=0;
+        if(li<LINES.length) setTimeout(step,450); else termBody.innerHTML=html;
+      }
+    }
+    step();
+  }
+
+  /* ---------- REVEAL on scroll ---------- */
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+    },{threshold:.12});
+    document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+  } else { document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); }); }
+
+  /* ---------- reading progress ---------- */
+  var bar=document.querySelector(".reading-progress");
+  if(bar){
+    var ticking=false;
+    window.addEventListener("scroll",function(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){
+        var h=document.documentElement.scrollHeight-window.innerHeight;
+        bar.style.transform="scaleX("+(h>0?window.scrollY/h:0)+")"; ticking=false;
+      });
+    },{passive:true});
+  }
+
+  /* ---------- app-bar active state ---------- */
+  var abLinks=document.querySelectorAll(".app-bar a[href^='#']");
+  window.addEventListener("scroll",function(){
+    var p=document.getElementById("projects");
+    if(!p) return;
+    var inProj = p.getBoundingClientRect().top < window.innerHeight*0.5 && p.getBoundingClientRect().bottom>0;
+    abLinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href")===(inProj?"#projects":"#home")); });
+  },{passive:true});
+
+  /* ---------- lightweight constellation background (theme-aware) ---------- */
+  var cv=document.getElementById("bg-canvas");
+  if(cv && !window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    var ctx=cv.getContext("2d"), W,H,pts,raf;
+    function size(){ W=cv.width=innerWidth*devicePixelRatio; H=cv.height=innerHeight*devicePixelRatio; }
+    function init(){
+      size();
+      var n=Math.min(70, Math.floor(innerWidth/22));
+      pts=[]; for(var i=0;i<n;i++){ pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25*devicePixelRatio,vy:(Math.random()-.5)*.25*devicePixelRatio}); }
+    }
+    function color(){ return currentTheme()==="dark" ? "255,138,43" : "249,115,22"; }
+    function draw(){
+      ctx.clearRect(0,0,W,H); var c=color();
+      for(var i=0;i<pts.length;i++){
+        var p=pts[i]; p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,1.6*devicePixelRatio,0,6.28);
+        ctx.fillStyle="rgba("+c+",.6)"; ctx.fill();
+        for(var j=i+1;j<pts.length;j++){
+          var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy, max=(120*devicePixelRatio)*(120*devicePixelRatio);
+          if(d<max){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
+            ctx.strokeStyle="rgba("+c+","+(.14*(1-d/max))+")"; ctx.lineWidth=devicePixelRatio; ctx.stroke(); }
+        }
+      }
+      raf=requestAnimationFrame(draw);
+    }
+    init(); draw();
+    var rt; addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(init,200); },{passive:true});
+  }
+})();
+</script>
 </body>
 </html>
