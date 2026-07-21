@@ -503,3 +503,82 @@
   transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateY(-4px);
   transition: none;
 }
+
+/* --------------------------------------------------------------------------
+   9) FIXES ROUND 2 — بعد المراجعة الثانية على index (3).html
+   -------------------------------------------------------------------------- */
+
+/* 9.1 - زرار تبديل الوضع الليلي/النهاري كان موجود في الـ HTML بس من غير أي تنسيق
+   خالص، فكان عملياً مبيتشافش في الهيدر. */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  color: var(--text);
+  padding: 0;
+  transition: background .25s var(--ease), transform .25s var(--ease), color .25s var(--ease);
+  flex-shrink: 0;
+}
+.theme-toggle:hover { background: var(--surface-hover); transform: translateY(-2px); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+/* 9.2 - كارت الكود في الهيرو كان بيطلع فوق الصورة وفوق الـ badges لأن
+   الإزاحة (offset) بتاعته كانت صغيرة جداً. دلوقتي بيتمركز تحت الدائرة
+   بالكامل، من غير أي تداخل مع الصورة أو الـ badges. */
+.hero-code-card {
+  bottom: -92px !important;
+  inset-inline-end: auto !important;
+  inset-inline-start: 50% !important;
+  transform: translateX(-50%) !important;
+}
+.hero-code-card:hover { transform: translateX(-50%) translateY(-6px) !important; }
+@media (max-width: 900px) {
+  .hero-code-card { display: none; }
+}
+/* مساحة كافية تحت الصورة عشان الكارت الجديد ميتقصش مع القسم اللي بعده */
+.hero-visual { margin-bottom: 110px; }
+@media (max-width: 900px) {
+  .hero-visual { margin-bottom: 0; }
+}
+
+/* 9.3 - كارت "ورش عمل واستشارات" (card-standard) كان بيسيب فراغ كبير
+   جنبه لأن الكروت اللي قبله كانت بتملي الصف بالظبط (2x2 + 1x1 + 1x1 + 2x1
+   = صف كامل من 8 خانات)، فكان بيقع لوحده في صف جديد فاضي حواليه.
+   خليناه ياخد عرض الصف كامل بدل ما يفضل تايه. */
+.achievement-card.card-standard { grid-column: 1 / -1 !important; }
+.achievement-card.card-standard .achievement-content { max-width: 640px; }
+@media (max-width: 900px) {
+  .achievement-card.card-standard { grid-column: span 2 !important; }
+}
+@media (max-width: 600px) {
+  .achievement-card.card-standard { grid-column: span 1 !important; }
+}
+
+/* 9.4 - حجم الخط يكبر للعربي وقت ما اللغة عربي، ويصغر شوية للإنجليزي
+   وقت ما اللغة إنجليزي (Tajawal بصرياً أصغر من Inter في نفس المقاس). */
+html[dir="rtl"] body { font-size: 16.5px; }
+html[dir="ltr"] body { font-size: 15.5px; }
+html[dir="rtl"] .hero-slogan,
+html[dir="rtl"] .hero-desc { font-size: 1.05em; }
+html[dir="ltr"] .hero-slogan,
+html[dir="ltr"] .hero-desc { font-size: .96em; }
+
+/* 9.5 - متغيّر --text-secondary مش موجود أصلاً في نظام الألوان (الاسم
+   الصح --text-muted) فكان بيرجع للون الافتراضي. */
+.support-teaser-fallback-fix { color: var(--text-muted); }
+
+/* 9.6 - أنيميشن نبضة بسيطة لزرار Ko-fi في قسم "ادعمني" (كانت الكلاس
+   .btn-pulse متحطة في الـ HTML من غير أي تعريف). */
+@keyframes btnPulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,94,91,.45); }
+  50% { box-shadow: 0 0 0 10px rgba(255,94,91,0); }
+}
+.btn-pulse { animation: btnPulseGlow 2.2s ease-in-out infinite; }
