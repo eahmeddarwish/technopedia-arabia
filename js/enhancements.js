@@ -1,148 +1,252 @@
 /* ==========================================================================
-   TECHNOPEDIA ARABIA — ENHANCEMENTS (v1.0)
+   TECHNOPEDIA ARABIA — ENHANCEMENTS (v2.0)
    ملف JS إضافي منفصل — مبيلمسش main.js / i18n.js / particles.js /
-   projects-render.js / projects-data.js خالص. بيضيف بس سلوك الأقسام الجديدة.
+   projects-render.js / projects-data.js خالص.
 
-   إزاي تحطه: انسخ الملف ده جوه مجلد js/ في الريبو (js/enhancements.js)
-   وضيف سطر واحد آخر <script> قبل </body> بعد main.js:
-   <script src="js/enhancements.js" defer></script>
+   v2.0 — بعد تقارير المراجعة المعمارية:
+   • Event Delegation بدل ربط حدث لكل عنصر
+   • requestAnimationFrame + تخزين الأبعاد (منع Layout Thrashing)
+   • Debounce للبحث + حالة "لا توجد نتائج"
+   • نبض GitHub الحي
+   • تحميل كسول للمعمل الحي (مفيش تكلفة قبل ما المستخدم يطلبه)
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+(function () {
+  'use strict';
 
-  /* ==========================================================================
-     1. MOUSE GLOW على كروت المشاريع (بيشتغل مع main.js من غير تعارض،
-        main.js بيتحكم في الـ tilt وده بيتحكم بس في مكان الإضاءة)
-     ========================================================================== */
-  if (window.matchMedia('(pointer: fine)').matches) {
-    document.querySelectorAll('.card.tilt').forEach((card) => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-      });
-    });
-  }
+  const onReady = (fn) =>
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', fn)
+      : fn();
 
-  /* ==========================================================================
-     2. KNOWLEDGE HUB — بحث + فلترة بس على المحتوى الموجود فعليًا في HTML
-        (زي ما هو الحال في باقي الموقع — المحتوى في HTML، مش JS)
-     ========================================================================== */
-  const searchInput = document.getElementById('knowledge-search-input');
-  const quickTags = document.querySelectorAll('.q-tag');
-  const searchableCards = document.querySelectorAll('.searchable-item');
-
-  const filterKnowledge = (query, tagFilter) => {
-    const q = (query || '').toLowerCase().trim();
-    searchableCards.forEach((card) => {
-      const cardTags = card.getAttribute('data-tags') || '';
-      const cardText = card.textContent.toLowerCase();
-      const matchesSearch = q === '' || cardText.includes(q) || cardTags.includes(q);
-      const matchesTag = tagFilter === 'all' || cardTags.includes(tagFilter);
-      card.classList.toggle('is-hidden', !(matchesSearch && matchesTag));
-    });
+  /* أداة تأخير عامة */
+  const debounce = (fn, wait = 300) => {
+    let t;
+    return function (...args) {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(this, args), wait);
+    };
   };
 
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      const activeTagBtn = document.querySelector('.q-tag.active');
-      filterKnowledge(e.target.value, activeTagBtn ? activeTagBtn.getAttribute('data-tag') : 'all');
-    });
-  }
+  onReady(() => {
 
-  quickTags.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      quickTags.forEach((b) => b.classList.remove('active'));
-      const target = e.currentTarget;
-      target.classList.add('active');
-      filterKnowledge(searchInput ? searchInput.value : '', target.getAttribute('data-tag'));
-    });
-  });
+    /* ======================================================================
+       1. MOUSE GLOW — Event Delegation + rAF + أبعاد مخزّنة
+          (الأبعاد بتتقاس مرة واحدة عند دخول الماوس، مش مع كل حركة)
+       ====================================================================== */
+    if (window.matchMedia('(pointer: fine)').matches) {
+      let activeCard = null;
+      let cachedRect = null;
+      let queuedX = 0;
+      let queuedY = 0;
+      let framePending = false;
 
-  /* ==========================================================================
-     3. VIDEO MODAL FACTORY (مشترك بين Knowledge Hub والشهادات)
-     ========================================================================== */
-  const setupVideoModal = (triggerEl, modalEl, backdropEl, closeBtnEl, iframeEl) => {
-    if (!triggerEl || !modalEl) return;
+      const paintGlow = () => {
+        framePending = false;
+        if (!activeCard || !cachedRect) return;
+        activeCard.style.setProperty('--mouse-x', (queuedX - cachedRect.left) + 'px');
+        activeCard.style.setProperty('--mouse-y', (queuedY - cachedRect.top) + 'px');
+      };
 
-    const openModal = () => {
-      const videoUrl = triggerEl.getAttribute('data-video-url') || '';
-      if (!videoUrl) return; // متفتحش المودال لو لسه مفيش رابط فيديو حقيقي متحط
-      modalEl.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      if (iframeEl) iframeEl.setAttribute('src', videoUrl);
-    };
+      document.addEventListener('pointerover', (e) => {
+        const card = e.target.closest('.card.tilt');
+        if (!card || card === activeCard) return;
+        activeCard = card;
+        cachedRect = card.getBoundingClientRect(); // قياس واحد فقط
+      }, { passive: true });
 
-    const closeModal = () => {
-      modalEl.classList.remove('active');
-      document.body.style.overflow = '';
-      if (iframeEl) iframeEl.setAttribute('src', '');
-    };
+      document.addEventListener('pointerout', (e) => {
+        if (activeCard && !activeCard.contains(e.relatedTarget)) {
+          activeCard = null;
+          cachedRect = null;
+        }
+      }, { passive: true });
 
-    triggerEl.addEventListener('click', openModal);
-    triggerEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal();
-      }
-    });
+      document.addEventListener('pointermove', (e) => {
+        if (!activeCard) return;
+        queuedX = e.clientX;
+        queuedY = e.clientY;
+        if (!framePending) {
+          framePending = true;
+          requestAnimationFrame(paintGlow);
+        }
+      }, { passive: true });
 
-    if (backdropEl) backdropEl.addEventListener('click', closeModal);
-    if (closeBtnEl) closeBtnEl.addEventListener('click', closeModal);
-  };
+      // إبطال الأبعاد المخزّنة لما التخطيط يتغيّر
+      const invalidate = debounce(() => { cachedRect = null; activeCard = null; }, 150);
+      window.addEventListener('resize', invalidate, { passive: true });
+      window.addEventListener('scroll', invalidate, { passive: true });
+    }
 
-  setupVideoModal(
-    document.getElementById('open-video-modal'),
-    document.getElementById('video-modal'),
-    document.getElementById('modal-backdrop'),
-    document.getElementById('modal-close'),
-    document.getElementById('youtube-iframe')
-  );
+    /* ======================================================================
+       2. المعمل الحي — تحميل كسول للـ iframe (مفيش تكلفة قبل الطلب)
+       ====================================================================== */
+    const labLaunch = document.getElementById('lab-launch');
+    const labStage = document.getElementById('lab-stage');
 
-  setupVideoModal(
-    document.getElementById('open-testimonial-video'),
-    document.getElementById('testimonial-video-modal'),
-    document.getElementById('t-modal-backdrop'),
-    document.getElementById('t-modal-close'),
-    document.getElementById('t-youtube-iframe')
-  );
+    if (labLaunch && labStage) {
+      labLaunch.addEventListener('click', () => {
+        const src = labLaunch.getAttribute('data-src');
+        if (!src || labStage.querySelector('iframe')) return;
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.knowledge-video-modal.active').forEach((modal) => {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-        const iframe = modal.querySelector('iframe');
-        if (iframe) iframe.setAttribute('src', '');
+        labStage.innerHTML =
+          '<div class="lab-stage-loading">جارٍ تحميل النموذج داخل متصفحك…</div>';
+
+        const frame = document.createElement('iframe');
+        frame.src = src;
+        frame.title = 'Visual Trigger Studio — نموذج CLIP يعمل داخل المتصفح';
+        frame.setAttribute('allow', 'camera; microphone; fullscreen');
+        frame.setAttribute('loading', 'lazy');
+        frame.addEventListener('load', () => {
+          const loader = labStage.querySelector('.lab-stage-loading');
+          if (loader) loader.remove();
+        });
+        labStage.appendChild(frame);
+
+        labLaunch.disabled = true;
+        labLaunch.textContent = 'شغّال دلوقتي ↓';
       });
     }
-  });
 
-  /* ==========================================================================
-     4. CONTACT — PATH SELECTOR (اختيار نوع المحادثة)
-     ========================================================================== */
-  const pathCards = document.querySelectorAll('.path-card');
-  const selectedPathInput = document.getElementById('selected-path-input');
-  const userMessageTextarea = document.getElementById('user-message');
+    /* ======================================================================
+       3. نبض GitHub الحي — أرقام حقيقية قابلة للتحقق بدل أرقام ثابتة
+       ====================================================================== */
+    const ghBox = document.getElementById('gh-pulse');
 
-  if (pathCards.length && selectedPathInput && userMessageTextarea) {
-    const activatePath = (card) => {
-      pathCards.forEach((c) => c.classList.remove('active'));
-      card.classList.add('active');
-      selectedPathInput.value = card.getAttribute('data-path') || '';
-      const placeholder = card.getAttribute('data-placeholder');
-      if (placeholder) userMessageTextarea.setAttribute('placeholder', placeholder);
-    };
+    if (ghBox) {
+      const fmtSince = (iso) => {
+        const diffH = (Date.now() - new Date(iso).getTime()) / 36e5;
+        if (diffH < 1)  return 'من أقل من ساعة';
+        if (diffH < 24) return 'من ' + Math.round(diffH) + ' ساعة';
+        const d = Math.round(diffH / 24);
+        if (d < 30)  return 'من ' + d + ' يوم';
+        return 'من ' + Math.round(d / 30) + ' شهر';
+      };
 
-    pathCards.forEach((card) => {
-      card.addEventListener('click', (e) => activatePath(e.currentTarget));
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          activatePath(e.currentTarget);
-        }
+      const setText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      fetch('https://api.github.com/users/eahmeddarwish/repos?per_page=100&sort=pushed')
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error('github ' + r.status))))
+        .then((repos) => {
+          if (!Array.isArray(repos) || !repos.length) return;
+
+          const publicRepos = repos.filter((r) => !r.fork);
+          const stars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+          const latest = repos
+            .map((r) => r.pushed_at)
+            .filter(Boolean)
+            .sort()
+            .pop();
+
+          setText('gh-repos', publicRepos.length);
+          setText('gh-stars', stars);
+          if (latest) setText('gh-last', fmtSince(latest));
+          ghBox.hidden = false;
+        })
+        .catch(() => {
+          /* لو GitHub مردّش أو حصل rate limit — الصندوق يفضل مخفي بدل ما يبان فاضي */
+        });
+    }
+
+    /* ======================================================================
+       4. البحث والفلترة — Debounce + Event Delegation + حالة لا نتائج
+       ====================================================================== */
+    const searchInput = document.getElementById('knowledge-search-input');
+    const tagsWrap = document.querySelector('.quick-tags-scroller');
+    const resultsWrap = document.querySelector('.bento-media-grid');
+
+    if (searchInput || tagsWrap) {
+      const cards = () => document.querySelectorAll('.searchable-item');
+
+      const emptyMsg = (() => {
+        if (!resultsWrap) return null;
+        const el = document.createElement('p');
+        el.className = 'no-results-state';
+        el.hidden = true;
+        el.textContent = 'مفيش نتائج مطابقة — جرّب كلمة تانية.';
+        resultsWrap.appendChild(el);
+        return el;
+      })();
+
+      const applyFilter = () => {
+        const q = (searchInput ? searchInput.value : '').toLowerCase().trim();
+        const activeBtn = document.querySelector('.q-tag.active');
+        const tag = activeBtn ? activeBtn.getAttribute('data-tag') : 'all';
+        let visible = 0;
+
+        cards().forEach((card) => {
+          const cardTags = card.getAttribute('data-tags') || '';
+          const text = card.textContent.toLowerCase();
+          const okSearch = q === '' || text.includes(q) || cardTags.includes(q);
+          const okTag = tag === 'all' || cardTags.includes(tag);
+          const show = okSearch && okTag;
+          card.classList.toggle('is-hidden', !show);
+          if (show) visible++;
+        });
+
+        if (emptyMsg) emptyMsg.hidden = visible !== 0;
+      };
+
+      if (searchInput) {
+        searchInput.addEventListener('input', debounce(applyFilter, 300));
+      }
+
+      if (tagsWrap) {
+        // ربط واحد على العنصر الأب بدل ربط لكل زرار
+        tagsWrap.addEventListener('click', (e) => {
+          const btn = e.target.closest('.q-tag');
+          if (!btn || !tagsWrap.contains(btn)) return;
+          tagsWrap.querySelectorAll('.q-tag').forEach((b) => {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
+          applyFilter();
+        });
+      }
+    }
+
+    /* ======================================================================
+       5. اختيار نوع المحادثة في فورم التواصل — Event Delegation
+       ====================================================================== */
+    const pathsWrap = document.querySelector('.conversation-paths-grid');
+    const selectedPathInput = document.getElementById('selected-path-input');
+    const userMessage = document.getElementById('user-message');
+
+    if (pathsWrap && selectedPathInput) {
+      pathsWrap.addEventListener('click', (e) => {
+        const card = e.target.closest('.path-card');
+        if (!card || !pathsWrap.contains(card)) return;
+
+        pathsWrap.querySelectorAll('.path-card').forEach((c) => {
+          c.classList.remove('active');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        card.classList.add('active');
+        card.setAttribute('aria-pressed', 'true');
+
+        selectedPathInput.value = card.getAttribute('data-path') || '';
+        const ph = card.getAttribute('data-placeholder');
+        if (ph && userMessage) userMessage.setAttribute('placeholder', ph);
       });
-    });
-  }
+    }
 
-});
+    /* ======================================================================
+       6. إغلاق المودالات — استهداف مباشر بدل المرور على الكل
+       ====================================================================== */
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const openModal = document.querySelector('.knowledge-video-modal.active');
+      if (!openModal) return;
+      openModal.classList.remove('active');
+      document.body.style.overflow = '';
+      const iframe = openModal.querySelector('iframe');
+      if (iframe) iframe.setAttribute('src', '');
+    });
+
+  });
+})();
