@@ -1,999 +1,342 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>أحمد درويش | Technopedia Arabia - مهندس أنظمة مدمجة وذكاء اصطناعي</title>
-  <meta name="description" content="البورتفوليو الرسمي لأحمد درويش. هندسة الأنظمة المدمجة، الذكاء الاصطناعي، والتعليم التقني المتقدم.">
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=zZXMYWPqFycUSEG88-9QXORTkC69MKGV9h_SI9r7jTo116fJOMIp4fl5vj-jQD8O8g0MX29iQshhNeQBLLWwsmiUMmibksuTwd41PhnTFjk3r9SFOBlUQ8Ix5UPy6uBxd3Z-NbuR1bqKPgnZu0gOgkXVIvRvYpaKFpochTcRU6dysS44G33z1aBYOAXWJeHeDBUtoHabD1bspWzgQPEkoCr7wNsv_RIvXsbPWqsovYAmHEEUUeAjPaJt1-cHP175RUugjYycn36lOzj-vpM82TwMv8w0FhVMX0_KXzRMYtSVRyH0OR_9QO7P-ejHOpZI" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCaE5HVXpPVGN5Tm1Ka05EUmhNemRpTURBd05qVTNNVGt5TUdaak9UWXpZVEE0TlRVMU16TTJOall5TVdJMlpHTVNDeElIRU1PRHk5YWxHeGdCJmZpbGVuYW1lPWluZGV4Lmh0bWwmb3BpPTEwMzEzNTA1MA"/></head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technopedia Arabia — Ahmed Darwish</title>
+<meta name="description" content="Technopedia Arabia — بورتفوليو أحمد درويش، مهندس أنظمة مدمجة ومحاضر تعليمي بخبرة 16+ عاماً. مشاريع Python وArduino وRaspberry Pi، فيديوهات تعليمية، وسيرة ذاتية.">
+<meta name="keywords" content="Embedded Systems, Arduino, Raspberry Pi, Python, Machine Learning, AI, IoT, Digital Circuit Design, هندسة أنظمة مدمجة, أردوينو, رازبيري باي, ذكاء اصطناعي, بايثون, تعليم تقني">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Technopedia Arabia — Ahmed Darwish">
+<meta property="og:description" content="Technopedia Arabia — بورتفوليو أحمد درويش، مهندس أنظمة مدمجة ومحاضر تعليمي بخبرة 16+ عاماً. مشاريع Python وArduino وRaspberry Pi، فيديوهات تعليمية، وسيرة ذاتية.">
+<meta property="og:image" content="https://engdarwish.com/assets/images/avatar.jpg">
+<meta property="og:url" content="https://engdarwish.com/index.html">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technopedia Arabia — Ahmed Darwish">
+<meta name="twitter:description" content="Technopedia Arabia — بورتفوليو أحمد درويش، مهندس أنظمة مدمجة ومحاضر تعليمي بخبرة 16+ عاماً. مشاريع Python وArduino وRaspberry Pi، فيديوهات تعليمية، وسيرة ذاتية.">
+<meta name="twitter:image" content="https://engdarwish.com/assets/images/avatar.jpg">
+
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  // Apply the stored theme before first paint to avoid a light/dark flash.
+  (function () {
+    try {
+      var t = localStorage.getItem("ta_theme");
+      document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ahmed Darwish",
+  "url": "https://engdarwish.com",
+  "image": "https://engdarwish.com/assets/images/avatar.jpg",
+  "jobTitle": "Embedded Systems Engineer & Educator",
+  "description": "Electrical Engineer and Educator with 16+ years of experience in embedded systems (Arduino, Raspberry Pi) and technical education.",
+  "email": "mailto:e_ahmeddarwish@hotmail.com",
+  "sameAs": [
+    "https://github.com/eahmeddarwish",
+    "https://www.linkedin.com/in/engahmeddarwish"
+  ],
+  "knowsAbout": [
+    "Arduino",
+    "Raspberry Pi",
+    "Embedded Systems",
+    "IoT",
+    "Python",
+    "C++",
+    "Circuit Design",
+    "Robotics"
+  ]
+}
+</script>
+</head>
 <body>
 
-  <!-- ===== Header / Navbar ===== -->
-  <header class="site-header">
-    <div class="container header-container">
-      <a href="#" class="brand-logo">
-        <span class="logo-text">Technopedia Arabia</span>
-      </a>
-      <nav class="nav-menu">
-        <a href="#about" class="nav-link">الرحلة</a>
-        <a href="#projects" class="nav-link">المشاريع</a>
-        <a href="#skills" class="nav-link">المنظومة</a>
-        <a href="#achievements" class="nav-link">الأثر</a>
-        <a href="#media" class="nav-link">Knowledge Hub</a>
-        <a href="#testimonials" class="nav-link">الشهادات</a>
-      </nav>
-      <div class="header-actions">
-        <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
-          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1.05 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <a href="#contact" class="btn btn-primary nav-cta">ابدأ محادثة</a>
-      </div>
-    </div>
-  </header>
+<div class="reading-progress" aria-hidden="true"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="grain-overlay"></div>
 
-  <!-- ===== Hero Section ===== -->
-  <section class="hero-section" id="hero">
-    <div class="container hero-container">
-      <div class="hero-content reveal">
-        <div class="hero-badge">
-          <span class="pulse-dot"></span>
-          <span>مهندس أنظمة مدمجة & خبير ذكاء اصطناعي</span>
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="assets/images/logo.png" alt="Technopedia Arabia logo">
+      <span>Technopedia Arabia<small data-i18n="hero.role1">مهندس أنظمة مدمجة</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="active" data-i18n="nav.home">الرئيسية</a>
+      <a href="support.html" data-i18n="nav.support" class="nav-cta">ادعمني</a>
+      <a href="index.html#about" data-i18n="nav.about">عني</a>
+      <a href="projects.html" data-i18n="nav.projects">المشاريع</a>
+      <a href="videos.html" data-i18n="nav.videos">الفيديوهات</a>
+      <a href="cv.html" data-i18n="nav.cv">السيرة الذاتية</a>
+    </nav>
+    <div class="nav-right">
+      <div class="header-social">
+          <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
+          <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+          <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5 8.5 8.5 0 0 1 21 11.5z"/><path d="M9 9c0 3 3 6 6 6"/></svg></a>
+          <a href="tel:+96551105252" aria-label="Phone" title="Phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+          <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email (Hotmail)" title="Email (Hotmail)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
+          <a href="mailto:eahmeddarwish@gmail.com" aria-label="Email (Gmail)" title="Email (Gmail)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
         </div>
-        <h1 class="hero-title">هندسة العتاد الذكي، وبناء عقول المستقبل.</h1>
-        <p class="hero-desc">أنا أحمد درويش. أدمج بين دقة الأنظمة المدمجة، وقوة الذكاء الاصطناعي، وشغف تبسيط المعرفة لخدمة مجتمع المهندسين العرب عبر Technopedia Arabia.</p>
-        <div class="hero-cta-group">
-          <a href="#projects" class="btn btn-primary">استكشف المشاريع</a>
-          <a href="#about" class="btn btn-ghost">قصة الرحلة</a>
-        </div>
-      </div>
-      <div class="hero-visual reveal reveal-delay-1">
-        <div class="hero-card-glass">
-          <div class="code-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="code-title">ahmed_darwish_core.py</span>
-          </div>
-          <pre><code>class TechnopediaArabia:
-    def __init__(self):
-        self.focus = "Embedded AI & IoT"
-        self.experience = "18+ Years"
-        self.mission = "Empowering Arab Engineers"
-    
-    def build_future(self):
-        return "Creating real impact through code & hardware."</code></pre>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Projects Section (V2 Evolved) ===== -->
-  <section class="section section--tight evolved-projects" id="projects">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="eyebrow">أعمالي</div>
-        <h2>مشاريع مختارة</h2>
-        <p>مجموعة من مشاريعي في البرمجة والأنظمة المدمجة والذكاء الاصطناعي.</p>
-      </div>
-
-      <div class="premium-filter-container reveal reveal-delay-1">
-        <div class="premium-filter" id="projects-filter">
-          <div class="filter-indicator"></div>
-          <button class="filter-btn active" data-filter="all">الكل</button>
-          <button class="filter-btn" data-filter="ai">ذكاء اصطناعي</button>
-          <button class="filter-btn" data-filter="embedded">أنظمة مدمجة</button>
-        </div>
-      </div>
-
-      <div class="grid premium-projects-grid" id="featured-projects-grid">
-        
-        <!-- 1. HERO PROJECT CARD -->
-        <a href="project-details.html?id=1" class="premium-project-card hero-project-card project-card-animate" data-category="ai">
-          <div class="card-glow" aria-hidden="true"></div>
-          <div class="card-inner">
-            <div class="project-image-wrapper">
-              <img src="assets/images/projects/project-1.jpg" alt="AraSign AI" class="project-image" loading="lazy">
-              <div class="project-preview-overlay">
-                <span class="preview-btn">عرض دراسة الحالة</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="category-ribbon">ذكاء اصطناعي</span>
-                <div class="quick-stats">
-                  <span class="stat"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Open Source</span>
-                  <span class="stat featured-stat"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Featured</span>
-                </div>
-              </div>
-              <h3 class="project-title">AraSign AI</h3>
-              <p class="project-desc">نظام متقدم للتعرف على لغة الإشارة العربية باستخدام تقنيات الرؤية الحاسوبية والتعلم العميق، مصمم لسد الفجوة في التواصل الفوري.</p>
-              <div class="project-tech-stack">
-                <span class="tech-chip">Python</span>
-                <span class="tech-chip">MediaPipe</span>
-                <span class="tech-chip">TensorFlow</span>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <!-- 2. STANDARD PROJECT CARD -->
-        <a href="project-details.html?id=2" class="premium-project-card standard-project-card project-card-animate" data-category="embedded" style="transition-delay: 100ms">
-          <div class="card-glow" aria-hidden="true"></div>
-          <div class="card-inner">
-            <div class="project-image-wrapper">
-              <img src="assets/images/projects/project-2.jpg" alt="Smart Thermostat V2" class="project-image" loading="lazy">
-              <div class="project-preview-overlay">
-                <span class="preview-btn">Watch Demo</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="category-ribbon">أنظمة مدمجة</span>
-                <div class="quick-stats">
-                  <span class="stat"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3 Months</span>
-                </div>
-              </div>
-              <h3 class="project-title">Smart Thermostat V2</h3>
-              <p class="project-desc">نظام تحكم حراري ذكي للمنازل يعتمد على إنترنت الأشياء مع واجهة تحكم عبر الموبايل.</p>
-              <div class="project-tech-stack">
-                <span class="tech-chip">ESP32</span>
-                <span class="tech-chip">C++</span>
-                <span class="tech-chip">IoT</span>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <!-- 3. STANDARD PROJECT CARD -->
-        <a href="project-details.html?id=3" class="premium-project-card standard-project-card project-card-animate" data-category="python" style="transition-delay: 200ms">
-          <div class="card-glow" aria-hidden="true"></div>
-          <div class="card-inner">
-            <div class="project-image-wrapper">
-              <img src="assets/images/projects/project-3.jpg" alt="Vein Scanner" class="project-image" loading="lazy">
-              <div class="project-preview-overlay">
-                <span class="preview-btn">عرض التفاصيل</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="category-ribbon">بايثون</span>
-                <div class="quick-stats">
-                  <span class="stat"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Award Winner</span>
-                </div>
-              </div>
-              <h3 class="project-title">Vein Scanner</h3>
-              <p class="project-desc">جهاز طبي مبدئي لفحص الأوردة باستخدام الأشعة تحت الحمراء ومعالجة الصور المباشرة.</p>
-              <div class="project-tech-stack">
-                <span class="tech-chip">Python</span>
-                <span class="tech-chip">OpenCV</span>
-                <span class="tech-chip">Raspberry Pi</span>
-              </div>
-            </div>
-          </div>
-        </a>
-
-      </div>
-
-      <div class="section-cta reveal" style="margin-top: 50px;">
-        <a href="projects.html" class="btn btn-ghost premium-btn">عرض كل المشاريع</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== The Journey / About Section ===== -->
-  <section class="section evolved-about" id="about">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <div class="eyebrow">الرحلة والأثر</div>
-        <h2>رحلة صنعت Technopedia Arabia</h2>
-        <p>لم أبدأ كصانع محتوى، بل بدأت كمهندس يفكك الراديوهات واللعب القديمة ليكتشف سر التيار. هذه قصتي باختصار.</p>
-      </div>
-
-      <div class="about-story-grid">
-        
-        <div class="about-visual-side reveal">
-          <div class="visual-composition">
-            <div class="about-ambient-glow"></div>
-            
-            <div class="about-portrait-frame lab-portrait">
-              <div class="glass-reflection"></div>
-              <img src="assets/images/lab-avatar.jpg" alt="Ahmed Darwish in Lab" loading="lazy" onerror="this.src='assets/images/avatar.jpg'">
-              <div class="lab-tag-overlay">
-                <span>⚡ معمل الأنظمة المدمجة</span>
-              </div>
-            </div>
-
-            <div class="floating-chip chip-1" data-float-speed="0.04">
-              <span class="chip-dot"></span>
-              <span>أنظمة مدمجة و هاردوير</span>
-            </div>
-            <div class="floating-chip chip-2" data-float-speed="-0.06">
-              <span class="chip-dot ai-dot"></span>
-              <span>ذكاء اصطناعي وبايثون</span>
-            </div>
-            <div class="floating-chip chip-3" data-float-speed="0.05">
-              <span>شغف تبسيط المعرفة</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="about-narrative-side reveal reveal-delay-1">
-          
-          <div class="human-moment-box glass">
-            <span class="quote-mark">“</span>
-            <p>أكثر شيء يسعدني في هذه الدنيا هو تلك اللحظة التي يضيء فيها وجه طالب أو مهندس بعد ساعات من التعقيد، حين يفهم أخيرًا كيف تتحدث البرمجيات مع العتاد.</p>
-          </div>
-
-          <div class="story-chapter">
-            <span class="chapter-num">01 / الشغف الأول</span>
-            <h3>من تجميع الدوائر إلى احتراف الأنظمة المدمجة</h3>
-            <p>
-              بدأت حكايتي قبل أكثر من 18 عاماً من الفضول الخالص تجاه الشاشات والدوائر الإلكترونية. لم يكن الهدف شهادة، بل متعة صنع أشياء تعمل بحق. هذا الشغف قادني لدراسة الهندسة واختيار تخصص <strong>الأنظمة المدمجة (Embedded Systems)</strong> — حيث يلتقي قسوة الحديد بمرونة البرمجة.
-            </p>
-          </div>
-
-          <div class="story-chapter">
-            <span class="chapter-num">02 / رسالة المعلم</span>
-            <h3>لماذا وُلدت Technopedia Arabia؟</h3>
-            <p>
-              خلال سنوات عملي الطويلة في التدريس وتوجيه آلاف الطلاب، لاحظت أن أكبر عائق يواجه الشباب العربي ليس نقص الذكاء، بل غياب المصدر المبسط والعملي باللغة العربية. من هنا قررت أن أحول خبرتي إلى مصادر مفتوحة، ولسان حالي يقول: <strong>"ما تعلمته بجهد، أود أن أسهله لغيري"</strong>.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="journey-timeline reveal">
-        <div class="timeline-track"></div>
-        
-        <div class="timeline-node">
-          <span class="node-year">2008</span>
-          <div class="node-content">
-            <h4>بداية الشغف والتدريس</h4>
-            <p>انطلاق الشغف العملي بعلوم الكهرباء والتحكم وبدء أولى خطوات التدريب.</p>
-          </div>
-        </div>
-
-        <div class="timeline-node">
-          <span class="node-year">2014</span>
-          <div class="node-content">
-            <h4>تعميق خبرة الـ Embedded</h4>
-            <p>التركيز الكامل على تصميم الأنظمة المدمجة، الأردوينو، ومتحكمات الـ Microcontrollers.</p>
-          </div>
-        </div>
-
-        <div class="timeline-node">
-          <span class="node-year">2019</span>
-          <div class="node-content">
-            <h4>عالم الذكاء الاصطناعي</h4>
-            <p>دمج البرمجيات الحديثة، بايثون، وعلوم الرؤية الحاسوبية مع الهاردوير.</p>
-          </div>
-        </div>
-
-        <div class="timeline-node active">
-          <span class="node-year">اليوم</span>
-          <div class="node-content">
-            <h4>Technopedia Arabia</h4>
-            <p>منصة متكاملة لنشر العلم التقني وتوجيه جيل جديد من المهندسين.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="highlights-grid reveal">
-        
-        <div class="highlight-card glass">
-          <div class="highlight-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="highlight-data">
-            <b data-counter="18" data-suffix="+">18+</b>
-            <span>عاماً من الخبرة</span>
-            <p>سنوات من الممارسة والعمل الهندسي الميداني.</p>
-          </div>
-        </div>
-
-        <div class="highlight-card glass">
-          <div class="highlight-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
-          </div>
-          <div class="highlight-data">
-            <b data-counter="150" data-suffix="+">150+</b>
-            <span>مشروع هندسي</span>
-            <p>تطبيقات ومشاريع ذكية تم إطلاقها بنجاح.</p>
-          </div>
-        </div>
-
-        <div class="highlight-card glass">
-          <div class="highlight-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="highlight-data">
-            <b data-counter="4200" data-suffix="+">4200+</b>
-            <span>طالب تم توجيههم</span>
-            <p>مهندسون وشباب تعلموا وتأثروا بالمحتوى.</p>
-          </div>
-        </div>
-
-        <div class="highlight-card glass">
-          <div class="highlight-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          </div>
-          <div class="highlight-data">
-            <b data-counter="300" data-suffix="+">300+</b>
-            <span>فيديو تعليمي</span>
-            <p>محتوى مرئي تفصيلي ومصادر مفتوحة.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== Technology Ecosystem / Skills Section (Bento Grid) ===== -->
-  <section class="section evolved-skills" id="skills">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <div class="eyebrow">المنظومة التقنية</div>
-        <h2>Technology Ecosystem</h2>
-        <p>شبكة مترابطة من التخصصات والتقنيات التي تبني رؤيتي الهندسية، من العتاد إلى الذكاء الاصطناعي.</p>
-      </div>
-
-      <div class="bento-skills-grid">
-        
-        <div class="skill-bento-card card-large glass reveal">
-          <div class="card-metric-badge">18+ AI Projects</div>
-          <div class="skill-group-header">
-            <div class="skill-group-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12L2.7 9.1"/><path d="M12 12l9.3 2.9"/></svg>
-            </div>
-            <div>
-              <h3>الذكاء الاصطناعي والتعلم العميق</h3>
-              <span class="expertise-tag core">Core Expertise</span>
-            </div>
-          </div>
-          <p class="skill-group-desc">تطوير نماذج ذكية، رؤية حاسوبية، وتوظيف نماذج اللغة الكبيرة لحل مشكلات واقعية.</p>
-          
-          <div class="categorized-chips">
-            <div class="chip-category-group">
-              <span class="chip-cat-title">Frameworks & Vision</span>
-              <div class="chips-row">
-                <span class="tech-chip-item">Python</span>
-                <span class="tech-chip-item">TensorFlow</span>
-                <span class="tech-chip-item">PyTorch</span>
-                <span class="tech-chip-item">OpenCV</span>
-                <span class="tech-chip-item">MediaPipe</span>
-                <span class="tech-chip-item">YOLO</span>
-              </div>
-            </div>
-            <div class="chip-category-group">
-              <span class="chip-cat-title">AI Tools & Models</span>
-              <div class="chips-row">
-                <span class="tech-chip-item">Hugging Face</span>
-                <span class="tech-chip-item">OpenAI / Gemini</span>
-                <span class="tech-chip-item">Embedded AI</span>
-                <span class="tech-chip-item">Optimization</span>
-              </div>
-            </div>
-          </div>
-          <div class="skill-meta-footer">
-            <span>🏆 تطبيق عملي: نظام AraSign للغة الإشارة</span>
-          </div>
-        </div>
-
-        <div class="skill-bento-card card-wide glass reveal reveal-delay-1">
-          <div class="card-metric-badge">150+ Boards</div>
-          <div class="skill-group-header">
-            <div class="skill-group-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
-            </div>
-            <div>
-              <h3>الأنظمة المدمجة والمتحكمات</h3>
-              <span class="expertise-tag core">Core Expertise</span>
-            </div>
-          </div>
-          <p class="skill-group-desc">برمجة الأجهزة وتصميم البرمجيات الثابتة للمتحكمات الدقيقة.</p>
-          <div class="chips-row mt-auto">
-            <span class="tech-chip-item">Arduino</span>
-            <span class="tech-chip-item">ESP32</span>
-            <span class="tech-chip-item">STM32</span>
-            <span class="tech-chip-item">Raspberry Pi</span>
-            <span class="tech-chip-item">C / C++</span>
-          </div>
-        </div>
-
-        <div class="skill-bento-card card-tall glass reveal">
-          <div class="card-metric-badge">IoT & Cloud</div>
-          <div class="skill-group-header">
-            <div class="skill-group-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-            </div>
-            <div>
-              <h3>الروبوتات وإنترنت الأشياء</h3>
-              <span class="expertise-tag advanced">Advanced</span>
-            </div>
-          </div>
-          <p class="skill-group-desc">ربط الأجهزة بالسحاب وقراءة الحساسات لتحقيق الأتمتة الكاملة.</p>
-          <div class="chips-row mt-auto">
-            <span class="tech-chip-item">Sensors & Actuators</span>
-            <span class="tech-chip-item">Automation</span>
-            <span class="tech-chip-item">Firebase</span>
-            <span class="tech-chip-item">ThingSpeak</span>
-            <span class="tech-chip-item">Blynk</span>
-            <span class="tech-chip-item">REST APIs</span>
-          </div>
-        </div>
-
-        <div class="skill-bento-card glass reveal reveal-delay-1">
-          <div class="card-metric-badge">Tools</div>
-          <div class="skill-group-header">
-            <div class="skill-group-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <div>
-              <h3>البرمجة والأدوات</h3>
-              <span class="expertise-tag advanced">Advanced</span>
-            </div>
-          </div>
-          <p class="skill-group-desc">إدارة الشيفرات وتطوير الأنظمة البيئية.</p>
-          <div class="chips-row mt-auto">
-            <span class="tech-chip-item">JavaScript</span>
-            <span class="tech-chip-item">Git / GitHub</span>
-            <span class="tech-chip-item">Linux</span>
-            <span class="tech-chip-item">Docker</span>
-          </div>
-        </div>
-
-        <div class="skill-bento-card glass reveal reveal-delay-2">
-          <div class="card-metric-badge">R&D</div>
-          <div class="skill-group-header">
-            <div class="skill-group-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            </div>
-            <div>
-              <h3>الأبحاث والتطوير</h3>
-              <span class="expertise-tag supporting">Supporting</span>
-            </div>
-          </div>
-          <p class="skill-group-desc">استكشاف التقنيات الناشئة وبناء النماذج الأولية المبتكرة.</p>
-          <div class="chips-row mt-auto">
-            <span class="tech-chip-item">Technical R&D</span>
-            <span class="tech-chip-item">Prototyping</span>
-            <span class="tech-chip-item">Thermal Imaging</span>
-          </div>
-        </div>
-
-        <div class="skill-bento-card glass reveal">
-          <div class="card-metric-badge">4200+ Students</div>
-          <div class="skill-group-header">
-            <div class="skill-group-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            </div>
-            <div>
-              <h3>التعليم ونقل المعرفة</h3>
-              <span class="expertise-tag community">Community</span>
-            </div>
-          </div>
-          <p class="skill-group-desc">تبسيط العلوم الهندسية المعقدة للشباب العربي.</p>
-          <div class="chips-row mt-auto">
-            <span class="tech-chip-item">Curriculum Design</span>
-            <span class="tech-chip-item">Mentoring</span>
-            <span class="tech-chip-item">Content Creation</span>
-            <span class="tech-chip-item">Open Source</span>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== Impact & Milestones / Achievements Section ===== -->
-  <section class="section evolved-achievements" id="achievements">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <div class="eyebrow">الأثر والقيادة</div>
-        <h2>Impact & Milestones</h2>
-        <p>أدلة حقيقية على القيادة والمساهمة المجتمعية وبناء جسور المعرفة بين الأكاديمية والصناعة التقنية في العالم العربي.</p>
-      </div>
-
-      <div class="bento-achievements-grid">
-        
-        <div class="achievement-card card-large glass reveal">
-          <div class="achievement-badge">Educational Leadership</div>
-          <div class="achievement-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="achievement-content">
-            <h3>تمكين الجيل القادم من المهندسين</h3>
-            <p>بناء وتطوير برامج تعليمية عملية وتوجيهية أثمرت عن تمكين أكثر من <strong>4200 طالب ومهندس</strong> في مجالات الأنظمة المدمجة والذكاء الاصطناعي، مع التركيز على التطبيق الميداني لا النظرية البحتة.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card card-stat glass reveal reveal-delay-1">
-          <div class="achievement-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          </div>
-          <div class="achievement-content">
-            <h3>المكتبة المرجعية المفتوحة</h3>
-            <p>صناعة ونشر أكثر من <strong>300 فيديو ومصدر تقني مرئي</strong>، لتشكيل واحدة من أغنى المكتبات التعليمية باللغة العربية في هاردوير وبرمجة المتحكمات.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card card-stat glass reveal reveal-delay-2">
-          <div class="achievement-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/></svg>
-          </div>
-          <div class="achievement-content">
-            <h3>قيادة المشاريع التطبيقية</h3>
-            <p>الإشراف على وتطوير أكثر من <strong>150 مشروعاً هندسياً</strong> تجمع بين لغة Python، الرؤية الحاسوبية، والأنظمة المدمجة الذكية.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card card-wide glass reveal">
-          <div class="achievement-badge">Community Building</div>
-          <div class="achievement-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-          </div>
-          <div class="achievement-content">
-            <h3>تأسيس منصة Technopedia Arabia</h3>
-            <p>إطلاق منصة ومجتمع هادف يسعى لردم الهوة بين الصناعة العالمية والمحتوى العربي، عبر توفير مصادر وأدوات تقنية تخدم المبتكرين والباحثين العرب في شتى أنحاء المنطقة.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card card-standard glass reveal reveal-delay-1">
-          <div class="achievement-icon">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-          </div>
-          <div class="achievement-content">
-            <h3>ورش العمل والاستشارات</h3>
-            <p>تنفيذ ورش تدريبية ميدانية واستشارات هندسية متخصصة للفرق والأفراد الطامحين لتحويل أفكارهم البرمجية إلى منتجات حقيقية.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="impact-timeline-wrapper reveal" style="margin-top: 60px;">
-        <div class="impact-timeline-head">
-          <h4>محطات الأثر الزمني</h4>
-          <span>مسار التطور والمساهمة المجتمعية</span>
-        </div>
-        <div class="impact-timeline-steps">
-          <div class="impact-step">
-            <span class="step-year">2008</span>
-            <p>انطلاقة التدريس ونشر الشغف التقني الأول.</p>
-          </div>
-          <div class="step-line"></div>
-          <div class="impact-step">
-            <span class="step-year">2014</span>
-            <p>التركيز على عمق هندسة الأنظمة المدمجة.</p>
-          </div>
-          <div class="step-line"></div>
-          <div class="impact-step">
-            <span class="step-year">2019</span>
-            <p>الدمج بين الذكاء الاصطناعي والهاردوير.</p>
-          </div>
-          <div class="step-line"></div>
-          <div class="impact-step">
-            <span class="step-year">2023</span>
-            <p>تأسيس منصة Technopedia Arabia.</p>
-          </div>
-          <div class="step-line"></div>
-          <div class="impact-step active">
-            <span class="step-year">اليوم</span>
-            <p>بناء التعليم التقني العملي للعالم العربي.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== Knowledge Hub (Media & Content Section) ===== -->
-  <section class="section evolved-media" id="media">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <div class="eyebrow">المعرفة والمحتوى</div>
-        <h2>Knowledge Hub</h2>
-        <p>مركزا معرفياً تفاعلياً ومصادر متخصصة تجمع بين الذكاء الاصطناعي، الأنظمة المدمجة، والقيادة التقنية لإثراء المجتمع العربي.</p>
-      </div>
-
-      <div class="knowledge-search-bar reveal">
-        <div class="search-input-wrapper">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" id="knowledge-search-input" placeholder="ابحث في الدورات والمقالات (مثل: Python, ESP32, YOLO...)" aria-label="Search tutorials">
-        </div>
-        <div class="quick-tags-scroller">
-          <button type="button" class="q-tag active" data-tag="all">الكل</button>
-          <button type="button" class="q-tag" data-tag="python">Python</button>
-          <button type="button" class="q-tag" data-tag="arduino">Arduino</button>
-          <button type="button" class="q-tag" data-tag="yolo">YOLO</button>
-          <button type="button" class="q-tag" data-tag="esp32">ESP32</button>
-          <button type="button" class="q-tag" data-tag="opencv">OpenCV</button>
-          <button type="button" class="q-tag" data-tag="tensorflow">TensorFlow</button>
-        </div>
-      </div>
-
-      <div class="bento-media-grid" id="knowledge-grid">
-        
-        <div class="media-card card-featured glass reveal searchable-item" id="open-video-modal" role="button" tabindex="0" aria-label="Play Featured Masterclass" data-tags="ai python tensorflow vision">
-          <div class="media-badge dynamic-badge">
-            <span class="pulse-dot"></span>
-            <span id="dynamic-badge-text">الأحدث هذا الأسبوع</span>
-          </div>
-          <div class="media-thumbnail-wrapper">
-            <img id="dynamic-hero-thumb" src="assets/images/projects/project-1.jpg" alt="Featured Masterclass" class="media-thumb" loading="lazy">
-            <div class="play-button-overlay">
-              <div class="play-icon">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>
-            </div>
-            <div class="media-meta-tags">
-              <span class="tag-pill" id="dynamic-tag-pill">Advanced AI</span>
-              <span class="tag-pill time-pill" id="dynamic-time-pill">45 mins</span>
-            </div>
-          </div>
-          <div class="media-content">
-            <h3 id="dynamic-hero-title">بناء نظام رؤية حاسوبية متكامل لتعرف لغة الإشارة من الصفر</h3>
-            <p id="dynamic-hero-desc">دورة تشريحية مفصلة تبين كيفية دمج مكتبة MediaPipe مع شبكات TensorFlow لبناء نموذج ذكاء اصطناعي تفاعلي يعمل في الوقت الفعلي.</p>
-            <span class="media-cta-btn">
-              شاهد العرض الآن (داخل الموقع)
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
-          </div>
-        </div>
-
-        <div class="media-card card-standard glass reveal reveal-delay-1 searchable-item" data-tags="arduino esp32 embedded systems">
-          <div class="media-badge">Series</div>
-          <div class="media-content">
-            <span class="media-category">Embedded Systems</span>
-            <h3>سلسلة احتراف المتحكمات الدقيقة</h3>
-            <p>دليل عملي شامل لتصميم الدوائر وبرمجة المتحكمات بلغة C والتعامل مع الحساسات المتقدمة.</p>
-            <div class="media-footer">
-              <span class="difficulty-tag">Intermediate</span>
-              <span class="duration-hint">12 حلقة</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="media-card card-standard glass reveal reveal-delay-2 searchable-item" data-tags="python ai computer vision opencv">
-          <div class="media-badge">Guide</div>
-          <div class="media-content">
-            <span class="media-category">Python & AI</span>
-            <h3>دليل مهندس البرمجيات لعالم الهاردوير</h3>
-            <p>كيف تستخدم لغة بايثون للتحكم بالعتاد الفعلي عبر مكتبات الربط المباشر مع الحساسات.</p>
-            <div class="media-footer">
-              <span class="difficulty-tag">Beginner Friendly</span>
-              <span class="duration-hint">8 دقائق قراءة</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="media-card card-wide glass reveal searchable-item" data-tags="collections ai embedded arduino python">
-          <div class="media-badge">Collections & Playlists</div>
-          <div class="media-content">
-            <h3>مسارات التعلم التخصصية</h3>
-            <p>استكشف قوائم التشغيل المصممة بعناية لتأخذك من الأساسيات وحتى بناء مشاريع الإنتاج الحقيقي.</p>
-            <div class="collections-chips-row">
-              <span class="collection-pill">🤖 الذكاء الاصطناعي العملي</span>
-              <span class="collection-pill">⚡ الأنظمة المدمجة والـ IoT</span>
-              <span class="collection-pill">👁️ الرؤية الحاسوبية</span>
-              <span class="collection-pill">🐍 بايثون والبرمجة</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="media-card card-standard glass reveal reveal-delay-1 searchable-item" data-tags="resources downloads code">
-          <div class="media-badge">Free Resources</div>
-          <div class="media-content">
-            <span class="media-category">Downloads</span>
-            <h3>ملفات الأكواد والمخططات الهندسية</h3>
-            <p>حزم الشيفرات البرمجية ومخططات التوصيل الخاصة بالمشاريع متاحة للتحميل المباشر.</p>
-            <div class="media-footer">
-              <a href="projects.html" class="resource-link">تصفح المكتبة &larr;</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== Testimonials / Transformation Stories Section ===== -->
-  <section class="section evolved-testimonials" id="testimonials">
-    <div class="container">
-      
-      <div class="section-head reveal">
-        <div class="eyebrow">شهادات الأثر</div>
-        <h2>قصص تحول حقيقية</h2>
-        <p>ما يقوله من شاركوا في هذه الرحلة التقنية، وكيف تحولت المعرفة النظرية إلى مشاريع وتطبيقات واقعية.</p>
-      </div>
-
-      <div class="bento-testimonials-grid">
-        
-        <div class="testimonial-card card-featured glass reveal">
-          <div class="testimonial-header">
-            <div class="user-profile">
-              <div class="user-avatar-frame">
-                <img src="assets/images/testimonials/user-1.jpg" alt="د. طارق العبدالله" loading="lazy" onerror="this.src='assets/images/avatar.jpg'">
-              </div>
-              <div class="user-meta">
-                <div class="name-row">
-                  <h4>د. طارق العبدالله</h4>
-                  <span class="verified-badge" title="Verified Member">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-                  </span>
-                </div>
-                <span class="user-role">باحث في الذكاء الاصطناعي وأستاذ جامعي</span>
-              </div>
-            </div>
-            <span class="outcome-badge">Featured Story</span>
-          </div>
-          <div class="testimonial-body">
-            <p class="transformation-story">
-              "كنت أبحث طويلاً عن مصدر عربي يربط بعمق بين مكتبات بايثون الحديثة والعتاد الحقيقي. بفضل المنهجية التي يقدمها أحمد درويش، استطعت نقل أبحاث طلبتنا في الرؤية الحاسوبية من مجرد محاكاة نظرية على الورق إلى أنظمة تشغيل حية تفاعلية تفخر بها الجامعة."
-            </p>
-          </div>
-          <div class="testimonial-footer-meta">
-            <span>Transformation: Academic Theory to Real-World AI Deployment</span>
-          </div>
-        </div>
-
-        <div class="testimonial-card card-video glass reveal reveal-delay-1" id="open-testimonial-video" role="button" tabindex="0">
-          <div class="video-thumbnail-container">
-            <img src="assets/images/projects/project-2.jpg" alt="Video Testimonial Preview" class="video-thumb" loading="lazy">
-            <div class="play-overlay">
-              <div class="play-circle">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>
-            </div>
-            <span class="outcome-badge video-badge">Video Story</span>
-          </div>
-          <div class="testimonial-header compact">
-            <div class="user-profile">
-              <div class="user-avatar-frame small">
-                <img src="assets/images/testimonials/user-2.jpg" alt="مهندس رامي حسن" loading="lazy" onerror="this.src='assets/images/avatar.jpg'">
-              </div>
-              <div class="user-meta">
-                <div class="name-row">
-                  <h4>مهندس رامي حسن</h4>
-                  <span class="verified-badge"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>
-                </div>
-                <span class="user-role">مهندس أنظمة مدمجة</span>
-              </div>
-            </div>
-          </div>
-          <p class="transformation-story short">
-            "شاهدت كيف تحولت شركتنا الناشئة في إنترنت الأشياء بفضل شروحات الأردوينو والـ ESP32."
-          </p>
-        </div>
-
-        <div class="testimonial-card card-standard glass reveal reveal-delay-2">
-          <div class="testimonial-header">
-            <div class="user-profile">
-              <div class="user-avatar-frame">
-                <img src="assets/images/testimonials/user-3.jpg" alt="سارة المنصور" loading="lazy" onerror="this.src='assets/images/avatar.jpg'">
-              </div>
-              <div class="user-meta">
-                <div class="name-row">
-                  <h4>سارة المنصور</h4>
-                  <span class="verified-badge"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>
-                </div>
-                <span class="user-role">طريحة هندسة حاسب</span>
-              </div>
-            </div>
-            <span class="outcome-badge">Student Success</span>
-          </div>
-          <p class="transformation-story">
-            "دخلت مجال المبرمجيات والأنظمة المدمجة وأنا أشعر بالرهبة من تعقيد الهاردوير. الشرح العملي والمبسط كسر هذا الحاجز تماماً، والآن بنيت مشروعي التخرج الأول بنفسي."
-          </p>
-        </div>
-
-        <div class="testimonial-card card-standard glass reveal">
-          <div class="testimonial-header">
-            <div class="user-profile">
-              <div class="user-avatar-frame">
-                <img src="assets/images/testimonials/user-4.jpg" alt="م. خالد الزهراني" loading="lazy" onerror="this.src='assets/images/avatar.jpg'">
-              </div>
-              <div class="user-meta">
-                <div class="name-row">
-                  <h4>م. خالد الزهراني</h4>
-                  <span class="verified-badge"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg></span>
-                </div>
-                <span class="user-role">مطور برمجيات أول</span>
-              </div>
-            </div>
-            <span class="outcome-badge">Career Growth</span>
-          </div>
-          <p class="transformation-story">
-            "المحتوى التقني الذي يقدمه أحمد يتميز بالعمق والاحترافية النادرة. لا يقدم حلولاً مؤقتة، بل يعلمك كيف تفكر كمهندس يبتكر الحلول من جذورها."
-          </p>
-        </div>
-
-        <div class="testimonial-card card-cta glass reveal reveal-delay-1">
-          <div class="cta-card-content">
-            <div class="cta-icon-glow">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            </div>
-            <h3>Maybe your story will be the next one.</h3>
-            <p>سواء كنت باحثاً، مهندساً، أو طموحاً تبني مستقبل التقنية؛ دعنا نحول فكرتك القادمة إلى واقع ملموس.</p>
-            <a href="#contact" class="btn btn-primary premium-btn">تواصل معي الآن</a>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== Contact & Footer Section (Product Director Polished) ===== -->
-  <footer class="site-footer-wrapper" id="contact">
-    <div class="container">
-      
-      <div class="conversion-contact-card glass reveal">
-        
-        <div class="contact-header-content">
-          <div class="eyebrow">لنصنع شيئاً معاً</div>
-          <h2>هل لديك فكرة تريد تحويلها إلى واقع؟</h2>
-          <p>اختر مسار المحادثة الأنسب لاحتياجك، ودعنا نبدأ النقاش الهندسي أو التعليمي القادم.</p>
-        </div>
-
-        <div class="conversation-paths-grid" id="conversation-paths">
-          <button type="button" class="path-card active" data-path="project" data-placeholder="أخبرني عن تفاصيل مشروعك التقني وطموحاتك بشأنه...">
-            <div class="path-icon">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            </div>
-            <span>أملك مشروعاً تقنياً</span>
-          </button>
-
-          <button type="button" class="path-card" data-path="learn" data-placeholder="ما الذي تود تعلمه أو التطوير فيه (برمجة، ذكاء اصطناعي، هاردوير)؟">
-            <div class="path-icon">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            </div>
-            <span>أريد أن أتعلم وأتطور</span>
-          </button>
-
-          <button type="button" class="path-card" data-path="collab" data-placeholder="ما هي طبيعة التعاون الاستراتيجي الذي تقترحه؟">
-            <div class="path-icon">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <span>تعاون استراتيجي</span>
-          </button>
-
-          <button type="button" class="path-card" data-path="speaking" data-placeholder="أخبرني عن تفاصيل الحدث، الموعد، والجمهور المستهدف...">
-            <div class="path-icon">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-            </div>
-            <span>دعوة لمؤتمر أو ورشة</span>
-          </button>
-
-          <button type="button" class="path-card" data-path="partnership" data-placeholder="ما هي أهداف الشراكة التعليمية أو المجتمعية التي تسعى لها؟">
-            <div class="path-icon">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            </div>
-            <span>شراكة تعليمية</span>
-          </button>
-        </div>
-
-        <form class="minimal-contact-form" id="contact-form" action="#" method="POST">
-          <input type="hidden" id="selected-path-input" name="inquiry_type" value="project">
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label for="user-name">الاسم الكريم</label>
-              <input type="text" id="user-name" name="name" placeholder="اكتب اسمك هنا..." required autocomplete="name">
-            </div>
-            <div class="form-group">
-              <label for="user-email">البريد الإلكتروني</label>
-              <input type="email" id="user-email" name="email" placeholder="name@example.com" required autocomplete="email">
-            </div>
-          </div>
-
-          <div class="form-group full-width">
-            <label for="user-message">تفاصيل الرسالة أو المشروع</label>
-            <textarea id="user-message" name="message" rows="4" placeholder="أخبرني عن تفاصيل مشروعك التقني وطموحاتك بشأنه..." required></textarea>
-          </div>
-
-          <div class="form-submit-wrapper">
-            <button type="submit" class="btn btn-primary premium-btn submit-btn">
-              ابدأ المحادثة الآن
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </form>
-
-        <div class="footer-emotional-quote">
-          <p>ربما تبدأ فكرتك القادمة برسالة واحدة فقط.</p>
-        </div>
-
-      </div>
-
-      <div class="minimal-footer-bottom">
-        <div class="footer-brand-col">
-          <a href="#" class="footer-logo">Technopedia Arabia</a>
-          <p>هندسة الأنظمة المدمجة والذكاء الاصطناعي — نحو بناء جيل مبدع.</p>
-        </div>
-
-        <div class="footer-nav-col">
-          <ul class="footer-links">
-            <li><a href="#about">الرحلة</a></li>
-            <li><a href="#projects">المشاريع</a></li>
-            <li><a href="#skills">المنظومة</a></li>
-            <li><a href="#media">Knowledge Hub</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-social-col">
-          <a href="https://wa.me/201000000000" target="_blank" rel="noopener" aria-label="WhatsApp" class="social-icon-whatsapp" title="تواصل عبر واتساب">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          </a>
-          <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg>
-          </a>
-          <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          </a>
-          <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="footer-copyright-row">
-        <p>&copy; 2026 Technopedia Arabia — جميع الحقوق محفوظة.</p>
-        <p class="curiosity-tag">Built with AI + Engineering + Curiosity</p>
-      </div>
-
-    </div>
-  </footer>
-
-  <!-- Modals -->
-  <div class="knowledge-video-modal" id="video-modal" aria-hidden="true">
-    <div class="modal-backdrop" id="modal-backdrop"></div>
-    <div class="modal-dialog glass">
-      <button class="modal-close-btn" id="modal-close" aria-label="Close modal">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <button type="button" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <div class="modal-video-container">
-        <iframe id="youtube-iframe" src="" title="Masterclass Video Player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="lang-toggle">
+        <button type="button" data-lang="ar">AR</button>
+        <button type="button" data-lang="en">EN</button>
       </div>
-      <div class="modal-footer-info">
-        <span>بناء نظام رؤية حاسوبية متكامل لتعرف لغة الإشارة</span>
-        <a href="https://youtube.com" target="_blank" rel="noopener" class="external-yt-link">فتح في يوتيوب ↗</a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer">
+  <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+  <a href="support.html" data-i18n="nav.support" class="nav-cta">ادعمني</a>
+  <a href="index.html#about" data-i18n="nav.about">عني</a>
+  <a href="projects.html" data-i18n="nav.projects">المشاريع</a>
+  <a href="videos.html" data-i18n="nav.videos">الفيديوهات</a>
+  <a href="cv.html" data-i18n="nav.cv">السيرة الذاتية</a>
+  <div class="header-social mobile-social">
+      <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
+      <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+      <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5 8.5 8.5 0 0 1 21 11.5z"/><path d="M9 9c0 3 3 6 6 6"/></svg></a>
+  </div>
+</div>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-text">
+      <div class="hero-eyebrow">
+        <span data-i18n="hero.eyebrow">مرحباً، أنا</span>
+      </div>
+      <h1 data-i18n="hero.name">أحمد درويش</h1>
+      <div class="role">
+        <span data-i18n="hero.role1">مهندس برمجيات</span>
+        <span data-i18n="hero.roleAnd">و</span>
+        <span class="grad-text" data-i18n="hero.role2">ذكاء اصطناعي</span>
+      </div>
+      <p class="hero-slogan" data-i18n="hero.slogan">رقمنة عالمك تبدأ هنا</p>
+      <p class="hero-desc" data-i18n="hero.desc">أبني حلول تقنية عملية تجمع بين البرمجة والأنظمة المدمجة والذكاء الاصطناعي.</p>
+      <div class="hero-cta">
+        <a href="projects.html" class="btn btn-primary" data-i18n="hero.ctaProjects">شاهد مشاريعي</a>
+        <a href="assets/cv/Ahmed_Darwish_CV.pdf" class="btn btn-ghost" data-i18n="hero.ctaCV" download>تحميل السيرة الذاتية</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-ring"></div>
+      <div class="avatar-frame">
+        <img src="assets/images/avatar.jpg" alt="Ahmed Darwish">
+      </div>
+      <div class="floating-badge glass badge-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg>
+        <span data-i18n="hero.badge1">+150 مشروع</span>
+      </div>
+      <div class="floating-badge glass badge-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span data-i18n="hero.badge2">Python • AI</span>
+      </div>
+      <div class="floating-badge glass badge-3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg>
+        <span data-i18n="hero.badge3">Arduino • RPi</span>
       </div>
     </div>
   </div>
+  <div class="scroll-hint"><span data-i18n="hero.scroll">مرر لأسفل</span><span class="dot"></span></div>
+</section>
 
-  <div class="knowledge-video-modal" id="testimonial-video-modal" aria-hidden="true">
-    <div class="modal-backdrop" id="t-modal-backdrop"></div>
-    <div class="modal-dialog glass">
-      <button class="modal-close-btn" id="t-modal-close" aria-label="Close modal">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-      <div class="modal-video-container">
-        <iframe id="t-youtube-iframe" src="" title="Video Testimonial Player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<!-- ===== About ===== -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="stats-row">
+          <div class="stat-card glass"><b data-counter="150" data-suffix="+">0</b><span data-i18n="about.stat1">مشروع هندسي متكامل</span></div>
+          <div class="stat-card glass"><b data-counter="16" data-suffix="+">0</b><span data-i18n="about.stat2">عاماً من الابتكار</span></div>
+          <div class="stat-card glass"><b data-counter="250" data-suffix="+">0</b><span data-i18n="about.stat3">مهندس وطالب تم توجيههم</span></div>
+        </div>
       </div>
-      <div class="modal-footer-info">
-        <span>شهادة مهندس رامي حسن - تأثير دورات الأنظمة المدمجة</span>
-        <span style="color: var(--primary);">Verified Transformation Story</span>
+      <div class="reveal reveal-delay-1 about-copy">
+        <div class="eyebrow" data-i18n="about.eyebrow">نبذة عني</div>
+        <h2 data-i18n="about.title">من أنا</h2>
+        <p>
+          <strong class="about-lead">أحوّل الأفكار المعقدة إلى أنظمة مدمجة ذكية، وأبني جسوراً بين عتاد الهاردوير وخوارزميات الذكاء الاصطناعي.</strong>
+          <span>بخبرة تتجاوز 16 عاماً، أجمع بين الشغف الهندسي والرسالة الأكاديمية. لا يقتصر دوري على تصميم اللوحات الإلكترونية، بل يمتد لقيادة المعامل التقنية لتمكين الجيل القادم.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2" style="margin-top:60px; text-align:center;">
+      <h3 style="margin-bottom:22px;" data-i18n="about.skillsTitle">التقنيات والأدوات</h3>
+      <div class="pill-cloud">
+        <span class="pill">Python</span>
+        <span class="pill" dir="ltr">C/C++ &amp; Arduino</span>
+        <span class="pill">Raspberry Pi</span>
+        <span class="pill">OpenCV</span>
+        <span class="pill">Machine Learning</span>
+        <span class="pill">Embedded Systems</span>
+        <span class="pill">Digital Circuit Design</span>
+        <span class="pill">Git / GitHub</span>
       </div>
     </div>
   </div>
+</section>
 
-  <script src="main.js"></script>
+<!-- ===== Why Work With Me ===== -->
+<section class="section section--tight why-work-section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="why.eyebrow">لماذا تختارني؟</div>
+      <h2 data-i18n="why.title">لماذا تعمل معي؟</h2>
+      <p data-i18n="why.desc">قيمة مضافة وخبرة حقيقية تضع مشروعك في قمة الريادة التقنية.</p>
+    </div>
+    <div class="grid grid-4 why-work-grid">
+      <div class="glass reveal why-card">
+        <h3 data-i18n="why.card1Title">+16 عاماً خبرة</h3>
+        <p data-i18n="why.card1Desc">مسيرة طويلة من الابتكار وتطوير الأنظمة المعقدة والثابتة.</p>
+      </div>
+      <div class="glass reveal reveal-delay-1 why-card">
+        <h3 data-i18n="why.card2Title">AI + الأنظمة المدمجة</h3>
+        <p data-i18n="why.card2Desc">دمج احترافي بين ذكاء البرمجيات وقوة عتاد الهاردوير.</p>
+      </div>
+      <div class="glass reveal reveal-delay-2 why-card">
+        <h3 data-i18n="why.card3Title">تعليم + صناعة</h3>
+        <p data-i18n="why.card3Desc">القدرة على تبسيط أعقد المعارف ونقلها بأسلوب أكاديمي وعملي.</p>
+      </div>
+      <div class="glass reveal reveal-delay-3 why-card">
+        <h3 data-i18n="why.card4Title">حلول شاملة</h3>
+        <p data-i18n="why.card4Desc">إدارة المشروع من الفكرة والتصميم وحتى التنفيذ والإطلاق.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Featured Projects ===== -->
+<section class="section section--tight" id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="projects.eyebrow">أعمالي</div>
+      <h2 data-i18n="projects.title">مشاريع مختارة</h2>
+      <p data-i18n="projects.desc">مجموعة من مشاريعي في البرمجة والأنظمة المدمجة والذكاء الاصطناعي.</p>
+    </div>
+    <div class="grid grid-3" id="featured-projects-grid"></div>
+    <div class="section-cta reveal">
+      <a href="projects.html" class="btn btn-ghost" data-i18n="projects.viewAll">عرض كل المشاريع</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Featured Videos (hidden until content is ready) ===== -->
+<section class="section section--tight is-hidden" id="videos">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="videos.eyebrow">شاهد واتعلم</div>
+      <h2 data-i18n="videos.title">أحدث الفيديوهات</h2>
+      <p data-i18n="videos.desc">شروحات ومشاريع مصورة على قناتي — تعلم بالخطوة خطوة.</p>
+    </div>
+    <div class="grid grid-3" id="featured-videos-grid"></div>
+    <div class="section-cta reveal">
+      <a href="videos.html" class="btn btn-ghost" data-i18n="videos.viewAll">كل الفيديوهات</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CV Summary ===== -->
+<section class="section section--tight" id="cv">
+  <div class="container">
+    <div class="glass reveal" style="padding:50px; text-align:center; max-width:720px; margin-inline:auto;">
+      <div class="eyebrow" data-i18n="cv.eyebrow">مسيرتي المهنية</div>
+      <h2 data-i18n="cv.title">سيرتي الذاتية</h2>
+      <p data-i18n="cv.desc">نظرة سريعة على خبراتي، مهاراتي، وشهاداتي.</p>
+      <div class="hero-cta" style="justify-content:center; margin-top:10px;">
+        <a href="cv.html" class="btn btn-primary" data-i18n="cv.viewFull">عرض السيرة كاملة</a>
+        <a href="assets/cv/Ahmed_Darwish_CV.pdf" class="btn btn-ghost" data-cv-download data-i18n="cv.download" download>تحميل PDF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Support teaser ===== -->
+<section class="section section--tight" id="support">
+  <div class="container">
+    <div class="glass reveal" style="padding:50px; text-align:center; max-width:780px; margin-inline:auto;">
+      <div class="eyebrow" data-i18n="support.eyebrow">ادعمني</div>
+      <h2 style="font-size: 2.2rem; margin-bottom: 20px;">كن شريكاً في صناعة الأثر 🚀</h2>
+      <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 30px; font-size: 1.05rem;">
+        لأكثر من 16 عاماً، أخذت على عاتقي تفكيك أعقد المفاهيم الهندسية وإتاحتها كمصادر مفتوحة. هذا المحتوى يستهلك آلاف الساعات وتكاليف مستمرة. دعمك ليس مجرد مبلغ؛ بل هو رسالة تقول: <strong>"استمر، نحن نؤمن بما تفعل"</strong>.
+      </p>
+      <div class="hero-cta" style="justify-content:center; margin-top:10px; gap: 15px; flex-wrap: wrap;">
+        <a href="https://ko-fi.com/eng_ahmeddarwish" target="_blank" class="btn btn-primary btn-pulse" style="background: #FF5E5B; border-color: #FF5E5B;">☕ ادعمني عبر Ko-fi</a>
+        <a href="https://buymeacoffee.com/eng_ahmeddarwish" target="_blank" class="btn btn-ghost" style="background: #FFDD00; color: #000; border-color: #FFDD00;">🍕 ادعمني عبر Buy Me a Coffee</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer custom-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid-wrapper">
+      <div class="footer-col-brand">
+        <a href="index.html" class="brand">
+          <img src="assets/images/logo.png" alt="Technopedia Arabia logo">
+          <span>Technopedia Arabia</span>
+        </a>
+        <p data-i18n="footer.tagline">أبني تقنية تستحق المشاركة لتحويل الأفكار إلى واقع ذكي.</p>
+        <div class="footer-social-icons">
+          <a href="https://github.com/eahmeddarwish" target="_blank" aria-label="GitHub"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
+          <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col-links">
+        <h4 data-i18n="footer.quickLinks">روابط سريعة</h4>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.home">الرئيسية</a></li>
+          <li><a href="projects.html" data-i18n="nav.projects">المشاريع</a></li>
+          <li><a href="cv.html" data-i18n="nav.cv">السيرة الذاتية</a></li>
+          <li><a href="support.html" data-i18n="nav.support">ادعمني</a></li>
+        </ul>
+      </div>
+      <div class="footer-col-tech">
+        <h4 data-i18n="footer.techTitle">الخبرات والتقنيات</h4>
+        <p>Embedded Systems, Python, AI, Arduino, Raspberry Pi, IoT & Digital Circuit Design.</p>
+      </div>
+      <div class="footer-col-contact">
+        <h4 data-i18n="footer.contactTitle">تواصل مباشر</h4>
+        <p data-i18n="footer.location">الكويت</p>
+        <a href="mailto:e_ahmeddarwish@hotmail.com">e_ahmeddarwish@hotmail.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year></span> Technopedia Arabia — <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></span>
+      <a href="index.html" data-i18n="footer.backHome">العودة للرئيسية</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/projects-data.js"></script>
+<script src="js/videos-data.js"></script>
+<script src="js/cv-data.js"></script>
+<script src="js/projects-render.js"></script>
+<script src="js/videos-render.js"></script>
+<script src="js/main.js" defer></script>
 </body>
 </html>
