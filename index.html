@@ -79,8 +79,8 @@ h1,h2,h3,h4{font-family:var(--font);line-height:1.2;margin:0;font-weight:800}
 /* reading progress + bg canvas */
 .reading-progress{position:fixed;top:0;inset-inline:0;height:3px;transform:scaleX(0);transform-origin:right;background:linear-gradient(90deg,var(--neon),var(--neon-2));z-index:100;transition:transform .1s linear}
 html[dir="ltr"] .reading-progress{transform-origin:left}
-#bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.5;pointer-events:none}
-html[data-theme="dark"] #bg-canvas{opacity:.35}
+#bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.62;pointer-events:none}
+html[data-theme="dark"] #bg-canvas{opacity:.5}
 body>*:not(#bg-canvas){position:relative;z-index:1}
 
 /* ---------- section + numbered head ---------- */
@@ -100,31 +100,37 @@ body>*:not(#bg-canvas){position:relative;z-index:1}
 .btn-primary{background:var(--neon);color:#fff;border-color:var(--neon)}
 html[data-theme="dark"] .btn-primary{color:#1a0a00}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(var(--neon-rgb),.6)}
-.btn-outline{border-color:var(--neon);color:var(--neon);font-family:var(--mono)}
+.btn-outline{border-color:var(--neon);color:var(--neon)}
 .btn-outline:hover{background:var(--neon);color:#fff}
 html[data-theme="dark"] .btn-outline:hover{color:#1a0a00}
 .btn-ghost{border-color:var(--border);color:var(--muted)}
 .btn-ghost:hover{border-color:var(--neon);color:var(--text)}
 .btn-sm{padding:9px 16px;font-size:13.5px}
+@media (hover:hover){
+  .hero-cta:has(.btn-outline:hover) .btn-primary{background:transparent;color:var(--muted);border-color:var(--border);box-shadow:none;transform:none}
+  .hero-cta:has(.btn-outline:hover) .btn-outline{background:var(--neon);color:#fff}
+  html[data-theme="dark"] .hero-cta:has(.btn-outline:hover) .btn-outline{color:#1a0a00}
+}
 
 /* ---------- header ---------- */
 .site-header{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 82%,transparent);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-soft)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;height:var(--header-h)}
 .brand{display:flex;align-items:center;gap:10px;min-width:0}
-.brand img{height:38px;width:38px;object-fit:contain;flex-shrink:0;transition:filter .4s var(--ease)}
+.brand img{height:44px;width:44px;object-fit:contain;flex-shrink:0;transition:filter .4s var(--ease),transform .25s var(--ease)}
+.brand:hover img{transform:scale(1.06)}
 html[data-theme="dark"] .brand img{filter:brightness(0) saturate(100%) invert(62%) sepia(69%) saturate(1500%) hue-rotate(346deg) brightness(103%)}
 .brand-name{font-weight:800;font-size:17px;white-space:nowrap}
 .brand-name .neon{font-weight:900}
-.brand-name small{display:block;font-size:11px;color:var(--dim);font-weight:500}
+.brand-name small{display:block;font-size:12.5px;color:var(--muted);font-weight:600;letter-spacing:.01em}
 .nav-links{display:flex;align-items:center;gap:26px}
 .nav-links a{font-size:15.5px;color:var(--muted);font-weight:600;transition:color .2s}
 .nav-links a:hover,.nav-links a.active{color:var(--neon)}
 .header-actions{display:flex;align-items:center;gap:10px}
 .hdr-social{display:flex;align-items:center;gap:4px}
-.hdr-social a{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:var(--muted);border:1px solid transparent;transition:all .2s}
-.hdr-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-2px)}
-.hdr-social svg{width:16px;height:16px}
+.hdr-social a{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;color:var(--muted);border:1px solid transparent;transition:all .2s}
+.hdr-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-2px) scale(1.12)}
+.hdr-social svg{width:18px;height:18px}
 .icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--border);color:var(--text);background:var(--surface);transition:all .2s var(--ease);flex-shrink:0}
 .icon-btn:hover{border-color:var(--neon);color:var(--neon);transform:translateY(-2px)}
 .icon-btn svg{width:18px;height:18px}
@@ -138,14 +144,24 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
 /* prominent support button (point 2) */
 .support-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:100px;
   font-weight:800;font-size:14.5px;color:#fff;
-  background:linear-gradient(120deg,var(--neon),#fb5f7a);
-  box-shadow:0 8px 22px -8px rgba(var(--neon-rgb),.75);position:relative;overflow:hidden}
-.support-cta svg{width:16px;height:16px}
+  background:var(--neon);
+  box-shadow:0 8px 22px -8px rgba(var(--neon-rgb),.7);position:relative;overflow:hidden}
+.support-cta svg{width:16px;height:16px;transform-origin:center;animation:heartbeat 1.5s ease-in-out infinite}
+@keyframes heartbeat{0%,55%,100%{transform:scale(1)}15%{transform:scale(1.3)}30%{transform:scale(1)}42%{transform:scale(1.16)}}
 .support-cta::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#fff;opacity:0;transition:opacity .25s}
 .support-cta:hover::after{opacity:.12}
 .support-cta:hover{transform:translateY(-2px)}
 .nav-toggle{display:none;width:40px;height:40px;place-items:center;border-radius:10px;border:1px solid var(--border);color:var(--text)}
 .nav-toggle svg{width:20px;height:20px}
+.nav-drawer{position:fixed;top:var(--header-h);inset-inline:0;z-index:55;background:var(--bg);border-bottom:1px solid var(--border);box-shadow:var(--shadow);transform:translateY(-14px);opacity:0;pointer-events:none;transition:transform .28s var(--ease),opacity .28s var(--ease)}
+.nav-drawer.open{transform:none;opacity:1;pointer-events:auto}
+.nav-drawer .container{display:flex;flex-direction:column;padding-block:10px}
+.nav-drawer a.dl{font-size:18px;font-weight:700;color:var(--text);padding:13px 4px;border-bottom:1px solid var(--border-soft)}
+.nav-drawer a.dl:hover{color:var(--neon)}
+.nav-drawer .dr-social{display:flex;gap:9px;margin-top:14px}
+.nav-drawer .dr-social a{width:44px;height:44px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--border);color:var(--muted);transition:all .2s}
+.nav-drawer .dr-social a:hover{color:var(--neon);border-color:var(--neon-line)}
+.nav-drawer .dr-social svg{width:20px;height:20px}
 
 /* ---------- hero ---------- */
 .hero{padding:56px 0 40px}
@@ -161,9 +177,9 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
 /* social row: icons on the (inline) start, label after — point 6 */
 .hero-social{display:flex;align-items:center;gap:8px;margin-top:26px;color:var(--muted)}
 .hero-social .lbl{font-family:var(--mono);font-size:12.5px;color:var(--dim)}
-.hero-social a{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--border);transition:all .2s}
-.hero-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-3px)}
-.hero-social svg{width:18px;height:18px}
+.hero-social a{width:42px;height:42px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--border);transition:all .2s}
+.hero-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-3px) scale(1.1)}
+.hero-social svg{width:20px;height:20px}
 
 /* hero visual: avatar (static ring, NO spinning ellipse) + tidy badges + terminal */
 .hero-visual{position:relative;display:flex;flex-direction:column;align-items:center;gap:20px}
@@ -172,11 +188,12 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
   border:2px solid var(--neon);box-shadow:0 0 0 6px var(--neon-soft),var(--shadow)}
 .avatar-frame img{width:100%;height:100%;object-fit:cover}
 .badge{position:absolute;display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:100px;
-  background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);font-size:12.5px;font-weight:700;white-space:nowrap;font-family:var(--mono)}
+  background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);font-size:12.5px;font-weight:700;white-space:nowrap;font-family:var(--mono);animation:floatB 5s ease-in-out infinite}
 .badge svg{width:15px;height:15px;color:var(--neon)}
-.badge.b1{top:6%;inset-inline-start:-14%}
-.badge.b2{top:46%;inset-inline-end:-18%}
-.badge.b3{bottom:4%;inset-inline-start:-8%}
+.badge.b1{top:2%;inset-inline-start:-26%;animation-delay:0s}
+.badge.b2{top:44%;inset-inline-end:-30%;animation-delay:1.4s}
+.badge.b3{bottom:2%;inset-inline-start:-12%;animation-delay:2.6s}
+@keyframes floatB{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 /* animated terminal card */
 .terminal{width:100%;max-width:360px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);direction:ltr;text-align:left}
 .term-bar{display:flex;align-items:center;gap:7px;padding:9px 13px;background:var(--bg-soft);border-bottom:1px solid var(--border-soft)}
@@ -211,6 +228,8 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
 .pay-txt span{font-size:12.5px;color:var(--dim)}
 .pay .go{margin-inline-start:auto;color:var(--dim);flex-shrink:0}
 .pay .go svg{width:18px;height:18px}
+.pay-more{display:block;text-align:center;font-size:13px;color:var(--muted);padding:10px 8px 0;font-family:var(--mono)}
+.pay-more:hover{color:var(--neon)}
 
 /* ---------- about + tech ecosystem merged (points 8+9) ---------- */
 .about-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:40px;align-items:start}
@@ -256,7 +275,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
 .proj-more p{color:var(--muted);font-size:15px;margin:0}
 
 /* ---------- contact (point 14): attractive + dropdown ---------- */
-.contact-card{max-width:680px;margin-inline:auto;background:linear-gradient(180deg,var(--surface),var(--card));
+.contact-card{max-width:760px;margin-inline:auto;background:linear-gradient(180deg,var(--surface),var(--card));
   border:1px solid var(--border);border-radius:var(--radius-lg);padding:38px;box-shadow:var(--shadow)}
 .contact-head{text-align:center;margin-bottom:26px}
 .contact-head h2{font-size:clamp(22px,3vw,30px);font-weight:900}
@@ -269,24 +288,41 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
 .field textarea{resize:vertical;min-height:110px}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .contact-card .btn-primary{width:100%;margin-top:6px;padding:14px}
+.contact-or{display:flex;align-items:center;gap:12px;margin:16px 0 2px;color:var(--dim);font-size:13px;font-family:var(--mono)}
+.contact-or::before,.contact-or::after{content:"";height:1px;flex:1;background:var(--border)}
+.btn-wa{width:100%;background:#25D366;color:#08361f;border-color:#25D366;font-weight:800}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(37,211,102,.5)}
+.btn-wa svg{width:19px;height:19px}
 
 /* ---------- footer (point 15): big logo, name, links, rights at bottom ---------- */
 .site-footer{border-top:1px solid var(--border);background:var(--bg-soft);margin-top:20px}
-.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding:50px 0 34px}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:36px;padding:56px 0 36px}
 .f-brand .brand{gap:12px;margin-bottom:14px}
-.f-brand .brand img{height:52px;width:52px}
-.f-brand .brand-name{font-size:22px}
-.f-brand p{color:var(--muted);font-size:15px;max-width:34ch;margin:0 0 16px}
+.f-brand .brand img{height:60px;width:60px}
+.f-brand .brand-name{font-size:24px}
+.f-brand p{color:var(--muted);font-size:16px;max-width:32ch;margin:0 0 16px}
 .f-social{display:flex;gap:8px}
 .f-social a{width:40px;height:40px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--border);color:var(--muted);transition:all .2s}
 .f-social a:hover{color:var(--neon);border-color:var(--neon-line);transform:translateY(-3px)}
 .f-social svg{width:19px;height:19px}
-.f-col h4{font-size:16px;font-weight:800;margin-bottom:14px}
+.f-col h4{font-size:17px;font-weight:800;margin-bottom:16px}
 .f-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.f-col a{color:var(--muted);font-size:15px;transition:color .2s}
+.f-col a{color:var(--muted);font-size:15.5px;transition:color .2s}
 .f-col a:hover{color:var(--neon)}
 .f-col p{color:var(--muted);font-size:15px;margin:0 0 8px}
-.footer-bottom{border-top:1px solid var(--border);padding:20px 0;text-align:center;color:var(--dim);font-size:14px;font-family:var(--mono)}
+.f-social-list{display:flex;flex-direction:column;gap:11px}
+.f-social-row{display:flex;align-items:center;gap:11px;color:var(--muted);font-size:15px;font-weight:600;transition:color .2s}
+.f-social-row .ic{width:40px;height:40px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--border);flex-shrink:0;transition:all .2s}
+.f-social-row:hover{color:var(--neon)}
+.f-social-row:hover .ic{border-color:var(--neon-line);transform:scale(1.1)}
+.f-social-row svg{width:20px;height:20px}
+.f-contact-list{display:flex;flex-direction:column;gap:13px}
+.f-contact-row{display:flex;align-items:center;gap:11px;color:var(--muted);font-size:15.5px}
+.f-contact-row .ic{color:var(--neon);flex-shrink:0;display:grid;place-items:center}
+.f-contact-row svg{width:19px;height:19px}
+.f-contact-row a{color:var(--muted)}
+.f-contact-row a:hover{color:var(--neon)}
+.footer-bottom{border-top:1px solid var(--border);padding:22px 0;text-align:center;color:var(--dim);font-size:14.5px;font-family:var(--mono)}
 
 /* ---------- mobile bottom app-bar (app-shell feel) ---------- */
 .app-bar{display:none;position:fixed;inset-inline:0;bottom:0;z-index:70;
@@ -315,7 +351,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
   .about-grid{grid-template-columns:1fr;gap:30px}
 }
 @media (max-width:860px){
-  .nav-links,.hdr-social,.header-actions .lang-toggle,.header-actions .btn-resume{display:none}
+  .nav-links,.hdr-social{display:none}
   .nav-toggle{display:grid}
   .proj-grid{grid-template-columns:1fr}
   .footer-top{grid-template-columns:1fr 1fr;gap:28px}
@@ -335,6 +371,8 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
   .f-brand p{margin-inline:auto}.f-social{justify-content:center}
   .f-col ul{align-items:center}
   .support-cta{padding:8px 14px;font-size:13px}
+  .brand-name small{display:none}
+  .footer-top{gap:24px}
 }
 /* hide the absolutely-positioned badges on small screens, show inline row instead */
 .badges-mobile{display:none}
@@ -349,7 +387,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
 <header class="site-header">
   <div class="container header-inner">
     <a href="index.html" class="brand" aria-label="Technopedia Arabia">
-      <img src="assets/images/logo.png" alt="Technopedia Arabia" width="38" height="38">
+      <img src="assets/images/logo.png" alt="شعار Technopedia Arabia" width="44" height="44">
       <span class="brand-name">Technopedia <span class="neon">Arabia</span>
         <small data-i18n="brand.tag">مهندس أنظمة مدمجة & AI</small></span>
     </a>
@@ -362,6 +400,10 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
     </nav>
 
     <div class="header-actions">
+      <a href="support.html" class="support-cta" data-i18n="nav.support">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.3-9.3-8.2C.9 10 1.9 6.2 5 5.1c2-.7 4 .1 5 1.9 1-1.8 3-2.6 5-1.9 3.1 1.1 4.1 4.9 2.3 7.7C18.7 16.7 12 21 12 21z"/></svg>
+        ادعمني
+      </a>
       <div class="hdr-social">
         <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
         <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
@@ -376,13 +418,28 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
         <button type="button" data-lang="ar" class="active">AR</button>
         <button type="button" data-lang="en">EN</button>
       </div>
-      <a href="support.html" class="support-cta" data-i18n="nav.support">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.3-9.3-8.2C.9 10 1.9 6.2 5 5.1c2-.7 4 .1 5 1.9 1-1.8 3-2.6 5-1.9 3.1 1.1 4.1 4.9 2.3 7.7C18.7 16.7 12 21 12 21z"/></svg>
-        ادعمني
-      </a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="القائمة" aria-expanded="false" aria-controls="nav-drawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
     </div>
   </div>
 </header>
+
+<div class="nav-drawer" id="nav-drawer">
+  <div class="container">
+    <a href="#about" class="dl" data-i18n="nav.about">عني</a>
+    <a href="#projects" class="dl" data-i18n="nav.projects">المشاريع</a>
+    <a href="#contact" class="dl" data-i18n="nav.contact">تواصل</a>
+    <a href="cv.html" class="dl" data-i18n="nav.cv">السيرة الذاتية</a>
+    <a href="support.html" class="dl" data-i18n="nav.support">ادعمني</a>
+    <div class="dr-social">
+      <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.4 0C6.1 2.8 5 3.1 5 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 3.6 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.1-.5 2V21"/></svg></a>
+      <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 13v4"/></svg></a>
+      <a href="https://wa.me/96551105252" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5z"/></svg></a>
+      <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
+    </div>
+  </div>
+</div>
 
 <!-- ===== Hero ===== -->
 <section class="hero" id="home">
@@ -409,7 +466,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
     <div class="hero-visual">
       <div class="avatar-wrap">
         <div class="avatar-frame">
-          <img src="assets/images/avatar.jpg" alt="أحمد درويش" width="280" height="280" fetchpriority="high">
+          <img src="assets/images/avatar.jpg" alt="أحمد درويش — مهندس أنظمة مدمجة وذكاء اصطناعي" width="280" height="280" fetchpriority="high">
         </div>
         <span class="badge b1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg> <span data-i18n="badge.projects">+150 مشروع</span></span>
         <span class="badge b2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> <span data-i18n="badge.years">16+ سنة خبرة</span></span>
@@ -443,9 +500,9 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
         <span class="pay-txt"><b>Ko-fi</b><span data-i18n="pay.kofi">دعم سريع بأي مبلغ</span></span>
         <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></span>
       </a>
-      <a class="pay" href="https://buymeacoffee.com/eng_ahmeddarwish" target="_blank" rel="noopener">
-        <span class="pay-ic">🍕</span>
-        <span class="pay-txt"><b>Buy Me a Coffee</b><span data-i18n="pay.bmc">ادعم بكوباية قهوة</span></span>
+      <a class="pay" href="https://paypal.me/YOUR_PAYPAL" target="_blank" rel="noopener">
+        <span class="pay-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 21l2-13h6a4 4 0 0 1 0 8H9"/><path d="M9 21l2-13"/></svg></span>
+        <span class="pay-txt"><b>PayPal</b><span data-i18n="pay.paypal">دعم دولي مباشر</span></span>
         <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></span>
       </a>
       <a class="pay" href="support.html">
@@ -453,6 +510,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
         <span class="pay-txt"><b data-i18n="pay.bank">تحويل بنكي مباشر</b><span data-i18n="pay.bankSub">IBAN / SWIFT عبر NBK</span></span>
         <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></span>
       </a>
+      <a class="pay-more" href="support.html" data-i18n="pay.more">طرق دعم إضافية — Buy Me a Coffee · InstaPay داخل صفحة الدعم ←</a>
     </div>
   </div>
 </section>
@@ -500,7 +558,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
     <div class="section-head reveal"><span class="n mono">02</span><h2 data-i18n="projects.title">مشاريع مختارة</h2><span class="line"></span></div>
     <div class="proj-grid">
       <article class="proj-card reveal">
-        <div class="proj-media"><img src="assets/images/drone-detection-yolov5.png" alt="Drone Detection YOLOv5" loading="lazy" width="480" height="270"></div>
+        <div class="proj-media"><img src="assets/images/drone-detection-yolov5.png" alt="نظام كشف وتتبّع الطائرات المسيّرة بـ YOLOv5 على Raspberry Pi 4" loading="lazy" width="480" height="270"></div>
         <div class="proj-body">
           <h3 data-i18n="proj.drone.t">كشف وتتبّع الطائرات المسيّرة</h3>
           <p data-i18n="proj.drone.d">نظام يكشف الطائرات المسيّرة لحظيًا ويتتبعها بكاميرا على موتورات Pan/Tilt، شغّال بالكامل على Raspberry Pi 4 بدون GPU.</p>
@@ -513,7 +571,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
       </article>
 
       <article class="proj-card reveal">
-        <div class="proj-media"><img src="assets/images/Visual-Trigger.png" alt="Visual Trigger Studio" loading="lazy" width="480" height="270"></div>
+        <div class="proj-media"><img src="assets/images/Visual-Trigger.png" alt="استوديو المشغّلات البصرية — نموذج CLIP يعمل داخل المتصفح عبر WebAssembly" loading="lazy" width="480" height="270"></div>
         <div class="proj-body">
           <h3 data-i18n="proj.vts.t">استوديو المشغّلات البصرية</h3>
           <p data-i18n="proj.vts.d">نموذج CLIP للرؤية الحاسوبية يعمل داخل المتصفح عبر WebAssembly — يتعرّف على أي صورة مرجعية وينفّذ فعلاً تختاره، بدون سيرفر أو عتاد.</p>
@@ -526,7 +584,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
       </article>
 
       <article class="proj-card reveal">
-        <div class="proj-media"><img src="assets/images/universal-market-predictor-deluxe.png" alt="Universal Market Predictor" loading="lazy" width="480" height="270"></div>
+        <div class="proj-media"><img src="assets/images/universal-market-predictor-deluxe.png" alt="متنبئ الأسواق الشامل Deluxe — نموذج LSTM للتنبؤ بالأسهم والعملات الرقمية" loading="lazy" width="480" height="270"></div>
         <div class="proj-body">
           <h3 data-i18n="proj.ump.t">متنبئ الأسواق الشامل — Deluxe</h3>
           <p data-i18n="proj.ump.d">نموذج LSTM واحد يتنبأ بأي سهم أو عملة رقمية على مدى 1/3/7 أيام، مع اختبار دلالة إحصائية يوضّح هل فيه ميزة تنبؤية حقيقية أم لا.</p>
@@ -571,8 +629,14 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
           <div class="field"><label for="c-name" data-i18n="contact.name">الاسم</label><input type="text" id="c-name" name="name" required></div>
           <div class="field"><label for="c-email" data-i18n="contact.email">البريد الإلكتروني</label><input type="email" id="c-email" name="email" required></div>
         </div>
+        <div class="field"><label for="c-phone" data-i18n="contact.phone">رقم الهاتف / واتساب (اختياري)</label><input type="tel" id="c-phone" name="phone" dir="ltr" placeholder="+20 / +965 ..."></div>
         <div class="field"><label for="c-msg" data-i18n="contact.msg">تفاصيل الرسالة</label><textarea id="c-msg" name="message" required></textarea></div>
         <button type="submit" class="btn btn-primary" data-i18n="contact.send">إرسال الرسالة</button>
+        <div class="contact-or"><span data-i18n="contact.or">أو</span></div>
+        <a href="https://wa.me/96551105252" target="_blank" rel="noopener" class="btn btn-wa" data-i18n="contact.wa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5z"/></svg>
+          راسلني على واتساب مباشرة
+        </a>
       </form>
     </div>
   </div>
@@ -584,15 +648,18 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
     <div class="footer-top">
       <div class="f-brand">
         <a href="index.html" class="brand">
-          <img src="assets/images/logo.png" alt="Technopedia Arabia" width="52" height="52">
+          <img src="assets/images/logo.png" alt="شعار Technopedia Arabia" width="60" height="60" loading="lazy">
           <span class="brand-name">Technopedia <span class="neon">Arabia</span></span>
         </a>
         <p data-i18n="footer.tagline">أبني تقنية تستحق المشاركة، وأحوّل الأفكار المعقدة إلى واقع ذكي.</p>
-        <div class="f-social">
-          <a href="https://github.com/eahmeddarwish" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.3-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1 .8-.2 1.6-.3 2.5-.3.8 0 1.7.1 2.5.3 1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 22 12.2C22 6.6 17.5 2 12 2z"/></svg></a>
-          <a href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0zM7.5 8H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-6.3c0-1.5 0-3.5-2.1-3.5s-2.4 1.6-2.4 3.3V24h-5z"/></svg></a>
-          <a href="https://wa.me/96541005052" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5z"/></svg></a>
-          <a href="mailto:e_ahmeddarwish@hotmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></a>
+      </div>
+      <div class="f-col">
+        <h4 data-i18n="footer.follow">تابعني</h4>
+        <div class="f-social-list">
+          <a class="f-social-row" href="https://github.com/eahmeddarwish" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.3-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1 .8-.2 1.6-.3 2.5-.3.8 0 1.7.1 2.5.3 1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 22 12.2C22 6.6 17.5 2 12 2z"/></svg></span><span>GitHub</span></a>
+          <a class="f-social-row" href="https://www.linkedin.com/in/engahmeddarwish" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0zM7.5 8H12v2.2h.1c.6-1.1 2.1-2.3 4.4-2.3 4.7 0 5.5 3 5.5 7V24h-5v-6.3c0-1.5 0-3.5-2.1-3.5s-2.4 1.6-2.4 3.3V24h-5z"/></svg></span><span>LinkedIn</span></a>
+          <a class="f-social-row" href="https://wa.me/96551105252" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.2-5.4A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 20 11.5z"/></svg></span><span>WhatsApp</span></a>
+          <a class="f-social-row" href="mailto:e_ahmeddarwish@hotmail.com"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></span><span>Email</span></a>
         </div>
       </div>
       <div class="f-col">
@@ -606,9 +673,11 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
       </div>
       <div class="f-col">
         <h4 data-i18n="footer.contact">تواصل مباشر</h4>
-        <p data-i18n="footer.location">الكويت</p>
-        <p><a href="mailto:e_ahmeddarwish@hotmail.com" class="ltr">e_ahmeddarwish@hotmail.com</a></p>
-        <p><a href="https://wa.me/96541005052" class="ltr">+965 5110 5252</a></p>
+        <div class="f-contact-list">
+          <div class="f-contact-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span data-i18n="footer.location">الكويت</span></div>
+          <div class="f-contact-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><a href="mailto:e_ahmeddarwish@hotmail.com" class="ltr">e_ahmeddarwish@hotmail.com</a></div>
+          <div class="f-contact-row"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9z"/></svg></span><a href="https://wa.me/96551105252" class="ltr">+965 5110 5252</a></div>
+        </div>
       </div>
     </div>
   </div>
@@ -662,6 +731,7 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
     "support.body":"Every time someone supports Technopedia Arabia, they’re not just sending money — they’re opening a door for another Arab student to reach a free explainer and a hands-on project that language or cost might have kept out of reach. This content is built on years of real engineering experience, and it keeps growing. Your support — any size — becomes a real part of the journey.",
     "pay.kofi":"Quick support, any amount","pay.bmc":"Support with a coffee",
     "pay.bank":"Direct bank transfer","pay.bankSub":"IBAN / SWIFT via NBK",
+    "pay.paypal":"Direct international support","pay.more":"More ways to give — Buy Me a Coffee · InstaPay inside the support page →",
     "about.title":"Impact & Tech Ecosystem",
     "about.lead":"I turn complex ideas into smart embedded systems,",
     "about.p1":"bridging hardware and AI algorithms. With 16+ years spanning engineering and technical education, I’ve shipped 150+ projects and mentored 250+ engineers and students under Technopedia Arabia.",
@@ -681,8 +751,9 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
     "contact.type":"Message type","contact.opt1":"I have a tech project","contact.opt2":"I want to learn",
     "contact.opt3":"Strategic collaboration","contact.opt4":"Conference or workshop invite",
     "contact.name":"Name","contact.email":"Email","contact.msg":"Message details","contact.send":"Send message",
+    "contact.phone":"Phone / WhatsApp (optional)","contact.or":"or","contact.wa":"Message me on WhatsApp",
     "footer.tagline":"I build technology worth sharing, turning complex ideas into smart reality.",
-    "footer.links":"Quick links","footer.contact":"Get in touch","footer.location":"Kuwait","footer.rights":"All rights reserved"
+    "footer.follow":"Follow me","footer.links":"Quick links","footer.contact":"Get in touch","footer.location":"Kuwait","footer.rights":"All rights reserved"
   };
   var AR = {};
   var nodes = document.querySelectorAll("[data-i18n]");
@@ -712,6 +783,23 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
 
   /* ---------- YEAR ---------- */
   var y = document.getElementById("year"); if(y) y.textContent = new Date().getFullYear();
+
+  /* ---------- MOBILE NAV DRAWER (hamburger) ---------- */
+  var navToggle = document.getElementById("nav-toggle");
+  var navDrawer = document.getElementById("nav-drawer");
+  if(navToggle && navDrawer){
+    function closeDrawer(){ navDrawer.classList.remove("open"); navToggle.setAttribute("aria-expanded","false"); }
+    navToggle.addEventListener("click", function(e){
+      e.stopPropagation();
+      var open = navDrawer.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    navDrawer.querySelectorAll("a").forEach(function(a){ a.addEventListener("click", closeDrawer); });
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeDrawer(); });
+    document.addEventListener("click", function(e){
+      if(navDrawer.classList.contains("open") && !navDrawer.contains(e.target) && !navToggle.contains(e.target)) closeDrawer();
+    });
+  }
 
   /* ---------- TERMINAL typing ---------- */
   var termBody = document.getElementById("term-body");
@@ -788,11 +876,11 @@ html[data-theme="dark"] .lang-toggle button.active{color:#1a0a00}
         var p=pts[i]; p.x+=p.vx; p.y+=p.vy;
         if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
         ctx.beginPath(); ctx.arc(p.x,p.y,1.6*devicePixelRatio,0,6.28);
-        ctx.fillStyle="rgba("+c+",.6)"; ctx.fill();
+        ctx.fillStyle="rgba("+c+",.75)"; ctx.fill();
         for(var j=i+1;j<pts.length;j++){
           var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy, max=(120*devicePixelRatio)*(120*devicePixelRatio);
           if(d<max){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
-            ctx.strokeStyle="rgba("+c+","+(.14*(1-d/max))+")"; ctx.lineWidth=devicePixelRatio; ctx.stroke(); }
+            ctx.strokeStyle="rgba("+c+","+(.2*(1-d/max))+")"; ctx.lineWidth=devicePixelRatio; ctx.stroke(); }
         }
       }
       raf=requestAnimationFrame(draw);
