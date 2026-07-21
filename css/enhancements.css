@@ -1,0 +1,505 @@
+/* ==========================================================================
+   TECHNOPEDIA ARABIA — ENHANCEMENTS (v1.0)
+   ملف CSS إضافي منفصل — بيستخدم نفس متغيرات التصميم من css/style.css
+   (--accent, --accent-2, --radius-*, --ease, --font-display, --surface...)
+   مبيلمسش أي كلاس موجود في style.css الأصلي — بس بيضيف كلاسات جديدة.
+
+   إزاي تحطه: انسخ الملف ده جوه مجلد css/ في الريبو (css/enhancements.css)
+   وضيف سطر واحد في <head> بعد سطر style.css:
+   <link rel="stylesheet" href="css/enhancements.css">
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0) إصلاح صغير: .grid-4 مكانش معرّف في style.css الأصلي
+   (قسم "ليه تشتغل معايا" بياستخدمه بس من غير تنسيق)
+   -------------------------------------------------------------------------- */
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* --------------------------------------------------------------------------
+   1) HERO — كارت الكود الزجاجي (لمسة هوية "مهندس")
+   حطه جوه .hero-visual جنب صورتك (تعليمات الدمج في الملف المرفق)
+   -------------------------------------------------------------------------- */
+.hero-code-card {
+  position: absolute;
+  bottom: -30px;
+  inset-inline-end: -40px;
+  width: 260px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 24px 60px -20px rgba(20, 25, 33, 0.25);
+  overflow: hidden;
+  z-index: 2;
+  transition: transform .4s var(--ease);
+}
+.hero-code-card:hover { transform: translateY(-6px) rotate(-1deg); }
+.hero-code-card .code-window-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--surface-border);
+}
+.hero-code-card .code-dot { width: 9px; height: 9px; border-radius: 50%; }
+.hero-code-card .code-dot.red { background: #ef4444; }
+.hero-code-card .code-dot.yellow { background: #f59e0b; }
+.hero-code-card .code-dot.green { background: #16a34a; }
+.hero-code-card .code-window-title {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-inline-start: 6px;
+  font-family: var(--font-display);
+}
+.hero-code-card pre {
+  margin: 0;
+  padding: 16px;
+  font-size: 11.5px;
+  line-height: 1.7;
+  direction: ltr;
+  text-align: left;
+  overflow-x: auto;
+  color: var(--text-muted);
+  background: var(--bg-soft);
+}
+.hero-code-card pre code { color: var(--accent); }
+@media (max-width: 900px) {
+  .hero-code-card { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   2) ABOUT / JOURNEY — صندوق اقتباس + Timeline أفقي
+   -------------------------------------------------------------------------- */
+.human-moment-box {
+  position: relative;
+  padding: 28px 32px;
+  margin-bottom: 34px;
+  border-radius: var(--radius-lg);
+}
+.human-moment-box .quote-mark {
+  position: absolute;
+  top: 6px;
+  inset-inline-start: 20px;
+  font-size: 46px;
+  font-family: var(--font-display);
+  color: var(--accent);
+  opacity: .35;
+  line-height: 1;
+}
+.human-moment-box p {
+  position: relative;
+  z-index: 1;
+  font-size: 16.5px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.journey-timeline { position: relative; margin-top: 70px; padding-inline-start: 6px; }
+.journey-timeline .timeline-track {
+  position: absolute;
+  top: 10px;
+  inset-inline-start: 0;
+  right: 0;
+  height: 2px;
+  background: var(--surface-border);
+}
+.timeline-node {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 24%;
+  vertical-align: top;
+  padding-top: 26px;
+}
+.timeline-node::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  inset-inline-start: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--surface-border);
+}
+.timeline-node.active::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, .15);
+}
+.timeline-node .node-year {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.timeline-node .node-content h4 { font-size: 15px; margin-bottom: 4px; }
+.timeline-node .node-content p { font-size: 13px; color: var(--text-muted); margin: 0; }
+@media (max-width: 900px) {
+  .journey-timeline { display: flex; flex-direction: column; gap: 22px; }
+  .journey-timeline .timeline-track { inset-inline-start: 5px; top: 0; bottom: 0; width: 2px; height: auto; }
+  .timeline-node { width: 100%; padding-inline-start: 26px; padding-top: 0; }
+  .timeline-node::before { top: 4px; }
+}
+
+/* --------------------------------------------------------------------------
+   3) SKILLS — Bento Grid (قسم جديد بالكامل)
+   -------------------------------------------------------------------------- */
+.bento-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(160px, auto);
+  gap: 20px;
+}
+.skill-bento-card {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.skill-bento-card.card-large { grid-column: span 2; grid-row: span 2; }
+.skill-bento-card.card-wide { grid-column: span 2; }
+.skill-bento-card.card-tall { grid-row: span 2; }
+.card-metric-badge {
+  position: absolute;
+  top: 20px;
+  inset-inline-end: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(249, 115, 22, .1);
+  color: var(--accent);
+  border: 1px solid rgba(249, 115, 22, .25);
+}
+.skill-group-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+.skill-group-icon {
+  width: 42px; height: 42px; flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+}
+.skill-group-header h3 { font-size: 17px; margin-bottom: 4px; }
+.expertise-tag {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  padding: 3px 9px; border-radius: 100px;
+}
+.expertise-tag.core { background: rgba(249,115,22,.1); color: var(--accent); }
+.expertise-tag.advanced { background: rgba(22,163,74,.1); color: var(--accent-2); }
+.expertise-tag.supporting { background: var(--surface); color: var(--text-dim); }
+.expertise-tag.community { background: rgba(251,113,133,.1); color: var(--accent-3); }
+.skill-group-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px; }
+.categorized-chips { display: flex; flex-direction: column; gap: 14px; }
+.chip-category-group .chip-cat-title {
+  display: block; font-size: 11px; font-weight: 700; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px;
+}
+.chips-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.chips-row.mt-auto { margin-top: auto; }
+.tech-chip-item {
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+  background: var(--surface); border: 1px solid var(--surface-border);
+  padding: 5px 11px; border-radius: 100px;
+}
+.skill-meta-footer {
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--surface-border);
+  font-size: 12.5px; color: var(--text-dim);
+}
+@media (max-width: 900px) {
+  .bento-skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .skill-bento-card.card-large,
+  .skill-bento-card.card-wide { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .bento-skills-grid { grid-template-columns: 1fr; }
+  .skill-bento-card.card-large,
+  .skill-bento-card.card-wide,
+  .skill-bento-card.card-tall { grid-column: span 1; grid-row: span 1; }
+}
+
+/* --------------------------------------------------------------------------
+   4) IMPACT / ACHIEVEMENTS — Bento Grid + Timeline (قسم جديد بالكامل)
+   -------------------------------------------------------------------------- */
+.bento-achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(140px, auto);
+  gap: 20px;
+}
+.achievement-card { padding: 26px; position: relative; display: flex; flex-direction: column; }
+.achievement-card.card-large { grid-column: span 2; grid-row: span 2; }
+.achievement-card.card-wide { grid-column: span 2; }
+.achievement-card.card-stat,
+.achievement-card.card-standard { grid-column: span 1; }
+.achievement-badge {
+  align-self: flex-start;
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  padding: 4px 10px; border-radius: 100px; margin-bottom: 14px;
+  background: rgba(22,163,74,.1); color: var(--accent-2);
+}
+.achievement-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-sm);
+  background: var(--surface); border: 1px solid var(--surface-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); margin-bottom: 14px;
+}
+.achievement-content h3 { font-size: 16px; margin-bottom: 8px; }
+.achievement-content p { font-size: 13.5px; margin: 0; }
+
+.impact-timeline-wrapper { margin-top: 56px; }
+.impact-timeline-head { text-align: center; margin-bottom: 30px; }
+.impact-timeline-head h4 { font-size: 18px; margin-bottom: 4px; }
+.impact-timeline-head span { font-size: 13px; color: var(--text-muted); }
+.impact-timeline-steps { display: flex; align-items: flex-start; justify-content: center; gap: 4px; flex-wrap: wrap; }
+.impact-step { text-align: center; max-width: 150px; }
+.impact-step .step-year {
+  display: inline-block; font-family: var(--font-display); font-weight: 700;
+  font-size: 12.5px; color: var(--accent); background: rgba(249,115,22,.08);
+  padding: 3px 10px; border-radius: 100px; margin-bottom: 8px;
+}
+.impact-step.active .step-year { background: var(--accent); color: #04121a; }
+.impact-step p { font-size: 12.5px; color: var(--text-muted); margin: 0; }
+.step-line { width: 40px; height: 1px; background: var(--surface-border); margin-top: 12px; }
+@media (max-width: 900px) {
+  .bento-achievements-grid { grid-template-columns: repeat(2, 1fr); }
+  .achievement-card.card-large,
+  .achievement-card.card-wide { grid-column: span 2; }
+  .impact-timeline-steps { flex-direction: column; align-items: center; }
+  .step-line { display: none; }
+}
+@media (max-width: 600px) {
+  .bento-achievements-grid { grid-template-columns: 1fr; }
+  .achievement-card.card-large,
+  .achievement-card.card-wide { grid-column: span 1; grid-row: span 1; }
+}
+
+/* --------------------------------------------------------------------------
+   5) TESTIMONIALS — قسم جديد بالكامل
+   ملاحظة: الشهادات هنا Placeholder فاضية علشان تتملى بتعليقات حقيقية بس —
+   متنشرش شهادات مختلقة بأسماء ناس مش حقيقيين.
+   -------------------------------------------------------------------------- */
+.bento-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(160px, auto);
+  gap: 20px;
+}
+.testimonial-card { padding: 26px; display: flex; flex-direction: column; }
+.testimonial-card.card-featured { grid-column: span 2; grid-row: span 2; }
+.testimonial-card.card-video { grid-row: span 2; padding: 0; overflow: hidden; cursor: pointer; }
+.testimonial-card.card-cta { align-items: center; text-align: center; justify-content: center; }
+.testimonial-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.testimonial-header.compact { padding: 16px 16px 0; margin-bottom: 10px; }
+.user-profile { display: flex; align-items: center; gap: 12px; }
+.user-avatar-frame { width: 46px; height: 46px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 1px solid var(--surface-border); }
+.user-avatar-frame.small { width: 36px; height: 36px; }
+.user-avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+.name-row { display: flex; align-items: center; gap: 6px; }
+.name-row h4 { font-size: 14.5px; margin: 0; }
+.verified-badge { color: var(--accent-2); display: inline-flex; }
+.user-role { font-size: 12px; color: var(--text-muted); }
+.outcome-badge {
+  font-size: 10.5px; font-weight: 700; padding: 4px 10px; border-radius: 100px;
+  background: var(--surface); border: 1px solid var(--surface-border); color: var(--text-dim);
+  white-space: nowrap;
+}
+.transformation-story { font-size: 15px; color: var(--text); line-height: 1.75; margin: 0; }
+.transformation-story.short { padding: 0 16px 16px; font-size: 13.5px; }
+.testimonial-footer-meta { margin-top: auto; padding-top: 14px; font-size: 12px; color: var(--text-dim); }
+.video-thumbnail-container { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.video-thumbnail-container .video-thumb { width: 100%; height: 100%; object-fit: cover; }
+.play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(4,18,26,.25); }
+.play-circle {
+  width: 46px; height: 46px; border-radius: 50%; background: var(--bg-elevated);
+  display: flex; align-items: center; justify-content: center; color: var(--accent);
+  transition: transform .3s var(--ease);
+}
+.testimonial-card.card-video:hover .play-circle { transform: scale(1.1); }
+.outcome-badge.video-badge { position: absolute; top: 12px; inset-inline-start: 12px; background: var(--bg-elevated); }
+.cta-icon-glow { color: var(--accent); margin-bottom: 12px; }
+.testimonial-card.card-cta h3 { font-size: 18px; margin-bottom: 8px; }
+.testimonial-card.card-cta p { font-size: 13.5px; margin-bottom: 16px; }
+@media (max-width: 900px) {
+  .bento-testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonial-card.card-featured { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .bento-testimonials-grid { grid-template-columns: 1fr; }
+  .testimonial-card.card-featured,
+  .testimonial-card.card-video { grid-column: span 1; grid-row: span 1; }
+}
+
+/* --------------------------------------------------------------------------
+   6) KNOWLEDGE HUB — بحث + فلترة + كروت (قسم جديد بالكامل)
+   -------------------------------------------------------------------------- */
+.knowledge-search-bar { margin-bottom: 36px; }
+.search-input-wrapper {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface); border: 1px solid var(--surface-border);
+  border-radius: 100px; padding: 12px 20px; max-width: 560px; margin: 0 auto 16px;
+}
+.search-input-wrapper svg { color: var(--text-dim); flex-shrink: 0; }
+.search-input-wrapper input {
+  border: none; background: none; outline: none; width: 100%;
+  font-size: 14.5px; color: var(--text); font-family: inherit;
+}
+.quick-tags-scroller { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.q-tag {
+  font-size: 12.5px; font-weight: 600; padding: 6px 14px; border-radius: 100px;
+  background: var(--surface); border: 1px solid var(--surface-border); color: var(--text-muted);
+  transition: all .2s var(--ease);
+}
+.q-tag:hover { color: var(--text); }
+.q-tag.active { background: var(--accent); border-color: var(--accent); color: #04121a; }
+
+.bento-media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(140px, auto);
+  gap: 20px;
+}
+.media-card { display: flex; flex-direction: column; overflow: hidden; cursor: pointer; position: relative; }
+.media-card.card-featured { grid-column: span 2; grid-row: span 2; }
+.media-card.card-wide { grid-column: span 2; }
+.media-card.is-hidden { display: none; }
+.media-badge {
+  position: absolute; top: 14px; inset-inline-start: 14px; z-index: 1;
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px;
+  background: var(--bg-elevated); color: var(--text-muted);
+}
+.media-badge.dynamic-badge { display: flex; align-items: center; gap: 6px; color: var(--accent); }
+.media-thumbnail-wrapper { position: relative; aspect-ratio: 16/9; }
+.media-card.card-featured .media-thumbnail-wrapper { aspect-ratio: auto; height: 100%; min-height: 260px; }
+.media-thumb { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.media-card:hover .media-thumb { transform: scale(1.05); }
+.play-button-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(4,18,26,.15); opacity: 0; transition: opacity .3s; }
+.media-card:hover .play-button-overlay { opacity: 1; }
+.play-icon {
+  width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: #04121a;
+  display: flex; align-items: center; justify-content: center;
+}
+.media-meta-tags { position: absolute; bottom: 12px; inset-inline-start: 12px; display: flex; gap: 6px; }
+.tag-pill {
+  font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 100px;
+  background: rgba(4,18,26,.55); color: #fff; backdrop-filter: blur(6px);
+}
+.media-content { padding: 20px; position: relative; }
+.media-category { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--accent); }
+.media-content h3 { font-size: 16px; margin: 6px 0 8px; }
+.media-content p { font-size: 13.5px; margin-bottom: 12px; }
+.media-cta-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--accent); }
+.media-footer { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-dim); }
+.difficulty-tag { background: var(--surface); border: 1px solid var(--surface-border); padding: 3px 9px; border-radius: 100px; }
+.collections-chips-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.collection-pill { font-size: 12.5px; background: var(--surface); border: 1px solid var(--surface-border); padding: 6px 12px; border-radius: 100px; }
+.resource-link { color: var(--accent); font-weight: 700; font-size: 13.5px; }
+@media (max-width: 900px) {
+  .bento-media-grid { grid-template-columns: repeat(2, 1fr); }
+  .media-card.card-featured,
+  .media-card.card-wide { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .bento-media-grid { grid-template-columns: 1fr; }
+  .media-card.card-featured,
+  .media-card.card-wide { grid-column: span 1; grid-row: span 1; }
+}
+
+/* --------------------------------------------------------------------------
+   7) VIDEO MODAL (مشترك بين Knowledge Hub والشهادات)
+   -------------------------------------------------------------------------- */
+.knowledge-video-modal { position: fixed; inset: 0; z-index: 200; display: none; }
+.knowledge-video-modal.active { display: block; }
+.knowledge-video-modal .modal-backdrop { position: absolute; inset: 0; background: rgba(4,18,26,.72); backdrop-filter: blur(4px); }
+.knowledge-video-modal .modal-dialog {
+  position: relative; max-width: 860px; width: 92%; margin: 6vh auto;
+  border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-elevated);
+}
+.modal-close-btn {
+  position: absolute; top: 12px; inset-inline-end: 12px; z-index: 2;
+  width: 36px; height: 36px; border-radius: 50%; border: none;
+  background: rgba(4,18,26,.55); color: #fff; display: flex; align-items: center; justify-content: center;
+}
+.modal-video-container { position: relative; aspect-ratio: 16/9; background: #000; }
+.modal-video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.modal-footer-info { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+.external-yt-link { color: var(--accent); font-weight: 700; }
+
+/* --------------------------------------------------------------------------
+   8) CONTACT — Path Selector (اختيار نوع المحادثة)
+   الفورم لسه محتاج تربطه بخدمة إرسال حقيقية (Formspree/EmailJS) عشان
+   الرسايل توصلك فعليًا — راجع دليل الدمج المرفق.
+   -------------------------------------------------------------------------- */
+.conversation-paths-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 28px; }
+.path-card {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 16px 10px; text-align: center;
+  background: var(--surface); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md); font-size: 12.5px; font-weight: 600; color: var(--text-muted);
+  transition: all .2s var(--ease);
+}
+.path-card:hover { color: var(--text); border-color: rgba(249,115,22,.3); }
+.path-card.active { background: rgba(249,115,22,.08); border-color: var(--accent); color: var(--accent); }
+.path-icon { color: inherit; }
+.minimal-contact-form { display: flex; flex-direction: column; gap: 18px; }
+.minimal-contact-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.minimal-contact-form label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text-muted); }
+.minimal-contact-form input,
+.minimal-contact-form textarea {
+  width: 100%; padding: 13px 16px; border-radius: var(--radius-sm);
+  background: var(--surface); border: 1px solid var(--surface-border);
+  color: var(--text); font-family: inherit; font-size: 14.5px; resize: vertical;
+}
+.minimal-contact-form input:focus,
+.minimal-contact-form textarea:focus { outline: none; border-color: var(--accent); }
+@media (max-width: 900px) {
+  .conversation-paths-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .conversation-paths-grid { grid-template-columns: repeat(2, 1fr); }
+  .minimal-contact-form .form-row { grid-template-columns: 1fr; }
+}
+
+/* --------------------------------------------------------------------------
+   9) تحسين بصري لكروت المشاريع الموجودة (.card من projects-render.js)
+   من غير أي تعديل في الـ JS — بس تحسين الـ CSS اللي بيستخدم نفس الكلاسات
+   -------------------------------------------------------------------------- */
+.card.tilt {
+  position: relative;
+  transform-style: preserve-3d;
+}
+.card.tilt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(249,115,22,.12), transparent 60%);
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  z-index: 1;
+}
+.card.tilt:hover::before { opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   10) إصلاح صغير تاني: main.js بيحسب --rotate-x/--rotate-y ويضيف كلاس
+   .is-tilted على الكروت (تأثير 3D عند الماوس) بس مفيش قاعدة CSS بتستخدمهم
+   فعليًا — يعني التأثير محسوب بس مش ظاهر. السطرين دول بيفعّلوه.
+   -------------------------------------------------------------------------- */
+.card {
+  transition: transform .4s var(--ease), border-color .3s, box-shadow .3s;
+}
+.card.is-tilted {
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateY(-4px);
+  transition: none;
+}
