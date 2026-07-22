@@ -16,9 +16,9 @@ function projectCardHtml(p, lang, i) {
         <img src="${p.image}" alt="${p.title[lang]}" loading="lazy">
       </div>
       <div class="card-body">
-        <div class="card-tags">${tagsHtml}</div>
         <h3>${p.title[lang]}</h3>
         <p>${p.desc[lang]}</p>
+        <div class="card-tags">${tagsHtml}</div>
         ${links.length ? `<div class="card-links">${links.join("")}</div>` : ""}
       </div>
     </article>`;

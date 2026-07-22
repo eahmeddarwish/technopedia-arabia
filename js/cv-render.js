@@ -11,6 +11,7 @@ const svgIcons = {
   briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
   cap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>',
   code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>',
   award: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M9 13.5L7 22l5-3 5 3-2-8.5"/></svg>',
   globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>',
   phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
@@ -41,10 +42,15 @@ function renderCvSide(lang) {
   if (!side || !window.cvData) return;
   const d = window.cvData;
   side.innerHTML = `
+    <a href="index.html" class="cv-brand">
+      <img src="${d.logo || 'assets/images/logo.png'}" alt="Technopedia Arabia" width="34" height="34">
+      <span>Technopedia <b>Arabia</b></span>
+    </a>
     <img src="${d.photo}" alt="${d.name[lang]}" class="cv-avatar">
     <h2>${d.name[lang]}</h2>
     <p class="cv-role">${d.role[lang]}</p>
     <ul class="cv-contact-list">
+      ${d.location ? `<li>${svgIcons.pin}<span>${d.location[lang]}</span></li>` : ""}
       <li>${svgIcons.mail}<a href="mailto:${d.email}">${d.email}</a></li>
       <li>${svgIcons.phone}<a href="tel:${d.phone.replace(/\s+/g, "")}">${d.phone}</a></li>
       <li>${svgIcons.github}<a href="${d.github}" target="_blank" rel="noopener">GitHub</a></li>
@@ -68,24 +74,59 @@ function renderCvSummary(lang) {
 function renderCvSkills(lang) {
   const el = document.getElementById("cv-skills-list");
   if (!el || !window.cvData) return;
-  el.innerHTML = window.cvData.skills
-    .map(
-      (s) => `
-      <div class="skill-bar">
-        <div class="skill-bar-head"><span>${s.name}</span><span>${s.level}%</span></div>
-        <div class="skill-bar-track"><div class="skill-bar-fill" data-level="${s.level}" style="width:0%"></div></div>
-      </div>`
-    )
-    .join("");
+  const sk = window.cvData.skills, n = sk.length;
+  const cx = 190, cy = 178, R = 132;
+  const pt = (i, r) => {
+    const a = (Math.PI * 2 * i) / n - Math.PI / 2;
+    return [cx + Math.cos(a) * r, cy + Math.sin(a) * r];
+  };
+  const rings = [0.25, 0.5, 0.75, 1].map(f =>
+    `<polygon points="${sk.map((_, i) => pt(i, R * f).map(v => v.toFixed(1)).join(",")).join(" ")}"
+       fill="none" stroke="var(--border)" stroke-width="1"/>`).join("");
+  const spokes = sk.map((_, i) =>
+    `<line x1="${cx}" y1="${cy}" x2="${pt(i, R)[0].toFixed(1)}" y2="${pt(i, R)[1].toFixed(1)}"
+       stroke="var(--border-soft)" stroke-width="1"/>`).join("");
+  const shape = sk.map((s, i) => pt(i, R * (s.level / 100)).map(v => v.toFixed(1)).join(",")).join(" ");
+  const dots = sk.map((s, i) => {
+    const [x, y] = pt(i, R * (s.level / 100));
+    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="var(--neon)"/>`;
+  }).join("");
+  const labels = sk.map((s, i) => {
+    const [x, y] = pt(i, R + 26);
+    const anchor = x < cx - 12 ? "end" : x > cx + 12 ? "start" : "middle";
+    return `<text x="${x.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="${anchor}"
+      font-size="11.5" font-weight="700" fill="var(--muted)"
+      font-family="var(--mono)">${s.name}</text>
+      <text x="${x.toFixed(1)}" y="${(y + 18).toFixed(1)}" text-anchor="${anchor}"
+      font-size="10.5" font-weight="700" fill="var(--neon)"
+      font-family="var(--mono)">${s.level}%</text>`;
+  }).join("");
+  el.innerHTML = `
+    <div class="skill-radar">
+      <svg viewBox="0 0 380 356" role="img" aria-label="${t("cv.sectionSkills", lang)}">
+        ${rings}${spokes}
+        <polygon points="${shape}" fill="rgba(var(--neon-rgb),.20)"
+                 stroke="var(--neon)" stroke-width="2.5" stroke-linejoin="round"/>
+        ${dots}${labels}
+      </svg>
+    </div>`;
+}
 
-  requestAnimationFrame(() => {
-    el.querySelectorAll(".skill-bar-fill").forEach((bar) => {
-      const level = bar.getAttribute("data-level");
-      requestAnimationFrame(() => {
-        bar.style.width = level + "%";
-      });
-    });
-  });
+function renderCvSoftware(lang) {
+  const el = document.getElementById("cv-software-list");
+  if (!el || !window.cvData || !window.cvData.software) return;
+  el.innerHTML = window.cvData.software.map(g => `
+    <div class="sw-group">
+      <h4>${g.group[lang]}</h4>
+      <div class="sw-tags">${g.items.map(i => `<span class="tag">${i}</span>`).join("")}</div>
+    </div>`).join("");
+}
+
+function renderCvHighlights(lang) {
+  const el = document.getElementById("cv-highlights-list");
+  if (!el || !window.cvData || !window.cvData.highlights) return;
+  el.innerHTML = window.cvData.highlights.map(h => `
+    <li><span class="hl-ic">${svgIcons.check}</span><span>${h[lang]}</span></li>`).join("");
 }
 
 function renderCvCerts(lang) {
@@ -126,6 +167,8 @@ function renderCvAll() {
   renderTimeline("cv-experience-list", window.cvData && window.cvData.experience, lang);
   renderTimeline("cv-education-list", window.cvData && window.cvData.education, lang);
   renderCvSkills(lang);
+  renderCvSoftware(lang);
+  renderCvHighlights(lang);
   renderCvCerts(lang);
   renderCvLanguages(lang);
   fillCvDownloadLinks();

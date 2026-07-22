@@ -30,6 +30,8 @@ const translations = {
     "support.instapayBtn": "InstaPay / تحويل محلي — كلّمني",
     "cv.experience": "الخبرات العملية",
     "cv.education": "المؤهلات الدراسية",
+    "cv.sectionSoftware": "البرمجيات والأدوات",
+    "cv.sectionHighlights": "أبرز الإنجازات",
     "hero.eyebrow": "أهلاً، أنا",
     "hero.name": "أحمد درويش",
     "hero.role1": "مهندس أنظمة مدمجة",

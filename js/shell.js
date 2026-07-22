@@ -143,8 +143,21 @@
   if (anchor) body.insertBefore(anchor, body.firstChild);
   var prog = document.querySelector(".reading-progress");
   if (!prog) body.insertAdjacentHTML("afterbegin", '<div class="reading-progress" aria-hidden="true"></div>');
-  body.insertAdjacentHTML("beforeend", localize(FOOTER) + localize(APPBAR));
+  function mountFooter() {
+    if (document.querySelector("footer.site-footer")) return;
+    body.insertAdjacentHTML("beforeend", localize(FOOTER) + localize(APPBAR));
+    wireShell();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountFooter);
+  } else {
+    mountFooter();
+  }
 
+  var wired = false;
+  function wireShell() {
+    if (wired) return;      /* تتنده مرة واحدة بس مهما اتنادت */
+    wired = true;
   /* --- القوائم ماتتطبعش (مهم لصفحة السيرة الذاتية) --- */
   ["header.site-header",".nav-drawer",".app-bar","footer.site-footer",".reading-progress"]
     .forEach(function (sel) {
@@ -258,4 +271,6 @@
   /* --- السنة --- */
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
+  }
+
 })();
