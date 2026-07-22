@@ -192,8 +192,8 @@ const cvData = {
         "en": "Embedded Systems Engineer & Circuit Designer"
       },
       "org": {
-        "ar": "ممارسة هندسية مستقلة — الكويت والمنطقة",
-        "en": "Independent engineering practice — Kuwait & the region"
+        "ar": "ممارسة هندسية مستقلة — الكويت والعالم",
+        "en": "Independent engineering practice — Kuwait & Worldwide"
       },
       "period": "2010 — الآن",
       "desc": {
@@ -203,12 +203,12 @@ const cvData = {
     },
     {
       "role": {
-        "ar": "محاضر هندسة كهربائية — تدريب عملي وصناعي",
+        "ar": "محاضر هندسة كهربائية",
         "en": "Lecturer, Electrical Engineering — Practical & Industrial Training"
       },
       "org": {
-        "ar": "التعليم التطبيقي والتدريب — الكويت",
-        "en": "Applied education & training — Kuwait"
+        "ar": "معاهد التدريب التخصصية - الكويت",
+        "en": "Specialized ُducation & لإraining Centers — Kuwait"
       },
       "period": "2015 — 2018 · 2025 — الآن",
       "desc": {
