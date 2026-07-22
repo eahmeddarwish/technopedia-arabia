@@ -21,6 +21,21 @@ function getLang() {
   return (typeof getStoredLang === "function" ? getStoredLang() : "ar");
 }
 
+function renderTimeline(id, items, lang) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  const section = wrap.closest(".cv-section");
+  if (!items || !items.length) { if (section) section.style.display = "none"; return; }
+  if (section) section.style.display = "";
+  wrap.innerHTML = items.map(it => `
+    <div class="tl-item">
+      <div class="tl-period">${it.period || ""}</div>
+      <h4>${it.role ? it.role[lang] : ""}</h4>
+      <p class="tl-org">${it.org ? it.org[lang] : ""}</p>
+      ${(it.desc && it.desc[lang]) ? `<p>${it.desc[lang]}</p>` : ""}
+    </div>`).join("");
+}
+
 function renderCvSide(lang) {
   const side = document.getElementById("cv-side");
   if (!side || !window.cvData) return;
@@ -35,7 +50,12 @@ function renderCvSide(lang) {
       <li>${svgIcons.github}<a href="${d.github}" target="_blank" rel="noopener">GitHub</a></li>
       <li>${svgIcons.linkedin}<a href="${d.linkedin}" target="_blank" rel="noopener">LinkedIn</a></li>
     </ul>
-    <a href="${d.pdfPath}" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:16px;" data-cv-download download>${t("cv.download", lang)}</a>
+    ${(d.stats && d.stats.length) ? `<div class="cv-stats">${d.stats.map(s =>
+        `<div class="cv-stat"><b>${s.value}</b><span>${s.label[lang]}</span></div>`).join("")}</div>` : ""}
+    <div class="cv-actions">
+      <a href="${d.pdfPath}" class="btn btn-primary" data-cv-download download>${t("cv.download", lang)}</a>
+      <a href="${d.linkedin}" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+    </div>
   `;
 }
 
@@ -103,6 +123,8 @@ function renderCvAll() {
   const lang = getLang();
   renderCvSide(lang);
   renderCvSummary(lang);
+  renderTimeline("cv-experience-list", window.cvData && window.cvData.experience, lang);
+  renderTimeline("cv-education-list", window.cvData && window.cvData.education, lang);
   renderCvSkills(lang);
   renderCvCerts(lang);
   renderCvLanguages(lang);

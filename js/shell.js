@@ -117,6 +117,20 @@
   if (!body || body.dataset.shellDone) return;
   body.dataset.shellDone = "1";
 
+  /* على الصفحة الرئيسية الروابط بتبقى مراسي داخلية، وخارجها بتبقى index.html#... */
+  var PAGE = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  var HOME = (PAGE === "" || PAGE === "index.html");
+  function localize(h) {
+    if (!HOME) return h;
+    return h
+      .replace(/href="index\.html#/g, 'href="#')
+      .replace(/href="index\.html"/g, 'href="#home"')
+      .replace(/href="projects\.html"( class="dl")? data-i18n="nav\.projects"/g,
+               'href="#projects"$1 data-i18n="nav.projects"')
+      /* الرئيسية مالهاش لازمة وانت واقف عليها */
+      .replace(/\s*<a href="#home"[^>]*data-i18n="nav\.home">[^<]*<\/a>/g, "");
+  }
+
   /* --- شيل أي هيدر/درج/فوتر قديم قبل ما نحقن الجديد --- */
   ["header.site-header", ".mobile-drawer", ".nav-drawer", ".app-bar",
    "footer.site-footer", ".grain-overlay"].forEach(function (sel) {
@@ -125,11 +139,11 @@
 
   /* --- احقن --- */
   var anchor = document.getElementById("bg-canvas");
-  body.insertAdjacentHTML("afterbegin", HEADER + DRAWER);
+  body.insertAdjacentHTML("afterbegin", localize(HEADER) + localize(DRAWER));
   if (anchor) body.insertBefore(anchor, body.firstChild);
   var prog = document.querySelector(".reading-progress");
   if (!prog) body.insertAdjacentHTML("afterbegin", '<div class="reading-progress" aria-hidden="true"></div>');
-  body.insertAdjacentHTML("beforeend", FOOTER + APPBAR);
+  body.insertAdjacentHTML("beforeend", localize(FOOTER) + localize(APPBAR));
 
   /* --- القوائم ماتتطبعش (مهم لصفحة السيرة الذاتية) --- */
   ["header.site-header",".nav-drawer",".app-bar","footer.site-footer",".reading-progress"]
@@ -149,15 +163,22 @@
   var toggle = document.getElementById("nav-toggle");
   var drawer = document.getElementById("nav-drawer");
   if (toggle && drawer) {
-    toggle.addEventListener("click", function () {
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
       var open = drawer.classList.toggle("open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
+    function closeDrawer() {
+      drawer.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
     drawer.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        drawer.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
+      a.addEventListener("click", closeDrawer);
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDrawer(); });
+    document.addEventListener("click", function (e) {
+      if (drawer.classList.contains("open") &&
+          !drawer.contains(e.target) && !toggle.contains(e.target)) closeDrawer();
     });
   }
 
@@ -198,6 +219,41 @@
   }
   addEventListener("DOMContentLoaded", syncLangLabel);
   syncLangLabel();
+
+  /* --- الكروت اللي بترسم بالـ JS بعد ما main.js شغّل مراقب الظهور --- */
+  /* من غير ده بتفضل opacity:0 للأبد ومحدش بيشوفها */
+  (function () {
+    var io = ("IntersectionObserver" in window)
+      ? new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+          });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.02 })
+      : null;
+
+    function claim(root) {
+      (root.querySelectorAll ? root.querySelectorAll(".reveal:not(.in)") : []).forEach(function (el) {
+        if (io) io.observe(el); else el.classList.add("in");
+      });
+      if (root.classList && root.classList.contains("reveal") && !root.classList.contains("in")) {
+        if (io) io.observe(root); else root.classList.add("in");
+      }
+    }
+
+    claim(document);
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        m.addedNodes.forEach(function (n) { if (n.nodeType === 1) claim(n); });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+
+    /* شبكة أمان: أي عنصر فضل مخفي بعد ثانيتين يتعرض على طول */
+    setTimeout(function () {
+      document.querySelectorAll(".reveal:not(.in)").forEach(function (el) {
+        if (el.getBoundingClientRect().top < innerHeight * 1.5) el.classList.add("in");
+      });
+    }, 2000);
+  })();
 
   /* --- السنة --- */
   var y = document.getElementById("year");
