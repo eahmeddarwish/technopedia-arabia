@@ -88,7 +88,7 @@ const cvData = {
   ],
   "skills": [
     {
-      "name": "Embedded / Arduino / RPi",
+      "name": "Embedded / Arduino",
       "level": 95
     },
     {
@@ -104,7 +104,7 @@ const cvData = {
       "level": 85
     },
     {
-      "name": "Simulation (Proteus/SPICE)",
+      "name": "Simulation & SPICE",
       "level": 85
     },
     {
@@ -208,7 +208,7 @@ const cvData = {
       },
       "org": {
         "ar": "معاهد التدريب التخصصية - الكويت",
-        "en": "Specialized ُducation & لإraining Centers — Kuwait"
+        "en": "Specialized Education & Training Centers — Kuwait"
       },
       "period": "2015 — 2018 · 2025 — الآن",
       "desc": {
