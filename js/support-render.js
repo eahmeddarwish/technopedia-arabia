@@ -10,31 +10,31 @@ function renderSupportSection() {
 
   el.innerHTML = `
     <div class="bank-row">
-      <div><span class="label">${t("support.bankName", lang)}</span><span class="value" id="bank-field-name">${d.bankName[lang]}</span></div>
+      <div class="bank-kv"><span class="label">${t("support.bankName", lang)}</span><span class="value" id="bank-field-name">${d.bankName[lang]}</span></div>
       <button class="copy-btn" data-copy-target="#bank-field-name" title="${t("support.copy", lang)}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
       </button>
     </div>
     <div class="bank-row">
-      <div><span class="label">${t("support.accountName", lang)}</span><span class="value" id="bank-field-account">${d.accountName}</span></div>
+      <div class="bank-kv"><span class="label">${t("support.accountName", lang)}</span><span class="value" id="bank-field-account">${d.accountName}</span></div>
       <button class="copy-btn" data-copy-target="#bank-field-account" title="${t("support.copy", lang)}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
       </button>
     </div>
     <div class="bank-row">
-      <div><span class="label">${t("support.iban", lang)}</span><span class="value" id="bank-field-iban">${d.iban}</span></div>
+      <div class="bank-kv"><span class="label">${t("support.iban", lang)}</span><span class="value" id="bank-field-iban">${d.iban}</span></div>
       <button class="copy-btn" data-copy-target="#bank-field-iban" title="${t("support.copy", lang)}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
       </button>
     </div>
     <div class="bank-row">
-      <div><span class="label">${t("support.swift", lang)}</span><span class="value" id="bank-field-swift">${d.swift}</span></div>
+      <div class="bank-kv"><span class="label">${t("support.swift", lang)}</span><span class="value" id="bank-field-swift">${d.swift}</span></div>
       <button class="copy-btn" data-copy-target="#bank-field-swift" title="${t("support.copy", lang)}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
       </button>
     </div>
     <div class="bank-row">
-      <div><span class="label">${t("support.currency", lang)}</span><span class="value" id="bank-field-currency">${d.currency}</span></div>
+      <div class="bank-kv"><span class="label">${t("support.currency", lang)}</span><span class="value" id="bank-field-currency">${d.currency}</span></div>
       <button class="copy-btn" data-copy-target="#bank-field-currency" title="${t("support.copy", lang)}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
       </button>

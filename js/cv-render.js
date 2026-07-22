@@ -33,7 +33,9 @@ function renderTimeline(id, items, lang) {
       <div class="tl-period">${it.period || ""}</div>
       <h4>${it.role ? it.role[lang] : ""}</h4>
       <p class="tl-org">${it.org ? it.org[lang] : ""}</p>
-      ${(it.desc && it.desc[lang]) ? `<p>${it.desc[lang]}</p>` : ""}
+      ${(it.desc && it.desc[lang])
+        ? `<ul class="tl-points">${it.desc[lang].split(/(?<=[.؟!])\s+(?=[A-Z\u0600-\u06FF])/)
+             .filter(Boolean).map(x => `<li>${x.trim()}</li>`).join("")}</ul>` : ""}
     </div>`).join("");
 }
 
