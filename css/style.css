@@ -583,3 +583,77 @@ html[dir="ltr"] .cert-item:hover{transform:translateX(3px)}
   body{padding-bottom:0!important;background:#fff!important;color:#000!important}
   a{text-decoration:none!important;color:#000!important}
 }
+
+/* ==========================================================================
+   تصحيحات بعد المراجعة
+   ========================================================================== */
+
+/* روابط الكارت: Cairo وواضحة — كانت بتورث المونو وباهتة */
+.card-links a,.modal-links a{font-family:var(--font);font-size:14.5px;font-weight:800;
+  color:var(--neon);letter-spacing:0}
+.card-links a:hover,.modal-links a:hover{text-decoration:none;opacity:.75}
+.card-links{gap:18px;padding-top:4px;border-top:1px solid var(--border-soft);margin-top:8px}
+
+/* الفوتر: الأيقونات عمود واحد والكلام محاذي — مش متوسّط */
+.f-col{text-align:start}
+.f-col ul{align-items:stretch}
+.f-social-list,.f-contact-list{align-items:stretch}
+.f-social-row,.f-contact-row{justify-content:flex-start}
+.f-social-row .ic,.f-contact-row .ic{width:40px;flex-shrink:0;display:grid;place-items:center}
+.footer-top{align-items:start}
+
+/* رأس الصفحات الفرعية: محاذاة البداية زي باقي الموقع */
+.page-hero{text-align:start}
+.page-hero p{margin-inline:0}
+.filter-bar{justify-content:flex-start}
+
+/* أيقونات السيرة الذاتية: مقاس مضبوط ولون برتقالي */
+.cv-section svg,.cv-contact-list svg,.cert-item svg{width:18px;height:18px;
+  color:var(--neon);flex-shrink:0}
+.cv-section h3 svg{width:20px;height:20px}
+.cv-side svg{width:17px;height:17px;color:var(--neon)}
+
+/* ---------- السيرة: رادار المهارات + البرمجيات + الإنجازات + اللوجو ---------- */
+.cv-brand{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:20px;
+  padding-bottom:16px;border-bottom:1px solid var(--border-soft);font-weight:800;font-size:15px}
+.cv-brand img{width:34px;height:34px;object-fit:contain}
+.cv-brand b{color:var(--neon);font-weight:900}
+html[data-theme="dark"] .cv-brand img{filter:brightness(0) saturate(100%) invert(62%) sepia(69%) saturate(1500%) hue-rotate(346deg) brightness(103%)}
+
+.skill-radar{display:grid;place-items:center}
+.skill-radar svg{width:100%;max-width:400px;height:auto;overflow:visible}
+
+.sw-groups{display:flex;flex-direction:column;gap:20px}
+.sw-group h4{font-size:14px;font-weight:800;color:var(--muted);margin:0 0 10px;
+  text-transform:uppercase;letter-spacing:.04em}
+.sw-tags{display:flex;flex-wrap:wrap;gap:8px}
+.sw-tags .tag{font-size:12.5px;padding:6px 13px}
+
+.hl-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:13px}
+@media (max-width:760px){.hl-list{grid-template-columns:1fr}}
+.hl-list li{display:flex;align-items:flex-start;gap:11px;color:var(--muted);
+  font-size:15px;line-height:1.7}
+.hl-ic{width:22px;height:22px;border-radius:50%;background:var(--neon-soft);color:var(--neon);
+  display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.hl-ic svg{width:13px;height:13px}
+
+/* ---------- عني: حكاية Technopedia Arabia والشعار ---------- */
+.ta-story{margin:26px 0 22px;padding:24px 26px;border-radius:var(--radius-lg);
+  background:var(--card);border:1px solid var(--border)}
+.ta-story h3{font-size:20px;font-weight:900;margin:0 0 14px}
+.ta-story p{color:var(--muted);font-size:16px;line-height:1.95;margin:0 0 12px}
+.ta-story p:last-child{margin-bottom:0}
+.ta-story strong{color:var(--text);font-weight:800}
+.logo-story{display:flex;gap:20px;align-items:flex-start;margin-bottom:26px;
+  padding:22px 24px;border-radius:var(--radius-lg);
+  background:linear-gradient(120deg,var(--neon-soft),transparent 65%),var(--card);
+  border:1px solid var(--neon-line)}
+.logo-story img{width:72px;height:72px;object-fit:contain;flex-shrink:0}
+html[data-theme="dark"] .logo-story img{filter:brightness(0) saturate(100%) invert(62%) sepia(69%) saturate(1500%) hue-rotate(346deg) brightness(103%)}
+.logo-story h4{font-size:17px;font-weight:900;margin:0 0 9px}
+.logo-story p{color:var(--muted);font-size:15.5px;line-height:1.9;margin:0}
+.logo-story strong{color:var(--text);font-weight:800}
+@media (max-width:620px){
+  .logo-story{flex-direction:column;gap:14px}
+  .ta-story,.logo-story{padding:20px 18px}
+}
