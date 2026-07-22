@@ -37,15 +37,10 @@
 </head>
 <body>
 <script src="js/shell.js"></script>
-<!-- TA build: v7-selfcontained-2026 — لو مش شايف السطر ده في View-Source يبقى النسخة المرفوعة قديمة -->
+<!-- TA build: v8-shell-2026 — لو مش شايف السطر ده في View-Source يبقى النسخة المرفوعة قديمة -->
 <div class="reading-progress" aria-hidden="true"></div>
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
-
-<!-- ===== Header ===== -->
-
-
-
-
+<!-- ===== Header يتبني من js/shell.js ===== -->
 <!-- ===== Hero ===== -->
 <section class="hero" id="home">
   <div class="container hero-grid">
@@ -67,7 +62,6 @@
         <span class="lbl" data-i18n="hero.findme">سعيد بتواصلك معي</span>
       </div>
     </div>
-
     <div class="hero-visual">
       <div class="avatar-wrap">
         <div class="avatar-frame">
@@ -90,8 +84,7 @@
   </div>
   <div class="container"><div class="scroll-hint"><span data-i18n="hero.scroll">مرّر لأسفل</span><i></i></div></div>
 </section>
-
-<!-- ===== Support band (point 13) ===== -->
+<!-- ===== Support band ===== -->
 <section class="support-band" id="support">
   <div class="container support-inner">
     <div class="support-copy reveal">
@@ -114,8 +107,7 @@
     </div>
   </div>
 </section>
-
-<!-- ===== About + Tech ecosystem merged (points 8+9) ===== -->
+<!-- ===== About + Tech ecosystem ===== -->
 <section class="section" id="about">
   <div class="container">
     <div class="section-head reveal"><span class="n mono">01</span><h2 data-i18n="about.title">الأثر والمنظومة التقنية</h2><span class="line"></span></div>
@@ -125,17 +117,16 @@
         <div class="ta-story">
           <h3 data-i18n="about.taTitle">ما هي Technopedia Arabia؟</h3>
           <p data-i18n="about.taP1">مساحةٌ عربية أبني فيها تقنيةً حقيقية وأشرحها بلغتنا. ليست مدوّنة ولا دورات، بل مشاريع تعمل فعلاً: كودٌ مفتوح وتجربةٌ حيّة تفتحها في متصفحك قبل أن تقرأ عنها سطراً.</p>
-          <p data-i18n="about.taP2">بدأتُها لأن الفجوة لم تكن يوماً في الذكاء، بل في اللغة والتكلفة. فكلُّ ما أنشره هنا مجانيٌّ ومفتوح، ليصير المهندس والهاوي <strong> بانياً </strong>للتقنية لا مستهلكاً لها.</p>
+          <p data-i18n="about.taP2">بدأتُها لأن الفجوة لم تكن يوماً في الذكاء، بل في اللغة والتكلفة. فكلُّ ما أنشره هنا مجانيٌّ ومفتوح، ليصير المهندس والهاوي شريكَين في <strong>بناء</strong> التقنية لا في استهلاكها.</p>
         </div>
-
         <div class="logo-story">
           <img src="assets/images/logo.png" alt="شعار Technopedia Arabia" width="72" height="72" loading="lazy">
           <div>
             <h4 data-i18n="about.logoTitle">حكاية الشعار</h4>
-            <p data-i18n="about.logoP">قلمُ رصاصٍ جسمُه دائرةٌ إلكترونية. القلم شرحٌ، والدائرة تنفيذ — جسمٌ واحد لا شيئان متجاوران. <strong>لا شرحَ بلا تنفيذ، ولا تنفيذَ يُحتكَر.</strong> والسنُّ البرتقالي نقطةُ البداية: أول سطرِ كود، أول دائرة، أول طالب.</p>          </div>
+            <p data-i18n="about.logoP">قلمُ رصاصٍ جسمُه دائرةٌ إلكترونية. القلم شرحٌ، والدائرة تنفيذ — جسمٌ واحد لا شيئان متجاوران. <strong>لا شرحَ بلا تنفيذ، ولا تنفيذَ يُحتكَر.</strong> والسنُّ البرتقالي نقطةُ البداية: أول سطرِ كود، أول دائرة، أول طالب.</p>
+          </div>
         </div>
-
-        <div class="tech-title mono" data-i18n="about.techTitle">// التقنيات اللي بشتغل بها يومياً</div>
+        <div class="tech-title mono" data-i18n="about.techTitle">// تقنيات أعمل بها يومياً</div>
         <div class="tech-chips">
           <span class="chip">Python</span><span class="chip">TensorFlow</span><span class="chip">PyTorch</span>
           <span class="chip">OpenCV</span><span class="chip">YOLOv5</span><span class="chip">Arduino / C++</span>
@@ -164,8 +155,7 @@
     </div>
   </div>
 </section>
-
-<!-- ===== Projects (point 10) ===== -->
+<!-- ===== Projects ===== -->
 <section class="section section--tight" id="projects">
   <div class="container">
     <div class="section-head reveal"><span class="n mono">02</span><h2 data-i18n="projects.title">مشاريع مختارة</h2><span class="line"></span></div>
@@ -182,7 +172,6 @@
           </div>
         </div>
       </article>
-
       <article class="proj-card reveal">
         <div class="proj-media"><img src="assets/images/Visual-Trigger.png" alt="استوديو المشغّلات البصرية — نموذج CLIP يعمل داخل المتصفح عبر WebAssembly" loading="lazy" width="480" height="270"></div>
         <div class="proj-body">
@@ -195,7 +184,6 @@
           </div>
         </div>
       </article>
-
       <article class="proj-card reveal">
         <div class="proj-media"><img src="assets/images/universal-market-predictor-deluxe.png" alt="متنبئ الأسواق الشامل Deluxe — نموذج LSTM للتنبؤ بالأسهم والعملات الرقمية" loading="lazy" width="480" height="270"></div>
         <div class="proj-body">
@@ -208,7 +196,6 @@
           </div>
         </div>
       </article>
-
       <div class="proj-more reveal">
         <div class="eyebrow" data-i18n="projects.moreEyebrow">// الأرشيف الكامل</div>
         <h3 data-i18n="projects.moreTitle">وهذه مجرّد البداية</h3>
@@ -218,8 +205,7 @@
     </div>
   </div>
 </section>
-
-<!-- ===== Contact (point 14) ===== -->
+<!-- ===== Contact ===== -->
 <section class="section section--tight" id="contact">
   <div class="container">
     <div class="contact-card reveal">
@@ -259,13 +245,7 @@
     </div>
   </div>
 </section>
-
-<!-- ===== Footer (point 15) ===== -->
-
-
-<!-- ===== Mobile app-bar (app-shell) ===== -->
-
-
+<!-- ===== Footer + app-bar يتبنوا من js/shell.js ===== -->
 <script>
 (function(){
   "use strict";
@@ -275,7 +255,14 @@
   function currentTheme(){ return root.getAttribute("data-theme") === "dark" ? "dark" : "light"; }
   function setTheme(t){ root.setAttribute("data-theme", t); try{ localStorage.setItem("ta_theme", t); }catch(e){} }
   function toggleTheme(){ setTheme(currentTheme()==="dark" ? "light" : "dark"); }
-  document.querySelectorAll(".theme-toggle, .ab-theme").forEach(function(b){ b.addEventListener("click", toggleTheme); });
+  function wireTheme(){
+    document.querySelectorAll(".theme-toggle, .ab-theme").forEach(function(b){
+      if(b.dataset.themeWired) return;
+      b.dataset.themeWired = "1";
+      b.addEventListener("click", toggleTheme);
+    });
+  }
+  wireTheme();
   /* follow system changes only while user hasn't chosen manually */
   try{
     var mq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -289,7 +276,7 @@
   var EN = {
     "brand.tag":"Embedded Systems & AI Engineer",
     "nav.about":"About","nav.projects":"Projects","nav.contact":"Contact","nav.cv":"Résumé",
-    "about.taTitle":"What is Technopedia Arabia?","about.taP1":"An Arabic space where I build real technology and explain it in our own language. Not a blog, not a course catalogue — working projects: open code and a live demo you can open in your browser before reading a line about it.","about.taP2":"I started it because the gap was never intelligence — it was language and cost. Everything I publish here is free and open, so the engineer and hobbyists become <strong>builders</strong> of technology, not a consumer of it.","about.logoTitle":"The story behind the logo","about.logoP":"A pencil whose body is an electronic circuit. The pencil is explanation, the circuit is execution — one object, not two placed side by side.<strong> No explanation without building, and nothing built that stays locked away.</strong> The orange tip is where it starts: the first line of code, the first circuit, the first student.","nav.videos":"Videos","nav.support":"Support me","nav.home":"Home","nav.theme":"Theme","nav.lang":"Language",
+    "nav.videos":"Videos","nav.support":"Support me","nav.home":"Home","nav.theme":"Theme","nav.lang":"Language",
     "hero.eyebrow":"&gt; Hi, I'm","hero.name":"Ahmed Darwish",
     "hero.role1":"Embedded Systems","hero.and":"&amp;","hero.role2":"AI Engineer",
     "hero.slogan":"«Your world goes digital, right here»",
@@ -304,6 +291,11 @@
     "about.title":"Impact & Tech Ecosystem",
     "about.lead":"I turn complex ideas into smart embedded systems,",
     "about.p1":"bridging hardware and AI algorithms. With 16+ years spanning engineering and technical education, I’ve shipped 150+ projects and mentored 250+ engineers and students under Technopedia Arabia.",
+    "about.taTitle":"What is Technopedia Arabia?",
+    "about.taP1":"An Arabic space where I build real technology and explain it in our own language. Not a blog, not a course catalogue — working projects: open code and a live demo you can open in your browser before reading a line about it.",
+    "about.taP2":"I started it because the gap was never intelligence — it was language and cost. Everything I publish here is free and open, so engineers and hobbyists become partners in <strong>building</strong> technology, not just consuming it.",
+    "about.logoTitle":"The story behind the logo",
+    "about.logoP":"A pencil whose body is an electronic circuit. The pencil is explanation, the circuit is execution — one object, not two placed side by side. <strong>No explanation without building, and nothing built that stays locked away.</strong> The orange tip is where it starts: the first line of code, the first circuit, the first student.",
     "about.techTitle":"// tech I work with daily",
     "impact.years":"years of engineering","impact.projects":"complete engineering projects",
     "impact.mentored":"engineers & students mentored","impact.ai":"live models, public and running",
@@ -324,13 +316,20 @@
     "footer.tagline":"I build technology worth sharing, turning complex ideas into smart reality.",
     "footer.follow":"Follow me","footer.links":"Quick links","footer.contact":"Get in touch","footer.location":"Kuwait","footer.rights":"All rights reserved"
   };
+
+  /* القاموس العربي يتجمع بعد ما shell.js يخلص حقن الهيدر والفوتر،
+     عشان عناصرهم تدخل الترجمة زي باقي الصفحة */
   var AR = {};
-  var nodes = document.querySelectorAll("[data-i18n]");
-  nodes.forEach(function(el){ AR[el.getAttribute("data-i18n")] = el.innerHTML; });
+  function collectAR(){
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var k = el.getAttribute("data-i18n");
+      if(AR[k] == null) AR[k] = el.innerHTML;
+    });
+  }
 
   function applyLang(lang){
     var map = lang==="en" ? EN : AR;
-    nodes.forEach(function(el){
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
       var k = el.getAttribute("data-i18n");
       if(map[k]!=null) el.innerHTML = map[k];
     });
@@ -341,17 +340,36 @@
     var abl = document.querySelector(".ab-lang-lbl"); if(abl) abl.textContent = _lbl;
     try{ localStorage.setItem("ta_lang", lang); }catch(e){}
   }
-
   window.setLang = applyLang;   /* shell.js بينده عليها لما تضغط زرار اللغة */
-  try{ var sl = localStorage.getItem("ta_lang"); if(sl==="en") applyLang("en"); }catch(e){}
 
   /* ---------- YEAR ---------- */
-  var y = document.getElementById("year"); if(y) y.textContent = new Date().getFullYear();
+  function setYear(){ var y = document.getElementById("year"); if(y) y.textContent = new Date().getFullYear(); }
+
+  /* ---------- app-bar active state ---------- */
+  function wireAppBar(){
+    var abLinks = document.querySelectorAll(".app-bar a[href^='#']");
+    if(!abLinks.length) return;
+    window.addEventListener("scroll",function(){
+      var p=document.getElementById("projects");
+      if(!p) return;
+      var r=p.getBoundingClientRect();
+      var inProj = r.top < window.innerHeight*0.5 && r.bottom>0;
+      abLinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href")===(inProj?"#projects":"#home")); });
+    },{passive:true});
+  }
+
+  /* كل ده لازم يستنى الهيدر والفوتر يتحقنوا الأول */
+  document.addEventListener("DOMContentLoaded", function(){
+    wireTheme();
+    collectAR();
+    try{ if(localStorage.getItem("ta_lang")==="en") applyLang("en"); }catch(e){}
+    setYear();
+    wireAppBar();
+  });
 
   /* contact: reveal custom type field when "other" chosen */
   var cType=document.getElementById("c-type"), cOtherWrap=document.getElementById("c-other-wrap");
   if(cType && cOtherWrap){ cType.addEventListener("change", function(){ cOtherWrap.hidden = cType.value!=="other"; }); }
-
 
   /* ---------- TERMINAL typing ---------- */
   var termBody = document.getElementById("term-body");
@@ -381,14 +399,6 @@
     step();
   }
 
-  /* ---------- REVEAL on scroll ---------- */
-  if("IntersectionObserver" in window){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
-    },{threshold:.12});
-    document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
-  } else { document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); }); }
-
   /* ---------- reading progress ---------- */
   var bar=document.querySelector(".reading-progress");
   if(bar){
@@ -401,17 +411,6 @@
       });
     },{passive:true});
   }
-
-
-
-  /* ---------- app-bar active state ---------- */
-  var abLinks=document.querySelectorAll(".app-bar a[href^='#']");
-  window.addEventListener("scroll",function(){
-    var p=document.getElementById("projects");
-    if(!p) return;
-    var inProj = p.getBoundingClientRect().top < window.innerHeight*0.5 && p.getBoundingClientRect().bottom>0;
-    abLinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href")===(inProj?"#projects":"#home")); });
-  },{passive:true});
 
   /* ---------- lightweight constellation background (theme-aware) ---------- */
   var cv=document.getElementById("bg-canvas");
