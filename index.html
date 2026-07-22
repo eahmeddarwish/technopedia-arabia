@@ -214,7 +214,7 @@
         <h2 data-i18n="contact.title">لنصنع شيئاً معاً</h2>
         <p data-i18n="contact.sub">عندك فكرة، مشروع، أو دعوة؟ اختَر نوع الرسالة واكتبلي.</p>
       </div>
-      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form id="contact-form">
         <div class="field">
           <label for="c-type" data-i18n="contact.type">نوع الرسالة</label>
           <select id="c-type" name="inquiry_type">
@@ -233,7 +233,7 @@
           <div class="field"><label for="c-name" data-i18n="contact.name">الاسم</label><input type="text" id="c-name" name="name" required></div>
           <div class="field"><label for="c-email" data-i18n="contact.email">البريد الإلكتروني</label><input type="email" id="c-email" name="email" required></div>
         </div>
-        <div class="field"><label for="c-phone" data-i18n="contact.phone">رقم الهاتف / واتساب (اختياري)</label><input type="tel" id="c-phone" name="phone" dir="ltr" placeholder="رقم هاتفك"></div>
+        <div class="field"><label for="c-phone" data-i18n="contact.phone">رقم الهاتف / واتساب (اختياري)</label><input type="tel" id="c-phone" name="phone" dir="ltr" data-i18n-placeholder="contact.phonePh" placeholder="رقم هاتفك"></div>
         <div class="field"><label for="c-msg" data-i18n="contact.msg">تفاصيل الرسالة</label><textarea id="c-msg" name="message" required></textarea></div>
         <button type="submit" class="btn btn-primary" data-i18n="contact.send">إرسال الرسالة</button>
         <div class="contact-or"><span data-i18n="contact.or">أو</span></div>
@@ -312,7 +312,7 @@
     "contact.type":"Message type","contact.opt1":"I have a tech project","contact.opt2":"I want to learn",
     "contact.opt3":"Strategic collaboration","contact.opt4":"Conference or workshop invite","contact.opt5":"Other","contact.otherLabel":"Describe your message type",
     "contact.name":"Name","contact.email":"Email","contact.msg":"Message details","contact.send":"Send message",
-    "contact.phone":"Phone / WhatsApp (optional)","contact.or":"or","contact.wa":"Message me on WhatsApp",
+    "contact.phone":"Phone / WhatsApp (optional)","contact.phonePh":"Your phone number","contact.or":"or","contact.wa":"Message me on WhatsApp",
     "footer.tagline":"I build technology worth sharing, turning complex ideas into smart reality.",
     "footer.follow":"Follow me","footer.links":"Quick links","footer.contact":"Get in touch","footer.location":"Kuwait","footer.rights":"All rights reserved"
   };
@@ -325,6 +325,10 @@
       var k = el.getAttribute("data-i18n");
       if(AR[k] == null) AR[k] = el.innerHTML;
     });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el){
+      var k = el.getAttribute("data-i18n-placeholder");
+      if(AR[k] == null) AR[k] = el.getAttribute("placeholder");
+    });
   }
 
   function applyLang(lang){
@@ -332,6 +336,10 @@
     document.querySelectorAll("[data-i18n]").forEach(function(el){
       var k = el.getAttribute("data-i18n");
       if(map[k]!=null) el.innerHTML = map[k];
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el){
+      var k = el.getAttribute("data-i18n-placeholder");
+      if(map[k]!=null) el.setAttribute("placeholder", map[k]);
     });
     root.setAttribute("lang", lang);
     root.setAttribute("dir", lang==="en" ? "ltr" : "rtl");
@@ -366,6 +374,28 @@
     setYear();
     wireAppBar();
   });
+
+  /* ---------- CONTACT FORM ----------
+     مفيش سيرفر ولا حساب خارجي: الفورم بيجهّز الرسالة ويفتح واتساب بيها.
+     لو عملت حساب Formspree بعدين، رجّع action و method للفورم وامسح الجزء ده. */
+  var cForm=document.getElementById("contact-form");
+  if(cForm){
+    cForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      var g=function(id){ var el=document.getElementById(id); return el ? el.value.trim() : ""; };
+      var typeEl=document.getElementById("c-type");
+      var type = typeEl ? typeEl.options[typeEl.selectedIndex].text : "";
+      if(typeEl && typeEl.value==="other" && g("c-other")) type=g("c-other");
+      var isEn = root.getAttribute("lang")==="en";
+      var L = isEn
+        ? {t:"Type",n:"Name",e:"Email",p:"Phone",m:"Message",h:"New message from engdarwish.com"}
+        : {t:"نوع الرسالة",n:"الاسم",e:"البريد",p:"الهاتف",m:"الرسالة",h:"رسالة جديدة من engdarwish.com"};
+      var lines=[L.h,"",L.t+": "+type,L.n+": "+g("c-name"),L.e+": "+g("c-email")];
+      if(g("c-phone")) lines.push(L.p+": "+g("c-phone"));
+      lines.push("",L.m+":",g("c-msg"));
+      window.open("https://wa.me/96541005052?text="+encodeURIComponent(lines.join("\n")),"_blank","noopener");
+    });
+  }
 
   /* contact: reveal custom type field when "other" chosen */
   var cType=document.getElementById("c-type"), cOtherWrap=document.getElementById("c-other-wrap");
