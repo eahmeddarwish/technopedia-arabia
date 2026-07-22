@@ -1,280 +1,35 @@
 /* ==========================================================================
-   TECHNOPEDIA ARABIA — ENHANCEMENTS (v2.0)
-   ملف JS إضافي منفصل — مبيلمسش main.js / i18n.js / particles.js /
-   projects-render.js / projects-data.js خالص.
-
-   v2.0 — بعد تقارير المراجعة المعمارية:
-   • Event Delegation بدل ربط حدث لكل عنصر
-   • requestAnimationFrame + تخزين الأبعاد (منع Layout Thrashing)
-   • Debounce للبحث + حالة "لا توجد نتائج"
-   • نبض GitHub الحي
-   • تحميل كسول للمعمل الحي (مفيش تكلفة قبل ما المستخدم يطلبه)
+   TECHNOPEDIA ARABIA — enhancements.css
+   build: v8 — استبدل بيه css/enhancements.css القديم بالكامل.
+   بيتحمّل بعد style.css، فأي حاجة هنا لها الأولوية النهائية.
+   دوره هنا: يضمن إن أي بقايا من التصميم القديم متأثرش على الجديد.
    ========================================================================== */
 
-(function () {
-  'use strict';
-
-  const onReady = (fn) =>
-    document.readyState === 'loading'
-      ? document.addEventListener('DOMContentLoaded', fn)
-      : fn();
-
-  /* أداة تأخير عامة */
-  const debounce = (fn, wait = 300) => {
-    let t;
-    return function (...args) {
-      clearTimeout(t);
-      t = setTimeout(() => fn.apply(this, args), wait);
-    };
-  };
-
-  onReady(() => {
-
-    /* ======================================================================
-       1. MOUSE GLOW — Event Delegation + rAF + أبعاد مخزّنة
-          (الأبعاد بتتقاس مرة واحدة عند دخول الماوس، مش مع كل حركة)
-       ====================================================================== */
-    if (window.matchMedia('(pointer: fine)').matches) {
-      let activeCard = null;
-      let cachedRect = null;
-      let queuedX = 0;
-      let queuedY = 0;
-      let framePending = false;
-
-      const paintGlow = () => {
-        framePending = false;
-        if (!activeCard || !cachedRect) return;
-        activeCard.style.setProperty('--mouse-x', (queuedX - cachedRect.left) + 'px');
-        activeCard.style.setProperty('--mouse-y', (queuedY - cachedRect.top) + 'px');
-      };
-
-      document.addEventListener('pointerover', (e) => {
-        const card = e.target.closest('.card.tilt');
-        if (!card || card === activeCard) return;
-        activeCard = card;
-        cachedRect = card.getBoundingClientRect(); // قياس واحد فقط
-      }, { passive: true });
-
-      document.addEventListener('pointerout', (e) => {
-        if (activeCard && !activeCard.contains(e.relatedTarget)) {
-          activeCard = null;
-          cachedRect = null;
-        }
-      }, { passive: true });
-
-      document.addEventListener('pointermove', (e) => {
-        if (!activeCard) return;
-        queuedX = e.clientX;
-        queuedY = e.clientY;
-        if (!framePending) {
-          framePending = true;
-          requestAnimationFrame(paintGlow);
-        }
-      }, { passive: true });
-
-      // إبطال الأبعاد المخزّنة لما التخطيط يتغيّر
-      const invalidate = debounce(() => { cachedRect = null; activeCard = null; }, 150);
-      window.addEventListener('resize', invalidate, { passive: true });
-      window.addEventListener('scroll', invalidate, { passive: true });
-    }
-
-    /* ======================================================================
-       2. المعمل الحي — تحميل كسول للـ iframe (مفيش تكلفة قبل الطلب)
-       ====================================================================== */
-    const labLaunch = document.getElementById('lab-launch');
-    const labStage = document.getElementById('lab-stage');
-
-    if (labLaunch && labStage) {
-      labLaunch.addEventListener('click', () => {
-        const src = labLaunch.getAttribute('data-src');
-        if (!src || labStage.querySelector('iframe')) return;
-
-        labStage.innerHTML =
-          '<div class="lab-stage-loading">جارٍ تحميل النموذج داخل متصفحك…</div>';
-
-        const frame = document.createElement('iframe');
-        frame.src = src;
-        frame.title = 'Visual Trigger Studio — نموذج CLIP يعمل داخل المتصفح';
-        frame.setAttribute('allow', 'camera; microphone; fullscreen');
-        frame.setAttribute('loading', 'lazy');
-        frame.addEventListener('load', () => {
-          const loader = labStage.querySelector('.lab-stage-loading');
-          if (loader) loader.remove();
-        });
-        labStage.appendChild(frame);
-
-        labLaunch.disabled = true;
-        labLaunch.textContent = 'شغّال دلوقتي ↓';
-      });
-    }
-
-    /* ======================================================================
-       3. نبض GitHub الحي — أرقام حقيقية قابلة للتحقق بدل أرقام ثابتة
-       ====================================================================== */
-    const ghBox = document.getElementById('gh-pulse');
-
-    if (ghBox) {
-      const fmtSince = (iso) => {
-        const diffH = (Date.now() - new Date(iso).getTime()) / 36e5;
-        if (diffH < 1)  return 'من أقل من ساعة';
-        if (diffH < 24) return 'من ' + Math.round(diffH) + ' ساعة';
-        const d = Math.round(diffH / 24);
-        if (d < 30)  return 'من ' + d + ' يوم';
-        return 'من ' + Math.round(d / 30) + ' شهر';
-      };
-
-      const setText = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = val;
-      };
-
-      fetch('https://api.github.com/users/eahmeddarwish/repos?per_page=100&sort=pushed')
-        .then((r) => (r.ok ? r.json() : Promise.reject(new Error('github ' + r.status))))
-        .then((repos) => {
-          if (!Array.isArray(repos) || !repos.length) return;
-
-          const publicRepos = repos.filter((r) => !r.fork);
-          const stars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
-          const latest = repos
-            .map((r) => r.pushed_at)
-            .filter(Boolean)
-            .sort()
-            .pop();
-
-          setText('gh-repos', publicRepos.length);
-          setText('gh-stars', stars);
-          if (latest) setText('gh-last', fmtSince(latest));
-          ghBox.hidden = false;
-        })
-        .catch(() => {
-          /* لو GitHub مردّش أو حصل rate limit — الصندوق يفضل مخفي بدل ما يبان فاضي */
-        });
-    }
-
-    /* ======================================================================
-       4. البحث والفلترة — Debounce + Event Delegation + حالة لا نتائج
-       ====================================================================== */
-    const searchInput = document.getElementById('knowledge-search-input');
-    const tagsWrap = document.querySelector('.quick-tags-scroller');
-    const resultsWrap = document.querySelector('.bento-media-grid');
-
-    if (searchInput || tagsWrap) {
-      const cards = () => document.querySelectorAll('.searchable-item');
-
-      const emptyMsg = (() => {
-        if (!resultsWrap) return null;
-        const el = document.createElement('p');
-        el.className = 'no-results-state';
-        el.hidden = true;
-        el.textContent = 'مفيش نتائج مطابقة — جرّب كلمة تانية.';
-        resultsWrap.appendChild(el);
-        return el;
-      })();
-
-      const applyFilter = () => {
-        const q = (searchInput ? searchInput.value : '').toLowerCase().trim();
-        const activeBtn = document.querySelector('.q-tag.active');
-        const tag = activeBtn ? activeBtn.getAttribute('data-tag') : 'all';
-        let visible = 0;
-
-        cards().forEach((card) => {
-          const cardTags = card.getAttribute('data-tags') || '';
-          const text = card.textContent.toLowerCase();
-          const okSearch = q === '' || text.includes(q) || cardTags.includes(q);
-          const okTag = tag === 'all' || cardTags.includes(tag);
-          const show = okSearch && okTag;
-          card.classList.toggle('is-hidden', !show);
-          if (show) visible++;
-        });
-
-        if (emptyMsg) emptyMsg.hidden = visible !== 0;
-      };
-
-      if (searchInput) {
-        searchInput.addEventListener('input', debounce(applyFilter, 300));
-      }
-
-      if (tagsWrap) {
-        // ربط واحد على العنصر الأب بدل ربط لكل زرار
-        tagsWrap.addEventListener('click', (e) => {
-          const btn = e.target.closest('.q-tag');
-          if (!btn || !tagsWrap.contains(btn)) return;
-          tagsWrap.querySelectorAll('.q-tag').forEach((b) => {
-            b.classList.remove('active');
-            b.setAttribute('aria-pressed', 'false');
-          });
-          btn.classList.add('active');
-          btn.setAttribute('aria-pressed', 'true');
-          applyFilter();
-        });
-      }
-    }
-
-    /* ======================================================================
-       5. اختيار نوع المحادثة في فورم التواصل — Event Delegation
-       ====================================================================== */
-    const pathsWrap = document.querySelector('.conversation-paths-grid');
-    const selectedPathInput = document.getElementById('selected-path-input');
-    const userMessage = document.getElementById('user-message');
-
-    if (pathsWrap && selectedPathInput) {
-      pathsWrap.addEventListener('click', (e) => {
-        const card = e.target.closest('.path-card');
-        if (!card || !pathsWrap.contains(card)) return;
-
-        pathsWrap.querySelectorAll('.path-card').forEach((c) => {
-          c.classList.remove('active');
-          c.setAttribute('aria-pressed', 'false');
-        });
-        card.classList.add('active');
-        card.setAttribute('aria-pressed', 'true');
-
-        selectedPathInput.value = card.getAttribute('data-path') || '';
-        const ph = card.getAttribute('data-placeholder');
-        if (ph && userMessage) userMessage.setAttribute('placeholder', ph);
-      });
-    }
-
-    /* ======================================================================
-       6. إغلاق المودالات — استهداف مباشر بدل المرور على الكل
-       ====================================================================== */
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Escape') return;
-      const openModal = document.querySelector('.knowledge-video-modal.active');
-      if (!openModal) return;
-      openModal.classList.remove('active');
-      document.body.style.overflow = '';
-      const iframe = openModal.querySelector('iframe');
-      if (iframe) iframe.setAttribute('src', '');
-    });
-
-  });
-})();
-       /* ==========================================================================
-   إصلاح جذري لمسافة الهيرو والتوسيط (Hero Spacing Fix)
-   ========================================================================== */
-
-/* 1. إلغاء الـ 100vh اللي بتعمل فراغ عملاق، وضبط مسافة احترافية */
-.hero {
-  min-height: auto !important; 
-  padding: 80px 0 40px !important; 
-  display: block !important;
+/* --- شبكة الأمان للهيرو: يمنع أي min-height:100vh قديم من توسيط المحتوى --- */
+section.hero{
+  min-height:auto !important;
+  height:auto !important;
+  display:block !important;
+  align-items:normal !important;
+  padding-top:26px !important;
+}
+section.hero > .container.hero-grid{
+  display:grid !important;
+  align-items:start !important;
+  align-content:start !important;
+  min-height:auto !important;
+  height:auto !important;
+}
+.hero-visual{
+  flex-direction:column !important;
+  justify-content:flex-start !important;
 }
 
-/* 2. ضبط توسيط النص مع الصورة (جنب بعض على اللابتوب، وفوق بعض عالموبايل) */
-.hero-grid {
-  display: grid !important;
-  align-items: center !important; 
-}
+/* --- شبكة أمان للفوتر: يضمن التخطيط الجديد مايتكسرش --- */
+.site-footer{ display:block !important; }
+.site-footer .footer-top{ align-items:start !important; }
 
-/* 3. إلغاء المارجن القديم اللي كان بيعمل خلل في محاذاة الصورة */
-.hero-visual {
-  margin-bottom: 0 !important;
-}
-
-/* 4. تقليل المسافة جداً في الموبايل عشان الصورة تطلع تحت الهيدر مباشرة */
-@media (max-width: 860px) {
-  .hero {
-    padding: 30px 0 40px !important;
-  }
-}
+/* --- لمسات إضافية بسيطة --- */
+html{ scroll-padding-top: calc(var(--header-h) + 12px); } /* الروابط الداخلية ماتختفيش تحت الهيدر الثابت */
+.btn:active{ transform: translateY(0) scale(.98); }       /* رد فعل خفيف عند الضغط */
+a, button{ -webkit-tap-highlight-color: transparent; }    /* يشيل الوميض الأزرق على الموبايل */
