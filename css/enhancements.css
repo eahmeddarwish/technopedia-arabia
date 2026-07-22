@@ -11,7 +11,10 @@ section.hero{
   height:auto !important;
   display:block !important;
   align-items:normal !important;
-  padding-top:26px !important;
+  padding-top:26px;
+}
+@media (max-width:560px){
+  section.hero{ padding-top:14px !important; }
 }
 section.hero > .container.hero-grid{
   display:grid !important;
