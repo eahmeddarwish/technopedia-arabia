@@ -365,3 +365,14 @@ html[data-theme="dark"] .ab-theme-ics .i-moon{color:var(--neon)}
 /* hide the absolutely-positioned badges on small screens, show inline row instead */
 .badges-mobile{display:none}
 @media (max-width:560px){.avatar-wrap .badge{display:none}}
+
+
+/* ==========================================================================
+   PRINT — تُخفي القوائم عند طباعة السيرة الذاتية
+   ========================================================================== */
+@media print{
+  .no-print,#bg-canvas,.reading-progress,.app-bar,.nav-drawer,
+  header.site-header,footer.site-footer{display:none!important}
+  body{padding-bottom:0!important;background:#fff!important;color:#000!important}
+  a{text-decoration:none!important;color:#000!important}
+}
