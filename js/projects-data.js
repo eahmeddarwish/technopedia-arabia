@@ -72,6 +72,53 @@ const projectsData = [{
             ar: "موديل YOLOv5s مُدرَّب على 40,000+ صورة (99% mAP@0.5)، مُصدَّر لـ ONNX للاستدلال على CPU. نظام التتبع بيدمج فلتر كالمان (للتنبؤ بموقع الطائرة بين الفريمات) مع وحدة تحكم PID لكل محور، بتحرّك موتوري سيرفو عبر PCA9685 عشان تفضل الطائرة في منتصف الكاميرا. يعمل بمعدل 15-20 إطار/ثانية على Raspberry Pi 4 عادي.",
             en: "A YOLOv5s model trained on 40,000+ images (99% mAP@0.5), exported to ONNX for CPU inference. The tracking loop combines a Kalman filter (predicting the drone's position between frames) with a per-axis PID controller driving two pan/tilt servos via a PCA9685, keeping the drone centered in frame. Runs at 15–20 FPS on a stock Raspberry Pi 4.",
         },
+
+        article: {
+            ar: {
+                lead: "نموذجٌ واحد مُدرَّب، يعمل لحظيًا على حاسوبٍ بـ 35 دولارًا، يُطارد الطائرات المسيّرة ويُبقيها في منتصف الكاميرا — بدون كرت شاشة، وبدون أي حلول مختصرة.",
+                sections: [
+                    { h: "المشكلة", p: "كشف الطائرات المسيّرة سهلٌ على سيرفر بكرت شاشة قوي. لكن أن يعمل النظام <strong>لحظيًا على Raspberry Pi 4 بلا GPU</strong>، ويتتبّع الطائرة فعليًا بموتورات تُحرّك الكاميرا خلفها — هذه هي المعادلة الصعبة. الهدف: نظامٌ كامل يكشف ويلاحق، على جهازٍ يتّسع لكفّ اليد." },
+                    { h: "خط العمل", p: "النظام سلسلةٌ مترابطة، كل حلقة تُغذّي التي بعدها:", flow: ["كاميرا USB", "YOLOv5s على ONNX (معالج فقط)", "فلتر كالمان", "وحدة تحكم PID", "PCA9685", "موتورات Pan/Tilt"] },
+                    { h: "القرارات الهندسية", steps: [
+                        { t: "لماذا ONNX بدل PyTorch؟", d: "الـRaspberry Pi 4 بلا GPU ولا CUDA. تصدير النموذج لصيغة ONNX وتشغيله بـ ONNXRuntime يُلغي الاعتماد على PyTorch كليًا، ويمنح استدلالًا مُحسَّنًا على المعالج وحده — يكفي لـ 15-20 إطار/ثانية على الجهاز نفسه." },
+                        { t: "لماذا فلتر كالمان فوق PID؟", d: "الكشف لا يعمل على كل فريم بالسرعة الكاملة، فتصل النتائج متأخرةً ومهتزّة. فلتر كالمان يتتبّع الموقع والسرعة ويتنبأ بمكان الطائرة <em>الآن</em> بين عمليات الكشف، فتستجيب وحدة PID لتقديرٍ سلس بدل قيمةٍ قديمة — وهذا ما يمنع الموتورات من الاهتزاز في كل فجوة." },
+                        { t: "آلة حالاتٍ للسلوك", d: "أربع حالات تُدير النظام: بحث ← تتبّع ← فقدان ← عودة. أثناء البحث تمسح الكاميرا بحركةٍ جيبيةٍ بطيئة بدل الثبات، حتى تلتقط الهدف من جديد." },
+                    ]},
+                    { h: "القصة الحقيقية: بقٌّ كلّفني إعادة التدريب", p: "أول نموذجٍ بدا رائعًا على الورق (95% mAP)، لكنه في الواقع كان <strong>يقفل على صينيةٍ خشبية، وكرسي، ولمبة</strong>. السبب؟ مجموعة التدريب فيها 5 صور خلفية فقط من أصل 503 — النموذج لم يرَ تقريبًا كيف يبدو العالم <em>بدون</em> طائرة. الحل: دمجتُ ثلاثًا من أكبر مجموعات الدرونز (أكثر من 40 ألف صورة)، وأضفتُ خلفيات صعبة من COCO. النتيجة: mAP قفزت إلى 99%، والإيجابيات الخاطئة انهارت من ~100% إلى ~1%." },
+                ],
+                results: [
+                    { k: "الدقة (Precision)", v: "94.8%" },
+                    { k: "الاستدعاء (Recall)", v: "96.2%" },
+                    { k: "mAP@0.5", v: "99.0%" },
+                    { k: "الأداء على Pi 4", v: "15–20 إطار/ث" },
+                    { k: "الإيجابيات الخاطئة", v: "~1%" },
+                    { k: "صور التدريب", v: "+40,000" },
+                ],
+                note: "المقاييس من مجموعة التحقق أثناء التدريب، لا من اختبارٍ ميداني مستقل. المشروع مفتوح المصدر بالكامل — كل الكود والأوزان المُدرَّبة متاحة للتجربة والتعديل.",
+            },
+            en: {
+                lead: "One trained model, running in real time on a $35 computer, chasing drones and keeping them centered — no GPU, no shortcuts.",
+                sections: [
+                    { h: "The problem", p: "Detecting drones is easy on a beefy GPU server. Getting it to run <strong>in real time on a GPU-less Raspberry Pi 4</strong>, and physically track the drone with servos that steer the camera — that is the hard part. The goal: a complete detect-and-follow system on a computer that fits in your palm." },
+                    { h: "The pipeline", p: "The system is a chain where each link feeds the next:", flow: ["USB camera", "YOLOv5s on ONNX (CPU only)", "Kalman filter", "PID controller", "PCA9685", "Pan/Tilt servos"] },
+                    { h: "Engineering decisions", steps: [
+                        { t: "Why ONNX over PyTorch?", d: "The Pi 4 has no GPU and no CUDA. Exporting the model to ONNX and running it with ONNXRuntime removes the PyTorch dependency entirely and gives optimized CPU-only inference — enough for 15-20 FPS on-device." },
+                        { t: "Why a Kalman filter on top of PID?", d: "Inference doesn't run every frame at full speed, so detections arrive late and jittery. The Kalman filter tracks position and velocity and predicts where the drone <em>is now</em>, so the PID reacts to a smooth estimate instead of a stale one — this is what stops the servos jittering on every gap." },
+                        { t: "A state machine for behavior", d: "Four states run the system: searching → tracking → lost → returning. While searching, the camera does a slow sine-wave scan instead of standing still, to re-acquire the target." },
+                    ]},
+                    { h: "The real story: a bug that cost a retrain", p: "The first model looked great on paper (95% mAP) but in reality <strong>locked onto a wooden tray, a chair, a lamp</strong>. Why? The training set had only 5 background images out of 503 — the model had barely seen what the world looks like <em>without</em> a drone. The fix: I merged three of the largest drone datasets (40,000+ images) and added hard COCO backgrounds. Result: mAP jumped to 99%, false positives collapsed from ~100% to ~1%." },
+                ],
+                results: [
+                    { k: "Precision", v: "94.8%" },
+                    { k: "Recall", v: "96.2%" },
+                    { k: "mAP@0.5", v: "99.0%" },
+                    { k: "On Pi 4", v: "15–20 FPS" },
+                    { k: "False positives", v: "~1%" },
+                    { k: "Training images", v: "40,000+" },
+                ],
+                note: "Metrics are from the training validation split, not an independent field test. The project is fully open source — all code and trained weights are available to run and modify.",
+            },
+        },
     },
     {
         id: "adsb-flight-tracker",
