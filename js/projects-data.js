@@ -39,7 +39,7 @@ const projectsData = [{
                 p: "شطرنجٌ احترافي بلا تثبيتٍ ولا حساب: تفتح الرابط وتلعب فورًا. تختار مستوى الصعوبة (سهل / متوسط / صعب)، أو تتحدّى صديقًا وجهًا لوجهٍ على نفس الشاشة."
               },
               {
-                h: "إزاي بيشتغل",
+                h: "آلية العمل",
                 flow: [
                   "إدخال الحركة",
                   "python-chess يتحقق من صحّتها",
@@ -166,7 +166,7 @@ const projectsData = [{
             en: "A single shared LSTM backbone forecasting any global stock or cryptocurrency over 1/3/7-day horizons, with a statistical significance test to show whether the predictive edge is real or just noise.",
         },
         details: {
-            ar: "تطوير كامل لمشروع متنبئ الأسواق الأصلي: بدل نموذج منفصل لكل سهم، نموذج LSTM واحد مشترك بـembeddings خاصة لكل تكر يغطي أمريكا والخليج والمملكة المتحدة وألمانيا واليابان وهونج كونج والهند والعملات الرقمية. الهدف هو النسبة المئوية للعائد بدل السعر المُقيّس، لتفادي مشاكل الاستقراء على الأسهم شديدة الاتجاه. كل تنبؤ يُقارن بخط أساس بسيط (naive persistence) مع اختبار ثنائي الحدين (binomial test) وفاصل ثقة Wilson 95% على دقة الاتجاه، بدل الاكتفاء بنسبة دقة مجردة قد تكون مجرد صدفة إحصائية. القيود موثّقة بصراحة في الـREADME، بما فيها الأماكن اللي النموذج فيها لسه ما بيهزمش رمي العملة.",
+            ar: "تطوير كامل لمشروع متنبئ الأسواق الأصلي: بدلًا من نموذجٍ منفصلٍ لكل سهم، نموذج LSTM واحد مشترك بـembeddings خاصةٍ بكل سهمٍ تُغطّي أمريكا والخليج والمملكة المتحدة وألمانيا واليابان وهونج كونج والهند والعملات الرقمية. الهدف هو النسبة المئوية للعائد بدل السعر المُقيّس، لتفادي مشاكل الاستقراء على الأسهم شديدة الاتجاه. كل تنبؤ يُقارن بخط أساس بسيط (naive persistence) مع اختبار ثنائي الحدين (binomial test) وفاصل ثقة Wilson 95% على دقة الاتجاه، بدل الاكتفاء بنسبة دقة مجردة قد تكون مجرد صدفة إحصائية. القيود موثّقة بصراحة في الـREADME، بما فيها الحالات التي لا يزال النموذج فيها عاجزًا عن التفوّق علىش رمي العملة.",
             en: "A full evolution of the original Universal Market Predictor: instead of a separate model per ticker, one shared LSTM backbone with per-ticker embeddings covers US, Gulf/MENA, UK, Germany, Japan, Hong Kong, India markets, and major cryptocurrencies. The prediction target is percentage return rather than a scaled price, avoiding extrapolation failures on strongly-trending stocks. Every forecast is benchmarked against a naive persistence baseline with a binomial significance test and a 95% Wilson confidence interval on directional accuracy — rather than trusting a raw accuracy percentage that could just be statistical noise. Limitations are documented honestly in the README, including where the model currently does not beat a coin flip.",
         },
         article: {
@@ -195,7 +195,7 @@ const projectsData = [{
                   },
                   {
                     t: "لماذا إخراجٌ متعددٌ لا تكراري؟",
-                    d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ باللي بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
+                    d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ بما بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
                   },
                   {
                     t: "ثغرةٌ حقيقية: تنبؤٌ بالنسبة لا بالسعر",
@@ -305,7 +305,7 @@ const projectsData = [{
             en: "Real-time drone detection with a physical pan/tilt camera tracker, running fully on a GPU-less Raspberry Pi 4.",
         },
         details: {
-            ar: "موديل YOLOv5s مُدرَّب على 40,000+ صورة (99% mAP@0.5)، مُصدَّر لـ ONNX للاستدلال على CPU. نظام التتبع بيدمج فلتر كالمان (للتنبؤ بموقع الطائرة بين الفريمات) مع وحدة تحكم PID لكل محور، بتحرّك موتوري سيرفو عبر PCA9685 عشان تفضل الطائرة في منتصف الكاميرا. يعمل بمعدل 15-20 إطار/ثانية على Raspberry Pi 4 عادي.",
+            ar: "موديل YOLOv5s مُدرَّب على 40,000+ صورة (99% mAP@0.5)، مُصدَّر لـ ONNX للاستدلال على CPU. نظام التتبّع يدمج فلتر كالمان (للتنبؤ بموقع الطائرة بين الفريمات) مع وحدة تحكم PID لكل محور، تُحرّك موتوري سيرفو عبر PCA9685 لإبقاء الطائرة في منتصف الكاميرا. يعمل بمعدل 15-20 إطار/ثانية على Raspberry Pi 4 عادي.",
             en: "A YOLOv5s model trained on 40,000+ images (99% mAP@0.5), exported to ONNX for CPU inference. The tracking loop combines a Kalman filter (predicting the drone's position between frames) with a per-axis PID controller driving two pan/tilt servos via a PCA9685, keeping the drone centered in frame. Runs at 15–20 FPS on a stock Raspberry Pi 4.",
         },
         article: {
@@ -466,7 +466,7 @@ const projectsData = [{
             en: "A live ATC-style flight radar that runs with any RTL-SDR dongle on a laptop or Raspberry Pi."
         },
         details: {
-            ar: "يستقبل إشارات ADS-B الحقيقية على 1090MHz عبر dump1090، ويعرضها على واجهة رادار حية ببصمة كلاسيكية. الديمو المباشر بيشتغل بمحاكاة داخل المتصفح؛ النسخة الكاملة بتدعم هاردوير حقيقي.",
+            ar: "يستقبل إشارات ADS-B الحقيقية على 1090MHz عبر dump1090، ويعرضها على واجهة رادار حية ببصمة كلاسيكية. الديمو المباشر يعمل بمحاكاةٍ داخل المتصفح؛ النسخة الكاملة تدعم عتادًا حقيقيًا.",
             en: "Receives real ADS-B signals at 1090MHz via dump1090 and renders them on a live radar-style dashboard. The live demo runs a browser-side simulation; the full version supports real hardware."
         },
         article: {
@@ -475,7 +475,7 @@ const projectsData = [{
             sections: [
               {
                 h: "الفكرة",
-                p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. ومعندكش هاردوير؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
+                p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. وإن لم يكن لديك عتاد؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
               },
               {
                 h: "المعمارية",
@@ -756,7 +756,7 @@ const projectsData = [{
                 p: "ترفع صورةً لأي شيءٍ يهمّك، وتختار الإجراء: عرض صورة، تشغيل فيديو، جلب حالة الطقس، أو رسالةً نصية. وعندما تُشابه لقطةٌ جديدة صورتك المرجعية بدرجةٍ كافية — يُنفَّذ الإجراء تلقائيًا."
               },
               {
-                h: "إزاي بيشتغل",
+                h: "آلية العمل",
                 flow: [
                   "صورة مرجعية",
                   "مُرمِّز CLIP في المتصفح",
