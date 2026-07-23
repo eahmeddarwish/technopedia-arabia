@@ -1,7 +1,7 @@
 /* ==========================================================================
-   TECHNOPEDIA ARABIA — Articles (tutorials) list rendering
-   Homepage featured strip + full articles.html page with category filter.
-   Mirrors projects-render.js conventions.
+   TECHNOPEDIA ARABIA — Articles (tutorials) list rendering (الشروحات)
+   Mirrors projects-render.js. Homepage featured strip (#featured-articles-grid)
+   + full articles.html page (#articles-filter-bar / #articles-grid).
    ========================================================================== */
 
 const ARTICLE_CATEGORY_LIST = ["arduino", "raspberrypi", "python-ai", "digital", "electronics"];
@@ -10,16 +10,16 @@ let activeArticleFilter = "all";
 function articleCardHtml(a, lang, i) {
   const tagsHtml = a.tags.map((tg) => `<span class="tag tag-cyan">${tg}</span>`).join("");
   return `
-    <article class="card glass tilt reveal reveal-delay-${(i % 5) + 1}" data-article-id="${a.id}" data-categories="${a.category}">
+    <article class="card glass tilt reveal reveal-delay-${(i % 5) + 1}" data-article-id="${a.id}" data-categories="${a.categories.join(" ")}">
       <div class="card-media">
-        <img src="${a.cover}" alt="${a.title[lang]}" loading="lazy">
+        <img src="${a.image}" alt="${a.title[lang]}" loading="lazy">
       </div>
       <div class="card-body">
-        <div class="card-tags">${tagsHtml}</div>
         <h3>${a.title[lang]}</h3>
-        <p>${a.excerpt[lang]}</p>
+        <p>${a.desc[lang]}</p>
+        <div class="card-tags">${tagsHtml}</div>
         <div class="card-links">
-          <span class="article-read">${a.read[lang]}</span>
+          <span class="art-read">${a.read[lang]}</span>
           <a href="article.html?id=${encodeURIComponent(a.id)}">${t("articles.readMore", lang)} →</a>
         </div>
       </div>
@@ -75,7 +75,7 @@ function paintArticlesGrid(grid, lang) {
   const list =
     activeArticleFilter === "all"
       ? window.articlesData
-      : window.articlesData.filter((a) => a.category === activeArticleFilter);
+      : window.articlesData.filter((a) => a.categories.includes(activeArticleFilter));
   grid.innerHTML = list.length
     ? list.map((a, i) => articleCardHtml(a, lang, i)).join("")
     : `<p style="grid-column:1/-1;text-align:center;">${t("articles.empty", lang)}</p>`;

@@ -1,61 +1,53 @@
 /* ==========================================================================
    TECHNOPEDIA ARABIA — Tutorials / Articles data (الشروحات)
-   Migrated & rewritten from the old "How To DIGITAL" content.
-   Bilingual (ar default + en parallel). Fusha only. No dialect.
-   Each article:
-   {
-     id, category, featured, cover, updated, tags:[],
-     title:{ar,en}, excerpt:{ar,en}, read:{ar,en},
-     body:{ ar:{lead, sections:[{h,p,code,list,steps}], takeaways:[], note},
-            en:{ ... } }
-   }
-   Section fields are all optional except one of (p|code|list|steps).
+   منقولة ومُحدّثة من محتوى "How To DIGITAL" القديم. عربية فصحى + إنجليزي موازٍ.
+   نفس بنية مقال المشروع (lead / sections / steps) + دعم بلوك كود (code)
+   وخلاصة (takeaways). أضف شرحاً جديداً = كائن واحد في هذه المصفوفة.
    ========================================================================== */
 
 window.articlesData = [
   /* ===================================================================== */
   {
     id: "intro-arduino",
-    category: "arduino",
+    categories: ["arduino"],
     featured: true,
-    cover: "assets/images/intro-arduino.jpg",
-    updated: "2026-07",
+    image: "assets/images/tut-intro-arduino.jpg",
     tags: ["Arduino", "Microcontroller", "Electronics"],
+    read: { ar: "٧ دقائق قراءة", en: "7 min read" },
     title: {
       ar: "ما هو Arduino؟ دليل المبتدئ الشامل",
       en: "What Is Arduino? A Complete Beginner's Guide",
     },
-    excerpt: {
-      ar: "تعرّف على منصة Arduino: مكوّناتها، كيف تعمل، وكيف تكتب أول برنامج تشغيل لمصباح LED.",
+    desc: {
+      ar: "تعرّف على منصة Arduino: مكوّناتها، كيف تعمل، وكيف تكتب أول برنامج لتشغيل مصباح LED.",
       en: "Understand the Arduino platform: its parts, how it works, and how to write your first LED program.",
     },
-    read: { ar: "٧ دقائق قراءة", en: "7 min read" },
-    body: {
+    article: {
       ar: {
-        lead: "Arduino منصة إلكترونيات مفتوحة المصدر تجمع بين لوحة عتاد بسيطة وبيئة برمجية سهلة، وقد صُمّمت لتجعل التحكم في العالم المادي في متناول الجميع: الطلاب، الهواة، والمهندسين على حدٍّ سواء.",
+        lead: "Arduino منصة إلكترونيات مفتوحة المصدر تجمع بين لوحة عتادٍ بسيطة وبيئةٍ برمجية سهلة، صُمّمت لتجعل التحكم في العالم المادي في متناول الجميع: الطلاب والهواة والمهندسين على حدٍّ سواء.",
         sections: [
           {
             h: "نشأة المنصة",
-            p: "ظهر Arduino عام 2003 في مدينة إيفريا الإيطالية داخل معهد تصميم التفاعل، بهدف تبسيط تعليم الإلكترونيات على الطلاب. تحوّل المشروع لاحقاً إلى منصة عالمية مفتوحة المصدر يستخدمها ملايين المطوّرين حول العالم.",
+            p: "ظهر Arduino عام 2003 في مدينة إيفريا الإيطالية داخل معهد تصميم التفاعل، بهدف تبسيط تعليم الإلكترونيات على الطلاب. ثم تحوّل إلى منصةٍ عالمية مفتوحة المصدر يستخدمها ملايين المطوّرين حول العالم.",
           },
           {
             h: "المنصة اليوم",
-            p: "تطوّرت العائلة كثيراً: لوحة Uno R3 الكلاسيكية ما زالت مثالية للتعلّم، بينما تقدّم Uno R4 (2023) معالج ARM Cortex-M4 بتردد 48 ميجاهرتز، ومنفذ USB-C، ومصفوفة LED مدمجة بحجم 12×8، ونسخة R4 WiFi تضيف الاتصال اللاسلكي والبلوتوث — ما يجعل مشاريع إنترنت الأشياء أيسر من أي وقت مضى.",
+            p: "تطوّرت العائلة كثيراً: لوحة Uno R3 الكلاسيكية ما زالت مثاليةً للتعلّم، بينما تقدّم Uno R4 (2023) معالج ARM Cortex-M4 بتردد 48 ميجاهرتز، ومنفذ USB-C، ومصفوفة LED مدمجة بحجم 12×8، ونسخة R4 WiFi تضيف الاتصال اللاسلكي والبلوتوث — ما يجعل مشاريع إنترنت الأشياء أيسر من أي وقتٍ مضى.",
           },
           {
-            h: "من أي مكوّنات تتكوّن اللوحة؟",
-            p: "قلب اللوحة متحكّم دقيق (Microcontroller) يشغّل الكود، وحوله منافذ إدخال وإخراج تربطك بالعالم الخارجي.",
+            h: "من أي مكوّناتٍ تتكوّن اللوحة؟",
+            p: "قلب اللوحة متحكّمٌ دقيق (Microcontroller) يشغّل الكود، وحوله منافذ إدخالٍ وإخراجٍ تربطك بالعالم الخارجي.",
             list: [
               "المتحكّم الدقيق: يخزّن البرنامج وينفّذه (ATmega328P في لوحة Uno R3، أو معالج ARM Cortex-M4 في لوحة Uno R4 الأحدث).",
-              "الأطراف الرقمية (Digital Pins): تقرأ أو تُخرِج إشارة إمّا مرتفعة أو منخفضة.",
+              "الأطراف الرقمية (Digital Pins): تقرأ أو تُخرِج إشارةً مرتفعةً أو منخفضة.",
               "الأطراف التماثلية (Analog Pins): تقرأ جهداً متدرّجاً من المستشعرات.",
-              "منفذ USB: للبرمجة والتغذية بالطاقة في آن واحد.",
-              "منظّم الجهد: يوفّر تغذية مستقرة عند 5 فولت أو 3.3 فولت.",
+              "منفذ USB: للبرمجة والتغذية بالطاقة في آنٍ واحد.",
+              "منظّم الجهد: يوفّر تغذيةً مستقرة عند 5 فولت أو 3.3 فولت.",
             ],
           },
           {
-            h: "كيف تعمل دورة البرنامج؟",
-            p: "كل برنامج Arduino يتكوّن من دالتين أساسيتين: setup() تُنفَّذ مرة واحدة عند التشغيل لتهيئة الأطراف، وloop() تتكرّر إلى ما لا نهاية لتنفيذ المنطق الرئيسي.",
+            h: "آلية عمل البرنامج",
+            flow: ["setup() مرة واحدة", "تهيئة الأطراف", "loop() تتكرّر", "تنفيذ المنطق"],
           },
           {
             h: "أول برنامج: وميض مصباح LED",
@@ -81,18 +73,18 @@ window.articlesData = [
           },
         ],
         takeaways: [
-          "Arduino يجمع بين عتاد بسيط وبرمجة سهلة للتحكم في العالم المادي.",
-          "كل برنامج يعتمد على دالتَي setup() وloop().",
+          "Arduino يجمع بين عتادٍ بسيط وبرمجةٍ سهلة للتحكم في العالم المادي.",
+          "كل برنامجٍ يعتمد على دالتَي setup() وloop().",
           "برنامج الوميض هو نقطة الانطلاق المثالية لأي مبتدئ.",
         ],
-        note: "بعد إتقان الوميض، جرّب توصيل زر ضغط ومستشعر بسيط لتفهم الإدخال والإخراج معاً.",
+        note: "بعد إتقان الوميض، جرّب توصيل زرِّ ضغطٍ ومستشعرٍ بسيط لتفهم الإدخال والإخراج معاً.",
       },
       en: {
         lead: "Arduino is an open-source electronics platform that pairs a simple hardware board with an easy programming environment, designed to make controlling the physical world accessible to everyone: students, hobbyists, and engineers alike.",
         sections: [
           {
             h: "How the platform started",
-            p: "Arduino was created in 2003 in Ivrea, Italy, inside the Interaction Design Institute, with the goal of simplifying electronics education for students. It later grew into a global open-source platform used by millions of makers worldwide.",
+            p: "Arduino was created in 2003 in Ivrea, Italy, inside the Interaction Design Institute, to simplify electronics education for students. It later grew into a global open-source platform used by millions of makers worldwide.",
           },
           {
             h: "The platform today",
@@ -110,8 +102,8 @@ window.articlesData = [
             ],
           },
           {
-            h: "How the program cycle works",
-            p: "Every Arduino sketch has two core functions: setup() runs once at startup to initialise the pins, and loop() repeats forever to run the main logic.",
+            h: "How the program works",
+            flow: ["setup() once", "init the pins", "loop() repeats", "run the logic"],
           },
           {
             h: "Your first program: blinking an LED",
@@ -149,48 +141,47 @@ window.articlesData = [
   /* ===================================================================== */
   {
     id: "python-face-recognition",
-    category: "python-ai",
+    categories: ["python-ai"],
     featured: true,
-    cover: "assets/images/python-face-recognition.jpg",
-    updated: "2026-07",
+    image: "assets/images/tut-face-recognition.jpg",
     tags: ["Python", "OpenCV", "Computer Vision"],
+    read: { ar: "٨ دقائق قراءة", en: "8 min read" },
     title: {
       ar: "التعرّف على الوجوه باستخدام Python و OpenCV",
       en: "Face Recognition with Python and OpenCV",
     },
-    excerpt: {
+    desc: {
       ar: "كيف يرى الحاسوب الصور، وكيف تكتشف الوجوه فيها بمكتبة OpenCV والمصنّف الجاهز Haar Cascade.",
       en: "How a computer sees images, and how to detect faces in them using OpenCV and a ready Haar Cascade classifier.",
     },
-    read: { ar: "٨ دقائق قراءة", en: "8 min read" },
-    body: {
+    article: {
       ar: {
-        lead: "يخزّن الحاسوب الصور على هيئة مصفوفة أرقام. لتعليمه «رؤية» الوجوه نستعين بمكتبة الرؤية الحاسوبية مفتوحة المصدر OpenCV، التي تمكّن النظام من كشف الوجوه ومعالجتها بطريقة تقارب رؤية الإنسان.",
+        lead: "يخزّن الحاسوب الصور على هيئة مصفوفةٍ من الأرقام. ولتعليمه «رؤية» الوجوه نستعين بمكتبة الرؤية الحاسوبية مفتوحة المصدر OpenCV، التي تمكّن النظام من كشف الوجوه ومعالجتها بطريقةٍ تقارب رؤية الإنسان.",
         sections: [
           {
             h: "كيف يمثّل الحاسوب الصورة؟",
-            p: "تُخزَّن الصورة الملوّنة في ثلاث قنوات (أحمر وأخضر وأزرق - RGB)، بينما تُخزَّن الصورة الرمادية في قناة واحدة تمثّل شدّة كل بكسل. هذه المصفوفة الرقمية هي ما تعالجه الخوارزميات.",
+            p: "تُخزَّن الصورة الملوّنة في ثلاث قنوات (أحمر وأخضر وأزرق — RGB)، بينما تُخزَّن الصورة الرمادية في قناةٍ واحدة تمثّل شدّة كل بكسل. هذه المصفوفة الرقمية هي ما تعالجه الخوارزميات.",
           },
           {
             h: "ما هي مكتبة OpenCV؟",
-            p: "OpenCV اختصار لـ Open Source Computer Vision، وهي مكتبة تتيح للحاسوب كشف البيانات المرئية ومعالجتها والتعرّف عليها. تعمل على أنظمة Windows و macOS و Linux، وتعتمد داخلياً على مكتبة NumPy لمعالجة المصفوفات العددية بكفاءة.",
+            p: "OpenCV اختصارٌ لـ Open Source Computer Vision، وهي مكتبةٌ تتيح للحاسوب كشف البيانات المرئية ومعالجتها والتعرّف عليها. تعمل على أنظمة Windows و macOS و Linux، وتعتمد داخلياً على مكتبة NumPy لمعالجة المصفوفات العددية بكفاءة.",
             list: [
               "OpenCV: كشف ومعالجة الوجوه في الصور والفيديو.",
-              "NumPy: تمثيل الصورة كمصفوفة ثنائية الأبعاد وتسريع العمليات الحسابية.",
-              "المصنّف Haar Cascade: نموذج مدرَّب مسبقاً لكشف الوجوه الأمامية.",
+              "NumPy: تمثيل الصورة كمصفوفةٍ ثنائية الأبعاد وتسريع العمليات الحسابية.",
+              "المصنّف Haar Cascade: نموذجٌ مدرَّبٌ مسبقاً لكشف الوجوه الأمامية.",
             ],
           },
           {
             h: "التجهيز قبل الكتابة",
             steps: [
-              { t: "ثبّت المكتبة", d: "نفّذ الأمر pip install opencv-python في موجّه الأوامر." },
+              { t: "ثبّت المكتبة", d: "نفّذ الأمر pip install opencv-python في موجّه الأوامر (يعمل مع أحدث إصدارات Python 3)." },
               { t: "نزّل المصنّف", d: "احصل على ملف haarcascade_frontalface_default.xml من مستودع OpenCV على GitHub." },
-              { t: "جهّز صورة اختبار", d: "احفظ صورة بها وجه واضح في مجلد العمل باسم test.jpg." },
+              { t: "جهّز صورة اختبار", d: "احفظ صورةً بها وجهٌ واضح في مجلد العمل باسم test.jpg." },
             ],
           },
           {
             h: "كود كشف الوجوه",
-            p: "يحمّل الكود الصورة، يحوّلها إلى تدرّج رمادي لتسريع المعالجة، ثم يمرّر المصنّف لرسم مستطيل حول كل وجه.",
+            p: "يحمّل الكود الصورة، يحوّلها إلى تدرّجٍ رمادي لتسريع المعالجة، ثم يمرّر المصنّف لرسم مستطيلٍ حول كل وجه.",
             code:
               "import cv2\n\n" +
               "face_cascade = cv2.CascadeClassifier(\n" +
@@ -205,19 +196,19 @@ window.articlesData = [
           },
           {
             h: "كيف يعمل detectMultiScale؟",
-            p: "المُعامل 1.1 يحدّد مقدار تصغير الصورة في كل تمريرة للبحث عن وجوه بأحجام مختلفة، والرقم 4 هو أدنى عدد من الجيران المتجاورين اللازم لاعتبار المنطقة وجهاً؛ رفعه يقلّل النتائج الخاطئة.",
+            p: "المُعامل 1.1 يحدّد مقدار تصغير الصورة في كل تمريرةٍ للبحث عن وجوهٍ بأحجامٍ مختلفة، والرقم 4 هو أدنى عددٍ من الجيران المتجاورين اللازم لاعتبار المنطقة وجهاً؛ رفعه يقلّل النتائج الخاطئة.",
           },
           {
             h: "الطريقة الحديثة (2026)",
-            p: "مصنّف Haar كلاسيكي وسهل للبداية، لكنه يضعف مع الوجوه الجانبية أو المحجوبة. المعيار الحديث اليوم هو الكاشفات القائمة على الشبكات العصبية العميقة (DNN)، وأبرزها YuNet المدمج في OpenCV: نموذج خفيف (أقل من ميجابايت) وسريع جداً وأدقّ مع الوجوه المائلة والمزدحمة. وللتعرّف على هوية شخص بعينه تُستخدم شبكات التضمين العميقة التي تحوّل كل وجه إلى بصمة رقمية.",
+            p: "مصنّف Haar كلاسيكيٌّ وسهلٌ للبداية، لكنه يضعف مع الوجوه الجانبية أو المحجوبة. المعيار الحديث اليوم هو الكاشفات القائمة على الشبكات العصبية العميقة (DNN)، وأبرزها YuNet المدمج في OpenCV: نموذجٌ خفيف (أقل من ميجابايت) وسريعٌ جداً وأدقّ مع الوجوه المائلة والمزدحمة. وللتعرّف على هوية شخصٍ بعينه تُستخدم شبكات التضمين العميقة التي تحوّل كل وجهٍ إلى بصمةٍ رقمية.",
           },
         ],
         takeaways: [
-          "الصورة عند الحاسوب مصفوفة أرقام؛ التحويل للرمادي يسرّع المعالجة.",
-          "OpenCV + NumPy + مصنّف Haar تكفي لكشف الوجوه دون تدريب من الصفر.",
-          "ضبط مُعاملَي detectMultiScale يوازن بين الدقة والنتائج الخاطئة.",
+          "الصورة عند الحاسوب مصفوفة أرقام؛ التحويل إلى الرمادي يسرّع المعالجة.",
+          "OpenCV مع NumPy ومصنّف Haar تكفي لكشف الوجوه دون تدريبٍ من الصفر.",
+          "المعيار الحديث هو كاشفات DNN مثل YuNet لدقةٍ وسرعةٍ أعلى.",
         ],
-        note: "لتحويل الكشف إلى «تعرّف» يميّز شخصاً بعينه، انتقل لاحقاً إلى نماذج مثل LBPH أو شبكات التضمين العميقة.",
+        note: "لتحويل الكشف إلى «تعرّفٍ» يميّز شخصاً بعينه، انتقل لاحقاً إلى شبكات التضمين العميقة.",
       },
       en: {
         lead: "A computer stores images as arrays of numbers. To teach it to \"see\" faces we use the open-source computer-vision library OpenCV, which lets the system detect and process faces in a way close to how humans see.",
@@ -238,7 +229,7 @@ window.articlesData = [
           {
             h: "Setup before coding",
             steps: [
-              { t: "Install the library", d: "Run pip install opencv-python in your terminal." },
+              { t: "Install the library", d: "Run pip install opencv-python in your terminal (works with the latest Python 3 releases)." },
               { t: "Download the classifier", d: "Get haarcascade_frontalface_default.xml from the OpenCV GitHub repository." },
               { t: "Prepare a test image", d: "Save an image with a clear face in your working folder as test.jpg." },
             ],
@@ -268,11 +259,11 @@ window.articlesData = [
           },
         ],
         takeaways: [
-          "To a computer an image is an array of numbers; grayscale conversion speeds up processing.",
-          "OpenCV + NumPy + a Haar classifier are enough to detect faces without training from scratch.",
-          "Tuning the two detectMultiScale parameters balances accuracy against false positives.",
+          "To a computer an image is an array of numbers; grayscale speeds up processing.",
+          "OpenCV with NumPy and a Haar classifier are enough to detect faces without training from scratch.",
+          "The modern standard is DNN detectors like YuNet for higher accuracy and speed.",
         ],
-        note: "To turn detection into recognition of a specific person, move on to models such as LBPH or deep embedding networks.",
+        note: "To turn detection into recognition of a specific person, move on to deep embedding networks.",
       },
     },
   },
@@ -280,27 +271,26 @@ window.articlesData = [
   /* ===================================================================== */
   {
     id: "numbering-systems",
-    category: "digital",
+    categories: ["digital"],
     featured: false,
-    cover: "assets/images/numbering-systems.jpg",
-    updated: "2026-07",
+    image: "assets/images/tut-numbering-systems.jpg",
     tags: ["Digital", "Binary", "Fundamentals"],
+    read: { ar: "٦ دقائق قراءة", en: "6 min read" },
     title: {
       ar: "أنظمة العد الرقمية: الثنائي والعشري والست عشري",
       en: "Numbering Systems: Binary, Decimal, and Hexadecimal",
     },
-    excerpt: {
+    desc: {
       ar: "لماذا يفكّر الحاسوب بالأصفار والآحاد؟ وكيف تحوّل بين الأنظمة الأساسية بثقة.",
       en: "Why does a computer think in zeros and ones? And how to convert between the core systems with confidence.",
     },
-    read: { ar: "٦ دقائق قراءة", en: "6 min read" },
-    body: {
+    article: {
       ar: {
-        lead: "قبل أن تصمّم أي دائرة رقمية، عليك أن تتقن اللغة التي تتحدّث بها الآلة. أنظمة العد هي هذا الأساس: طرق مختلفة لتمثيل القيمة ذاتها بأعداد مختلفة من الرموز.",
+        lead: "قبل أن تصمّم أي دائرةٍ رقمية، عليك أن تتقن اللغة التي تتحدّث بها الآلة. أنظمة العد هي هذا الأساس: طرقٌ مختلفة لتمثيل القيمة ذاتها بأعدادٍ مختلفة من الرموز.",
         sections: [
           {
             h: "لماذا الثنائي؟",
-            p: "العناصر الإلكترونية تفرّق بسهولة بين حالتين فقط: جهد مرتفع (1) وجهد منخفض (0). لذلك اعتمد الحاسوب النظام الثنائي أساساً؛ فهو الأكثر موثوقية ومقاومةً للضوضاء.",
+            p: "العناصر الإلكترونية تفرّق بسهولةٍ بين حالتين فقط: جهدٌ مرتفع (1) وجهدٌ منخفض (0). لذلك اعتمد الحاسوب النظام الثنائي أساساً؛ فهو الأكثر موثوقيةً ومقاومةً للضوضاء.",
           },
           {
             h: "الأنظمة الأساسية",
@@ -312,7 +302,7 @@ window.articlesData = [
           },
           {
             h: "التحويل من ثنائي إلى عشري",
-            p: "اضرب كل خانة في قيمة موضعها (قوى العدد 2) ثم اجمع. مثال على العدد 1011: (1×8)+(0×4)+(1×2)+(1×1) = 11 في النظام العشري.",
+            p: "اضرب كل خانةٍ في قيمة موضعها (قوى العدد 2) ثم اجمع. مثالٌ على العدد 1011: (1×8)+(0×4)+(1×2)+(1×1) = 11 في النظام العشري.",
           },
           {
             h: "التحويل من عشري إلى ثنائي",
@@ -324,13 +314,13 @@ window.articlesData = [
           },
           {
             h: "لماذا الست عشري مريح؟",
-            p: "كل رمز ست عشري يمثّل بالضبط أربع خانات ثنائية، فالعدد 1111 يصبح F، مما يجعل كتابة العناوين والألوان والبيانات أقصر وأقل عرضةً للخطأ.",
+            p: "كل رمزٍ ست عشري يمثّل بالضبط أربع خاناتٍ ثنائية، فالعدد 1111 يصبح F، ما يجعل كتابة العناوين والألوان والبيانات أقصر وأقل عرضةً للخطأ.",
           },
         ],
         takeaways: [
           "الثنائي هو لغة العتاد لأنه يعتمد على حالتين فقط.",
-          "قيمة كل خانة تحدّدها قوى أساس النظام.",
-          "الست عشري اختصار عملي لكل أربع خانات ثنائية.",
+          "قيمة كل خانةٍ تحدّدها قوى أساس النظام.",
+          "الست عشري اختصارٌ عملي لكل أربع خاناتٍ ثنائية.",
         ],
       },
       en: {
