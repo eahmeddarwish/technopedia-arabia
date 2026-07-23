@@ -31,7 +31,10 @@ function renderArticleBody(a, lang) {
   (d.sections || []).forEach(function (sec) {
     html += '<section class="pd-section">';
     if (sec.h) html += "<h2>" + aesc(sec.h) + "</h2>";
-    if (sec.p) html += "<p>" + aesc(sec.p) + "</p>";
+    if (sec.p) {
+      var paras = Array.isArray(sec.p) ? sec.p : [sec.p];
+      html += paras.map(function (para) { return "<p>" + aesc(para) + "</p>"; }).join("");
+    }
     if (sec.flow) {
       html += '<div class="pd-flow">' + sec.flow.map(function (step, i) {
         return '<span class="pd-flow-step">' + aesc(step) + "</span>" +
@@ -91,7 +94,7 @@ function renderArticleDetail() {
   var tagsHtml = a.tags.map(function (tg) { return '<span class="tag tag-cyan">' + tg + "</span>"; }).join("");
 
   root.innerHTML =
-    '<article class="pd-article reveal">' +
+    '<article class="pd-article art-detail reveal">' +
       '<div class="pd-hero glass">' +
         '<div class="card-media" style="aspect-ratio:16/9;"><img src="' + a.image + '" alt="' + a.title[lang] + '"></div>' +
         '<div style="padding:24px 30px;">' +
