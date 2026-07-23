@@ -770,3 +770,14 @@ html[dir="ltr"] .pd-flow{direction:ltr}
 .nav-learn-menu a{display:block;padding:10px 14px;border-radius:9px;font-size:15px;font-weight:600;
   color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
 .nav-learn-menu a:hover{background:var(--neon-soft);color:var(--neon)}
+
+/* ==========================================================================
+   الشروحات — عناوين أهدأ (أصغر ووزن أخف) + تنفّس بين الفقرات
+   scoped بـ .art-detail عشان صفحات المشاريع تفضل زي ما هي
+   ========================================================================== */
+.art-detail .pd-section{margin-bottom:30px}
+.art-detail .pd-section h2{font-size:clamp(17px,2vw,20px);font-weight:800;margin:0 0 12px;color:var(--text)}
+.art-detail .pd-section h2::before{height:17px;width:3px}
+.art-detail .pd-body p{margin:0 0 14px}
+.art-detail .pd-body p:last-child{margin-bottom:0}
+.art-detail .pd-lead{font-size:18px;font-weight:600;line-height:1.9}
