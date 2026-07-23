@@ -13,7 +13,7 @@ function videoCardHtml(v, lang, i) {
     <article class="card glass tilt reveal reveal-delay-${(i % 5) + 1} video-card" data-video-id="${v.id}">
       <div class="card-media">
         <img src="${videoThumb(v.youtubeId)}" alt="${v.title[lang]}" loading="lazy">
-        <div class="play-btn"><div class="circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="play-btn"><span class="circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 7.5c0-1 1.1-1.6 2-1.1l7 4.5c.8.5.8 1.7 0 2.2l-7 4.5c-.9.5-2-.1-2-1.1V7.5z"/></svg></span></div>
       </div>
       <div class="card-body">
         <h3>${v.title[lang]}</h3>
