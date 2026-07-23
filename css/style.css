@@ -682,7 +682,7 @@ html[data-theme="dark"] .logo-story img{filter:brightness(0) saturate(100%) inve
    ========================================================================== */
 .pd-article{max-width:840px;margin-inline:auto}
 .pd-hero{overflow:hidden;border-radius:var(--radius-lg);margin-bottom:32px}
-.pd-actions{display:flex;flex-wrap:wrap;gap:12px}
+.pd-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid var(--border-soft)}
 .pd-actions .btn{padding:12px 22px;font-size:15px}
 .pd-actions .btn svg{width:18px;height:18px}
 .pd-actions .btn span{white-space:nowrap}
