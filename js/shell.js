@@ -17,9 +17,14 @@
       <a href="index.html" data-i18n="nav.home">الرئيسية</a>
       <a href="index.html#about" data-i18n="nav.about">عني</a>
       <a href="projects.html" data-i18n="nav.projects">المشاريع</a>
-      <a href="articles.html" data-i18n="nav.articles">الشروحات</a>
+      <div class="nav-learn">
+        <button type="button" class="nav-learn-btn" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.learn">تعلّم</span><svg class="nav-learn-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="nav-learn-menu">
+          <a href="articles.html" data-i18n="nav.articles">الشروحات</a>
+          <a href="videos.html" data-i18n="nav.videos">الفيديوهات</a>
+        </div>
+      </div>
       <a href="index.html#contact" data-i18n="nav.contact">تواصل</a>
-      <a href="videos.html" data-i18n="nav.videos">الفيديوهات</a>
       <a href="cv.html" data-i18n="nav.cv">السيرة الذاتية</a>
     </nav>
 
