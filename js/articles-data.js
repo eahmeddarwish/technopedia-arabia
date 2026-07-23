@@ -272,94 +272,272 @@ window.articlesData = [
   {
     id: "numbering-systems",
     categories: ["digital"],
-    featured: false,
+    featured: true,
     image: "assets/images/tut-numbering-systems.jpg",
-    tags: ["Digital", "Binary", "Fundamentals"],
-    read: { ar: "٦ دقائق قراءة", en: "6 min read" },
+    tags: ["Digital", "Binary", "Hexadecimal", "Fundamentals"],
+    read: { ar: "١٢ دقيقة قراءة", en: "12 min read" },
     title: {
-      ar: "أنظمة العد الرقمية: الثنائي والعشري والست عشري",
-      en: "Numbering Systems: Binary, Decimal, and Hexadecimal",
+      ar: "أنظمة العد الرقمية: من العشري إلى الثنائي والثماني والست عشري",
+      en: "Numbering Systems: From Decimal to Binary, Octal, and Hexadecimal",
     },
     desc: {
-      ar: "لماذا يفكّر الحاسوب بالأصفار والآحاد؟ وكيف تحوّل بين الأنظمة الأساسية بثقة.",
-      en: "Why does a computer think in zeros and ones? And how to convert between the core systems with confidence.",
+      ar: "شرحٌ مؤصَّل لأنظمة العد: مفهوم القاعدة والقوة، لماذا يفكّر الحاسوب بالأصفار والآحاد، وكيف تحوّل بين الأنظمة الأربعة بأمثلةٍ محلولة خطوةً بخطوة.",
+      en: "A grounded guide to numbering systems: base and power, why a computer thinks in zeros and ones, and how to convert between the four systems with fully worked examples.",
     },
     article: {
       ar: {
-        lead: "قبل أن تصمّم أي دائرةٍ رقمية، عليك أن تتقن اللغة التي تتحدّث بها الآلة. أنظمة العد هي هذا الأساس: طرقٌ مختلفة لتمثيل القيمة ذاتها بأعدادٍ مختلفة من الرموز.",
+        lead: "قبل أن تصمّم أي دائرةٍ رقمية، عليك أن تتقن اللغة التي تتحدّث بها الآلة. أنظمة العد هي هذا الأساس: طرقٌ مختلفة لتمثيل القيمة نفسها بأعدادٍ مختلفة من الرموز. في هذا الشرح ننطلق من النظام العشري الذي نعرفه، ونبني عليه بقيّة الأنظمة خطوةً بخطوة، مع مثالٍ محلولٍ لكل فكرة.",
         sections: [
+          {
+            h: "رقمٌ أم عدد؟",
+            p: "الرمز الواحد (من 0 إلى 9) نسمّيه رقماً، وما زاد عن الرقم 9 نسمّيه عدداً؛ إذ يتكوّن من رقمين أو أكثر مرتّبين في خاناتٍ متعددة، لكل خانةٍ قيمةٌ ودلالةٌ تختلف حسب موقعها. فالأرقام إذاً هي وحدات البناء، والأعداد تُركَّب منها لتمثيل قيمٍ أكبر من 9.",
+          },
+          {
+            h: "الفكرة الجوهرية: القاعدة والقوة",
+            p: "أي نظام عدٍّ يقوم على ركيزتين: قاعدة (Base) تمثّل عدد الرموز المتاحة في النظام، وقوة (Power) تمثّل قيمة موقع كل خانة. قيمة أي عددٍ هي مجموع حاصل ضرب كل رقمٍ في (القاعدة مرفوعةً لأُسِّ موقعه). لنحلّل العدد العشري 573 لنرى القاعدة (10) والقوة (أُسّ الموقع) بوضوح:",
+            code:
+              "  5      7      3      (base 10)\n" +
+              " 10^2   10^1   10^0\n" +
+              "----------------------\n" +
+              " 5x100 + 7x10 + 3x1\n" +
+              "  500  +  70  +  3   =  573",
+          },
+          {
+            h: "الكسور والقوى السالبة",
+            p: "الخانات على يسار الفاصلة العشرية تبدأ قوّتها من 0 وتزيد بمقدار 1 كلما اتجهنا يساراً، أما الخانات على يمين الفاصلة فتبدأ من ‎−1 وتقلّ كلما اتجهنا يميناً. تحليل العدد 114.67 يوضّح ذلك:",
+            code:
+              "  1     1     4  .  6      7\n" +
+              " 10^2  10^1  10^0  10^-1  10^-2\n" +
+              "-------------------------------\n" +
+              " 100 + 10 + 4 + 0.6 + 0.07  =  114.67",
+          },
           {
             h: "لماذا الثنائي؟",
-            p: "العناصر الإلكترونية تفرّق بسهولةٍ بين حالتين فقط: جهدٌ مرتفع (1) وجهدٌ منخفض (0). لذلك اعتمد الحاسوب النظام الثنائي أساساً؛ فهو الأكثر موثوقيةً ومقاومةً للضوضاء.",
+            p: "العناصر الإلكترونية تفرّق بسهولةٍ بين حالتين فقط: مرورُ تيارٍ يعني إشارةً مرتفعة (High) قيمتها 1، وانعدامُه يعني إشارةً منخفضة (Low) قيمتها 0. لذلك اعتمد الحاسوب النظام الثنائي (القاعدة 2) لغةً له؛ فهو الأكثر موثوقيةً ومقاومةً للضوضاء. وأدنى خانةٍ (أقصى اليمين) تسمّى البت الأقل أهمية (LSB)، وأعلى خانةٍ (أقصى اليسار) تسمّى البت الأكثر أهمية (MSB).",
           },
           {
-            h: "الأنظمة الأساسية",
-            list: [
-              "العشري (الأساس 10): رموزه من 0 إلى 9، وهو نظامنا اليومي.",
-              "الثنائي (الأساس 2): رمزاه 0 و1، ولغة العتاد الرقمي.",
-              "الست عشري (الأساس 16): رموزه 0-9 ثم A-F، ويختصر الأعداد الثنائية الطويلة.",
-            ],
+            h: "العدّ في النظام الثنائي",
+            p: "يعمل العدّ الثنائي بنفس منطق العشري: عندما تبلغ خانةٌ أقصى قيمةٍ لها (1) تعود إلى 0 وتزيد الخانة التي على يسارها بمقدار 1، وهكذا. تأمّل العدّ من صفر:",
+            code:
+              "dec :  0   1   2   3   4    5    6    7\n" +
+              "bin :  000 001 010 011 100  101  110  111",
           },
           {
-            h: "التحويل من ثنائي إلى عشري",
-            p: "اضرب كل خانةٍ في قيمة موضعها (قوى العدد 2) ثم اجمع. مثالٌ على العدد 1011: (1×8)+(0×4)+(1×2)+(1×1) = 11 في النظام العشري.",
+            h: "الخانات والاحتمالات",
+            p: "لمعرفة كم خانةً ثنائية تحتاج لتمثيل عددٍ معيّن، استخدم علاقتين بسيطتين: عدد الاحتمالات وأقصى قيمة.",
+            code:
+              "P    = 2^n        (possibilities)\n" +
+              "Vmax = 2^n - 1    (max value)\n\n" +
+              "n=1 :  2 values  (0 .. 1)\n" +
+              "n=2 :  4 values  (0 .. 3)\n" +
+              "n=3 :  8 values  (0 .. 7)\n" +
+              "n=4 : 16 values  (0 .. 15)",
           },
           {
-            h: "التحويل من عشري إلى ثنائي",
-            steps: [
-              { t: "اقسم على 2", d: "اقسم العدد العشري على 2 وسجّل الباقي (0 أو 1)." },
-              { t: "كرّر", d: "واصل قسمة ناتج القسمة حتى يصل إلى صفر." },
-              { t: "اقرأ عكسياً", d: "رتّب البواقي من الأسفل إلى الأعلى لتحصل على العدد الثنائي." },
-            ],
+            h: "التحويل من عشري إلى ثنائي (القسمة المتتالية)",
+            p: "نقسم العدد العشري قسمةً متتاليةً على القاعدة 2، ونسجّل الباقي في كل خطوة (0 أو 1)، ثم نقرأ البواقي من الأسفل إلى الأعلى. لنحوّل 20:",
+            code:
+              "20 / 2 = 10   rem 0   ^\n" +
+              "10 / 2 =  5   rem 0   |\n" +
+              " 5 / 2 =  2   rem 1   |  read\n" +
+              " 2 / 2 =  1   rem 0   |  upward\n" +
+              " 1 / 2 =  0   rem 1   |\n\n" +
+              "20 (dec) = 10100 (bin)",
           },
           {
-            h: "لماذا الست عشري مريح؟",
-            p: "كل رمزٍ ست عشري يمثّل بالضبط أربع خاناتٍ ثنائية، فالعدد 1111 يصبح F، ما يجعل كتابة العناوين والألوان والبيانات أقصر وأقل عرضةً للخطأ.",
+            h: "التحويل من ثنائي إلى عشري (الضرب بالقوى)",
+            p: "نضرب كل خانةٍ في (2 مرفوعةً لأُسّ موقعها) ثم نجمع النواتج. لنحوّل 101101:",
+            code:
+              "  1    0    1    1    0    1\n" +
+              " 2^5  2^4  2^3  2^2  2^1  2^0\n" +
+              "-----------------------------\n" +
+              " 32 +  0 +  8 +  4 +  0 +  1  =  45\n\n" +
+              "101101 (bin) = 45 (dec)",
+          },
+          {
+            h: "تحويل الكسور العشرية",
+            p: "لتحويل كسرٍ عشري إلى ثنائي نضربه ضرباً متتالياً في 2، ونأخذ الجزء الصحيح من كل ناتج (0 أو 1) من الأعلى إلى الأسفل. نتوقّف عندما يصبح الكسر صفراً، أو نكتفي بأربع أو خمس خاناتٍ إن استمرّ:",
+            code:
+              "0.3125 x 2 = 0.625  ->  0\n" +
+              "0.625  x 2 = 1.25   ->  1\n" +
+              "0.25   x 2 = 0.5    ->  0\n" +
+              "0.5    x 2 = 1.0    ->  1   (stop)\n\n" +
+              "0.3125 (dec) = 0.0101 (bin)",
+          },
+          {
+            h: "النظام الثماني (Octal)",
+            p: "قاعدته 8 ورموزه من 0 إلى 7. وُجد ليختصر الأعداد الثنائية الطويلة، إذ يمثّل كل رمزٍ ثماني ثلاث خاناتٍ ثنائية بالضبط. للتحويل من ثنائي إلى ثماني نقسّم العدد إلى مجموعاتٍ من ثلاث خاناتٍ من اليمين، ونضيف أصفاراً لليسار عند الحاجة:",
+            code:
+              "10110001  ->  010 110 001\n" +
+              "               2   6   1\n\n" +
+              "10110001 (bin) = 261 (oct)",
+          },
+          {
+            h: "النظام الست عشري (Hexadecimal)",
+            p: "قاعدته 16، ورموزه 0-9 ثم A-F (حيث A=10 وصولاً إلى F=15). يمثّل كل رمزٍ ست عشري أربع خاناتٍ ثنائية بالضبط، لذا هو الأكثر إيجازاً وشيوعاً في العناوين والألوان. للتحويل من ثنائي إلى ست عشري نجمّع الخانات أربعاً أربعاً من اليمين:",
+            code:
+              "10110001  ->  1011 0001\n" +
+              "               B    1\n\n" +
+              "10110001 (bin) = B1 (hex)",
+          },
+          {
+            h: "جدولٌ مرجعي (0 إلى 15)",
+            p: "احفظ هذا الجدول فهو مفتاح التنقّل السريع بين الأنظمة الأربعة:",
+            code:
+              "Dec | Binary | Oct | Hex\n" +
+              "----+--------+-----+----\n" +
+              "  0 |  0000  |  0  |  0\n" +
+              "  1 |  0001  |  1  |  1\n" +
+              "  2 |  0010  |  2  |  2\n" +
+              "  3 |  0011  |  3  |  3\n" +
+              "  4 |  0100  |  4  |  4\n" +
+              "  5 |  0101  |  5  |  5\n" +
+              "  6 |  0110  |  6  |  6\n" +
+              "  7 |  0111  |  7  |  7\n" +
+              "  8 |  1000  | 10  |  8\n" +
+              "  9 |  1001  | 11  |  9\n" +
+              " 10 |  1010  | 12  |  A\n" +
+              " 11 |  1011  | 13  |  B\n" +
+              " 12 |  1100  | 14  |  C\n" +
+              " 13 |  1101  | 15  |  D\n" +
+              " 14 |  1110  | 16  |  E\n" +
+              " 15 |  1111  | 17  |  F",
           },
         ],
         takeaways: [
-          "الثنائي هو لغة العتاد لأنه يعتمد على حالتين فقط.",
-          "قيمة كل خانةٍ تحدّدها قوى أساس النظام.",
-          "الست عشري اختصارٌ عملي لكل أربع خاناتٍ ثنائية.",
+          "كل نظام عدٍّ يُبنى على قاعدةٍ (عدد الرموز) وقوةٍ (قيمة الموقع).",
+          "الثنائي لغة العتاد لأنه يعتمد على حالتين فقط: مرور تيارٍ أو انعدامه.",
+          "عشري ← ثنائي بالقسمة المتتالية على 2، وثنائي ← عشري بالضرب في قوى 2.",
+          "كل رمزٍ ثماني = 3 خانات ثنائية، وكل رمزٍ ست عشري = 4 خانات ثنائية.",
         ],
+        note: "أتقنتَ التحويل؟ الخطوة التالية هي العمليات الحسابية في النظام الثنائي وتمثيل الأعداد السالبة (المتمّم الثنائي) — وهي أساس ما تفعله وحدة الحساب داخل أي معالج.",
       },
       en: {
-        lead: "Before you design any digital circuit, you must master the language the machine speaks. Numbering systems are that foundation: different ways to represent the same value with different sets of symbols.",
+        lead: "Before you design any digital circuit, you must master the language the machine speaks. Numbering systems are that foundation: different ways to represent the same value with different sets of symbols. Here we start from the familiar decimal system and build the rest on top of it, step by step, with a worked example for every idea.",
         sections: [
           {
+            h: "Digit or number?",
+            p: "A single symbol (0 to 9) is a digit; anything greater than 9 is a number made of two or more digits arranged in positions, where each position carries a different value depending on its place. Digits are the building blocks; numbers are assembled from them to represent values larger than 9.",
+          },
+          {
+            h: "The core idea: base and power",
+            p: "Every numbering system rests on two pillars: a base, the count of available symbols, and a power, the value of each position. The value of any number is the sum of each digit times (base raised to the power of its position). Let's decompose the decimal 573 to see the base (10) and the power (position exponent) clearly:",
+            code:
+              "  5      7      3      (decimal, base = 10)\n" +
+              " 10^2   10^1   10^0\n" +
+              "----------------------\n" +
+              " 5x100 + 7x10 + 3x1\n" +
+              "  500  +  70  +  3   =  573",
+          },
+          {
+            h: "Fractions and negative powers",
+            p: "Positions left of the decimal point start at power 0 and grow by 1 as you move left; positions to the right start at -1 and decrease as you move right. Decomposing 114.67 shows this:",
+            code:
+              "  1     1     4  .  6      7\n" +
+              " 10^2  10^1  10^0  10^-1  10^-2\n" +
+              "-------------------------------\n" +
+              " 100 + 10 + 4 + 0.6 + 0.07  =  114.67",
+          },
+          {
             h: "Why binary?",
-            p: "Electronic components easily distinguish only two states: high voltage (1) and low voltage (0). That is why the computer adopts binary as its base; it is the most reliable and noise-resistant.",
+            p: "Electronic components easily distinguish only two states: current flowing means a HIGH signal valued 1, and no current means a LOW signal valued 0. So the computer adopts binary (base 2) as its language; it is the most reliable and noise-resistant. The rightmost position is the Least Significant Bit (LSB), and the leftmost is the Most Significant Bit (MSB).",
           },
           {
-            h: "The core systems",
-            list: [
-              "Decimal (base 10): symbols 0 to 9, our everyday system.",
-              "Binary (base 2): symbols 0 and 1, the language of digital hardware.",
-              "Hexadecimal (base 16): symbols 0-9 then A-F, a shorthand for long binary numbers.",
-            ],
+            h: "Counting in binary",
+            p: "Binary counting follows the same logic as decimal: when a position reaches its maximum (1) it resets to 0 and increments the position to its left, and so on. Watch the count from zero:",
+            code:
+              "decimal:  0   1   2   3   4    5    6    7\n" +
+              "binary :  000 001 010 011 100  101  110  111",
           },
           {
-            h: "Binary to decimal",
-            p: "Multiply each digit by its positional value (powers of 2) then add. For 1011: (1×8)+(0×4)+(1×2)+(1×1) = 11 in decimal.",
+            h: "Bits and possibilities",
+            p: "To know how many binary positions you need to represent a value, use two simple relations: number of possibilities and maximum value.",
+            code:
+              "P    = 2^n        (possibilities)\n" +
+              "Vmax = 2^n - 1    (maximum value)\n\n" +
+              "n=1 :  2 values  (0 .. 1)\n" +
+              "n=2 :  4 values  (0 .. 3)\n" +
+              "n=3 :  8 values  (0 .. 7)\n" +
+              "n=4 : 16 values  (0 .. 15)",
           },
           {
-            h: "Decimal to binary",
-            steps: [
-              { t: "Divide by 2", d: "Divide the decimal number by 2 and record the remainder (0 or 1)." },
-              { t: "Repeat", d: "Keep dividing the quotient until it reaches zero." },
-              { t: "Read upward", d: "Order the remainders from bottom to top to get the binary number." },
-            ],
+            h: "Decimal to binary (successive division)",
+            p: "Divide the decimal number repeatedly by the base 2, record the remainder at each step (0 or 1), then read the remainders from bottom to top. Let's convert 20:",
+            code:
+              "20 / 2 = 10   rem 0   ^\n" +
+              "10 / 2 =  5   rem 0   |\n" +
+              " 5 / 2 =  2   rem 1   |  read\n" +
+              " 2 / 2 =  1   rem 0   |  upward\n" +
+              " 1 / 2 =  0   rem 1   |\n\n" +
+              "20 (dec) = 10100 (bin)",
           },
           {
-            h: "Why hexadecimal is convenient",
-            p: "Each hex symbol represents exactly four binary digits, so 1111 becomes F, making addresses, colours, and data shorter and less error-prone to write.",
+            h: "Binary to decimal (multiply by powers)",
+            p: "Multiply each position by (2 raised to the power of its place) then add the results. Let's convert 101101:",
+            code:
+              "  1    0    1    1    0    1\n" +
+              " 2^5  2^4  2^3  2^2  2^1  2^0\n" +
+              "-----------------------------\n" +
+              " 32 +  0 +  8 +  4 +  0 +  1  =  45\n\n" +
+              "101101 (bin) = 45 (dec)",
+          },
+          {
+            h: "Converting decimal fractions",
+            p: "To convert a decimal fraction to binary, multiply it repeatedly by 2 and take the integer part of each result (0 or 1) from top to bottom. Stop when the fraction becomes zero, or settle for four or five positions if it keeps going:",
+            code:
+              "0.3125 x 2 = 0.625  ->  0\n" +
+              "0.625  x 2 = 1.25   ->  1\n" +
+              "0.25   x 2 = 0.5    ->  0\n" +
+              "0.5    x 2 = 1.0    ->  1   (stop)\n\n" +
+              "0.3125 (dec) = 0.0101 (bin)",
+          },
+          {
+            h: "The octal system",
+            p: "Base 8, symbols 0 to 7. It was created to shorten long binary numbers, since each octal symbol represents exactly three binary positions. To convert binary to octal, split the number into groups of three from the right, padding with zeros on the left when needed:",
+            code:
+              "10110001  ->  010 110 001\n" +
+              "               2   6   1\n\n" +
+              "10110001 (bin) = 261 (oct)",
+          },
+          {
+            h: "The hexadecimal system",
+            p: "Base 16, symbols 0-9 then A-F (where A=10 up to F=15). Each hex symbol represents exactly four binary positions, making it the most compact and the most common in addresses and colours. To convert binary to hex, group the positions four by four from the right:",
+            code:
+              "10110001  ->  1011 0001\n" +
+              "               B    1\n\n" +
+              "10110001 (bin) = B1 (hex)",
+          },
+          {
+            h: "Reference table (0 to 15)",
+            p: "Memorise this table; it is the key to moving quickly between the four systems:",
+            code:
+              "Dec | Binary | Oct | Hex\n" +
+              "----+--------+-----+----\n" +
+              "  0 |  0000  |  0  |  0\n" +
+              "  1 |  0001  |  1  |  1\n" +
+              "  2 |  0010  |  2  |  2\n" +
+              "  3 |  0011  |  3  |  3\n" +
+              "  4 |  0100  |  4  |  4\n" +
+              "  5 |  0101  |  5  |  5\n" +
+              "  6 |  0110  |  6  |  6\n" +
+              "  7 |  0111  |  7  |  7\n" +
+              "  8 |  1000  | 10  |  8\n" +
+              "  9 |  1001  | 11  |  9\n" +
+              " 10 |  1010  | 12  |  A\n" +
+              " 11 |  1011  | 13  |  B\n" +
+              " 12 |  1100  | 14  |  C\n" +
+              " 13 |  1101  | 15  |  D\n" +
+              " 14 |  1110  | 16  |  E\n" +
+              " 15 |  1111  | 17  |  F",
           },
         ],
         takeaways: [
-          "Binary is the language of hardware because it relies on only two states.",
-          "Each digit's value is set by the powers of the system's base.",
-          "Hexadecimal is a practical shorthand for every four binary digits.",
+          "Every numbering system is built on a base (symbol count) and a power (position value).",
+          "Binary is the language of hardware because it relies on only two states: current or no current.",
+          "Decimal to binary uses successive division by 2; binary to decimal uses multiplication by powers of 2.",
+          "Each octal symbol = 3 binary positions, and each hexadecimal symbol = 4 binary positions.",
         ],
+        note: "Mastered conversion? The next step is binary arithmetic and representing negative numbers (two's complement) - the basis of what the arithmetic unit inside any processor does.",
       },
     },
   },
