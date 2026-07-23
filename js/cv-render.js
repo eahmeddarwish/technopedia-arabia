@@ -30,7 +30,7 @@ function renderTimeline(id, items, lang) {
   if (section) section.style.display = "";
   wrap.innerHTML = items.map(it => `
     <div class="tl-item">
-      <div class="tl-period">${it.period || ""}</div>
+      <div class="tl-period">${(it.period || "").replace(/الآن/g, lang === "en" ? "Present" : "الآن")}</div>
       <h4>${it.role ? it.role[lang] : ""}</h4>
       <p class="tl-org">${it.org ? it.org[lang] : ""}</p>
       ${(it.desc && it.desc[lang])

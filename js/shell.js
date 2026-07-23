@@ -154,6 +154,22 @@
     mountFooter();
   }
 
+
+  (function () {
+    if (window.TAModal) return;
+    var ov = document.createElement("div");
+    ov.className = "ta-modal-overlay";
+    ov.innerHTML = '<div class="ta-modal"><button class="ta-modal-close" aria-label="إغلاق">&times;</button><div class="ta-modal-media"></div><div class="ta-modal-content"></div></div>';
+    function close(){ ov.classList.remove("open"); ov.querySelector(".ta-modal-media").innerHTML=""; document.body.style.overflow=""; }
+    function open(o){ ov.querySelector(".ta-modal-media").innerHTML=o.mediaHtml||""; ov.querySelector(".ta-modal-content").innerHTML=o.contentHtml||""; ov.classList.add("open"); document.body.style.overflow="hidden"; }
+    ov.addEventListener("click", function(e){ if(e.target===ov) close(); });
+    ov.querySelector(".ta-modal-close").addEventListener("click", close);
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape") close(); });
+    function mount(){ if(!ov.parentNode) document.body.appendChild(ov); }
+    if(document.body) mount(); else document.addEventListener("DOMContentLoaded", mount);
+    window.TAModal = { open: open, close: close };
+  })();
+
   var wired = false;
   function wireShell() {
     if (wired) return;      /* تتنده مرة واحدة بس مهما اتنادت */
