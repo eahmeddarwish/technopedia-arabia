@@ -752,3 +752,21 @@ html[dir="ltr"] .pd-flow{direction:ltr}
 .pd-code{background:#0f1420;color:#e6edf3;border:1px solid var(--border);border-radius:var(--radius, 14px);
   padding:18px 20px;margin:14px 0 4px;overflow-x:auto;direction:ltr;text-align:left}
 .pd-code code{font-family:var(--mono);font-size:13.5px;line-height:1.7;white-space:pre;color:inherit}
+
+/* ==========================================================================
+   قائمة «تعلّم» المنسدلة في النافبار (ديسكتوب) — تجمع الشروحات + الفيديوهات
+   ========================================================================== */
+.nav-learn{position:relative;display:inline-flex;align-items:center}
+.nav-learn-btn{display:inline-flex;align-items:center;gap:4px;background:none;border:0;cursor:pointer;
+  font-family:inherit;font-size:15.5px;font-weight:600;color:var(--muted);transition:color .2s;padding:0}
+.nav-learn:hover .nav-learn-btn,.nav-learn:focus-within .nav-learn-btn{color:var(--neon)}
+.nav-learn-caret{width:15px;height:15px;transition:transform .2s}
+.nav-learn:hover .nav-learn-caret,.nav-learn:focus-within .nav-learn-caret{transform:rotate(180deg)}
+.nav-learn-menu{position:absolute;top:100%;inset-inline-start:50%;transform:translate(50%,6px);
+  min-width:180px;margin-top:12px;background:var(--card);border:1px solid var(--border);
+  border-radius:14px;box-shadow:var(--shadow);padding:8px;display:flex;flex-direction:column;gap:2px;
+  opacity:0;visibility:hidden;transition:opacity .18s var(--ease),transform .18s var(--ease),visibility .18s;z-index:70}
+.nav-learn:hover .nav-learn-menu,.nav-learn:focus-within .nav-learn-menu{opacity:1;visibility:visible;transform:translate(50%,0)}
+.nav-learn-menu a{display:block;padding:10px 14px;border-radius:9px;font-size:15px;font-weight:600;
+  color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
+.nav-learn-menu a:hover{background:var(--neon-soft);color:var(--neon)}
