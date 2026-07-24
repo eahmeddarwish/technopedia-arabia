@@ -752,6 +752,10 @@ html[dir="ltr"] .pd-flow{direction:ltr}
 .pd-code{background:#0f1420;color:#e6edf3;border:1px solid var(--border);border-radius:var(--radius, 14px);
   padding:18px 20px;margin:14px 0 4px;overflow-x:auto;direction:ltr;text-align:left}
 .pd-code code{font-family:var(--mono);font-size:13.5px;line-height:1.7;white-space:pre;color:inherit}
+.pd-inline-img{margin:16px 0;text-align:center}
+.pd-inline-img img{max-width:min(100%,320px);height:auto;background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-sm, 10px);padding:14px;box-shadow:var(--shadow)}
+.pd-inline-img figcaption{margin-top:8px;font-size:13px;color:var(--muted);font-family:var(--mono)}
 
 /* ==========================================================================
    قائمة «تعلّم» المنسدلة في النافبار (ديسكتوب) — تجمع الشروحات + الفيديوهات
