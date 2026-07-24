@@ -45,6 +45,8 @@ function renderArticleBody(a, lang) {
     if (sec.steps) html += '<div class="pd-steps">' + sec.steps.map(function (st) {
       return '<div class="pd-step"><h3>' + aesc(st.t) + "</h3><p>" + aesc(st.d) + "</p></div>";
     }).join("") + "</div>";
+    if (sec.img) html += '<figure class="pd-inline-img"><img src="' + aesc(sec.img) + '" alt="' + aesc(sec.imgAlt || sec.h || "") + '" loading="lazy">' +
+      (sec.imgCap ? "<figcaption>" + aesc(sec.imgCap) + "</figcaption>" : "") + "</figure>";
     if (sec.code) html += '<pre class="pd-code"><code>' + acodeEsc(sec.code) + "</code></pre>";
     html += "</section>";
   });

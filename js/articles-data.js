@@ -732,4 +732,678 @@ window.articlesData = [
       },
     },
   },
+  /* ===================================================================== */
+  {
+    id: "boolean-algebra-logic-gates",
+    categories: ["digital"],
+    image: "assets/images/tut-boolean-logic-gates.jpg",
+    tags: ["Digital Logic", "Boolean Algebra", "Logic Gates"],
+    read: { ar: "١٤ دقيقة قراءة", en: "14 min read" },
+    title: {
+      ar: "البوابات المنطقية والجبر البُولي: اللغة التي تفهمها كل معالج",
+      en: "Logic Gates & Boolean Algebra: The Language Every Processor Understands",
+    },
+    desc: {
+      ar: "سبع بوابات فقط، وثلاث عمليات جبرية، تكفي لبناء أي معالج أو ذاكرة. تعرّف على كل بوابة منطقية وجداول حقيقتها، ثم على الجبر البُولي وقوانينه من الأساس.",
+      en: "Just seven gates and three algebraic operations are enough to build any processor or memory chip. Learn every logic gate and its truth table, then Boolean algebra and its laws from the ground up.",
+    },
+    article: {
+      ar: {
+        lead: "قبل أي معالج أو ذاكرة أو حتى آلة حاسبة بسيطة، توجد سبع بوابات منطقية فقط، وقواعد جبرية صارمة تحكم كيف تتصل ببعضها. في هذا الشرح نبني الفهم من الصفر: كيف تتحول إشارة كهربية إلى قيمة 0 أو 1، ما الذي يميز كل بوابةٍ عن الأخرى، ثم ندخل إلى الجبر البُولي — اللغة الرياضية التي تتيح لنا تبسيط أي دائرة قبل أن نبنيها فعلياً.",
+        sections: [
+          {
+            h: "الإشارة الرقمية: من الجهد الكهربي إلى 0 و1",
+            p: [
+              "تخيّل دائرة بسيطة: بطارية، مصباح، ومفتاح كهربي يصلهما بسلك. حين يكون المفتاح مفتوحاً (OFF) لا يمر تيار، وفرق الجهد على طرفي المصباح يساوي صفراً — نقول إن الإشارة لها القيمة الرقمية 0. وحين نغلق المفتاح (ON) يمر التيار ويصل الجهد لأعلى قيمته، فنقول إن الإشارة لها القيمة الرقمية 1.",
+              "هذا هو جوهر الرقمية بأكملها: أي إشارة كهربية داخل دائرة إلكترونية يمكن اختزالها إلى حالتين فقط، مرتفعة (High) أو منخفضة (Low)، ونرمز لهما بـ 1 و0. وعلى هذا الأساس الكهربي البسيط بُنيت كل معالجات العالم.",
+            ],
+          },
+          {
+            h: "ما هي البوابة المنطقية؟",
+            p: [
+              "البوابة المنطقية (Logic Gate) دائرة إلكترونية صغيرة، عادةً مجموعة من الترانزستورات الموصولة معاً، تُنتج إشارة خرج واحدة (Output) بناءً على إشارة أو أكثر من إشارات الدخل (Input)، وفق شرطٍ منطقي ثابت لا يتغير.",
+              "كلمة «بوابة» تعني أن الإشارات يجب أن تمر من خلالها وتحقق شرطها الخاص، وكلمة «منطقية» تعني أن نتيجة الخرج معروفة ومحددة سلفاً حسب تصميم البوابة: إذا تحققت شروط الدخل كان الخرج مرتفعاً (1)، وإلا كان منخفضاً (0). وبتوصيل هذه البوابات السبع مع بعضها بطرق مختلفة تُبنى كل الدوائر الرقمية، من العدّادات إلى وحدات الذاكرة.",
+            ],
+          },
+          {
+            h: "جدول الحقيقة: الأداة التي تصف كل بوابة",
+            p: [
+              "جدول الحقيقة (Truth Table) جدول رياضي يسرد كل الاحتمالات الممكنة لإشارات الدخل، وما يقابل كل احتمالٍ منها من قيمة للخرج. الأعمدة على جهة الدخل تمثّل الإشارات الداخلة، وعمود الخرج يمثّل النتيجة، وكل صفٍّ يمثّل احتمالاً واحداً من احتمالات الدخل.",
+              "لدائرة لها n من إشارات الدخل، يكون عدد الصفوف دائماً 2 أُس n لأن كل إشارة تأخذ قيمتين فقط. ولا بد من الاتفاق مسبقاً على ترتيب الإشارات: أيها الأكثر أهمية (MSB) فيُكتب أقصى اليسار، وأيها الأقل أهمية (LSB) فيُكتب أقصى اليمين — والاختيار هنا اصطلاحي، المهم الثبات عليه طوال التصميم.",
+            ],
+            code:
+              "A B C | F\n" +
+              "------+----\n" +
+              "0 0 0 | M0\n" +
+              "0 0 1 | M1\n" +
+              "0 1 0 | M2\n" +
+              "0 1 1 | M3\n" +
+              "1 0 0 | M4\n" +
+              "1 0 1 | M5\n" +
+              "1 1 0 | M6\n" +
+              "1 1 1 | M7",
+          },
+          {
+            h: "بوابة NOT (العاكس)",
+            p: "أبسط البوابات: دخلٌ واحد وخرجٌ واحد، والخرج هو عكس الدخل تماماً. تُسمى أيضاً العاكس (Inverter)، ويُرمز للقيمة المعكوسة بوضع شرطة (Prime) بعد الحرف، فيُكتب الخرج Z=X' حيث X' تعني «ليس X».",
+            img: "assets/images/tut-logic-not.png",
+            imgAlt: "رمز بوابة NOT",
+            imgCap: "NOT — Inverter",
+            code: "X | Z=X'\n--+-----\n0 |  1\n1 |  0",
+          },
+          {
+            h: "بوابة AND",
+            p: "تعطي هذه البوابة خرجاً مرتفعاً (1) فقط إذا كانت كل إشارات الدخل مرتفعة معاً؛ فإن كانت واحدةٌ منها منخفضة كان الخرج منخفضاً. تُكتب علاقتها الرياضية Z=X.Y أو ببساطة Z=XY، وتُقرأ Z يساوي X AND Y.",
+            code: "X Y | Z=XY\n----+-----\n0 0 |  0\n0 1 |  0\n1 0 |  0\n1 1 |  1",
+          },
+          {
+            h: "بوابة OR",
+            p: "عكس منطق AND تقريباً: يكفي أن تكون إحدى إشارات الدخل مرتفعة (1) ليكون الخرج مرتفعاً، ولا يكون الخرج منخفضاً إلا إذا كانت كل إشارات الدخل منخفضة معاً. تُكتب علاقتها Z=X+Y، وتُقرأ Z يساوي X OR Y.",
+            code: "X Y | Z=X+Y\n----+------\n0 0 |  0\n0 1 |  1\n1 0 |  1\n1 1 |  1",
+          },
+          {
+            h: "بوابة NAND (عكس AND)",
+            p: "هي بوابة AND متبوعة ببوابة NOT عند الخرج مباشرة؛ فتُنتج خرجاً منخفضاً (0) في الحالة الوحيدة التي تكون فيها كل إشارات الدخل مرتفعة، وفيما عداها يكون الخرج مرتفعاً. تُكتب Z=(XY)'، وتُرسم بوضع دائرة صغيرة عند خرج بوابة AND للدلالة على الانعكاس.",
+            img: "assets/images/tut-logic-nand.png",
+            imgAlt: "رمز بوابة NAND",
+            imgCap: "NAND",
+            code: "X Y | Z=(XY)'\n----+--------\n0 0 |   1\n0 1 |   1\n1 0 |   1\n1 1 |   0",
+          },
+          {
+            h: "بوابة NOR (عكس OR)",
+            p: "هي بوابة OR متبوعة بـ NOT عند الخرج؛ فيكون الخرج مرتفعاً (1) في الحالة الوحيدة التي تكون فيها كل إشارات الدخل منخفضة معاً، وفيما عداها يكون الخرج منخفضاً. تُكتب Z=(X+Y)'.",
+            img: "assets/images/tut-logic-nor.png",
+            imgAlt: "رمز بوابة NOR",
+            imgCap: "NOR",
+            code: "X Y | Z=(X+Y)'\n----+---------\n0 0 |   1\n0 1 |   0\n1 0 |   0\n1 1 |   0",
+          },
+          {
+            h: "بوابة XOR (الاختلاف الحصري)",
+            p: "تُسمى Exclusive OR، وتعطي خرجاً مرتفعاً (1) فقط إذا اختلفت إشارتا الدخل في القيمة — إحداهما 0 والأخرى 1 — أما إذا تساوتا فالخرج منخفض. تُكتب Z=X⊕Y، وتفيد عملياً في كشف الاختلاف بين إشارتين وفي دوائر الجمع الثنائي (Adders).",
+            img: "assets/images/tut-logic-xor.png",
+            imgAlt: "رمز بوابة XOR",
+            imgCap: "XOR",
+            code: "X Y | Z=X⊕Y\n----+------\n0 0 |  0\n0 1 |  1\n1 0 |  1\n1 1 |  0",
+          },
+          {
+            h: "بوابة XNOR",
+            p: "عكس XOR: تعطي خرجاً مرتفعاً (1) فقط إذا تساوت إشارتا الدخل في القيمة (كلتاهما 0 أو كلتاهما 1)، وتُكتب Z=(X⊕Y)'. تفيد عملياً في دوائر المقارنة (Comparators) للتحقق من تطابق إشارتين.",
+            img: "assets/images/tut-logic-xnor.png",
+            imgAlt: "رمز بوابة XNOR",
+            imgCap: "XNOR",
+            code: "X Y | Z=(X⊕Y)'\n----+---------\n0 0 |   1\n0 1 |   0\n1 0 |   0\n1 1 |   1",
+          },
+          {
+            h: "البوابات السبع في جدول واحد",
+            p: "قبل الانتقال للجبر البُولي، هذا ملخص سريع يجمع شرط كل بوابة وعلاقتها الرياضية في مكان واحد:",
+            code:
+              "Gate | Output = 1 when...        | Expression\n" +
+              "-----+-----------------------------+-----------\n" +
+              "NOT  | input = 0                  | Z = X'\n" +
+              "AND  | all inputs = 1             | Z = XY\n" +
+              "OR   | at least one input = 1     | Z = X+Y\n" +
+              "NAND | at least one input = 0     | Z = (XY)'\n" +
+              "NOR  | all inputs = 0             | Z = (X+Y)'\n" +
+              "XOR  | inputs differ               | Z = X⊕Y\n" +
+              "XNOR | inputs match                | Z = (X⊕Y)'",
+          },
+          {
+            h: "الجبر البُولي: من أين جاء؟",
+            p: [
+              "لكي نتعامل رياضياً مع البوابات المنطقية، لا بد من جبرٍ يحكم العلاقة بينها. أول من وضع أسس هذا الفرع هو عالم الرياضيات البريطاني جورج بول (George Boole)، الذي قدّم فكرته في كتابه «التحليل الرياضي للمنطق» عام 1847، ثم أرسى قوانينه الكاملة في كتابه «قوانين الفكر» عام 1854. أما تسمية «الجبر البُولي» تحديداً فتعود للعالم الأمريكي هنري شيفر (Henry Sheffer) عام 1913.",
+              "وكما يقوم الجبر العادي على عمليتي الجمع والضرب، يقوم الجبر البُولي على ثلاث عمليات فقط: الاتصال (AND، ويرمز له بـ ∧ أو النقطة .)، الانفصال (OR، ويرمز له بـ ∨ أو علامة +)، والنفي (NOT، ويرمز له بـ ¬ أو الشرطة ').",
+            ],
+          },
+          {
+            h: "المسلمات الأساسية (Postulates)",
+            p: "هذه أبسط قوانين الجبر البُولي وأكثرها استخداماً، وطريقة إثبات أي واحدةٍ منها بسيطة: نعوّض القيمتين الممكنتين 0 و1 مكان X ونتأكد أن الطرفين يتساويان في كل الحالات — وهذا ما يُعرف بالإثبات بجدول الحقيقة.",
+            code:
+              "X'' = X                          (double negation)\n\n" +
+              "X.X = X          X+X = X         (idempotent)\n" +
+              "X.X' = 0         X+X' = 1        (complement)\n" +
+              "X.1 = X          X+0 = X         (identity)\n" +
+              "X.0 = 0          X+1 = 1         (null / dominance)\n\n" +
+              "X⊕X = 0        X⊕X' = 1       X⊕1 = X'       X⊕0 = X",
+          },
+          {
+            h: "قوانين الإبدال والتجميع والتوزيع",
+            p: "هذه القوانين تتيح إعادة ترتيب حدود المعادلة أو تجميعها دون أن تتغير قيمتها، تماماً كما في الجبر العادي — لكنها هنا تشمل عملية XOR أيضاً، وهو ما لا نراه في الجبر التقليدي:",
+            code:
+              "Commutative:   X.Y = Y.X            X+Y = Y+X\n\n" +
+              "Associative:   X.(Y.Z) = (X.Y).Z    X+(Y+Z) = (X+Y)+Z\n\n" +
+              "Distributive:  X.(Y+Z) = XY + XZ\n" +
+              "               X+(YZ) = (X+Y).(X+Z)   <- valid only in Boolean algebra\n\n" +
+              "XOR forms:     X⊕(Y⊕Z) = (X⊕Y)⊕Z\n" +
+              "               X.(Y⊕Z) = XY ⊕ XZ",
+          },
+          {
+            h: "قانون الامتصاص (Absorption)",
+            p: "من أهم القوانين في تبسيط المعادلات المنطقية عملياً، لأنه يسمح بحذف حدٍّ كاملٍ من المعادلة دون التأثير في النتيجة. إليك أشهر صورها مع برهانها المختصر:",
+            code:
+              "X + XY = X                    X.(X+Y) = X\n" +
+              "  = X.1 + XY                    = X.X + X.Y\n" +
+              "  = X.(1+Y) = X.1 = X            = X + X.Y = X\n\n" +
+              "X + X'Y = X+Y                  X.(X'+Y) = XY\n" +
+              "  = (X+X').(X+Y)                 = X.X' + X.Y\n" +
+              "  = 1.(X+Y) = X+Y                = 0 + X.Y = XY\n\n" +
+              "XY + XY' = X                   (X+Y).(X+Y') = X\n" +
+              "  = X.(Y+Y') = X.1 = X            = X + Y.Y' = X+0 = X",
+          },
+          {
+            h: "نظرية الإجماع (Consensus Theorem)",
+            p: "نظرية متقدمة لكنها مفيدة جداً عند تبسيط معادلاتٍ تحتوي على ثلاثة حدود أو أكثر؛ فهي تسمح بحذف حدٍّ كاملٍ (يُسمى حد الإجماع) إذا كان الحدّان الآخران يحتويان على المتغير ونقيضه:",
+            code:
+              "XY + X'Z + YZ = XY + X'Z        <- YZ is the \"consensus\" term, safely dropped\n\n" +
+              "proof:\n" +
+              "  XY + X'Z + YZ\n" +
+              "  = XY + X'Z + 1.YZ\n" +
+              "  = XY + X'Z + (X+X').YZ\n" +
+              "  = XY + X'Z + XYZ + X'YZ\n" +
+              "  = XY.(1+Z) + X'Z.(1+Y)\n" +
+              "  = XY + X'Z",
+          },
+          {
+            h: "قوانين دي مورجان (De Morgan)",
+            p: "من أهم القوانين عملياً، لأنها الجسر بين AND وOR: تتيح تحويل أي معادلة قائمة على NAND إلى ما يعادلها بـ NOR والعكس، وهو ما نحتاجه عند التصميم ببوابةٍ واحدة فقط كما سنرى في الشرح القادم عن تبسيط الدوائر:",
+            code:
+              "(X.Y)' = X' + Y'      <- NAND of two = OR of their complements\n" +
+              "(X+Y)' = X'.Y'        <- NOR of two = AND of their complements\n\n" +
+              "General form (n variables):\n" +
+              "(X1.X2. ... .Xn)' = X1' + X2' + ... + Xn'\n" +
+              "(X1+X2+ ... +Xn)' = X1'.X2'. ... .Xn'",
+          },
+        ],
+        takeaways: [
+          "البوابات المنطقية السبع (NOT, AND, OR, NAND, NOR, XOR, XNOR) هي اللبنات التي تُبنى منها كل دائرة رقمية.",
+          "جدول الحقيقة يصف سلوك أي بوابة أو دائرة بذكر كل احتمالات الدخل ونتيجة الخرج لكل احتمال.",
+          "الجبر البُولي يقوم على ثلاث عمليات فقط: AND وOR وNOT، ويشترك مع الجبر العادي في الإبدال والتجميع والتوزيع.",
+          "الامتصاص والإجماع أدوات عملية لحذف حدود زائدة من المعادلة دون تغيير قيمتها.",
+          "قوانين دي مورجان هي الجسر بين AND وOR، ولها دور محوري عند تنفيذ أي دائرة ببوابةٍ واحدة فقط.",
+        ],
+        note: "بعد أن أتقنت البوابات والجبر البُولي، الخطوة التالية طبيعية: كيف نأخذ معادلة منطقية طويلة ونختصرها لأقل عدد من البوابات باستخدام خرائط كارنو — وهو موضوع الشرح القادم: تبسيط الدوائر المنطقية (Gate-Level Minimization).",
+      },
+      en: {
+        lead: "Before any processor, memory chip, or even a simple calculator, there are only seven logic gates — and a strict set of algebraic rules governing how they connect. This guide builds the understanding from zero: how an electrical signal becomes a 0 or a 1, what sets each gate apart, and then Boolean algebra — the mathematical language that lets us simplify any circuit before we ever build it.",
+        sections: [
+          {
+            h: "The Digital Signal: From Voltage to 0 and 1",
+            p: [
+              "Picture a simple circuit: a battery, a lamp, and a switch connecting them with wire. When the switch is open (OFF) no current flows, and the voltage across the lamp is zero — the signal has the digital value 0. Close the switch (ON) and current flows, pushing the voltage to its highest level — the signal now has the digital value 1.",
+              "That is the whole essence of \"digital\": any electrical signal inside a circuit can be reduced to just two states, High or Low, written as 1 and 0. Every processor on Earth is built on this simple electrical foundation.",
+            ],
+          },
+          {
+            h: "What Is a Logic Gate?",
+            p: [
+              "A logic gate is a small electronic circuit — usually a group of connected transistors — that produces one output signal based on one or more input signals, following a fixed logical condition that never changes.",
+              "\"Gate\" means signals must pass through it and satisfy its specific condition; \"logic\" means the output result is known and fixed by the gate's design: if the input condition is met, the output is High (1); otherwise it's Low (0). Wiring these seven gates together in different combinations builds every digital circuit that exists, from counters to memory cells.",
+            ],
+          },
+          {
+            h: "Truth Tables: The Language That Describes Every Gate",
+            p: [
+              "A truth table lists every possible combination of input signals alongside the output that results from each. Columns on the input side represent the input signals, the output column represents the result, and each row represents one possible input combination.",
+              "For a circuit with n input signals, the table always has 2^n rows, because each signal can only take two values. You must also agree in advance on signal ordering: which is the Most Significant Bit (MSB, written leftmost) and which is the Least Significant Bit (LSB, written rightmost) — the choice itself is arbitrary; what matters is staying consistent throughout the design.",
+            ],
+            code:
+              "A B C | F\n" +
+              "------+----\n" +
+              "0 0 0 | M0\n" +
+              "0 0 1 | M1\n" +
+              "0 1 0 | M2\n" +
+              "0 1 1 | M3\n" +
+              "1 0 0 | M4\n" +
+              "1 0 1 | M5\n" +
+              "1 1 0 | M6\n" +
+              "1 1 1 | M7",
+          },
+          {
+            h: "The NOT Gate (Inverter)",
+            p: "The simplest gate: one input, one output, and the output is simply the opposite of the input. Also called an Inverter. The complemented value is written with a prime after the letter, so the output is Z = X', read \"Z equals NOT X.\"",
+            img: "assets/images/tut-logic-not.png",
+            imgAlt: "NOT gate symbol",
+            imgCap: "NOT — Inverter",
+            code: "X | Z=X'\n--+-----\n0 |  1\n1 |  0",
+          },
+          {
+            h: "The AND Gate",
+            p: "This gate outputs High (1) only when every input is High; if even one input is Low, the output is Low. Its expression is Z = X.Y or simply Z = XY, read \"Z equals X AND Y.\"",
+            code: "X Y | Z=XY\n----+-----\n0 0 |  0\n0 1 |  0\n1 0 |  0\n1 1 |  1",
+          },
+          {
+            h: "The OR Gate",
+            p: "Roughly the opposite of AND: it's enough for one input to be High for the output to be High, and the output is only Low when every input is Low. Its expression is Z = X+Y, read \"Z equals X OR Y.\"",
+            code: "X Y | Z=X+Y\n----+------\n0 0 |  0\n0 1 |  1\n1 0 |  1\n1 1 |  1",
+          },
+          {
+            h: "The NAND Gate (Inverted AND)",
+            p: "An AND gate followed immediately by a NOT at the output; it outputs Low (0) in the one case where every input is High, and High otherwise. Written Z = (XY)', and drawn as an AND symbol with a small bubble at the output marking the inversion.",
+            img: "assets/images/tut-logic-nand.png",
+            imgAlt: "NAND gate symbol",
+            imgCap: "NAND",
+            code: "X Y | Z=(XY)'\n----+--------\n0 0 |   1\n0 1 |   1\n1 0 |   1\n1 1 |   0",
+          },
+          {
+            h: "The NOR Gate (Inverted OR)",
+            p: "An OR gate followed by a NOT at the output; the output is High (1) only when every input is Low, and Low otherwise. Written Z = (X+Y)'.",
+            img: "assets/images/tut-logic-nor.png",
+            imgAlt: "NOR gate symbol",
+            imgCap: "NOR",
+            code: "X Y | Z=(X+Y)'\n----+---------\n0 0 |   1\n0 1 |   0\n1 0 |   0\n1 1 |   0",
+          },
+          {
+            h: "The XOR Gate (Exclusive OR)",
+            p: "Short for Exclusive OR, this gate outputs High (1) only when its two inputs differ — one is 0 and the other is 1; if they match, the output is Low. Written Z = X⊕Y, and it's the core building block of binary adders and difference detectors.",
+            img: "assets/images/tut-logic-xor.png",
+            imgAlt: "XOR gate symbol",
+            imgCap: "XOR",
+            code: "X Y | Z=X⊕Y\n----+------\n0 0 |  0\n0 1 |  1\n1 0 |  1\n1 1 |  0",
+          },
+          {
+            h: "The XNOR Gate",
+            p: "The opposite of XOR: outputs High (1) only when the two inputs match (both 0 or both 1). Written Z = (X⊕Y)', and it's the core of digital comparators that check whether two signals are identical.",
+            img: "assets/images/tut-logic-xnor.png",
+            imgAlt: "XNOR gate symbol",
+            imgCap: "XNOR",
+            code: "X Y | Z=(X⊕Y)'\n----+---------\n0 0 |   1\n0 1 |   0\n1 0 |   0\n1 1 |   1",
+          },
+          {
+            h: "All Seven Gates in One Table",
+            p: "Before moving to Boolean algebra, here is a quick reference gathering every gate's condition and expression:",
+            code:
+              "Gate | Output = 1 when...        | Expression\n" +
+              "-----+-----------------------------+-----------\n" +
+              "NOT  | input = 0                  | Z = X'\n" +
+              "AND  | all inputs = 1             | Z = XY\n" +
+              "OR   | at least one input = 1     | Z = X+Y\n" +
+              "NAND | at least one input = 0     | Z = (XY)'\n" +
+              "NOR  | all inputs = 0             | Z = (X+Y)'\n" +
+              "XOR  | inputs differ               | Z = X⊕Y\n" +
+              "XNOR | inputs match                | Z = (X⊕Y)'",
+          },
+          {
+            h: "Boolean Algebra: Where Did It Come From?",
+            p: [
+              "To handle logic gates mathematically we need an algebra governing the relationships between them. The foundations were laid by British mathematician George Boole, who introduced the idea in his 1847 book \"The Mathematical Analysis of Logic,\" then completed the laws in his 1854 book \"An Investigation of the Laws of Thought.\" The name \"Boolean algebra\" itself was coined later by American mathematician Henry Sheffer in 1913.",
+              "Just as ordinary algebra rests on addition and multiplication, Boolean algebra rests on exactly three operations: conjunction (AND, symbol ∧ or a dot), disjunction (OR, symbol ∨ or +), and negation (NOT, symbol ¬ or a prime ').",
+            ],
+          },
+          {
+            h: "The Basic Postulates",
+            p: "These are the simplest and most-used laws, and each can be proven by direct substitution of 0 and 1 for X — the fastest way to verify any Boolean law:",
+            code:
+              "X'' = X                          (double negation)\n\n" +
+              "X.X = X          X+X = X         (idempotent)\n" +
+              "X.X' = 0         X+X' = 1        (complement)\n" +
+              "X.1 = X          X+0 = X         (identity)\n" +
+              "X.0 = 0          X+1 = 1         (null / dominance)\n\n" +
+              "X⊕X = 0        X⊕X' = 1       X⊕1 = X'       X⊕0 = X",
+          },
+          {
+            h: "Commutative, Associative, and Distributive Laws",
+            p: "These laws let you reorder or regroup the terms of an equation without changing its value, just like ordinary algebra — except Boolean algebra also extends them to the XOR operation, which has no counterpart in regular algebra:",
+            code:
+              "Commutative:   X.Y = Y.X            X+Y = Y+X\n\n" +
+              "Associative:   X.(Y.Z) = (X.Y).Z    X+(Y+Z) = (X+Y)+Z\n\n" +
+              "Distributive:  X.(Y+Z) = XY + XZ\n" +
+              "               X+(YZ) = (X+Y).(X+Z)   <- valid only in Boolean algebra\n\n" +
+              "XOR forms:     X⊕(Y⊕Z) = (X⊕Y)⊕Z\n" +
+              "               X.(Y⊕Z) = XY ⊕ XZ",
+          },
+          {
+            h: "The Absorption Laws",
+            p: "Among the most useful laws for practical simplification, because each lets you drop an entire term from the equation without affecting the result. Here are the six most common forms with their short proofs:",
+            code:
+              "X + XY = X                    X.(X+Y) = X\n" +
+              "  = X.1 + XY                    = X.X + X.Y\n" +
+              "  = X.(1+Y) = X.1 = X            = X + X.Y = X\n\n" +
+              "X + X'Y = X+Y                  X.(X'+Y) = XY\n" +
+              "  = (X+X').(X+Y)                 = X.X' + X.Y\n" +
+              "  = 1.(X+Y) = X+Y                = 0 + X.Y = XY\n\n" +
+              "XY + XY' = X                   (X+Y).(X+Y') = X\n" +
+              "  = X.(Y+Y') = X.1 = X            = X + Y.Y' = X+0 = X",
+          },
+          {
+            h: "The Consensus Theorem",
+            p: "A more advanced but very useful theorem when simplifying equations with three or more terms: it lets you drop an entire term — called the \"consensus\" term — whenever the other two terms contain a variable and its complement:",
+            code:
+              "XY + X'Z + YZ = XY + X'Z        <- YZ is the \"consensus\" term, safely dropped\n\n" +
+              "proof:\n" +
+              "  XY + X'Z + YZ\n" +
+              "  = XY + X'Z + 1.YZ\n" +
+              "  = XY + X'Z + (X+X').YZ\n" +
+              "  = XY + X'Z + XYZ + X'YZ\n" +
+              "  = XY.(1+Z) + X'Z.(1+Y)\n" +
+              "  = XY + X'Z",
+          },
+          {
+            h: "De Morgan's Laws",
+            p: "Among the most practically important laws, because they bridge AND and OR: they let you convert any NAND-based equation into an equivalent NOR-based one and vice versa — exactly what's needed when a design must use a single gate type only, as the next guide on circuit minimization will show:",
+            code:
+              "(X.Y)' = X' + Y'      <- NAND of two = OR of their complements\n" +
+              "(X+Y)' = X'.Y'        <- NOR of two = AND of their complements\n\n" +
+              "General form (n variables):\n" +
+              "(X1.X2. ... .Xn)' = X1' + X2' + ... + Xn'\n" +
+              "(X1+X2+ ... +Xn)' = X1'.X2'. ... .Xn'",
+          },
+        ],
+        takeaways: [
+          "The seven logic gates (NOT, AND, OR, NAND, NOR, XOR, XNOR) are the building blocks every digital circuit is made from.",
+          "A truth table describes any gate or circuit's behavior by listing every input combination and its resulting output.",
+          "Boolean algebra rests on just three operations — AND, OR, NOT — and shares commutative, associative, and distributive laws with ordinary algebra.",
+          "Absorption and consensus are practical tools for dropping redundant terms from an equation without changing its value.",
+          "De Morgan's laws bridge AND and OR, and are central to implementing any circuit with a single gate type.",
+        ],
+        note: "Once gates and Boolean algebra click, the natural next step is taking a long logic equation and shrinking it to the fewest possible gates using Karnaugh maps — the subject of the next guide: Gate-Level Minimization.",
+      },
+    },
+  },
+  /* ===================================================================== */
+  {
+    id: "gate-level-minimization",
+    categories: ["digital"],
+    image: "assets/images/tut-gate-minimization.jpg",
+    tags: ["Digital Logic", "Karnaugh Map", "Circuit Design"],
+    read: { ar: "١٢ دقيقة قراءة", en: "12 min read" },
+    title: {
+      ar: "تبسيط الدوائر المنطقية بخرائط كارنو (K-Map)",
+      en: "Gate-Level Minimization With Karnaugh Maps (K-Maps)",
+    },
+    desc: {
+      ar: "معادلة منطقية أطول تعني بوابات أكثر وتكلفة أعلى. تعلّم خرائط كارنو خطوة بخطوة: من خريطة المتغيرين إلى الأربع متغيرات، وحالات «لا يهم»، والتنفيذ ببوابةٍ واحدة فقط.",
+      en: "A longer logic equation means more gates and higher cost. Learn Karnaugh maps step by step: from the two-variable map to four variables, don't-care conditions, and single-gate-type implementation.",
+    },
+    article: {
+      ar: {
+        lead: "معادلة منطقية طويلة تعني بوابات أكثر، تكلفة أعلى، ودائرة أبطأ. خرائط كارنو (Karnaugh Maps) أداة بصرية بسيطة تختصر أي معادلة بولية إلى أقل عدد ممكن من الحدود والبوابات، بلا حساباتٍ جبرية معقدة. في هذا الشرح نبني الأداة خطوة بخطوة، من خريطة المتغيرين البسيطة إلى خريطة الأربع متغيرات، مروراً بحالات «لا يهم» والتنفيذ بنوعٍ واحد فقط من البوابات.",
+        sections: [
+          {
+            h: "لماذا نبسّط الدوائر أصلاً؟",
+            p: [
+              "الغاية من تبسيط أي دائرة رقمية هي الوصول إلى تصميمٍ أبسط وأرخص وبنفس الأداء الوظيفي. كل بوابة زائدة في التصميم تعني تكلفة تصنيع أعلى، استهلاك طاقة أكبر، ومساحة أوسع على الشريحة الإلكترونية.",
+              "الجبر البُولي وحده يمكن أن يبسّط أي معادلة، لكن العملية تصبح طويلة ومعقدة مع المعادلات التي تحتوي على حدود كثيرة. لذلك نحتاج طريقة بصرية مباشرة، وهنا يأتي دور خريطة كارنو (K-Map)، وسنتعلم في هذا الشرح تبسيط دوال بمدخلين وثلاثة وأربعة مدخلات.",
+            ],
+          },
+          {
+            h: "خريطة كارنو: الفكرة الأساسية",
+            p: [
+              "خريطة كارنو جدول من المربعات، كل مربعٍ فيه يمثّل احتمالاً واحداً من احتمالات الدخل (Minterm)، تماماً كصفٍّ واحد في جدول الحقيقة، لكن بترتيبٍ خاص يجعل كل مربعين متجاورين يختلفان في متغيرٍ واحد فقط. هذا الترتيب هو سر الأداة بأكملها.",
+              "يمكن استخدام الخريطة لتبسيط الدالة في صورة SOP (مجموع الحاصل الضربي) أو في صورة POS (حاصل ضرب المجموع) بنفس الخطوات.",
+            ],
+          },
+          {
+            h: "خطوات التبسيط بالخريطة",
+            p: "أياً كان عدد المتغيرات، الإجراء ثابت دائماً:",
+            list: [
+              "استخرج جدول الحقيقة للدالة، أو معادلتها بصورة Minterms/Maxterms",
+              "ارسم خريطة بعدد مربعاتٍ يساوي عدد احتمالات الدخل (2 أُس n)",
+              "جمّع المربعات المتجاورة المتساوية في القيمة معاً في مجموعات (حجم كل مجموعة يجب أن يكون قوة من قوى 2: 1، 2، 4، 8...)",
+              "اكتب الحد المختصر لكل مجموعة (كل مجموعةٍ أكبر تعني حداً أقصر بمتغيرات أقل)",
+              "اجمع كل الحدود للحصول على المعادلة النهائية المبسّطة",
+              "تحقق: هل يمكن تبسيطٌ إضافي؟",
+              "ارسم الدائرة المنطقية النهائية بأقل عدد من البوابات",
+            ],
+          },
+          {
+            h: "خريطة المتغيرين",
+            p: "لدالة F بمتغيرين X وY، الخريطة مربّعٌ من 2×2 (4 مربعات). كل مربعٍ متجاورٍ لمربعٍ آخر أفقياً أو رأسياً (لا قطرياً) يختلف عنه في متغيرٍ واحد فقط، وهذا ما يسمح بدمجهما في حدٍّ واحد أقصر.",
+            code: "      Y=0  Y=1\nX=0 |  M0   M1  |   M0=X'Y'  M1=X'Y\nX=1 |  M2   M3  |   M2=XY'   M3=XY",
+          },
+          {
+            h: "مثال: تبسيط دالة بمتغيرين",
+            p: "لتكن لدينا الدالة التالية، ونريد أبسط صورة لها بالخريطة:",
+            code:
+              "X Y | F\n----+---\n0 0 | 0\n0 1 | 1\n1 0 | 1\n1 1 | 1\n\n" +
+              "K-Map:\n      Y=0  Y=1\nX=0 |  0    1  |\nX=1 |  1    1  |\n\n" +
+              "Group 1: (X=1,Y=0)+(X=1,Y=1)  -> X\n" +
+              "Group 2: (X=0,Y=1)+(X=1,Y=1)  -> Y\n\n" +
+              "F(X,Y) = X + Y",
+          },
+          {
+            h: "خريطة الثلاث متغيرات",
+            p: "لدالة بثلاثة متغيرات X وY وZ يصبح عدد الاحتمالات 8، فالخريطة صفٌّ واحد من 2×4 مربعات. هنا يظهر أهم شرطٍ في بناء الخريطة: ترتيب أعمدة YZ يجب أن يتبع نظام جراي (Gray Code) — 00، 01، 11، 10 — وليس الترتيب الثنائي العادي، لأن الهدف أن يختلف كل عمودين متجاورين في بتٍّ واحدٍ فقط، بما في ذلك العمود الأول والأخير (لأن الخريطة ملتفّة على نفسها من الحافة اليمنى إلى اليسرى).",
+            code: "        YZ=00  YZ=01  YZ=11  YZ=10\nX=0  |   M0     M1     M3     M2   |\nX=1  |   M4     M5     M7     M6   |",
+          },
+          {
+            h: "أمثلة محلولة على خريطة الثلاث متغيرات",
+            p: "لنطبّق الخطوات على ثلاث دوالّ معطاة بصيغة مجموع الحدود الصغرى (Minterms):",
+            code:
+              "F(X,Y,Z) = ∑(2,3,4,5)\n" +
+              "        YZ=00 01 11 10\n" +
+              "X=0  |    0   0  1  1  |\n" +
+              "X=1  |    1   1  0  0  |\n" +
+              "Groups: (2,3)->X'Y   (4,5)->XY'\n" +
+              "F(X,Y,Z) = X'Y + XY'   =  X⊕Y\n\n" +
+              "F(X,Y,Z) = ∑(3,4,6,7)\n" +
+              "        YZ=00 01 11 10\n" +
+              "X=0  |    0   0  1  0  |\n" +
+              "X=1  |    1   0  1  1  |\n" +
+              "Groups: (4,6)->XZ'   (3,7)->YZ\n" +
+              "F(X,Y,Z) = YZ + XZ'\n\n" +
+              "F(X,Y,Z) = ∑(0,2,4,5,6)\n" +
+              "        YZ=00 01 11 10\n" +
+              "X=0  |    1   0  0  1  |\n" +
+              "X=1  |    1   1  0  1  |\n" +
+              "Groups: (0,2,4,6)->Z'   (4,5)->XY'\n" +
+              "F(X,Y,Z) = Z' + XY'",
+          },
+          {
+            h: "خريطة الأربع متغيرات",
+            p: "مع أربعة متغيرات W وX وY وZ يصبح عدد الاحتمالات 16، فالخريطة مربّعٌ من 4×4. القاعدة نفسها تتكرر: كلٌّ من صفوف WX وأعمدة YZ يجب أن تُرتَّب بنظام جراي، والخريطة ملتفّة من كل الجهات — يمين إلى يسار، وأعلى إلى أسفل — فأركان الخريطة الأربعة تُعتبر متجاورة أيضاً ويمكن تجميعها معاً!",
+            code:
+              "F(W,X,Y,Z) = ∑(0,1,2,4,5,6,8,9,12,13,14)\n\n" +
+              "          YZ=00 01 11 10\n" +
+              "WX=00 |    1   1  0  1  |\n" +
+              "WX=01 |    1   1  0  1  |\n" +
+              "WX=11 |    1   1  0  0  |\n" +
+              "WX=10 |    1   1  0  1  |\n\n" +
+              "F(W,X,Y,Z) = Y' + W'Z' + XZ'",
+          },
+          {
+            h: "المُحدِّد الأولي والمُحدِّد الأولي الأساسي",
+            p: [
+              "عند تجميع المربعات، ثلاثة شروط يجب مراعاتها: تغطية كل الحدود ذات القيمة 1، أقل عدد ممكن من المجموعات، وعدم تكرار تغطية أي مربعٍ دون داعٍ. المُحدِّد الأولي (Prime Implicant) هو أكبر مجموعةٍ ممكنة من المربعات المتجاورة. أما المُحدِّد الأولي الأساسي (Essential Prime Implicant) فهو محدِّدٌ أولي يحتوي على مربعٍ لا يغطيه أي محدِّدٍ أولي آخر — أي أنه إجباري الوجود في أي حل.",
+              "من المهم أن تدرك أن بعض الدوال قد يكون لها أكثر من حلٍّ صحيح، طالما أن كل حلٍّ يغطي كل الحدود المطلوبة بأقل عددٍ من الحدود؛ فكلها حلولٌ مقبولة بنفس الكفاءة.",
+            ],
+            code:
+              "F(A,B,C,D) = ∑(0,2,3,5,7,8,9,10,11,13,15)\n" +
+              "Prime implicants: CD, B'C, AD, AB'\n" +
+              "Essential prime implicants: BD, B'D'\n\n" +
+              "More than one minimal solution is valid, e.g.:\n" +
+              "F = BD + B'D' + CD + AD\n" +
+              "F = BD + B'D' + CD + AB'\n" +
+              "F = BD + B'D' + B'C + AD\n" +
+              "F = BD + B'D' + B'C + AB'",
+          },
+          {
+            h: "حالة «لا يهم» (Don't-Care Conditions)",
+            p: "في بعض الدوال توجد احتمالات دخلٍ لن تحدث فعلياً أبداً (كأن تُستخدم أربع خانات لتمثيل عشرة أرقام فقط من BCD مثلاً)، فلا يهم أن يكون خرجها 0 أو 1 لأنها لن تُختبر عملياً. نرمز لهذه الحالات بالرمز X أو d، ونعاملها كقيمة 1 فقط إذا ساعدت في تكوين مجموعةٍ أكبر، وإلا نتجاهلها كأنها 0.",
+            code:
+              "F(W,X,Y,Z) = ∑(1,3,7,11,15)     d(W,X,Y,Z) = ∑(0,2,5)\n\n" +
+              "          YZ=00 01 11 10\n" +
+              "WX=00 |    x   1  1  x  |\n" +
+              "WX=01 |    0   x  1  0  |\n" +
+              "WX=11 |    0   0  1  0  |\n" +
+              "WX=10 |    0   0  1  0  |\n\n" +
+              "F(W,X,Y,Z) = YZ + W'Z  =  YZ + W'X'",
+          },
+          {
+            h: "التنفيذ ببوابات NAND فقط",
+            p: "في التصنيع الفعلي، غالباً ما يكون أرخص وأسهل استخدام نوعٍ واحدٍ فقط من البوابات بدل خلط أنواع مختلفة. أي دالة يمكن تنفيذها بالكامل ببوابات NAND فقط، بشرط أن تكون مبسّطة أولاً في صورة SOP، ثم نتبع ثلاث خطوات: نحوّل كل بوابة AND إلى NAND متبوعة بعاكس، نحوّل بوابة OR الأخيرة إلى NAND بعد عكسها، ثم نعكس أي حدٍّ مفرد (متغيرٍ واحد) مباشرة.",
+            code:
+              "F(A,B,C,D) = AB + CD\n\n" +
+              "Step 1 (SOP with AND-OR):     AB + CD\n" +
+              "Step 2 (AND -> NAND+inverter, OR -> NAND):\n" +
+              "   F = ((AB)'.(CD)')'\n" +
+              "Step 3 (De Morgan check):\n" +
+              "   ((AB)'.(CD)')' = ((AB)')' + ((CD)')' = AB + CD   ✓",
+          },
+          {
+            h: "التنفيذ ببوابات NOR فقط",
+            p: "بالمثل، يمكن تنفيذ أي دالة ببوابات NOR فقط، لكن بشرط أن تكون مبسّطة أولاً في صورة POS، ونتبع نفس منطق NAND معكوساً: نحوّل كل بوابة OR إلى NOR متبوعة بعاكس، ونحوّل بوابة AND الأخيرة إلى NOR بعد عكسها.",
+            code:
+              "F(A,B,C,D) = (A+B)(C+D)\n\n" +
+              "Step 1 (POS with OR-AND):     (A+B).(C+D)\n" +
+              "Step 2 (OR -> NOR+inverter, AND -> NOR):\n" +
+              "   F = ((A+B)' + (C+D)')'\n" +
+              "Step 3 (De Morgan check):\n" +
+              "   ((A+B)'+(C+D)')' = ((A+B)')'.((C+D)')' = (A+B).(C+D)   ✓",
+          },
+        ],
+        takeaways: [
+          "خريطة كارنو تختصر أي معادلة بولية بصرياً دون الحاجة لجبر معقّد، بشرط ألا يتجاوز عدد المتغيرات 4 أو 5.",
+          "ترتيب أعمدة وصفوف الخريطة يتبع نظام جراي (Gray Code) دائماً، بحيث يختلف كل عنصرين متجاورين في متغيرٍ واحد فقط — والخريطة ملتفّة من كل حوافها.",
+          "المُحدِّد الأولي الأساسي إجباري في أي حل، وقد توجد أكثر من صيغة صحيحة ومكافئة للدالة النهائية.",
+          "حالات «لا يهم» تُعامل كـ1 فقط إذا ساعدت على تكوين مجموعةٍ أكبر، وإلا تُهمَل.",
+          "أي دالة SOP يمكن تنفيذها ببوابات NAND فقط، وأي دالة POS يمكن تنفيذها ببوابات NOR فقط، وهذا يبسّط عملية التصنيع الفعلية.",
+        ],
+        note: "الخطوة التالية بعد إتقان خرائط كارنو هي الدوائر المنطقية المركّبة: العدّادات، والمُرمِّزات (Encoders)، والمُفكِّكات (Decoders) — وكلها ليست إلا بوابات منطقية مرتّبة بذكاء.",
+      },
+      en: {
+        lead: "A long Boolean equation means more gates, higher cost, and a slower circuit. Karnaugh Maps (K-Maps) are a simple visual tool that shrink any Boolean equation to the smallest possible number of terms and gates, without heavy algebra. This guide builds the tool step by step, from the simple two-variable map to the four-variable map, through don't-care conditions and single-gate-type implementation.",
+        sections: [
+          {
+            h: "Why Minimize Circuits At All?",
+            p: [
+              "The goal of minimizing any digital circuit is reaching a simpler, cheaper design with the exact same function. Every extra gate in a design means higher manufacturing cost, more power draw, and more chip area.",
+              "Boolean algebra alone can simplify any equation, but the process gets long and error-prone once an equation has many terms. That's where the Karnaugh Map (K-Map) comes in, a direct visual method. In this guide we'll minimize functions of two, three, and four inputs.",
+            ],
+          },
+          {
+            h: "The Karnaugh Map: Core Idea",
+            p: [
+              "A K-Map is a grid of squares, where each square represents one input combination (a minterm), exactly like one row of a truth table, but arranged so that any two neighboring squares differ in exactly one variable. That single property is the whole trick behind the tool.",
+              "The map can minimize a function in SOP form (Sum of Products) or POS form (Product of Sums) using the same procedure.",
+            ],
+          },
+          {
+            h: "Minimization Steps",
+            p: "Regardless of the number of variables, the procedure never changes:",
+            list: [
+              "Find the function's truth table, or its Minterms/Maxterms expression",
+              "Draw a map with a number of squares equal to the number of input combinations (2^n)",
+              "Combine equal-valued neighboring squares into groups (each group's size must be a power of 2: 1, 2, 4, 8...)",
+              "Write the shortened term for each group (a bigger group means a shorter term with fewer literals)",
+              "Add up all the terms to get the final minimized expression",
+              "Check: is further simplification possible?",
+              "Draw the final logic circuit",
+            ],
+          },
+          {
+            h: "The Two-Variable Map",
+            p: "For a function F of two variables X and Y, the map is a 2x2 grid (4 squares). Any two squares that are horizontally or vertically adjacent (never diagonally) differ in exactly one variable, which is what lets you merge them into one shorter term.",
+            code: "      Y=0  Y=1\nX=0 |  M0   M1  |   M0=X'Y'  M1=X'Y\nX=1 |  M2   M3  |   M2=XY'   M3=XY",
+          },
+          {
+            h: "Example: Minimizing a Two-Variable Function",
+            p: "Given the following function, find its simplest form using the map:",
+            code:
+              "X Y | F\n----+---\n0 0 | 0\n0 1 | 1\n1 0 | 1\n1 1 | 1\n\n" +
+              "K-Map:\n      Y=0  Y=1\nX=0 |  0    1  |\nX=1 |  1    1  |\n\n" +
+              "Group 1: (X=1,Y=0)+(X=1,Y=1)  -> X\n" +
+              "Group 2: (X=0,Y=1)+(X=1,Y=1)  -> Y\n\n" +
+              "F(X,Y) = X + Y",
+          },
+          {
+            h: "The Three-Variable Map",
+            p: "For a function of three variables X, Y, and Z there are 8 combinations, so the map is a single row of 2x4 squares. Here the most important rule of map-building appears: the YZ column order must follow Gray Code — 00, 01, 11, 10 — not plain binary order, because every pair of neighboring columns, including the first and last, must differ in exactly one bit (the map wraps around from its right edge back to its left).",
+            code: "        YZ=00  YZ=01  YZ=11  YZ=10\nX=0  |   M0     M1     M3     M2   |\nX=1  |   M4     M5     M7     M6   |",
+          },
+          {
+            h: "Worked Examples on the Three-Variable Map",
+            p: "Let's apply the steps to three functions given as sums of minterms:",
+            code:
+              "F(X,Y,Z) = ∑(2,3,4,5)\n" +
+              "        YZ=00 01 11 10\n" +
+              "X=0  |    0   0  1  1  |\n" +
+              "X=1  |    1   1  0  0  |\n" +
+              "Groups: (2,3)->X'Y   (4,5)->XY'\n" +
+              "F(X,Y,Z) = X'Y + XY'   =  X⊕Y\n\n" +
+              "F(X,Y,Z) = ∑(3,4,6,7)\n" +
+              "        YZ=00 01 11 10\n" +
+              "X=0  |    0   0  1  0  |\n" +
+              "X=1  |    1   0  1  1  |\n" +
+              "Groups: (4,6)->XZ'   (3,7)->YZ\n" +
+              "F(X,Y,Z) = YZ + XZ'\n\n" +
+              "F(X,Y,Z) = ∑(0,2,4,5,6)\n" +
+              "        YZ=00 01 11 10\n" +
+              "X=0  |    1   0  0  1  |\n" +
+              "X=1  |    1   1  0  1  |\n" +
+              "Groups: (0,2,4,6)->Z'   (4,5)->XY'\n" +
+              "F(X,Y,Z) = Z' + XY'",
+          },
+          {
+            h: "The Four-Variable Map",
+            p: "With four variables W, X, Y, and Z there are 16 combinations, so the map is a 4x4 grid. The same rule repeats: both the WX rows and YZ columns must follow Gray Code, and the map wraps on every side — right to left and top to bottom — meaning the map's four corners are also considered adjacent and can be grouped together!",
+            code:
+              "F(W,X,Y,Z) = ∑(0,1,2,4,5,6,8,9,12,13,14)\n\n" +
+              "          YZ=00 01 11 10\n" +
+              "WX=00 |    1   1  0  1  |\n" +
+              "WX=01 |    1   1  0  1  |\n" +
+              "WX=11 |    1   1  0  0  |\n" +
+              "WX=10 |    1   1  0  1  |\n\n" +
+              "F(W,X,Y,Z) = Y' + W'Z' + XZ'",
+          },
+          {
+            h: "Prime Implicants and Essential Prime Implicants",
+            p: [
+              "When grouping squares, three conditions must hold: every 1-valued minterm must be covered, use as few groups as possible, and never cover a square redundantly. A Prime Implicant is the largest possible group of adjacent squares. An Essential Prime Implicant is a prime implicant that contains a square not covered by any other prime implicant, meaning it must appear in any valid solution.",
+              "It's worth knowing that some functions have more than one correct minimal solution, as long as every solution covers all required terms with the same minimum term count — all such solutions are equally valid.",
+            ],
+            code:
+              "F(A,B,C,D) = ∑(0,2,3,5,7,8,9,10,11,13,15)\n" +
+              "Prime implicants: CD, B'C, AD, AB'\n" +
+              "Essential prime implicants: BD, B'D'\n\n" +
+              "More than one minimal solution is valid, e.g.:\n" +
+              "F = BD + B'D' + CD + AD\n" +
+              "F = BD + B'D' + CD + AB'\n" +
+              "F = BD + B'D' + B'C + AD\n" +
+              "F = BD + B'D' + B'C + AB'",
+          },
+          {
+            h: "Don't-Care Conditions",
+            p: "Some functions include input combinations that will simply never occur in practice (say, using four bits to represent only ten BCD digits). Whether their output is 0 or 1 doesn't matter, since they're never actually tested. We mark these with X or d, and treat them as 1 only when doing so helps form a larger group; otherwise we ignore them as if they were 0.",
+            code:
+              "F(W,X,Y,Z) = ∑(1,3,7,11,15)     d(W,X,Y,Z) = ∑(0,2,5)\n\n" +
+              "          YZ=00 01 11 10\n" +
+              "WX=00 |    x   1  1  x  |\n" +
+              "WX=01 |    0   x  1  0  |\n" +
+              "WX=11 |    0   0  1  0  |\n" +
+              "WX=10 |    0   0  1  0  |\n\n" +
+              "F(W,X,Y,Z) = YZ + W'Z  =  YZ + W'X'",
+          },
+          {
+            h: "NAND-Only Implementation",
+            p: "In real manufacturing, it's often cheaper and simpler to use a single gate type instead of mixing several. Any function can be fully implemented with NAND gates alone, provided it's first simplified into SOP form, then three steps followed: convert every AND to a NAND with an inverter, convert the final OR into a NAND after inverting it, and invert any single-literal term directly.",
+            code:
+              "F(A,B,C,D) = AB + CD\n\n" +
+              "Step 1 (SOP with AND-OR):     AB + CD\n" +
+              "Step 2 (AND -> NAND+inverter, OR -> NAND):\n" +
+              "   F = ((AB)'.(CD)')'\n" +
+              "Step 3 (De Morgan check):\n" +
+              "   ((AB)'.(CD)')' = ((AB)')' + ((CD)')' = AB + CD   ✓",
+          },
+          {
+            h: "NOR-Only Implementation",
+            p: "Likewise, any function can be implemented with NOR gates alone, provided it's first simplified into POS form, following the mirror logic of the NAND case: convert every OR to a NOR with an inverter, and convert the final AND into a NOR after inverting it.",
+            code:
+              "F(A,B,C,D) = (A+B)(C+D)\n\n" +
+              "Step 1 (POS with OR-AND):     (A+B).(C+D)\n" +
+              "Step 2 (OR -> NOR+inverter, AND -> NOR):\n" +
+              "   F = ((A+B)' + (C+D)')'\n" +
+              "Step 3 (De Morgan check):\n" +
+              "   ((A+B)'+(C+D)')' = ((A+B)')'.((C+D)')' = (A+B).(C+D)   ✓",
+          },
+        ],
+        takeaways: [
+          "A Karnaugh Map visually minimizes any Boolean equation without heavy algebra, as long as the variable count stays at 4 or 5.",
+          "Map rows and columns always follow Gray Code, so any two neighbors differ in exactly one variable, and the map wraps around on every edge.",
+          "An essential prime implicant must appear in any valid solution, and a function can have more than one correct, equivalent minimal form.",
+          "Don't-care conditions count as 1 only when they help form a bigger group; otherwise they're ignored.",
+          "Any SOP function can be built with NAND gates only, and any POS function with NOR gates only, simplifying real-world manufacturing.",
+        ],
+        note: "Once Karnaugh maps click, the natural next step is combinational building blocks: counters, encoders, and decoders — all of which are just logic gates arranged with intent.",
+      },
+    },
+  },
 ];
