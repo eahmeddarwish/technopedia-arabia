@@ -8,9 +8,15 @@
    - demoUrl / codeUrl: leave "" to hide that link button
    - tags: short tech labels shown on the card
    - title / desc / details: each has {ar, en}
+
+   Ordered best-to-least by real engineering depth, documentation quality,
+   and global/professional polish. Thin placeholder entries (no code, no
+   demo, generic textbook description, no documented technical decisions)
+   were removed rather than kept as filler.
    ========================================================================== */
 
-const projectsData = [{
+const projectsData = [
+    {
         id: "smart-stethoscope",
         categories: ["python-ai", "raspberrypi"],
         featured: true,
@@ -126,284 +132,6 @@ const projectsData = [{
               { k: "Training iterations", v: "9+" }
             ],
             note: "For educational and research purposes only — not a certified medical device. Any result must be confirmed by a qualified clinician. Fully open source and open to further improvement."
-          }
-        }
-    },
-    {
-        id: "voice-chess-pro",
-        categories: ["python-ai"],
-        featured: true,
-        image: "assets/images/voice-chess-pro.png",
-        demoUrl: "https://huggingface.co/spaces/engdarwish/voice-chess-pro",
-        codeUrl: "https://github.com/eahmeddarwish/voice-chess-pro",
-        tags: ["Python", "Gradio", "Stockfish"],
-        title: {
-            ar: "شطرنج تفاعلي احترافي (Voice Chess Pro)",
-            en: "Voice Chess Pro — Interactive Web Chess",
-        },
-        desc: {
-            ar: "لعبة شطرنج تفاعلية كاملة تعمل في المتصفح، بوضعين: التحدي ضد محرك Stockfish أو اللعب بين شخصين، مع تصدير النقلات بصيغة PGN.",
-            en: "A full interactive browser-based chess game with two modes: challenge the Stockfish engine or play against another player, plus PGN move export.",
-        },
-        details: {
-            ar: "بُني المشروع بلغة Python باستخدام Gradio لواجهة الويب، ومحرك Stockfish كخصم ذكاء اصطناعي بثلاث مستويات صعوبة (سهل، متوسط، صعب). يدعم وضعين للعب: لاعب ضد لاعب، أو لاعب ضد الحاسوب، مع تتبع كامل لسجل النقلات وإمكانية تصدير المباراة بصيغة PGN القياسية لتحليلها لاحقاً في أي برنامج شطرنج. تجربة تُظهر كيفية دمج محرك شطرنج احترافي (UCI) مع واجهة ويب تفاعلية بسيطة وسريعة النشر عبر Hugging Face Spaces.",
-            en: "Built in Python with a Gradio web interface and the Stockfish engine as an AI opponent across three difficulty levels (Easy, Medium, Hard). Supports two modes, Player vs Player and Player vs Computer, with full move-history tracking and standard PGN export for later analysis in any chess program. A practical example of wiring a professional UCI chess engine into a lightweight, instantly deployable web UI on Hugging Face Spaces.",
-        },
-        article: {
-          ar: {
-            lead: "لعبة شطرنجٍ كاملة تعمل بالكامل داخل المتصفح — ضدّ محرك Stockfish بثلاث مستويات، أو ضدّ صديقٍ على نفس الجهاز، وكل جلسةٍ مستقلةٌ تمامًا عن غيرها.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "شطرنجٌ احترافي بلا تثبيتٍ ولا حساب: تفتح الرابط وتلعب فورًا. تختار مستوى الصعوبة (سهل / متوسط / صعب)، أو تتحدّى صديقًا وجهًا لوجهٍ على نفس الشاشة."
-              },
-              {
-                h: "آلية العمل",
-                flow: [
-                  "إدخال الحركة",
-                  "python-chess يتحقق من صحّتها",
-                  "محرك Stockfish يردّ",
-                  "تحديث الرقعة"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "محرك شطرنجٍ كامل بـ python-chess",
-                    d: "كل حركةٍ تُفحَص للتأكد من قانونيّتها قبل تنفيذها — لا حركاتٍ غير شرعية، ولا حالاتٍ شاذّة. المكتبة تتكفّل بقواعد الشطرنج كاملةً بما فيها التبييت والترقية والكِش."
-                  },
-                  {
-                    t: "خصمٌ ذكيٌّ بمحرك Stockfish",
-                    d: "من أقوى محركات الشطرنج المفتوحة، بمستوى صعوبةٍ قابلٍ للضبط — من خصمٍ ودودٍ للمبتدئ إلى تحدٍّ حقيقيٍّ للاعب المتمرّس."
-                  },
-                  {
-                    t: "حالة لعبٍ منفصلةٌ لكل جلسة",
-                    d: "كل متصفحٍ يحتفظ بلعبته الخاصة، فيمكن لعشرات الأشخاص اللعب في الوقت نفسه دون أي تداخل — تصميمٌ آمنٌ للّعب المتزامن."
-                  }
-                ]
-              },
-              {
-                h: "مدخلاتٌ مرنة",
-                p: "تُدخِل الحركة بالصيغة القياسية (<em>e2e4</em>، <em>Nf3</em>) أو بلغةٍ طبيعية (<em>e2 to e4</em>). مع أزرارٍ للتراجع وإعادة الضبط وقلب الرقعة، وسجلٍّ للحركات وتصديرٍ بصيغة PGN."
-              }
-            ],
-            results: [
-              {
-                k: "مستويات الصعوبة",
-                v: "3"
-              },
-              {
-                k: "المحرك",
-                v: "Stockfish"
-              },
-              {
-                k: "لاعبون متزامنون",
-                v: "غير محدود"
-              },
-              {
-                k: "التثبيت",
-                v: "صفر"
-              }
-            ],
-            note: "مشروعٌ مفتوح المصدر بالكامل، يعمل داخل المتصفح عبر Gradio — الكود متاحٌ للتجربة والتعديل."
-          },
-          en: {
-            lead: "A full chess game running entirely in the browser — against Stockfish at three levels, or a friend on the same device, each session fully independent.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Serious chess with no install and no account: open the link and play. Pick a difficulty (Easy / Medium / Hard), or challenge a friend face-to-face on the same screen."
-              },
-              {
-                h: "How it works",
-                flow: [
-                  "Move input",
-                  "python-chess validates it",
-                  "Stockfish replies",
-                  "Board updates"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "A full engine with python-chess",
-                    d: "Every move is checked for legality before it's applied — no illegal moves, no edge cases. The library handles all of chess including castling, promotion and check."
-                  },
-                  {
-                    t: "A smart opponent with Stockfish",
-                    d: "One of the strongest open chess engines, with adjustable difficulty — from a gentle opponent for beginners to a real challenge for experienced players."
-                  },
-                  {
-                    t: "Per-session game state",
-                    d: "Each browser keeps its own game, so dozens can play at once with zero interference — designed to be safe for concurrent play."
-                  }
-                ]
-              },
-              {
-                h: "Flexible input",
-                p: "Enter moves in standard notation (<em>e2e4</em>, <em>Nf3</em>) or plain language (<em>e2 to e4</em>). With undo, reset and flip controls, move history and PGN export."
-              }
-            ],
-            results: [
-              {
-                k: "Difficulty levels",
-                v: "3"
-              },
-              {
-                k: "Engine",
-                v: "Stockfish"
-              },
-              {
-                k: "Concurrent players",
-                v: "Unlimited"
-              },
-              {
-                k: "Install",
-                v: "None"
-              }
-            ],
-            note: "Fully open source, running in the browser via Gradio — the code is available to run and modify."
-          }
-        }
-    },
-    {
-        id: "universal-market-predictor-deluxe",
-        categories: ["python-ai"],
-        featured: true,
-        image: "assets/images/universal-market-predictor-deluxe.png",
-        demoUrl: "https://huggingface.co/spaces/engdarwish/universal-market-predictor-deluxe",
-        codeUrl: "https://github.com/eahmeddarwish/universal-market-predictor-deluxe",
-        tags: ["Python", "TensorFlow", "LSTM", "Gradio"],
-        title: {
-            ar: "متنبئ الأسواق الشامل — إصدار Deluxe",
-            en: "Universal Market Predictor — Deluxe Edition",
-        },
-        desc: {
-            ar: "نموذج LSTM واحد مشترك يتنبأ بأي سهم أو عملة رقمية عالمياً على مدى 1/3/7 أيام، مع اختبار دلالة إحصائية يوضح هل فيه ميزة تنبؤية حقيقية أم مجرد ضوضاء.",
-            en: "A single shared LSTM backbone forecasting any global stock or cryptocurrency over 1/3/7-day horizons, with a statistical significance test to show whether the predictive edge is real or just noise.",
-        },
-        details: {
-            ar: "تطوير كامل لمشروع متنبئ الأسواق الأصلي: بدلًا من نموذجٍ منفصلٍ لكل سهم، نموذج LSTM واحد مشترك بـembeddings خاصةٍ بكل سهمٍ تُغطّي أمريكا والخليج والمملكة المتحدة وألمانيا واليابان وهونج كونج والهند والعملات الرقمية. الهدف هو النسبة المئوية للعائد بدل السعر المُقيّس، لتفادي مشاكل الاستقراء على الأسهم شديدة الاتجاه. كل تنبؤ يُقارن بخط أساس بسيط (naive persistence) مع اختبار ثنائي الحدين (binomial test) وفاصل ثقة Wilson 95% على دقة الاتجاه، بدل الاكتفاء بنسبة دقة مجردة قد تكون مجرد صدفة إحصائية. القيود موثّقة بصراحة في الـREADME، بما فيها الحالات التي لا يزال النموذج فيها عاجزًا عن التفوّق علىش رمي العملة.",
-            en: "A full evolution of the original Universal Market Predictor: instead of a separate model per ticker, one shared LSTM backbone with per-ticker embeddings covers US, Gulf/MENA, UK, Germany, Japan, Hong Kong, India markets, and major cryptocurrencies. The prediction target is percentage return rather than a scaled price, avoiding extrapolation failures on strongly-trending stocks. Every forecast is benchmarked against a naive persistence baseline with a binomial significance test and a 95% Wilson confidence interval on directional accuracy — rather than trusting a raw accuracy percentage that could just be statistical noise. Limitations are documented honestly in the README, including where the model currently does not beat a coin flip.",
-        },
-        article: {
-          ar: {
-            lead: "نموذج LSTM موحّدٌ لكل الأسهم والعملات، بتقييمٍ صادق: كل رقمٍ يُعرض إلى جانب مقياسٍ مرجعيٍّ «لا يفعل شيئًا» — لأن نظام التنبؤ لا يفوق في مصداقيته المقياسَ الذي يُقارَن به.",
-            sections: [
-              {
-                h: "المبدأ الأساسي",
-                p: "سعر إغلاق الغد لسهمٍ كبيرٍ عادةً قريبٌ من سعر اليوم. فأي نموذجٍ — حتى العديم الفائدة — قد يُظهر دقةً برّاقةً لمجرّد اعتماده على هذه الحقيقة. الطريقة الوحيدة لمعرفة إن كان النموذج تعلّم شيئًا حقيقيًا: أن نضع خطأه ودقّته إلى جانب مقياسٍ ساذجٍ لا يستخدم أي تعلّمٍ آلي."
-              },
-              {
-                h: "النموذج المشترك",
-                flow: [
-                  "تسلسل سعري (60 يوم × 12 ميزة)",
-                  "LSTM ثلاثي الطبقات",
-                  "+ تضمين لكل سهم",
-                  "إخراج: 1/3/7 أيام دفعةً واحدة"
-                ]
-              },
-              {
-                h: "القرارات الهندسية",
-                steps: [
-                  {
-                    t: "لماذا نموذجٌ مشتركٌ لا نموذجٌ لكل سهم؟",
-                    d: "العمود الفقري يرى سلوك السوق عبر كل سهمٍ وبورصةٍ وعملة — الانهيارات والصعودات والتقلّبات — أكثر بكثيرٍ مما يعلّمه تاريخ سهمٍ واحد. والتضمين (embedding) يتيح التخصّص لكل أصلٍ دون شبكةٍ منفصلة."
-                  },
-                  {
-                    t: "لماذا إخراجٌ متعددٌ لا تكراري؟",
-                    d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ بما بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
-                  },
-                  {
-                    t: "ثغرةٌ حقيقية: تنبؤٌ بالنسبة لا بالسعر",
-                    d: "أول نسخةٍ تنبّأت بسعرٍ مُعايَرٍ مباشرةً، فخسرت أمام المقياس الساذج في الأسهم الصاعدة — لأن أسعار الاختبار خرجت عن النطاق الذي رآه النموذج. الحلّ: التنبؤ بنسبة عائدٍ مئوية، وكل الميزات صارت نِسَبًا محدودةً لا مستوياتِ سعرٍ خام."
-                  }
-                ]
-              },
-              {
-                h: "هل الميزة حقيقيةٌ أم ضوضاء؟",
-                p: "دقة اتجاهٍ في نطاق 52–58% قد تكون مجرّد صدفةٍ إحصائية. لذلك يُجري التقرير <strong>اختبار دلالةٍ إحصائية</strong> على كل صف: لا تُعامَل النتيجة كميزةٍ حقيقية إلا إذا استبعدت فترة الثقة خطّ الـ50% تمامًا. والنتيجة صادقة: ميزةٌ واضحةٌ في أسهمٍ أمريكيةٍ كبرى، وغائبةٌ في أسهم الخليج — والمشروع يوثّق هذا بدل إخفائه."
-              }
-            ],
-            results: [
-              {
-                k: "آفاق التنبؤ",
-                v: "1/3/7 أيام"
-              },
-              {
-                k: "نموذج واحد",
-                v: "كل الأسهم"
-              },
-              {
-                k: "مقاييس مرجعية",
-                v: "3"
-              },
-              {
-                k: "اختبار الدلالة",
-                v: "✓"
-              }
-            ],
-            note: "مشروعٌ بحثيٌّ تعليمي — لا شيء فيه نصيحةٌ مالية. الأسواق تنطوي على مخاطرةٍ حقيقية. الكود مفتوحٌ بالكامل."
-          },
-          en: {
-            lead: "One shared LSTM for every stock and coin, with honest evaluation: every number sits next to a 'does-nothing' baseline — because a prediction system is only as trustworthy as the baseline it's compared against.",
-            sections: [
-              {
-                h: "The core principle",
-                p: "Tomorrow's close for a large stock is usually near today's. So any model — even a useless one — can show a flattering accuracy just by leaning on that. The only way to know if the model learned something real: place its error and accuracy next to a naive baseline that uses no ML at all."
-              },
-              {
-                h: "The shared model",
-                flow: [
-                  "Price sequence (60d × 12 features)",
-                  "3-layer LSTM",
-                  "+ per-ticker embedding",
-                  "Output: 1/3/7-day at once"
-                ]
-              },
-              {
-                h: "Engineering decisions",
-                steps: [
-                  {
-                    t: "Why shared, not one model per ticker?",
-                    d: "The backbone sees market behavior across every stock, exchange and coin — crashes, rallies, volatility — far more than any single ticker's history teaches. The embedding lets it specialize per asset without a separate network."
-                  },
-                  {
-                    t: "Why multi-output, not recursive?",
-                    d: "Predicting day+1 then feeding it back to predict day+2 compounds error fast. A single pass emitting all horizons at once avoids it entirely."
-                  },
-                  {
-                    t: "A real bug: predict % return, not price",
-                    d: "The first version predicted a scaled price directly and lost to the naive baseline on trending stocks — test prices fell outside the range the model had seen. The fix: predict a percentage return, and express every feature as a bounded ratio, not a raw price level."
-                  }
-                ]
-              },
-              {
-                h: "Real edge, or noise?",
-                p: "Directional accuracy of 52–58% could just be luck. So the report runs a <strong>significance test</strong> on every row: a result counts only if the confidence interval excludes the 50% line entirely. And the finding is honest: a clear edge on large US names, absent on Gulf tickers — the project documents this rather than hiding it."
-              }
-            ],
-            results: [
-              {
-                k: "Forecast horizons",
-                v: "1/3/7 days"
-              },
-              {
-                k: "One model",
-                v: "All tickers"
-              },
-              {
-                k: "Baselines",
-                v: "3"
-              },
-              {
-                k: "Significance test",
-                v: "✓"
-              }
-            ],
-            note: "An educational research project — none of it is financial advice. Markets carry real risk. Fully open source."
           }
         }
     },
@@ -569,141 +297,256 @@ const projectsData = [{
         }
     },
     {
-        id: "adsb-flight-tracker",
-        categories: ["iot", "python-ai"],
-        featured: false,
-        image: "assets/images/adsb-radar-screenshot.png",
-        demoUrl: "https://engdarwish-adsb-flight-tracker.static.hf.space",
-        codeUrl: "https://github.com/eahmeddarwish/adsb-flight-tracker",
-        tags: ["Python", "Flask", "RTL-SDR", "ADS-B", "Raspberry Pi"],
+        id: "universal-market-predictor-deluxe",
+        categories: ["python-ai"],
+        featured: true,
+        image: "assets/images/universal-market-predictor-deluxe.png",
+        demoUrl: "https://huggingface.co/spaces/engdarwish/universal-market-predictor-deluxe",
+        codeUrl: "https://github.com/eahmeddarwish/universal-market-predictor-deluxe",
+        tags: ["Python", "TensorFlow", "LSTM", "Gradio"],
         title: {
-            ar: "متتبع رحلات ADS-B",
-            en: "ADS-B Flight Tracker"
+            ar: "متنبئ الأسواق الشامل — إصدار Deluxe",
+            en: "Universal Market Predictor — Deluxe Edition",
         },
         desc: {
-            ar: "رادار طيران حي بتصميم ATC كلاسيكي، يشتغل بأي دونجل RTL-SDR على أي لابتوب أو Raspberry Pi.",
-            en: "A live ATC-style flight radar that runs with any RTL-SDR dongle on a laptop or Raspberry Pi."
+            ar: "نموذج LSTM واحد مشترك يتنبأ بأي سهم أو عملة رقمية عالمياً على مدى 1/3/7 أيام، مع اختبار دلالة إحصائية يوضح هل فيه ميزة تنبؤية حقيقية أم مجرد ضوضاء.",
+            en: "A single shared LSTM backbone forecasting any global stock or cryptocurrency over 1/3/7-day horizons, with a statistical significance test to show whether the predictive edge is real or just noise.",
         },
         details: {
-            ar: "يستقبل إشارات ADS-B الحقيقية على 1090MHz عبر dump1090، ويعرضها على واجهة رادار حية ببصمة كلاسيكية. الديمو المباشر يعمل بمحاكاةٍ داخل المتصفح؛ النسخة الكاملة تدعم عتادًا حقيقيًا.",
-            en: "Receives real ADS-B signals at 1090MHz via dump1090 and renders them on a live radar-style dashboard. The live demo runs a browser-side simulation; the full version supports real hardware."
+            ar: "تطوير كامل لمشروع متنبئ الأسواق الأصلي: بدلًا من نموذجٍ منفصلٍ لكل سهم، نموذج LSTM واحد مشترك بـembeddings خاصةٍ بكل سهمٍ تُغطّي أمريكا والخليج والمملكة المتحدة وألمانيا واليابان وهونج كونج والهند والعملات الرقمية. الهدف هو النسبة المئوية للعائد بدل السعر المُقيّس، لتفادي مشاكل الاستقراء على الأسهم شديدة الاتجاه. كل تنبؤ يُقارن بخط أساس بسيط (naive persistence) مع اختبار ثنائي الحدين (binomial test) وفاصل ثقة Wilson 95% على دقة الاتجاه، بدل الاكتفاء بنسبة دقة مجردة قد تكون مجرد صدفة إحصائية. القيود موثّقة بصراحة في الـREADME، بما فيها الحالات التي لا يزال النموذج فيها عاجزًا عن التفوّق علىش رمي العملة.",
+            en: "A full evolution of the original Universal Market Predictor: instead of a separate model per ticker, one shared LSTM backbone with per-ticker embeddings covers US, Gulf/MENA, UK, Germany, Japan, Hong Kong, India markets, and major cryptocurrencies. The prediction target is percentage return rather than a scaled price, avoiding extrapolation failures on strongly-trending stocks. Every forecast is benchmarked against a naive persistence baseline with a binomial significance test and a 95% Wilson confidence interval on directional accuracy — rather than trusting a raw accuracy percentage that could just be statistical noise. Limitations are documented honestly in the README, including where the model currently does not beat a coin flip.",
         },
         article: {
           ar: {
-            lead: "رادار طيرانٍ حيٌّ يفكّ تشفير إشارات الطائرات الحقيقية على تردد 1090 ميجاهرتز بدونجل RTL-SDR، ويعرضها على واجهةٍ بطابع أبراج المراقبة — على أي لابتوبٍ أو راسبيري باي.",
+            lead: "نموذج LSTM موحّدٌ لكل الأسهم والعملات، بتقييمٍ صادق: كل رقمٍ يُعرض إلى جانب مقياسٍ مرجعيٍّ «لا يفعل شيئًا» — لأن نظام التنبؤ لا يفوق في مصداقيته المقياسَ الذي يُقارَن به.",
+            sections: [
+              {
+                h: "المبدأ الأساسي",
+                p: "سعر إغلاق الغد لسهمٍ كبيرٍ عادةً قريبٌ من سعر اليوم. فأي نموذجٍ — حتى العديم الفائدة — قد يُظهر دقةً برّاقةً لمجرّد اعتماده على هذه الحقيقة. الطريقة الوحيدة لمعرفة إن كان النموذج تعلّم شيئًا حقيقيًا: أن نضع خطأه ودقّته إلى جانب مقياسٍ ساذجٍ لا يستخدم أي تعلّمٍ آلي."
+              },
+              {
+                h: "النموذج المشترك",
+                flow: [
+                  "تسلسل سعري (60 يوم × 12 ميزة)",
+                  "LSTM ثلاثي الطبقات",
+                  "+ تضمين لكل سهم",
+                  "إخراج: 1/3/7 أيام دفعةً واحدة"
+                ]
+              },
+              {
+                h: "القرارات الهندسية",
+                steps: [
+                  {
+                    t: "لماذا نموذجٌ مشتركٌ لا نموذجٌ لكل سهم؟",
+                    d: "العمود الفقري يرى سلوك السوق عبر كل سهمٍ وبورصةٍ وعملة — الانهيارات والصعودات والتقلّبات — أكثر بكثيرٍ مما يعلّمه تاريخ سهمٍ واحد. والتضمين (embedding) يتيح التخصّص لكل أصلٍ دون شبكةٍ منفصلة."
+                  },
+                  {
+                    t: "لماذا إخراجٌ متعددٌ لا تكراري؟",
+                    d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ بما بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
+                  },
+                  {
+                    t: "ثغرةٌ حقيقية: تنبؤٌ بالنسبة لا بالسعر",
+                    d: "أول نسخةٍ تنبّأت بسعرٍ مُعايَرٍ مباشرةً، فخسرت أمام المقياس الساذج في الأسهم الصاعدة — لأن أسعار الاختبار خرجت عن النطاق الذي رآه النموذج. الحلّ: التنبؤ بنسبة عائدٍ مئوية، وكل الميزات صارت نِسَبًا محدودةً لا مستوياتِ سعرٍ خام."
+                  }
+                ]
+              },
+              {
+                h: "هل الميزة حقيقيةٌ أم ضوضاء؟",
+                p: "دقة اتجاهٍ في نطاق 52–58% قد تكون مجرّد صدفةٍ إحصائية. لذلك يُجري التقرير <strong>اختبار دلالةٍ إحصائية</strong> على كل صف: لا تُعامَل النتيجة كميزةٍ حقيقية إلا إذا استبعدت فترة الثقة خطّ الـ50% تمامًا. والنتيجة صادقة: ميزةٌ واضحةٌ في أسهمٍ أمريكيةٍ كبرى، وغائبةٌ في أسهم الخليج — والمشروع يوثّق هذا بدل إخفائه."
+              }
+            ],
+            results: [
+              {
+                k: "آفاق التنبؤ",
+                v: "1/3/7 أيام"
+              },
+              {
+                k: "نموذج واحد",
+                v: "كل الأسهم"
+              },
+              {
+                k: "مقاييس مرجعية",
+                v: "3"
+              },
+              {
+                k: "اختبار الدلالة",
+                v: "✓"
+              }
+            ],
+            note: "مشروعٌ بحثيٌّ تعليمي — لا شيء فيه نصيحةٌ مالية. الأسواق تنطوي على مخاطرةٍ حقيقية. الكود مفتوحٌ بالكامل."
+          },
+          en: {
+            lead: "One shared LSTM for every stock and coin, with honest evaluation: every number sits next to a 'does-nothing' baseline — because a prediction system is only as trustworthy as the baseline it's compared against.",
+            sections: [
+              {
+                h: "The core principle",
+                p: "Tomorrow's close for a large stock is usually near today's. So any model — even a useless one — can show a flattering accuracy just by leaning on that. The only way to know if the model learned something real: place its error and accuracy next to a naive baseline that uses no ML at all."
+              },
+              {
+                h: "The shared model",
+                flow: [
+                  "Price sequence (60d × 12 features)",
+                  "3-layer LSTM",
+                  "+ per-ticker embedding",
+                  "Output: 1/3/7-day at once"
+                ]
+              },
+              {
+                h: "Engineering decisions",
+                steps: [
+                  {
+                    t: "Why shared, not one model per ticker?",
+                    d: "The backbone sees market behavior across every stock, exchange and coin — crashes, rallies, volatility — far more than any single ticker's history teaches. The embedding lets it specialize per asset without a separate network."
+                  },
+                  {
+                    t: "Why multi-output, not recursive?",
+                    d: "Predicting day+1 then feeding it back to predict day+2 compounds error fast. A single pass emitting all horizons at once avoids it entirely."
+                  },
+                  {
+                    t: "A real bug: predict % return, not price",
+                    d: "The first version predicted a scaled price directly and lost to the naive baseline on trending stocks — test prices fell outside the range the model had seen. The fix: predict a percentage return, and express every feature as a bounded ratio, not a raw price level."
+                  }
+                ]
+              },
+              {
+                h: "Real edge, or noise?",
+                p: "Directional accuracy of 52–58% could just be luck. So the report runs a <strong>significance test</strong> on every row: a result counts only if the confidence interval excludes the 50% line entirely. And the finding is honest: a clear edge on large US names, absent on Gulf tickers — the project documents this rather than hiding it."
+              }
+            ],
+            results: [
+              {
+                k: "Forecast horizons",
+                v: "1/3/7 days"
+              },
+              {
+                k: "One model",
+                v: "All tickers"
+              },
+              {
+                k: "Baselines",
+                v: "3"
+              },
+              {
+                k: "Significance test",
+                v: "✓"
+              }
+            ],
+            note: "An educational research project — none of it is financial advice. Markets carry real risk. Fully open source."
+          }
+        }
+    },
+    {
+        id: "arabic-emotion-detector",
+        categories: ["python-ai"],
+        featured: false,
+        image: "assets/images/arabic-emotion-detector.png",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/arabic-emotion-detector",
+        tags: ["Python", "AraBERT", "Whisper", "DeepFace", "NLP"],
+        title: {
+            ar: "محلل المشاعر العربي متعدد الوسائط — نص وصوت ومرئي",
+            en: "Arabic Multimodal Emotion Detector — Text, Voice & Visual",
+        },
+        desc: {
+            ar: "خط أنابيب يأخذ فيديو بالعربية الفصحى أو العامية، يفرّغه صوتيًا بـ Whisper، يحلّل مشاعر كل مقطع نصي بنموذج AraBERT مُدرَّب خصيصًا، يدمج ذلك مع تحليل تعابير الوجه، ويرصد خطاب الكراهية — لينتج فيديو مُترجَمًا مع شارة مشاعر، وملف SRT، وتقرير Excel كامل.",
+            en: "A pipeline that takes an Arabic (MSA or dialect) video, transcribes it with Whisper, classifies the emotion of each text segment with a purpose-fine-tuned AraBERT model, fuses that with facial-expression analysis, and flags hate speech — producing a subtitled video with an emotion badge, an SRT file, and a full Excel report.",
+        },
+        details: {
+            ar: "مشروعٌ شخصيٌّ بدأ كسكربتات تجميع بيانات منفصلة لتوحيد توسيمات بشرية متعددة لمقاطع نصية (بما فيها حسم اختلاف المُقيِّمين وقياس موثوقية الاتفاق بينهم إحصائيًا)، ثم تطوّر إلى نظامٍ واحدٍ متكامل: تقطيع الصوت يراعي فواصل الصمت الطبيعية بدل التقطيع الثابت كي لا تُقصّ الجمل في منتصفها، ونموذج النص وموزون طبقيًا لمعالجة عدم توازن الفئات، ويُدمَج مع نموذج تحليل الوجه بوزنٍ محسوب. الكود بالكامل مفتوح المصدر مع دليل تدريب خطوة بخطوة لمن يريد إعادة التدريب على بياناته الخاصة، وكل الأرقام المذكورة في التوثيق هي نتائج فعلية غير مُلفَّقة — بما فيها نقاط الضعف.",
+            en: "A personal project that started as separate data-aggregation scripts to reconcile multiple human labels per text segment (including resolving rater disagreement and statistically measuring inter-rater reliability), then grew into one integrated system: audio segmentation respects natural silence boundaries instead of fixed-length cuts so sentences aren't chopped mid-word, the text model is class-weighted to handle label imbalance, and it's fused with a facial-expression model using a computed weight. The full code is open-source with a step-by-step training guide for anyone who wants to retrain it on their own data, and every number in the documentation is a real, unfabricated result — including the weaknesses.",
+        },
+        article: {
+          ar: {
+            lead: "خط أنابيب مفتوح المصدر لتحليل المشاعر العربية من النص والصوت والوجه معًا، مع توثيق صادق لكل رقم — بما فيه الضعف في الفئات النادرة.",
             sections: [
               {
                 h: "الفكرة",
-                p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. وإن لم يكن لديك عتاد؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
+                p: "تحليل المشاعر في المحتوى العربي المرئي يحتاج أكثر من مجرد نص: نبرة الصوت وتعبير الوجه يحملان إشارات لا يلتقطها النص وحده. المشروع يدمج ثلاثة مصادر إشارة (نص مُفرَّغ صوتيًا، تعبير وجه، وفلتر خطاب كراهية منفصل) في حكمٍ واحد لكل مقطع، مع الحفاظ على تتبّع مصدر كل توسيم تدريبي وموثوقيته."
               },
               {
-                h: "المعمارية",
+                h: "تدفّق خط الأنابيب",
                 flow: [
-                  "دونجل RTL-SDR (1090MHz)",
-                  "dump1090 يفكّ الإشارة",
-                  "خادم Flask (API + واجهة)",
-                  "خريطة Leaflet في المتصفح"
+                  "تفريغ صوتي بـ Whisper",
+                  "تقطيع يراعي فواصل الصمت الطبيعية",
+                  "تصنيف النص (AraBERT) + تصنيف تعبير الوجه (DeepFace)",
+                  "دمج موزون بين النتيجتين + فحص خطاب الكراهية",
+                  "فيديو مترجم + ملف SRT + تقرير Excel"
                 ]
               },
               {
                 h: "القرارات التقنية",
                 steps: [
                   {
-                    t: "وضعان دائمان: محاكاةٌ وحقيقي",
-                    d: "وضع المحاكاة يعمل في ثوانٍ بلا أي عتاد — هو ما يشتغل على النسخة الحية. والوضع الحقيقي يفكّ بثّ ADS-B فعليًا من الدونجل. الاثنان يتكلمان مع نفس الخادم ونفس الواجهة، فتبدّل بينهما بزرٍّ واحد."
+                    t: "حسم التوسيم بتسلسل أولويات صريح بدل قاعدة واحدة جامدة",
+                    d: "بيانات التوسيم البشري كانت غير متجانسة: بعض المقاطع وسمها مُقيِّمان مستقلان، بعضها مُقيِّم واحد فقط، وبعضها موسوم آليًا بلا مُقيِّم بشري إطلاقًا. بدل تجاهل الفروق، بُني تسلسل أولويات واضح (اتفاق المُقيِّمَين → حسم التحكيم → مُقيِّم واحد → توسيم مسبق → بديل آلي)، مع قياس Cohen's Kappa فعليًا (٠.٦٦٨، اتفاق «جيد») على كل الصفوف التي وسمها مُقيِّمان — تحقّق إحصائي حقيقي بدل افتراض أن التصنيف قابل للاستخدام."
                   },
                   {
-                    t: "كودٌ عابرٌ للمنصّات",
-                    d: "الخادم بايثون صافٍ بلا أي كودٍ خاصٍّ بالراسبيري باي — يعمل على ويندوز وماك ولينكس. الراسبيري باي مجرد خيارٍ مريحٍ للتشغيل الدائم 24 ساعة، لا شرط."
+                    t: "تقطيع صوتي يراعي حدود الصمت لا طولًا ثابتًا",
+                    d: "التقطيع بطول ثابت يقطع الجمل في منتصفها أحيانًا، ما يشوّه سياق النموذج النصي. استُبدل بمنطق يكتشف فواصل الصمت الطبيعية بين الجمل ويقطع عندها، فتبقى كل وحدة تحليل جملة كاملة قدر الإمكان."
                   },
                   {
-                    t: "إثراءٌ آمنٌ من جهة الخادم",
-                    d: "بيانات الرحلات الإضافية تُجلَب عبر الخادم فقط — مفتاح الـAPI لا يصل للمتصفح إطلاقًا. خادمٌ واحدٌ على منفذٍ واحدٍ يخدم الواجهة والـAPI معًا."
+                    t: "تدريب موزون طبقيًا لعدم توازن الفئات",
+                    d: "توزيع المشاعر في البيانات غير متساوٍ إطلاقًا (الحزن والفرح يمثلان نصف العينات تقريبًا، بينما الاشمئزاز والحياد أقل من ٤٪ لكل منهما). أُضيف مسار تدريب موزون (WeightedTrainer) يرفع وزن الفئات النادرة في دالة الخسارة، ونُشرت المقارنة الكاملة بين النسختين (عادية وموزونة) بدل اختيار الأفضل ظاهريًا وإخفاء الأخرى."
                   }
                 ]
               },
               {
-                h: "جاهزٌ للتشغيل الدائم",
-                p: "مع ملف systemd للتشغيل التلقائي عند الإقلاع، يتحوّل الراسبيري باي إلى كشك رادارٍ يعمل بلا توقّف. وكل الإعدادات عبر متغيّرات البيئة — لا شيء مثبّتٌ في الكود، فتغيّر المنطقة والمركز بسهولة."
+                h: "حدود صادقة، لا أرقام مجمّلة",
+                p: "دقة الاختبار (٥٥–٥٧٪) ومتوسط F1 الكلي (٠.٣٣–٠.٤٣) متواضعان لأن حجم البيانات محدود (١٤٣٦ عينة) وبعض الفئات نادرة جدًا (الاشمئزاز ٤٥ عينة فقط) — وهذا مذكور صراحةً في التوثيق بدل إخفائه. الهدف مشروع تعليمي/شخصي قابل لإعادة الإنتاج والتطوير، لا منتج إشراف على المحتوى جاهز للإنتاج."
               }
             ],
             results: [
-              {
-                k: "التردد",
-                v: "1090 MHz"
-              },
-              {
-                k: "المنصّات",
-                v: "ويندوز/ماك/لينكس"
-              },
-              {
-                k: "وضع المحاكاة",
-                v: "بلا عتاد"
-              },
-              {
-                k: "المنافذ",
-                v: "واحد"
-              }
+              { k: "عينات نصية موسومة", v: "1,436" },
+              { k: "Cohen's Kappa (موثوقية الاتفاق)", v: "0.668" },
+              { k: "أفضل Macro F1 (نموذج موزون)", v: "0.43" }
             ],
-            note: "مشروعٌ مفتوح المصدر بالكامل، مع نسخةٍ حيةٍ على Hugging Face تعمل بوضع المحاكاة مباشرةً."
+            note: "مشروعٌ شخصيٌّ مفتوح المصدر لأغراض تعليمية وportfolio، وليس منتج إشراف على المحتوى معتمَدًا — كل الأرقام أعلاه نتائج اختبار فعلية غير مُلفَّقة، بما فيها ضعف الأداء على الفئات النادرة، وموثّقة بالتفصيل في المستودع مع دليل تدريب كامل لإعادة الإنتاج."
           },
           en: {
-            lead: "A live aircraft radar that decodes real ADS-B signals on 1090 MHz with an RTL-SDR dongle, rendering every plane on a retro ATC-style dashboard — on any laptop or Raspberry Pi.",
+            lead: "An open-source pipeline for Arabic emotion analysis from text, voice, and face together, with honest documentation of every number — including the weakness on rare classes.",
             sections: [
               {
                 h: "The idea",
-                p: "It picks up the ADS-B signals aircraft actually broadcast, decodes them, and shows each plane on a live map with heading-accurate icons and trails. No hardware? A built-in simulation runs the same UI with demo traffic."
+                p: "Emotion analysis in Arabic video content needs more than text alone: vocal tone and facial expression carry signals text misses. The project fuses three signal sources (transcribed text, facial expression, and a separate hate-speech filter) into one per-segment judgment, while keeping track of each training label's source and reliability."
               },
               {
-                h: "Architecture",
+                h: "Pipeline flow",
                 flow: [
-                  "RTL-SDR dongle (1090MHz)",
-                  "dump1090 decodes",
-                  "Flask server (API + UI)",
-                  "Leaflet map in browser"
+                  "Whisper audio transcription",
+                  "Silence-boundary-aware segmentation",
+                  "Text classification (AraBERT) + facial-expression classification (DeepFace)",
+                  "Weighted fusion of both results + hate-speech check",
+                  "Subtitled video + SRT file + Excel report"
                 ]
               },
               {
                 h: "Technical decisions",
                 steps: [
                   {
-                    t: "Two first-class modes: sim and live",
-                    d: "Simulation runs in seconds with no hardware — it powers the live demo. Live mode decodes real ADS-B from the dongle. Both talk to the same server and UI, so you switch with one button."
+                    t: "Resolving labels with an explicit priority cascade instead of one rigid rule",
+                    d: "The human-annotation data was inherently uneven: some segments had two independent raters, some only one, and some were machine-labeled with no human rater at all. Instead of ignoring these differences, an explicit priority cascade was built (both raters agree → arbitrator resolves → single rater → pre-labeled → machine fallback), with Cohen's Kappa actually measured (0.668, \"good\" agreement) across every row both raters labeled — a real statistical check rather than assuming the taxonomy is usable."
                   },
                   {
-                    t: "Cross-platform code",
-                    d: "The server is pure Python with no Pi-specific code — it runs on Windows, macOS and Linux. A Raspberry Pi is just a convenient always-on box, not a requirement."
+                    t: "Silence-boundary-aware segmentation instead of fixed-length cuts",
+                    d: "Fixed-length segmentation sometimes cuts a sentence mid-word, distorting the text model's context. It was replaced with logic that detects natural silence gaps between sentences and cuts there instead, keeping each analysis unit as close to a full sentence as possible."
                   },
                   {
-                    t: "Safe server-side enrichment",
-                    d: "Extra flight data is fetched through the server only — the API key never reaches the browser. One server on one port serves both the UI and the API."
+                    t: "Class-weighted training for label imbalance",
+                    d: "The emotion distribution is far from even (sadness and joy alone are roughly half of all samples, while disgust and neutral are each under 4%). A weighted training path (WeightedTrainer) was added to up-weight rare classes in the loss function, and the full comparison between both variants (normal and weighted) is published rather than picking the better-looking one and hiding the other."
                   }
                 ]
               },
               {
-                h: "Ready for permanent use",
-                p: "With a systemd unit for boot-time auto-start, the Pi becomes a 24/7 radar kiosk. All configuration is via environment variables — nothing is hardcoded, so you change region and center easily."
+                h: "Honest limitations, not polished numbers",
+                p: "Test accuracy (55–57%) and macro-F1 (0.33–0.43) are modest because the dataset is small (1,436 samples) and some classes are quite rare (disgust has only 45 samples) — and this is stated explicitly in the documentation rather than hidden. The goal is a reproducible educational/personal project, not a production-ready content-moderation product."
               }
             ],
             results: [
-              {
-                k: "Frequency",
-                v: "1090 MHz"
-              },
-              {
-                k: "Platforms",
-                v: "Win/Mac/Linux"
-              },
-              {
-                k: "Sim mode",
-                v: "No hardware"
-              },
-              {
-                k: "Ports",
-                v: "One"
-              }
+              { k: "Labeled text samples", v: "1,436" },
+              { k: "Cohen's Kappa (inter-rater reliability)", v: "0.668" },
+              { k: "Best macro F1 (weighted model)", v: "0.43" }
             ],
-            note: "Fully open source, with a live Hugging Face demo running in simulation mode out of the box."
+            note: "A personal, open-source project for educational and portfolio purposes, not a certified content-moderation product — every number above is a real, unfabricated test result, including the weaker performance on rare classes, and it's documented in full in the repository along with a complete training guide for reproducing it."
           }
         }
     },
@@ -987,47 +830,144 @@ const projectsData = [{
           }
         }
     },
-   {
-        id: "pendulum-gravity-lab",
-        categories: ["python-physics"],
-        featured: true,
-        image: "assets/images/pendulum-gravity-lab.jpg",
-        demoUrl: "https://huggingface.co/spaces/engdarwish/pendulum-gravity-lab",
-        codeUrl: "https://github.com/eahmeddarwish/pendulum-gravity-lab",
-        tags: ["Python", "OpenCV", "Gradio", "NumPy", "SciPy"],
-        title: {
-            ar: "مختبر البندول لتعيين عجلة الجاذبية (Pendulum Gravity Lab)",
-            en: "Pendulum Gravity Lab",
-        },
-        desc: {
-            ar: "قياس عجلة الجاذبية الأرضية عبر تتبّع بندول حقيقي بالرؤية الحاسوبية، مع تحليل إحصائي كامل ومحاكاة عددية تفاعلية بلا حاجة لكاميرا.",
-            en: "Measuring Earth's gravitational acceleration via computer-vision pendulum tracking, with full uncertainty analysis and an interactive camera-free numerical simulation.",
-        },
-        details: {
-            ar: "أداة رؤية حاسوبية مبنية بلغة Python وOpenCV تتتبّع بندولًا حقيقيًا عبر الكاميرا (تحويل هَف للدوائر) وتوقّت أرجحاته لحساب عجلة الجاذبية g = 4π²L/T²، مدعومة بميزانية كاملة لعدم اليقين وانحدار خطي متعدد الأطوال بدل الاكتفاء بمتوسط بسيط. تم اكتشاف وإصلاح علّتين برمجيتين حقيقيتين أثناء التطوير: فيضان عددي صامت (uint16 overflow) كان يُنتج قيمًا خيالية لـ g، وعلة توقيت عند تحليل الفيديوهات المسجَّلة. يرافق التجربة محاكاة تفاعلية مبنية بـ Gradio تحل معادلة البندول اللاخطي عدديًا (RK4) وتقارنها بالحل التحليلي الدقيق عبر التكامل الإهليلجي — لا تحتاج كاميرا أو عتادًا، وتعمل من أي متصفح عبر Hugging Face Spaces.",
-            en: "A Python + OpenCV computer-vision tool that tracks a real pendulum through a camera (Hough Circle Transform) and times its oscillations to compute g = 4π²L/T², backed by a full uncertainty budget and multi-length linear regression rather than a single flattering average. Two real bugs were found and fixed during development: a silent uint16 numeric overflow that produced nonsensical g values, and a timing bug affecting analysis of recorded video files. An interactive Gradio simulation accompanies the experiment, numerically solving the nonlinear pendulum equation (RK4) and cross-checking it against the exact analytic solution via the elliptic integral — no camera or hardware required, runs from any browser on Hugging Face Spaces.",
-        },
-    },
     {
-        id: "universal-market-predictor",
-        categories: ["python-ai"],
-        featured: true,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "https://github.com/eahmeddarwish/universal-market-predictor",
-        tags: ["Python", "TensorFlow", "LSTM"],
+        id: "adsb-flight-tracker",
+        categories: ["iot", "python-ai"],
+        featured: false,
+        image: "assets/images/adsb-radar-screenshot.png",
+        demoUrl: "https://engdarwish-adsb-flight-tracker.static.hf.space",
+        codeUrl: "https://github.com/eahmeddarwish/adsb-flight-tracker",
+        tags: ["Python", "Flask", "RTL-SDR", "ADS-B", "Raspberry Pi"],
         title: {
-            ar: "متنبئ الأسواق الشامل (Universal Market Predictor)",
-            en: "Universal Market Predictor",
+            ar: "متتبع رحلات ADS-B",
+            en: "ADS-B Flight Tracker"
         },
         desc: {
-            ar: "أداة تتنبأ بسعر الإغلاق التالي لأي سهم عالمي أو عملة رقمية باستخدام نموذج LSTM، مع مؤشرات فنية ورسوم بيانية تفاعلية.",
-            en: "An LSTM-powered tool that forecasts the next-day closing price for any global stock or cryptocurrency, with technical indicators and interactive charts.",
+            ar: "رادار طيران حي بتصميم ATC كلاسيكي، يشتغل بأي دونجل RTL-SDR على أي لابتوب أو Raspberry Pi.",
+            en: "A live ATC-style flight radar that runs with any RTL-SDR dongle on a laptop or Raspberry Pi."
         },
         details: {
-            ar: "يجلب المشروع بيانات الأسعار التاريخية عبر Yahoo Finance لأي سهم عالمي (نيويورك، ناسداك، لندن، تداول، بورصة الكويت، مصر وغيرها) أو عملة رقمية، ثم يحسب 16 مؤشراً فنياً (RSI, MACD, Bollinger Bands...) قبل تدريب نموذج LSTM ثلاثي الطبقات للتنبؤ بسعر الإغلاق التالي. يعرض التطبيق شارت الأسعار وشارت التوقع والـ backtest، وملخص إشارات فنية، عبر واجهة Gradio.",
-            en: "Fetches historical price data via Yahoo Finance for any global stock (NYSE, NASDAQ, LSE, Tadawul, Boursa Kuwait, EGX, and more) or cryptocurrency, computes 16 technical indicators (RSI, MACD, Bollinger Bands, and more), then trains a 3-layer LSTM model to forecast the next day's closing price. The Gradio-based app displays a price chart, a backtest/prediction chart, and a technical signal summary.",
+            ar: "يستقبل إشارات ADS-B الحقيقية على 1090MHz عبر dump1090، ويعرضها على واجهة رادار حية ببصمة كلاسيكية. الديمو المباشر يعمل بمحاكاةٍ داخل المتصفح؛ النسخة الكاملة تدعم عتادًا حقيقيًا.",
+            en: "Receives real ADS-B signals at 1090MHz via dump1090 and renders them on a live radar-style dashboard. The live demo runs a browser-side simulation; the full version supports real hardware."
         },
+        article: {
+          ar: {
+            lead: "رادار طيرانٍ حيٌّ يفكّ تشفير إشارات الطائرات الحقيقية على تردد 1090 ميجاهرتز بدونجل RTL-SDR، ويعرضها على واجهةٍ بطابع أبراج المراقبة — على أي لابتوبٍ أو راسبيري باي.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. وإن لم يكن لديك عتاد؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
+              },
+              {
+                h: "المعمارية",
+                flow: [
+                  "دونجل RTL-SDR (1090MHz)",
+                  "dump1090 يفكّ الإشارة",
+                  "خادم Flask (API + واجهة)",
+                  "خريطة Leaflet في المتصفح"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "وضعان دائمان: محاكاةٌ وحقيقي",
+                    d: "وضع المحاكاة يعمل في ثوانٍ بلا أي عتاد — هو ما يشتغل على النسخة الحية. والوضع الحقيقي يفكّ بثّ ADS-B فعليًا من الدونجل. الاثنان يتكلمان مع نفس الخادم ونفس الواجهة، فتبدّل بينهما بزرٍّ واحد."
+                  },
+                  {
+                    t: "كودٌ عابرٌ للمنصّات",
+                    d: "الخادم بايثون صافٍ بلا أي كودٍ خاصٍّ بالراسبيري باي — يعمل على ويندوز وماك ولينكس. الراسبيري باي مجرد خيارٍ مريحٍ للتشغيل الدائم 24 ساعة، لا شرط."
+                  },
+                  {
+                    t: "إثراءٌ آمنٌ من جهة الخادم",
+                    d: "بيانات الرحلات الإضافية تُجلَب عبر الخادم فقط — مفتاح الـAPI لا يصل للمتصفح إطلاقًا. خادمٌ واحدٌ على منفذٍ واحدٍ يخدم الواجهة والـAPI معًا."
+                  }
+                ]
+              },
+              {
+                h: "جاهزٌ للتشغيل الدائم",
+                p: "مع ملف systemd للتشغيل التلقائي عند الإقلاع، يتحوّل الراسبيري باي إلى كشك رادارٍ يعمل بلا توقّف. وكل الإعدادات عبر متغيّرات البيئة — لا شيء مثبّتٌ في الكود، فتغيّر المنطقة والمركز بسهولة."
+              }
+            ],
+            results: [
+              {
+                k: "التردد",
+                v: "1090 MHz"
+              },
+              {
+                k: "المنصّات",
+                v: "ويندوز/ماك/لينكس"
+              },
+              {
+                k: "وضع المحاكاة",
+                v: "بلا عتاد"
+              },
+              {
+                k: "المنافذ",
+                v: "واحد"
+              }
+            ],
+            note: "مشروعٌ مفتوح المصدر بالكامل، مع نسخةٍ حيةٍ على Hugging Face تعمل بوضع المحاكاة مباشرةً."
+          },
+          en: {
+            lead: "A live aircraft radar that decodes real ADS-B signals on 1090 MHz with an RTL-SDR dongle, rendering every plane on a retro ATC-style dashboard — on any laptop or Raspberry Pi.",
+            sections: [
+              {
+                h: "The idea",
+                p: "It picks up the ADS-B signals aircraft actually broadcast, decodes them, and shows each plane on a live map with heading-accurate icons and trails. No hardware? A built-in simulation runs the same UI with demo traffic."
+              },
+              {
+                h: "Architecture",
+                flow: [
+                  "RTL-SDR dongle (1090MHz)",
+                  "dump1090 decodes",
+                  "Flask server (API + UI)",
+                  "Leaflet map in browser"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "Two first-class modes: sim and live",
+                    d: "Simulation runs in seconds with no hardware — it powers the live demo. Live mode decodes real ADS-B from the dongle. Both talk to the same server and UI, so you switch with one button."
+                  },
+                  {
+                    t: "Cross-platform code",
+                    d: "The server is pure Python with no Pi-specific code — it runs on Windows, macOS and Linux. A Raspberry Pi is just a convenient always-on box, not a requirement."
+                  },
+                  {
+                    t: "Safe server-side enrichment",
+                    d: "Extra flight data is fetched through the server only — the API key never reaches the browser. One server on one port serves both the UI and the API."
+                  }
+                ]
+              },
+              {
+                h: "Ready for permanent use",
+                p: "With a systemd unit for boot-time auto-start, the Pi becomes a 24/7 radar kiosk. All configuration is via environment variables — nothing is hardcoded, so you change region and center easily."
+              }
+            ],
+            results: [
+              {
+                k: "Frequency",
+                v: "1090 MHz"
+              },
+              {
+                k: "Platforms",
+                v: "Win/Mac/Linux"
+              },
+              {
+                k: "Sim mode",
+                v: "No hardware"
+              },
+              {
+                k: "Ports",
+                v: "One"
+              }
+            ],
+            note: "Fully open source, with a live Hugging Face demo running in simulation mode out of the box."
+          }
+        }
     },
     {
         id: "esp32-thermal-camera",
@@ -1171,213 +1111,163 @@ const projectsData = [{
         }
     },
     {
-        id: "smart-traffic-light",
-        categories: ["arduino", "iot"],
-        featured: true,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "C++", "Sensors"],
-        title: {
-            ar: "نظام إشارة مرور ذكية",
-            en: "Smart Traffic Light System",
-        },
-        desc: {
-            ar: "نظام تحكم بإشارات المرور يستخدم أردوينو لضبط توقيت الإشارات ديناميكياً حسب كثافة الحركة بدل التوقيت الثابت.",
-            en: "An Arduino-based traffic control system that adjusts signal timing dynamically based on traffic density instead of fixed intervals.",
-        },
-        details: {
-            ar: "بُني النظام باستخدام Arduino Uno وحساسات IR لقياس كثافة السيارات في كل اتجاه، مع خوارزمية بسيطة توزّع زمن الإشارة الخضراء حسب الازدحام الفعلي. يشرح المشروع أساسيات التحكم بالـ LEDs والتوقيت متعدد المهام (multitasking) بدون استخدام delay().",
-            en: "Built with an Arduino Uno and IR sensors to measure vehicle density per lane, with a simple algorithm that allocates green-light time based on actual congestion. The project demonstrates LED control and non-blocking timing (avoiding delay()) for multi-signal management.",
-        },
-    },
-    {
-        id: "rfid-attendance",
-        categories: ["arduino", "iot"],
-        featured: false,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "RFID", "C++"],
-        title: {
-            ar: "نظام حضور وغياب بتقنية RFID",
-            en: "RFID-Based Attendance System",
-        },
-        desc: {
-            ar: "نظام يسجل حضور الطلاب أو الموظفين تلقائياً عبر بطاقات RFID، مع تخزين البيانات وعرضها على شاشة LCD.",
-            en: "Automatically logs student or employee attendance using RFID cards, storing and displaying the data on an LCD screen.",
-        },
-        details: {
-            ar: "يعتمد المشروع على وحدة قارئ RFID (RC522) متصلة بـ Arduino، بحيث يسجل كل مرور لبطاقة الوقت والهوية. صُمم أصلاً كحل بديل لتسجيل الحضور اليدوي في المحاضرات، وقابل للتوسع بربطه بقاعدة بيانات أو تطبيق ويب.",
-            en: "Uses an RC522 RFID reader module connected to an Arduino to log the time and identity of each card scan. Originally designed as a replacement for manual lecture attendance sheets, and easily extendable to connect with a database or web app.",
-        },
-    },
-    {
-        id: "line-follower-robot",
-        categories: ["arduino", "robotics"],
-        featured: true,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "IR Sensors", "Robotics"],
-        title: {
-            ar: "روبوت متتبع للخط (Line Follower)",
-            en: "Autonomous Line-Follower Robot",
-        },
-        desc: {
-            ar: "روبوت يتحرك ذاتياً متتبعاً مساراً مرسوماً على الأرض باستخدام مصفوفة حساسات الأشعة تحت الحمراء والتحكم بمحركين.",
-            en: "A self-driving robot that follows a track drawn on the floor using an IR sensor array and dual-motor control.",
-        },
-        details: {
-            ar: "يستخدم المشروع مصفوفة حساسات IR لقراءة التباين بين اللون الأسود والأبيض، مع دائرة تحكم بالمحركات (L298N) لتصحيح المسار لحظياً. مشروع كلاسيكي لتعلم أساسيات الروبوتات والتحكم الحلقي المغلق (closed-loop control).",
-            en: "Uses an IR sensor array to detect contrast between black and white track lines, paired with an L298N motor driver for real-time path correction. A classic project for learning robotics fundamentals and closed-loop control.",
-        },
-    },
-    {
-        id: "solar-tracker",
-        categories: ["arduino", "iot"],
-        featured: false,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "LDR", "Servo Motors"],
-        title: {
-            ar: "متتبع شمسي ثنائي المحور",
-            en: "Dual-Axis Solar Tracker",
-        },
-        desc: {
-            ar: "نظام ميكانيكي يوجّه لوحاً شمسياً تلقائياً نحو أقصى شدة ضوء باستخدام حساسات LDR ومحركي سيرفو.",
-            en: "A mechanical system that automatically orients a solar panel toward peak sunlight using LDR sensors and two servo motors.",
-        },
-        details: {
-            ar: "يقارن النظام قراءات أربع حساسات LDR موزعة حول اللوح الشمسي ليحدد اتجاه أعلى شدة إضاءة، ثم يحرك محركي سيرفو (أفقي ورأسي) لتوجيه اللوح تلقائياً. أظهرت الاختبارات تحسناً ملحوظاً في كفاءة الطاقة الملتقطة مقارنة بلوح ثابت.",
-            en: "Compares readings from four LDR sensors placed around the panel to determine the direction of peak light intensity, then drives two servo motors (horizontal and vertical) to reorient the panel. Testing showed a noticeable improvement in captured energy compared to a fixed panel.",
-        },
-    },
-    {
-        id: "firefighting-robot",
-        categories: ["arduino", "robotics"],
-        featured: false,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "Flame Sensor", "Robotics"],
-        title: {
-            ar: "روبوت إطفاء حرائق",
-            en: "Fire-Fighting Robot",
-        },
-        desc: {
-            ar: "روبوت متنقل يكتشف مصدر النار عبر حساسات لهب ويتحرك تلقائياً نحوه لإطفائه باستخدام مضخة ماء صغيرة.",
-            en: "A mobile robot that detects a fire source using flame sensors and autonomously navigates toward it to extinguish it with a small water pump.",
-        },
-        details: {
-            ar: "يستخدم ثلاث حساسات لهب موجهة بزوايا مختلفة لتحديد اتجاه النار، وبمجرد الاقتراب الكافي يُفعّل النظام مضخة ماء صغيرة موصولة بمرحل (relay) للإطفاء. مشروع يجمع بين الاستشعار والتحكم بالحركة والفعل (actuation) في تطبيق واحد.",
-            en: "Uses three flame sensors angled in different directions to triangulate the fire's location, and once close enough, triggers a small relay-controlled water pump to extinguish it. Combines sensing, motion control, and actuation in a single applied project.",
-        },
-    },
-    {
-        id: "gsm-security-alarm",
-        categories: ["arduino", "iot"],
-        featured: false,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "GSM Module", "PIR Sensor"],
-        title: {
-            ar: "نظام إنذار أمني عبر GSM",
-            en: "GSM-Based Home Security Alarm",
-        },
-        desc: {
-            ar: "نظام إنذار يكتشف الحركة غير المتوقعة عبر حساس PIR ويرسل تنبيه SMS فوري لصاحب المنزل عبر وحدة GSM.",
-            en: "A security system that detects unexpected motion via a PIR sensor and sends an instant SMS alert to the homeowner through a GSM module.",
-        },
-        details: {
-            ar: "عند رصد حساس PIR لحركة داخل نطاقه، يُفعّل Arduino وحدة SIM800L لإرسال رسالة نصية فورية لرقم مسجّل مسبقاً، مع إمكانية إضافة صفارة إنذار محلية. حل عملي منخفض التكلفة للأمن المنزلي البسيط.",
-            en: "When the PIR sensor detects motion within range, the Arduino triggers a SIM800L GSM module to send an instant SMS to a pre-registered number, with an optional local buzzer alarm. A practical, low-cost solution for basic home security.",
-        },
-    },
-    {
-        id: "plant-watering",
-        categories: ["arduino", "iot"],
-        featured: false,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "Soil Moisture Sensor", "Automation"],
-        title: {
-            ar: "نظام ري تلقائي للنباتات",
-            en: "Automated Plant Watering System",
-        },
-        desc: {
-            ar: "نظام يراقب رطوبة التربة باستمرار ويشغّل مضخة ماء تلقائياً عند الحاجة، بدون أي تدخل يدوي.",
-            en: "Continuously monitors soil moisture and automatically activates a water pump when needed, with zero manual intervention.",
-        },
-        details: {
-            ar: "يقرأ حساس رطوبة التربة القيمة كل فترة زمنية، وعندما تنخفض عن حد معيّن يُشغّل Arduino مرحلاً يحرّك مضخة مياه صغيرة لفترة محسوبة. مثالي للنباتات المنزلية أثناء السفر أو كأساس لمشروع زراعة ذكية (Smart Agriculture) أكبر.",
-            en: "Reads the soil moisture sensor at regular intervals, and when the value drops below a threshold, the Arduino activates a relay that runs a small water pump for a calculated duration. Ideal for houseplants while traveling, or as the foundation for a larger Smart Agriculture project.",
-        },
-    },
-    {
-        id: "python-face-recognition",
+        id: "voice-chess-pro",
         categories: ["python-ai"],
         featured: true,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Python", "OpenCV", "Machine Learning"],
+        image: "assets/images/voice-chess-pro.png",
+        demoUrl: "https://huggingface.co/spaces/engdarwish/voice-chess-pro",
+        codeUrl: "https://github.com/eahmeddarwish/voice-chess-pro",
+        tags: ["Python", "Gradio", "Stockfish"],
         title: {
-            ar: "نظام تعرّف على الوجه بلغة Python",
-            en: "Python Face Recognition System",
+            ar: "شطرنج تفاعلي احترافي (Voice Chess Pro)",
+            en: "Voice Chess Pro — Interactive Web Chess",
         },
         desc: {
-            ar: "تطبيق Python يتعرّف على الوجوه في الوقت الفعلي عبر الكاميرا باستخدام OpenCV ومكتبات التعلم الآلي.",
-            en: "A real-time face recognition application using OpenCV and machine learning libraries via a live camera feed.",
+            ar: "لعبة شطرنج تفاعلية كاملة تعمل في المتصفح، بوضعين: التحدي ضد محرك Stockfish أو اللعب بين شخصين، مع تصدير النقلات بصيغة PGN.",
+            en: "A full interactive browser-based chess game with two modes: challenge the Stockfish engine or play against another player, plus PGN move export.",
         },
         details: {
-            ar: "يعتمد المشروع على مكتبة OpenCV لالتقاط الفيديو الحي، ونماذج تعلم آلي (face_recognition/dlib) لاستخراج بصمة الوجه ومطابقتها مع قاعدة بيانات مسبقة. استُخدم أصلاً كأساس لأنظمة حضور ذكية وأنظمة أمان بدون لمس، وشرحته بالتفصيل خطوة بخطوة في قناتي التعليمية.",
-            en: "Uses OpenCV for live video capture and machine learning models (face_recognition/dlib) to extract facial embeddings and match them against a pre-built database. Originally used as the foundation for smart attendance and touchless security systems, and explained step by step on my educational channel.",
+            ar: "بُني المشروع بلغة Python باستخدام Gradio لواجهة الويب، ومحرك Stockfish كخصم ذكاء اصطناعي بثلاث مستويات صعوبة (سهل، متوسط، صعب). يدعم وضعين للعب: لاعب ضد لاعب، أو لاعب ضد الحاسوب، مع تتبع كامل لسجل النقلات وإمكانية تصدير المباراة بصيغة PGN القياسية لتحليلها لاحقاً في أي برنامج شطرنج. تجربة تُظهر كيفية دمج محرك شطرنج احترافي (UCI) مع واجهة ويب تفاعلية بسيطة وسريعة النشر عبر Hugging Face Spaces.",
+            en: "Built in Python with a Gradio web interface and the Stockfish engine as an AI opponent across three difficulty levels (Easy, Medium, Hard). Supports two modes, Player vs Player and Player vs Computer, with full move-history tracking and standard PGN export for later analysis in any chess program. A practical example of wiring a professional UCI chess engine into a lightweight, instantly deployable web UI on Hugging Face Spaces.",
         },
+        article: {
+          ar: {
+            lead: "لعبة شطرنجٍ كاملة تعمل بالكامل داخل المتصفح — ضدّ محرك Stockfish بثلاث مستويات، أو ضدّ صديقٍ على نفس الجهاز، وكل جلسةٍ مستقلةٌ تمامًا عن غيرها.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "شطرنجٌ احترافي بلا تثبيتٍ ولا حساب: تفتح الرابط وتلعب فورًا. تختار مستوى الصعوبة (سهل / متوسط / صعب)، أو تتحدّى صديقًا وجهًا لوجهٍ على نفس الشاشة."
+              },
+              {
+                h: "آلية العمل",
+                flow: [
+                  "إدخال الحركة",
+                  "python-chess يتحقق من صحّتها",
+                  "محرك Stockfish يردّ",
+                  "تحديث الرقعة"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "محرك شطرنجٍ كامل بـ python-chess",
+                    d: "كل حركةٍ تُفحَص للتأكد من قانونيّتها قبل تنفيذها — لا حركاتٍ غير شرعية، ولا حالاتٍ شاذّة. المكتبة تتكفّل بقواعد الشطرنج كاملةً بما فيها التبييت والترقية والكِش."
+                  },
+                  {
+                    t: "خصمٌ ذكيٌّ بمحرك Stockfish",
+                    d: "من أقوى محركات الشطرنج المفتوحة، بمستوى صعوبةٍ قابلٍ للضبط — من خصمٍ ودودٍ للمبتدئ إلى تحدٍّ حقيقيٍّ للاعب المتمرّس."
+                  },
+                  {
+                    t: "حالة لعبٍ منفصلةٌ لكل جلسة",
+                    d: "كل متصفحٍ يحتفظ بلعبته الخاصة، فيمكن لعشرات الأشخاص اللعب في الوقت نفسه دون أي تداخل — تصميمٌ آمنٌ للّعب المتزامن."
+                  }
+                ]
+              },
+              {
+                h: "مدخلاتٌ مرنة",
+                p: "تُدخِل الحركة بالصيغة القياسية (<em>e2e4</em>، <em>Nf3</em>) أو بلغةٍ طبيعية (<em>e2 to e4</em>). مع أزرارٍ للتراجع وإعادة الضبط وقلب الرقعة، وسجلٍّ للحركات وتصديرٍ بصيغة PGN."
+              }
+            ],
+            results: [
+              {
+                k: "مستويات الصعوبة",
+                v: "3"
+              },
+              {
+                k: "المحرك",
+                v: "Stockfish"
+              },
+              {
+                k: "لاعبون متزامنون",
+                v: "غير محدود"
+              },
+              {
+                k: "التثبيت",
+                v: "صفر"
+              }
+            ],
+            note: "مشروعٌ مفتوح المصدر بالكامل، يعمل داخل المتصفح عبر Gradio — الكود متاحٌ للتجربة والتعديل."
+          },
+          en: {
+            lead: "A full chess game running entirely in the browser — against Stockfish at three levels, or a friend on the same device, each session fully independent.",
+            sections: [
+              {
+                h: "The idea",
+                p: "Serious chess with no install and no account: open the link and play. Pick a difficulty (Easy / Medium / Hard), or challenge a friend face-to-face on the same screen."
+              },
+              {
+                h: "How it works",
+                flow: [
+                  "Move input",
+                  "python-chess validates it",
+                  "Stockfish replies",
+                  "Board updates"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "A full engine with python-chess",
+                    d: "Every move is checked for legality before it's applied — no illegal moves, no edge cases. The library handles all of chess including castling, promotion and check."
+                  },
+                  {
+                    t: "A smart opponent with Stockfish",
+                    d: "One of the strongest open chess engines, with adjustable difficulty — from a gentle opponent for beginners to a real challenge for experienced players."
+                  },
+                  {
+                    t: "Per-session game state",
+                    d: "Each browser keeps its own game, so dozens can play at once with zero interference — designed to be safe for concurrent play."
+                  }
+                ]
+              },
+              {
+                h: "Flexible input",
+                p: "Enter moves in standard notation (<em>e2e4</em>, <em>Nf3</em>) or plain language (<em>e2 to e4</em>). With undo, reset and flip controls, move history and PGN export."
+              }
+            ],
+            results: [
+              {
+                k: "Difficulty levels",
+                v: "3"
+              },
+              {
+                k: "Engine",
+                v: "Stockfish"
+              },
+              {
+                k: "Concurrent players",
+                v: "Unlimited"
+              },
+              {
+                k: "Install",
+                v: "None"
+              }
+            ],
+            note: "Fully open source, running in the browser via Gradio — the code is available to run and modify."
+          }
+        }
     },
     {
-        id: "python-speech-recognition",
-        categories: ["python-ai"],
-        featured: false,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Python", "Speech Recognition", "Automation"],
-        title: {
-            ar: "التحكم الصوتي والتعرّف على الكلام بـ Python",
-            en: "Python Speech Recognition & Voice Control",
-        },
-        desc: {
-            ar: "سكربت Python يحوّل الأوامر الصوتية إلى نص وينفذ إجراءات تلقائية على الجهاز، من فتح برامج إلى التحكم بالماوس.",
-            en: "A Python script that converts voice commands into text and executes automated actions on the machine — from launching apps to controlling the mouse.",
-        },
-        details: {
-            ar: "يستخدم المشروع مكتبة SpeechRecognition مع Google Speech API لتحويل الصوت إلى نص، ثم يربط الأوامر بإجراءات عبر PyAutoGUI للتحكم بالماوس ولوحة المفاتيح. مثال عملي على بناء واجهات تفاعل صوتي بسيطة (Voice UI) بدون أجهزة إضافية.",
-            en: "Uses the SpeechRecognition library with the Google Speech API to convert audio into text, then maps commands to actions via PyAutoGUI for mouse and keyboard control. A practical example of building a simple Voice UI with no extra hardware required.",
-        },
-    },
-    {
-        id: "raspberry-smart-mirror",
-        categories: ["raspberrypi"],
+        id: "pendulum-gravity-lab",
+        categories: ["python-physics"],
         featured: true,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Raspberry Pi", "Python", "IoT"],
+        image: "assets/images/pendulum-gravity-lab.jpg",
+        demoUrl: "https://huggingface.co/spaces/engdarwish/pendulum-gravity-lab",
+        codeUrl: "https://github.com/eahmeddarwish/pendulum-gravity-lab",
+        tags: ["Python", "OpenCV", "Gradio", "NumPy", "SciPy"],
         title: {
-            ar: "المرآة الذكية (Smart Mirror) بـ Raspberry Pi",
-            en: "Raspberry Pi Smart Mirror",
+            ar: "مختبر البندول لتعيين عجلة الجاذبية (Pendulum Gravity Lab)",
+            en: "Pendulum Gravity Lab",
         },
         desc: {
-            ar: "مرآة ذات اتجاه واحد تعرض الوقت والطقس والأخبار على شاشة مخفية خلفها، مبنية بالكامل على Raspberry Pi.",
-            en: "A one-way mirror that displays time, weather, and news on a hidden screen behind the glass, built entirely on a Raspberry Pi.",
+            ar: "قياس عجلة الجاذبية الأرضية عبر تتبّع بندول حقيقي بالرؤية الحاسوبية، مع تحليل إحصائي كامل ومحاكاة عددية تفاعلية بلا حاجة لكاميرا.",
+            en: "Measuring Earth's gravitational acceleration via computer-vision pendulum tracking, with full uncertainty analysis and an interactive camera-free numerical simulation.",
         },
         details: {
-            ar: "يشغّل Raspberry Pi واجهة ويب (MagicMirror²) تُعرض على شاشة موضوعة خلف مرآة عاكسة من جهة واحدة، مع وحدات (modules) قابلة للتخصيص للطقس والتقويم والأخبار. مشروع ممتاز لتعلم دمج الهاردوير مع الويب في منتج نهائي متكامل.",
-            en: "Runs a Raspberry Pi web interface (MagicMirror²) displayed on a screen mounted behind a one-way mirror, with customizable modules for weather, calendar, and news. An excellent project for learning how to merge hardware with a web front end into a polished finished product.",
+            ar: "أداة رؤية حاسوبية مبنية بلغة Python وOpenCV تتتبّع بندولًا حقيقيًا عبر الكاميرا (تحويل هَف للدوائر) وتوقّت أرجحاته لحساب عجلة الجاذبية g = 4π²L/T²، مدعومة بميزانية كاملة لعدم اليقين وانحدار خطي متعدد الأطوال بدل الاكتفاء بمتوسط بسيط. تم اكتشاف وإصلاح علّتين برمجيتين حقيقيتين أثناء التطوير: فيضان عددي صامت (uint16 overflow) كان يُنتج قيمًا خيالية لـ g، وعلة توقيت عند تحليل الفيديوهات المسجَّلة. يرافق التجربة محاكاة تفاعلية مبنية بـ Gradio تحل معادلة البندول اللاخطي عدديًا (RK4) وتقارنها بالحل التحليلي الدقيق عبر التكامل الإهليلجي — لا تحتاج كاميرا أو عتادًا، وتعمل من أي متصفح عبر Hugging Face Spaces.",
+            en: "A Python + OpenCV computer-vision tool that tracks a real pendulum through a camera (Hough Circle Transform) and times its oscillations to compute g = 4π²L/T², backed by a full uncertainty budget and multi-length linear regression rather than a single flattering average. Two real bugs were found and fixed during development: a silent uint16 numeric overflow that produced nonsensical g values, and a timing bug affecting analysis of recorded video files. An interactive Gradio simulation accompanies the experiment, numerically solving the nonlinear pendulum equation (RK4) and cross-checking it against the exact analytic solution via the elliptic integral — no camera or hardware required, runs from any browser on Hugging Face Spaces.",
         },
     },
     {
@@ -1494,143 +1384,7 @@ const projectsData = [{
             note: "A hobbyist home physical-security project, not a certified access-control product — the authentication factors here are convenience factors, not cryptographic protection, and this is stated explicitly in the repository."
           }
         }
-    },
-    {
-        id: "arabic-emotion-detector",
-        categories: ["python-ai"],
-        featured: false,
-        image: "assets/images/arabic-emotion-detector.png",
-        demoUrl: "",
-        codeUrl: "https://github.com/eahmeddarwish/arabic-emotion-detector",
-        tags: ["Python", "AraBERT", "Whisper", "DeepFace", "NLP"],
-        title: {
-            ar: "محلل المشاعر العربي متعدد الوسائط — نص وصوت ومرئي",
-            en: "Arabic Multimodal Emotion Detector — Text, Voice & Visual",
-        },
-        desc: {
-            ar: "خط أنابيب يأخذ فيديو بالعربية الفصحى أو العامية، يفرّغه صوتيًا بـ Whisper، يحلّل مشاعر كل مقطع نصي بنموذج AraBERT مُدرَّب خصيصًا، يدمج ذلك مع تحليل تعابير الوجه، ويرصد خطاب الكراهية — لينتج فيديو مُترجَمًا مع شارة مشاعر، وملف SRT، وتقرير Excel كامل.",
-            en: "A pipeline that takes an Arabic (MSA or dialect) video, transcribes it with Whisper, classifies the emotion of each text segment with a purpose-fine-tuned AraBERT model, fuses that with facial-expression analysis, and flags hate speech — producing a subtitled video with an emotion badge, an SRT file, and a full Excel report.",
-        },
-        details: {
-            ar: "مشروعٌ شخصيٌّ بدأ كسكربتات تجميع بيانات منفصلة لتوحيد توسيمات بشرية متعددة لمقاطع نصية (بما فيها حسم اختلاف المُقيِّمين وقياس موثوقية الاتفاق بينهم إحصائيًا)، ثم تطوّر إلى نظامٍ واحدٍ متكامل: تقطيع الصوت يراعي فواصل الصمت الطبيعية بدل التقطيع الثابت كي لا تُقصّ الجمل في منتصفها، ونموذج النص وموزون طبقيًا لمعالجة عدم توازن الفئات، ويُدمَج مع نموذج تحليل الوجه بوزنٍ محسوب. الكود بالكامل مفتوح المصدر مع دليل تدريب خطوة بخطوة لمن يريد إعادة التدريب على بياناته الخاصة، وكل الأرقام المذكورة في التوثيق هي نتائج فعلية غير مُلفَّقة — بما فيها نقاط الضعف.",
-            en: "A personal project that started as separate data-aggregation scripts to reconcile multiple human labels per text segment (including resolving rater disagreement and statistically measuring inter-rater reliability), then grew into one integrated system: audio segmentation respects natural silence boundaries instead of fixed-length cuts so sentences aren't chopped mid-word, the text model is class-weighted to handle label imbalance, and it's fused with a facial-expression model using a computed weight. The full code is open-source with a step-by-step training guide for anyone who wants to retrain it on their own data, and every number in the documentation is a real, unfabricated result — including the weaknesses.",
-        },
-        article: {
-          ar: {
-            lead: "خط أنابيب مفتوح المصدر لتحليل المشاعر العربية من النص والصوت والوجه معًا، مع توثيق صادق لكل رقم — بما فيه الضعف في الفئات النادرة.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "تحليل المشاعر في المحتوى العربي المرئي يحتاج أكثر من مجرد نص: نبرة الصوت وتعبير الوجه يحملان إشارات لا يلتقطها النص وحده. المشروع يدمج ثلاثة مصادر إشارة (نص مُفرَّغ صوتيًا، تعبير وجه، وفلتر خطاب كراهية منفصل) في حكمٍ واحد لكل مقطع، مع الحفاظ على تتبّع مصدر كل توسيم تدريبي وموثوقيته."
-              },
-              {
-                h: "تدفّق خط الأنابيب",
-                flow: [
-                  "تفريغ صوتي بـ Whisper",
-                  "تقطيع يراعي فواصل الصمت الطبيعية",
-                  "تصنيف النص (AraBERT) + تصنيف تعبير الوجه (DeepFace)",
-                  "دمج موزون بين النتيجتين + فحص خطاب الكراهية",
-                  "فيديو مترجم + ملف SRT + تقرير Excel"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "حسم التوسيم بتسلسل أولويات صريح بدل قاعدة واحدة جامدة",
-                    d: "بيانات التوسيم البشري كانت غير متجانسة: بعض المقاطع وسمها مُقيِّمان مستقلان، بعضها مُقيِّم واحد فقط، وبعضها موسوم آليًا بلا مُقيِّم بشري إطلاقًا. بدل تجاهل الفروق، بُني تسلسل أولويات واضح (اتفاق المُقيِّمَين → حسم التحكيم → مُقيِّم واحد → توسيم مسبق → بديل آلي)، مع قياس Cohen's Kappa فعليًا (٠.٦٦٨، اتفاق «جيد») على كل الصفوف التي وسمها مُقيِّمان — تحقّق إحصائي حقيقي بدل افتراض أن التصنيف قابل للاستخدام."
-                  },
-                  {
-                    t: "تقطيع صوتي يراعي حدود الصمت لا طولًا ثابتًا",
-                    d: "التقطيع بطول ثابت يقطع الجمل في منتصفها أحيانًا، ما يشوّه سياق النموذج النصي. استُبدل بمنطق يكتشف فواصل الصمت الطبيعية بين الجمل ويقطع عندها، فتبقى كل وحدة تحليل جملة كاملة قدر الإمكان."
-                  },
-                  {
-                    t: "تدريب موزون طبقيًا لعدم توازن الفئات",
-                    d: "توزيع المشاعر في البيانات غير متساوٍ إطلاقًا (الحزن والفرح يمثلان نصف العينات تقريبًا، بينما الاشمئزاز والحياد أقل من ٤٪ لكل منهما). أُضيف مسار تدريب موزون (WeightedTrainer) يرفع وزن الفئات النادرة في دالة الخسارة، ونُشرت المقارنة الكاملة بين النسختين (عادية وموزونة) بدل اختيار الأفضل ظاهريًا وإخفاء الأخرى."
-                  }
-                ]
-              },
-              {
-                h: "حدود صادقة، لا أرقام مجمّلة",
-                p: "دقة الاختبار (٥٥–٥٧٪) ومتوسط F1 الكلي (٠.٣٣–٠.٤٣) متواضعان لأن حجم البيانات محدود (١٤٣٦ عينة) وبعض الفئات نادرة جدًا (الاشمئزاز ٤٥ عينة فقط) — وهذا مذكور صراحةً في التوثيق بدل إخفائه. الهدف مشروع تعليمي/شخصي قابل لإعادة الإنتاج والتطوير، لا منتج إشراف على المحتوى جاهز للإنتاج."
-              }
-            ],
-            results: [
-              { k: "عينات نصية موسومة", v: "1,436" },
-              { k: "Cohen's Kappa (موثوقية الاتفاق)", v: "0.668" },
-              { k: "أفضل Macro F1 (نموذج موزون)", v: "0.43" }
-            ],
-            note: "مشروعٌ شخصيٌّ مفتوح المصدر لأغراض تعليمية وportfolio، وليس منتج إشراف على المحتوى معتمَدًا — كل الأرقام أعلاه نتائج اختبار فعلية غير مُلفَّقة، بما فيها ضعف الأداء على الفئات النادرة، وموثّقة بالتفصيل في المستودع مع دليل تدريب كامل لإعادة الإنتاج."
-          },
-          en: {
-            lead: "An open-source pipeline for Arabic emotion analysis from text, voice, and face together, with honest documentation of every number — including the weakness on rare classes.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Emotion analysis in Arabic video content needs more than text alone: vocal tone and facial expression carry signals text misses. The project fuses three signal sources (transcribed text, facial expression, and a separate hate-speech filter) into one per-segment judgment, while keeping track of each training label's source and reliability."
-              },
-              {
-                h: "Pipeline flow",
-                flow: [
-                  "Whisper audio transcription",
-                  "Silence-boundary-aware segmentation",
-                  "Text classification (AraBERT) + facial-expression classification (DeepFace)",
-                  "Weighted fusion of both results + hate-speech check",
-                  "Subtitled video + SRT file + Excel report"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Resolving labels with an explicit priority cascade instead of one rigid rule",
-                    d: "The human-annotation data was inherently uneven: some segments had two independent raters, some only one, and some were machine-labeled with no human rater at all. Instead of ignoring these differences, an explicit priority cascade was built (both raters agree → arbitrator resolves → single rater → pre-labeled → machine fallback), with Cohen's Kappa actually measured (0.668, \"good\" agreement) across every row both raters labeled — a real statistical check rather than assuming the taxonomy is usable."
-                  },
-                  {
-                    t: "Silence-boundary-aware segmentation instead of fixed-length cuts",
-                    d: "Fixed-length segmentation sometimes cuts a sentence mid-word, distorting the text model's context. It was replaced with logic that detects natural silence gaps between sentences and cuts there instead, keeping each analysis unit as close to a full sentence as possible."
-                  },
-                  {
-                    t: "Class-weighted training for label imbalance",
-                    d: "The emotion distribution is far from even (sadness and joy alone are roughly half of all samples, while disgust and neutral are each under 4%). A weighted training path (WeightedTrainer) was added to up-weight rare classes in the loss function, and the full comparison between both variants (normal and weighted) is published rather than picking the better-looking one and hiding the other."
-                  }
-                ]
-              },
-              {
-                h: "Honest limitations, not polished numbers",
-                p: "Test accuracy (55–57%) and macro-F1 (0.33–0.43) are modest because the dataset is small (1,436 samples) and some classes are quite rare (disgust has only 45 samples) — and this is stated explicitly in the documentation rather than hidden. The goal is a reproducible educational/personal project, not a production-ready content-moderation product."
-              }
-            ],
-            results: [
-              { k: "Labeled text samples", v: "1,436" },
-              { k: "Cohen's Kappa (inter-rater reliability)", v: "0.668" },
-              { k: "Best macro F1 (weighted model)", v: "0.43" }
-            ],
-            note: "A personal, open-source project for educational and portfolio purposes, not a certified content-moderation product — every number above is a real, unfabricated test result, including the weaker performance on rare classes, and it's documented in full in the repository along with a complete training guide for reproducing it."
-          }
-        }
-    },
-    {
-        id: "obstacle-avoiding-car",
-        categories: ["arduino", "robotics"],
-        featured: false,
-        image: "assets/images/project-placeholder.svg",
-        demoUrl: "",
-        codeUrl: "",
-        tags: ["Arduino", "Ultrasonic Sensor", "Robotics"],
-        title: {
-            ar: "سيارة تتجنب العوائق تلقائياً",
-            en: "Ultrasonic Obstacle-Avoiding Car",
-        },
-        desc: {
-            ar: "روبوت متحرك يتفادى العوائق تلقائياً باستخدام حساس موجات فوق صوتية وتغيير مساره لحظياً.",
-            en: "A mobile robot that autonomously avoids obstacles using an ultrasonic sensor and real-time path correction.",
-        },
-        details: {
-            ar: "يعتمد المشروع على حساس HC-SR04 مثبّت على سيرفو للمسح الأفقي، بحيث يقيس المسافة في اتجاهات متعددة ويختار المسار الأخلى من العوائق. مقدمة ممتازة لمفاهيم الملاحة الذاتية (autonomous navigation).",
-            en: "Uses an HC-SR04 ultrasonic sensor mounted on a servo for horizontal sweeping, measuring distance in multiple directions and choosing the clearest path. A great introduction to autonomous navigation concepts.",
-        },
-    },
+    }
 ];
 
 if (typeof window !== "undefined") window.projectsData = projectsData;
