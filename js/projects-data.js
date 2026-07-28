@@ -268,6 +268,121 @@ const projectsData = [{
           }
         }
     },
+       {
+        id: "arabic-emotion-detector",
+        categories: ["python-ai"],
+        featured: false,
+        image: "assets/images/arabic-emotion-detector.png",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/arabic-emotion-detector",
+        tags: ["Python", "AraBERT", "Whisper", "DeepFace", "NLP"],
+        title: {
+            ar: "محلل المشاعر العربي متعدد الوسائط — نص وصوت ومرئي",
+            en: "Arabic Multimodal Emotion Detector — Text, Voice & Visual",
+        },
+        desc: {
+            ar: "خط أنابيب يأخذ فيديو بالعربية الفصحى أو العامية، يفرّغه صوتيًا بـ Whisper، يحلّل مشاعر كل مقطع نصي بنموذج AraBERT مُدرَّب خصيصًا، يدمج ذلك مع تحليل تعابير الوجه، ويرصد خطاب الكراهية — لينتج فيديو مُترجَمًا مع شارة مشاعر، وملف SRT، وتقرير Excel كامل.",
+            en: "A pipeline that takes an Arabic (MSA or dialect) video, transcribes it with Whisper, classifies the emotion of each text segment with a purpose-fine-tuned AraBERT model, fuses that with facial-expression analysis, and flags hate speech — producing a subtitled video with an emotion badge, an SRT file, and a full Excel report.",
+        },
+        details: {
+            ar: "مشروعٌ شخصيٌّ بدأ كسكربتات تجميع بيانات منفصلة لتوحيد توسيمات بشرية متعددة لمقاطع نصية (بما فيها حسم اختلاف المُقيِّمين وقياس موثوقية الاتفاق بينهم إحصائيًا)، ثم تطوّر إلى نظامٍ واحدٍ متكامل: تقطيع الصوت يراعي فواصل الصمت الطبيعية بدل التقطيع الثابت كي لا تُقصّ الجمل في منتصفها، ونموذج النص وموزون طبقيًا لمعالجة عدم توازن الفئات، ويُدمَج مع نموذج تحليل الوجه بوزنٍ محسوب. الكود بالكامل مفتوح المصدر مع دليل تدريب خطوة بخطوة لمن يريد إعادة التدريب على بياناته الخاصة، وكل الأرقام المذكورة في التوثيق هي نتائج فعلية غير مُلفَّقة — بما فيها نقاط الضعف.",
+            en: "A personal project that started as separate data-aggregation scripts to reconcile multiple human labels per text segment (including resolving rater disagreement and statistically measuring inter-rater reliability), then grew into one integrated system: audio segmentation respects natural silence boundaries instead of fixed-length cuts so sentences aren't chopped mid-word, the text model is class-weighted to handle label imbalance, and it's fused with a facial-expression model using a computed weight. The full code is open-source with a step-by-step training guide for anyone who wants to retrain it on their own data, and every number in the documentation is a real, unfabricated result — including the weaknesses.",
+        },
+        article: {
+          ar: {
+            lead: "خط أنابيب مفتوح المصدر لتحليل المشاعر العربية من النص والصوت والوجه معًا، مع توثيق صادق لكل رقم — بما فيه الضعف في الفئات النادرة.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "تحليل المشاعر في المحتوى العربي المرئي يحتاج أكثر من مجرد نص: نبرة الصوت وتعبير الوجه يحملان إشارات لا يلتقطها النص وحده. المشروع يدمج ثلاثة مصادر إشارة (نص مُفرَّغ صوتيًا، تعبير وجه، وفلتر خطاب كراهية منفصل) في حكمٍ واحد لكل مقطع، مع الحفاظ على تتبّع مصدر كل توسيم تدريبي وموثوقيته."
+              },
+              {
+                h: "تدفّق خط الأنابيب",
+                flow: [
+                  "تفريغ صوتي بـ Whisper",
+                  "تقطيع يراعي فواصل الصمت الطبيعية",
+                  "تصنيف النص (AraBERT) + تصنيف تعبير الوجه (DeepFace)",
+                  "دمج موزون بين النتيجتين + فحص خطاب الكراهية",
+                  "فيديو مترجم + ملف SRT + تقرير Excel"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "حسم التوسيم بتسلسل أولويات صريح بدل قاعدة واحدة جامدة",
+                    d: "بيانات التوسيم البشري كانت غير متجانسة: بعض المقاطع وسمها مُقيِّمان مستقلان، بعضها مُقيِّم واحد فقط، وبعضها موسوم آليًا بلا مُقيِّم بشري إطلاقًا. بدل تجاهل الفروق، بُني تسلسل أولويات واضح (اتفاق المُقيِّمَين → حسم التحكيم → مُقيِّم واحد → توسيم مسبق → بديل آلي)، مع قياس Cohen's Kappa فعليًا (٠.٦٦٨، اتفاق «جيد») على كل الصفوف التي وسمها مُقيِّمان — تحقّق إحصائي حقيقي بدل افتراض أن التصنيف قابل للاستخدام."
+                  },
+                  {
+                    t: "تقطيع صوتي يراعي حدود الصمت لا طولًا ثابتًا",
+                    d: "التقطيع بطول ثابت يقطع الجمل في منتصفها أحيانًا، ما يشوّه سياق النموذج النصي. استُبدل بمنطق يكتشف فواصل الصمت الطبيعية بين الجمل ويقطع عندها، فتبقى كل وحدة تحليل جملة كاملة قدر الإمكان."
+                  },
+                  {
+                    t: "تدريب موزون طبقيًا لعدم توازن الفئات",
+                    d: "توزيع المشاعر في البيانات غير متساوٍ إطلاقًا (الحزن والفرح يمثلان نصف العينات تقريبًا، بينما الاشمئزاز والحياد أقل من ٤٪ لكل منهما). أُضيف مسار تدريب موزون (WeightedTrainer) يرفع وزن الفئات النادرة في دالة الخسارة، ونُشرت المقارنة الكاملة بين النسختين (عادية وموزونة) بدل اختيار الأفضل ظاهريًا وإخفاء الأخرى."
+                  }
+                ]
+              },
+              {
+                h: "حدود صادقة، لا أرقام مجمّلة",
+                p: "دقة الاختبار (٥٥–٥٧٪) ومتوسط F1 الكلي (٠.٣٣–٠.٤٣) متواضعان لأن حجم البيانات محدود (١٤٣٦ عينة) وبعض الفئات نادرة جدًا (الاشمئزاز ٤٥ عينة فقط) — وهذا مذكور صراحةً في التوثيق بدل إخفائه. الهدف مشروع تعليمي/شخصي قابل لإعادة الإنتاج والتطوير، لا منتج إشراف على المحتوى جاهز للإنتاج."
+              }
+            ],
+            results: [
+              { k: "عينات نصية موسومة", v: "1,436" },
+              { k: "Cohen's Kappa (موثوقية الاتفاق)", v: "0.668" },
+              { k: "أفضل Macro F1 (نموذج موزون)", v: "0.43" }
+            ],
+            note: "مشروعٌ شخصيٌّ مفتوح المصدر لأغراض تعليمية وportfolio، وليس منتج إشراف على المحتوى معتمَدًا — كل الأرقام أعلاه نتائج اختبار فعلية غير مُلفَّقة، بما فيها ضعف الأداء على الفئات النادرة، وموثّقة بالتفصيل في المستودع مع دليل تدريب كامل لإعادة الإنتاج."
+          },
+          en: {
+            lead: "An open-source pipeline for Arabic emotion analysis from text, voice, and face together, with honest documentation of every number — including the weakness on rare classes.",
+            sections: [
+              {
+                h: "The idea",
+                p: "Emotion analysis in Arabic video content needs more than text alone: vocal tone and facial expression carry signals text misses. The project fuses three signal sources (transcribed text, facial expression, and a separate hate-speech filter) into one per-segment judgment, while keeping track of each training label's source and reliability."
+              },
+              {
+                h: "Pipeline flow",
+                flow: [
+                  "Whisper audio transcription",
+                  "Silence-boundary-aware segmentation",
+                  "Text classification (AraBERT) + facial-expression classification (DeepFace)",
+                  "Weighted fusion of both results + hate-speech check",
+                  "Subtitled video + SRT file + Excel report"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "Resolving labels with an explicit priority cascade instead of one rigid rule",
+                    d: "The human-annotation data was inherently uneven: some segments had two independent raters, some only one, and some were machine-labeled with no human rater at all. Instead of ignoring these differences, an explicit priority cascade was built (both raters agree → arbitrator resolves → single rater → pre-labeled → machine fallback), with Cohen's Kappa actually measured (0.668, \"good\" agreement) across every row both raters labeled — a real statistical check rather than assuming the taxonomy is usable."
+                  },
+                  {
+                    t: "Silence-boundary-aware segmentation instead of fixed-length cuts",
+                    d: "Fixed-length segmentation sometimes cuts a sentence mid-word, distorting the text model's context. It was replaced with logic that detects natural silence gaps between sentences and cuts there instead, keeping each analysis unit as close to a full sentence as possible."
+                  },
+                  {
+                    t: "Class-weighted training for label imbalance",
+                    d: "The emotion distribution is far from even (sadness and joy alone are roughly half of all samples, while disgust and neutral are each under 4%). A weighted training path (WeightedTrainer) was added to up-weight rare classes in the loss function, and the full comparison between both variants (normal and weighted) is published rather than picking the better-looking one and hiding the other."
+                  }
+                ]
+              },
+              {
+                h: "Honest limitations, not polished numbers",
+                p: "Test accuracy (55–57%) and macro-F1 (0.33–0.43) are modest because the dataset is small (1,436 samples) and some classes are quite rare (disgust has only 45 samples) — and this is stated explicitly in the documentation rather than hidden. The goal is a reproducible educational/personal project, not a production-ready content-moderation product."
+              }
+            ],
+            results: [
+              { k: "Labeled text samples", v: "1,436" },
+              { k: "Cohen's Kappa (inter-rater reliability)", v: "0.668" },
+              { k: "Best macro F1 (weighted model)", v: "0.43" }
+            ],
+            note: "A personal, open-source project for educational and portfolio purposes, not a certified content-moderation product — every number above is a real, unfabricated test result, including the weaker performance on rare classes, and it's documented in full in the repository along with a complete training guide for reproducing it."
+          }
+        }
+    },
     {
         id: "universal-market-predictor-deluxe",
         categories: ["python-ai"],
@@ -1492,121 +1607,6 @@ const projectsData = [{
               { k: "Hardware-free run mode", v: "Available" }
             ],
             note: "A hobbyist home physical-security project, not a certified access-control product — the authentication factors here are convenience factors, not cryptographic protection, and this is stated explicitly in the repository."
-          }
-        }
-    },
-    {
-        id: "arabic-emotion-detector",
-        categories: ["python-ai"],
-        featured: false,
-        image: "assets/images/arabic-emotion-detector.png",
-        demoUrl: "",
-        codeUrl: "https://github.com/eahmeddarwish/arabic-emotion-detector",
-        tags: ["Python", "AraBERT", "Whisper", "DeepFace", "NLP"],
-        title: {
-            ar: "محلل المشاعر العربي متعدد الوسائط — نص وصوت ومرئي",
-            en: "Arabic Multimodal Emotion Detector — Text, Voice & Visual",
-        },
-        desc: {
-            ar: "خط أنابيب يأخذ فيديو بالعربية الفصحى أو العامية، يفرّغه صوتيًا بـ Whisper، يحلّل مشاعر كل مقطع نصي بنموذج AraBERT مُدرَّب خصيصًا، يدمج ذلك مع تحليل تعابير الوجه، ويرصد خطاب الكراهية — لينتج فيديو مُترجَمًا مع شارة مشاعر، وملف SRT، وتقرير Excel كامل.",
-            en: "A pipeline that takes an Arabic (MSA or dialect) video, transcribes it with Whisper, classifies the emotion of each text segment with a purpose-fine-tuned AraBERT model, fuses that with facial-expression analysis, and flags hate speech — producing a subtitled video with an emotion badge, an SRT file, and a full Excel report.",
-        },
-        details: {
-            ar: "مشروعٌ شخصيٌّ بدأ كسكربتات تجميع بيانات منفصلة لتوحيد توسيمات بشرية متعددة لمقاطع نصية (بما فيها حسم اختلاف المُقيِّمين وقياس موثوقية الاتفاق بينهم إحصائيًا)، ثم تطوّر إلى نظامٍ واحدٍ متكامل: تقطيع الصوت يراعي فواصل الصمت الطبيعية بدل التقطيع الثابت كي لا تُقصّ الجمل في منتصفها، ونموذج النص وموزون طبقيًا لمعالجة عدم توازن الفئات، ويُدمَج مع نموذج تحليل الوجه بوزنٍ محسوب. الكود بالكامل مفتوح المصدر مع دليل تدريب خطوة بخطوة لمن يريد إعادة التدريب على بياناته الخاصة، وكل الأرقام المذكورة في التوثيق هي نتائج فعلية غير مُلفَّقة — بما فيها نقاط الضعف.",
-            en: "A personal project that started as separate data-aggregation scripts to reconcile multiple human labels per text segment (including resolving rater disagreement and statistically measuring inter-rater reliability), then grew into one integrated system: audio segmentation respects natural silence boundaries instead of fixed-length cuts so sentences aren't chopped mid-word, the text model is class-weighted to handle label imbalance, and it's fused with a facial-expression model using a computed weight. The full code is open-source with a step-by-step training guide for anyone who wants to retrain it on their own data, and every number in the documentation is a real, unfabricated result — including the weaknesses.",
-        },
-        article: {
-          ar: {
-            lead: "خط أنابيب مفتوح المصدر لتحليل المشاعر العربية من النص والصوت والوجه معًا، مع توثيق صادق لكل رقم — بما فيه الضعف في الفئات النادرة.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "تحليل المشاعر في المحتوى العربي المرئي يحتاج أكثر من مجرد نص: نبرة الصوت وتعبير الوجه يحملان إشارات لا يلتقطها النص وحده. المشروع يدمج ثلاثة مصادر إشارة (نص مُفرَّغ صوتيًا، تعبير وجه، وفلتر خطاب كراهية منفصل) في حكمٍ واحد لكل مقطع، مع الحفاظ على تتبّع مصدر كل توسيم تدريبي وموثوقيته."
-              },
-              {
-                h: "تدفّق خط الأنابيب",
-                flow: [
-                  "تفريغ صوتي بـ Whisper",
-                  "تقطيع يراعي فواصل الصمت الطبيعية",
-                  "تصنيف النص (AraBERT) + تصنيف تعبير الوجه (DeepFace)",
-                  "دمج موزون بين النتيجتين + فحص خطاب الكراهية",
-                  "فيديو مترجم + ملف SRT + تقرير Excel"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "حسم التوسيم بتسلسل أولويات صريح بدل قاعدة واحدة جامدة",
-                    d: "بيانات التوسيم البشري كانت غير متجانسة: بعض المقاطع وسمها مُقيِّمان مستقلان، بعضها مُقيِّم واحد فقط، وبعضها موسوم آليًا بلا مُقيِّم بشري إطلاقًا. بدل تجاهل الفروق، بُني تسلسل أولويات واضح (اتفاق المُقيِّمَين → حسم التحكيم → مُقيِّم واحد → توسيم مسبق → بديل آلي)، مع قياس Cohen's Kappa فعليًا (٠.٦٦٨، اتفاق «جيد») على كل الصفوف التي وسمها مُقيِّمان — تحقّق إحصائي حقيقي بدل افتراض أن التصنيف قابل للاستخدام."
-                  },
-                  {
-                    t: "تقطيع صوتي يراعي حدود الصمت لا طولًا ثابتًا",
-                    d: "التقطيع بطول ثابت يقطع الجمل في منتصفها أحيانًا، ما يشوّه سياق النموذج النصي. استُبدل بمنطق يكتشف فواصل الصمت الطبيعية بين الجمل ويقطع عندها، فتبقى كل وحدة تحليل جملة كاملة قدر الإمكان."
-                  },
-                  {
-                    t: "تدريب موزون طبقيًا لعدم توازن الفئات",
-                    d: "توزيع المشاعر في البيانات غير متساوٍ إطلاقًا (الحزن والفرح يمثلان نصف العينات تقريبًا، بينما الاشمئزاز والحياد أقل من ٤٪ لكل منهما). أُضيف مسار تدريب موزون (WeightedTrainer) يرفع وزن الفئات النادرة في دالة الخسارة، ونُشرت المقارنة الكاملة بين النسختين (عادية وموزونة) بدل اختيار الأفضل ظاهريًا وإخفاء الأخرى."
-                  }
-                ]
-              },
-              {
-                h: "حدود صادقة، لا أرقام مجمّلة",
-                p: "دقة الاختبار (٥٥–٥٧٪) ومتوسط F1 الكلي (٠.٣٣–٠.٤٣) متواضعان لأن حجم البيانات محدود (١٤٣٦ عينة) وبعض الفئات نادرة جدًا (الاشمئزاز ٤٥ عينة فقط) — وهذا مذكور صراحةً في التوثيق بدل إخفائه. الهدف مشروع تعليمي/شخصي قابل لإعادة الإنتاج والتطوير، لا منتج إشراف على المحتوى جاهز للإنتاج."
-              }
-            ],
-            results: [
-              { k: "عينات نصية موسومة", v: "1,436" },
-              { k: "Cohen's Kappa (موثوقية الاتفاق)", v: "0.668" },
-              { k: "أفضل Macro F1 (نموذج موزون)", v: "0.43" }
-            ],
-            note: "مشروعٌ شخصيٌّ مفتوح المصدر لأغراض تعليمية وportfolio، وليس منتج إشراف على المحتوى معتمَدًا — كل الأرقام أعلاه نتائج اختبار فعلية غير مُلفَّقة، بما فيها ضعف الأداء على الفئات النادرة، وموثّقة بالتفصيل في المستودع مع دليل تدريب كامل لإعادة الإنتاج."
-          },
-          en: {
-            lead: "An open-source pipeline for Arabic emotion analysis from text, voice, and face together, with honest documentation of every number — including the weakness on rare classes.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Emotion analysis in Arabic video content needs more than text alone: vocal tone and facial expression carry signals text misses. The project fuses three signal sources (transcribed text, facial expression, and a separate hate-speech filter) into one per-segment judgment, while keeping track of each training label's source and reliability."
-              },
-              {
-                h: "Pipeline flow",
-                flow: [
-                  "Whisper audio transcription",
-                  "Silence-boundary-aware segmentation",
-                  "Text classification (AraBERT) + facial-expression classification (DeepFace)",
-                  "Weighted fusion of both results + hate-speech check",
-                  "Subtitled video + SRT file + Excel report"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Resolving labels with an explicit priority cascade instead of one rigid rule",
-                    d: "The human-annotation data was inherently uneven: some segments had two independent raters, some only one, and some were machine-labeled with no human rater at all. Instead of ignoring these differences, an explicit priority cascade was built (both raters agree → arbitrator resolves → single rater → pre-labeled → machine fallback), with Cohen's Kappa actually measured (0.668, \"good\" agreement) across every row both raters labeled — a real statistical check rather than assuming the taxonomy is usable."
-                  },
-                  {
-                    t: "Silence-boundary-aware segmentation instead of fixed-length cuts",
-                    d: "Fixed-length segmentation sometimes cuts a sentence mid-word, distorting the text model's context. It was replaced with logic that detects natural silence gaps between sentences and cuts there instead, keeping each analysis unit as close to a full sentence as possible."
-                  },
-                  {
-                    t: "Class-weighted training for label imbalance",
-                    d: "The emotion distribution is far from even (sadness and joy alone are roughly half of all samples, while disgust and neutral are each under 4%). A weighted training path (WeightedTrainer) was added to up-weight rare classes in the loss function, and the full comparison between both variants (normal and weighted) is published rather than picking the better-looking one and hiding the other."
-                  }
-                ]
-              },
-              {
-                h: "Honest limitations, not polished numbers",
-                p: "Test accuracy (55–57%) and macro-F1 (0.33–0.43) are modest because the dataset is small (1,436 samples) and some classes are quite rare (disgust has only 45 samples) — and this is stated explicitly in the documentation rather than hidden. The goal is a reproducible educational/personal project, not a production-ready content-moderation product."
-              }
-            ],
-            results: [
-              { k: "Labeled text samples", v: "1,436" },
-              { k: "Cohen's Kappa (inter-rater reliability)", v: "0.668" },
-              { k: "Best macro F1 (weighted model)", v: "0.43" }
-            ],
-            note: "A personal, open-source project for educational and portfolio purposes, not a certified content-moderation product — every number above is a real, unfabricated test result, including the weaker performance on rare classes, and it's documented in full in the repository along with a complete training guide for reproducing it."
           }
         }
     },
