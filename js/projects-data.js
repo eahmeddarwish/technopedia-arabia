@@ -31,102 +31,247 @@ const projectsData = [{
             en: "A personal project combining audio signal processing, on-device AI, and embedded hardware. Audio is captured via a BOYA BY-M1 Pro microphone attached to a conventional stethoscope, run through a DSP pipeline (bandpass + notch filtering, noise gating, best 3-second window selection), converted to a Mel-spectrogram, and classified by a quantized TensorFlow Lite CNN running entirely on-device with no internet connection. The result is shown on a PySide6 touchscreen with a clinical explanation of the decision, and exported as a PDF report. The project is complete and working end to end, and is published here as an open-source reference after a full professional refactor (tests, documentation, configurable settings).",
         },
         article: {
-          ar: {
-            lead: "سماعةٌ رقميةٌ بذكاء اصطناعي تفحص صوت القلب على الجهاز نفسه — دون إنترنت — وتشرح سبب قرارها على الشاشة وفي تقرير PDF.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "الهدف أن يتمكّن أيّ شخصٍ — ممرضًا كان أم طبيبًا أم فردًا في منطقةٍ محدودة الموارد الطبية — من استخدام سماعةٍ رخيصةٍ نسبيًّا مبنيةٍ على Raspberry Pi لفحص صوت القلب، والحصول على تصنيفٍ أوليٍّ فوري: طبيعي، لغطٌ قلبي (Murmur)، صوتٌ قلبيٌّ إضافي (S3/S4)، أو تشويشٌ في التسجيل — قبل اتخاذ قرار تحويل الحالة إلى طبيب قلب."
-              },
-              {
-                h: "خط معالجة الإشارة",
-                flow: [
-                  "تسجيل 8 ثوانٍ @ 44100 هرتز",
-                  "تخفيض المعدل إلى 2000 هرتز",
-                  "فلتر Bandpass + Notch 50هرتز",
-                  "بوابة ضوضاء + اختيار أفضل 3 ثوانٍ",
-                  "Mel Spectrogram (64 نطاق)",
-                  "CNN مضغوط (INT8 TFLite)"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "قاعدة قرار \"اللغط أولًا\"",
-                    d: "بدلًا من الاعتماد على الدالة argmax مباشرة، يتحقق النموذج أولًا من احتمالية اللغط (Murmur) مقارنةً بحدٍّ أدنى محافظ. وهو خيارٌ متعمَّدٌ بعد تجربة عدة قيمٍ للعتبة (Threshold)، أدّى إلى تحقيق نسبة اكتشافٍ بلغت 100% لجميع حالات اللغط الحقيقية (مقابل دقةٍ إجماليةٍ قدرها 75%) — لأن تفويت حالة لغطٍ حقيقية أخطر بكثيرٍ من إنذارٍ كاذب."
-                  },
-                  {
-                    t: "ضغط النموذج بصيغة INT8",
-                    d: "حُوِّل النموذج من TensorFlow العادي إلى صيغة TensorFlow Lite مع ضغط INT8، ليعمل بسرعةٍ كافيةٍ على معالج Raspberry Pi المحدود، بعد تجربة أكثر من 9 نسخٍ تدريبيةٍ مختلفة."
-                  },
-                  {
-                    t: "إعادة هيكلة الكود بالكامل",
-                    d: "كان الكود الأصلي ملف واجهةٍ رسوميةٍ واحدًا ضخمًا (أكثر من 1700 سطر) بمساراتٍ ثابتةٍ على جهاز Raspberry Pi معيّن. قُسِّم إلى حزمة بايثون منظمة (معالجة إشارة، استدلال، تسجيل صوت، تقرير PDF، واجهة) قابلةٍ للاختبار دون أي عتاد، مع إعداداتٍ عبر متغيرات البيئة بدلًا من المسارات الثابتة."
-                  }
-                ]
-              },
-              {
-                h: "اكتشاف وتصحيح خطأ في الداتاسيت المستخدم للتدريب",
-                p: "أثناء تجهيز المشروع للنشر، لوحظ أن ملفات التصنيفات المرفقة بداتاسيت PASCAL \"Heartbeat Sounds\" الشهير على Kaggle تحتوي على أخطاءٍ منهجيةٍ في مطابقة أسماء الملفات (بادئاتٌ وهمية وتضاربٌ في صياغة الأسماء)، ما يجعل جزءًا كبيرًا من الصفوف غير قابلٍ للربط الصحيح بالملف الصوتي الحقيقي. صُحِّح الخطأ بالكامل (176 من 176 في set_a، و656 من 656 في set_b) وتم التحقق برمجيًّا من دقة كل تصحيح، ونُشر جدول التصحيح فقط (أسماء الملفات والتصنيفات، دون أي صوت) في المستودع — دون إعادة نشر الداتاسيت نفسه المحمي بحقوق الملكية."
-              }
-            ],
-            results: [
-              { k: "نسبة اكتشاف اللغط", v: "100%" },
-              { k: "الدقة الإجمالية", v: "75%" },
-              { k: "عدد التصنيفات", v: "4" },
-              { k: "نسخ تدريبٍ جُرِّبت", v: "9+" }
-            ],
-            note: "المشروع لأغراضٍ تعليميةٍ وبحثيةٍ فقط، وليس جهازًا طبيًّا معتمدًا — يجب تأكيد أي نتيجةٍ من قِبل طبيبٍ مختص. الكود منشورٌ بالكامل مفتوح المصدر، ومفتوحٌ للتحسين والتطوير."
-          },
-          en: {
-            lead: "An AI-powered digital stethoscope that screens heart sounds entirely on-device — no internet required — and explains its reasoning on screen and in a PDF report.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Let anyone — a nurse, a doctor, or someone in a resource-limited setting — use a relatively cheap Raspberry Pi-based stethoscope to get an immediate first-pass screening: normal, murmur, extra heart sound (S3/S4), or recording artifact, before deciding whether to refer to a cardiologist."
-              },
-              {
-                h: "Signal pipeline",
-                flow: [
-                  "8s capture @ 44100 Hz",
-                  "Downsample to 2000 Hz",
-                  "Bandpass + 50Hz notch filter",
-                  "Noise gate + best 3s window",
-                  "Mel Spectrogram (64 bands)",
-                  "Quantized CNN (INT8 TFLite)"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "\"Murmur-first\" decision rule",
-                    d: "Instead of a plain argmax, the model first checks the murmur probability against a conservative threshold. A deliberate choice after a threshold sweep, reaching 100% recall on real murmur cases (versus 75% overall accuracy) — because missing a real murmur is far more dangerous than a false alarm."
-                  },
-                  {
-                    t: "INT8 model quantization",
-                    d: "The model was converted from full TensorFlow to TensorFlow Lite with INT8 quantization so it runs fast enough on the Raspberry Pi's limited processor, after 9+ different training iterations."
-                  },
-                  {
-                    t: "Full codebase restructure",
-                    d: "The original code was one 1700+ line GUI file hardcoded to a specific Raspberry Pi's file paths. It was split into an organized Python package (signal processing, inference, audio capture, PDF report, GUI) testable with no hardware attached, with environment-variable configuration replacing the hardcoded paths."
-                  }
-                ]
-              },
-              {
-                h: "Finding and fixing a bug in the training dataset",
-                p: "While preparing this project for release, we noticed the label files shipped with the popular PASCAL \"Heartbeat Sounds\" dataset on Kaggle contain a systematic filename-matching bug (phantom prefixes and inconsistent naming) that leaves a large fraction of rows unmatchable to the real audio file. We fully corrected it (176/176 and 656/656 rows) and verified every fix programmatically, publishing only the corrected mapping table (filenames + labels, no audio) in the repository — without redistributing the copyrighted dataset itself."
-              }
-            ],
-            results: [
-              { k: "Murmur recall", v: "100%" },
-              { k: "Overall accuracy", v: "75%" },
-              { k: "Classes", v: "4" },
-              { k: "Training iterations", v: "9+" }
-            ],
-            note: "For educational and research purposes only — not a certified medical device. Any result must be confirmed by a qualified clinician. Fully open source and open to further improvement."
-          }
+            ar: {
+                lead: "سماعةٌ رقميةٌ بذكاء اصطناعي تفحص صوت القلب على الجهاز نفسه — دون إنترنت — وتشرح سبب قرارها على الشاشة وفي تقرير PDF.",
+                sections: [{
+                        h: "الفكرة",
+                        p: "الهدف أن يتمكّن أيّ شخصٍ — ممرضًا كان أم طبيبًا أم فردًا في منطقةٍ محدودة الموارد الطبية — من استخدام سماعةٍ رخيصةٍ نسبيًّا مبنيةٍ على Raspberry Pi لفحص صوت القلب، والحصول على تصنيفٍ أوليٍّ فوري: طبيعي، لغطٌ قلبي (Murmur)، صوتٌ قلبيٌّ إضافي (S3/S4)، أو تشويشٌ في التسجيل — قبل اتخاذ قرار تحويل الحالة إلى طبيب قلب."
+                    },
+                    {
+                        h: "خط معالجة الإشارة",
+                        flow: [
+                            "تسجيل 8 ثوانٍ @ 44100 هرتز",
+                            "تخفيض المعدل إلى 2000 هرتز",
+                            "فلتر Bandpass + Notch 50هرتز",
+                            "بوابة ضوضاء + اختيار أفضل 3 ثوانٍ",
+                            "Mel Spectrogram (64 نطاق)",
+                            "CNN مضغوط (INT8 TFLite)"
+                        ]
+                    },
+                    {
+                        h: "القرارات التقنية",
+                        steps: [{
+                                t: "قاعدة قرار \"اللغط أولًا\"",
+                                d: "بدلًا من الاعتماد على الدالة argmax مباشرة، يتحقق النموذج أولًا من احتمالية اللغط (Murmur) مقارنةً بحدٍّ أدنى محافظ. وهو خيارٌ متعمَّدٌ بعد تجربة عدة قيمٍ للعتبة (Threshold)، أدّى إلى تحقيق نسبة اكتشافٍ بلغت 100% لجميع حالات اللغط الحقيقية (مقابل دقةٍ إجماليةٍ قدرها 75%) — لأن تفويت حالة لغطٍ حقيقية أخطر بكثيرٍ من إنذارٍ كاذب."
+                            },
+                            {
+                                t: "ضغط النموذج بصيغة INT8",
+                                d: "حُوِّل النموذج من TensorFlow العادي إلى صيغة TensorFlow Lite مع ضغط INT8، ليعمل بسرعةٍ كافيةٍ على معالج Raspberry Pi المحدود، بعد تجربة أكثر من 9 نسخٍ تدريبيةٍ مختلفة."
+                            },
+                            {
+                                t: "إعادة هيكلة الكود بالكامل",
+                                d: "كان الكود الأصلي ملف واجهةٍ رسوميةٍ واحدًا ضخمًا (أكثر من 1700 سطر) بمساراتٍ ثابتةٍ على جهاز Raspberry Pi معيّن. قُسِّم إلى حزمة بايثون منظمة (معالجة إشارة، استدلال، تسجيل صوت، تقرير PDF، واجهة) قابلةٍ للاختبار دون أي عتاد، مع إعداداتٍ عبر متغيرات البيئة بدلًا من المسارات الثابتة."
+                            }
+                        ]
+                    },
+                    {
+                        h: "اكتشاف وتصحيح خطأ في الداتاسيت المستخدم للتدريب",
+                        p: "أثناء تجهيز المشروع للنشر، لوحظ أن ملفات التصنيفات المرفقة بداتاسيت PASCAL \"Heartbeat Sounds\" الشهير على Kaggle تحتوي على أخطاءٍ منهجيةٍ في مطابقة أسماء الملفات (بادئاتٌ وهمية وتضاربٌ في صياغة الأسماء)، ما يجعل جزءًا كبيرًا من الصفوف غير قابلٍ للربط الصحيح بالملف الصوتي الحقيقي. صُحِّح الخطأ بالكامل (176 من 176 في set_a، و656 من 656 في set_b) وتم التحقق برمجيًّا من دقة كل تصحيح، ونُشر جدول التصحيح فقط (أسماء الملفات والتصنيفات، دون أي صوت) في المستودع — دون إعادة نشر الداتاسيت نفسه المحمي بحقوق الملكية."
+                    }
+                ],
+                results: [{
+                        k: "نسبة اكتشاف اللغط",
+                        v: "100%"
+                    },
+                    {
+                        k: "الدقة الإجمالية",
+                        v: "75%"
+                    },
+                    {
+                        k: "عدد التصنيفات",
+                        v: "4"
+                    },
+                    {
+                        k: "نسخ تدريبٍ جُرِّبت",
+                        v: "9+"
+                    }
+                ],
+                note: "المشروع لأغراضٍ تعليميةٍ وبحثيةٍ فقط، وليس جهازًا طبيًّا معتمدًا — يجب تأكيد أي نتيجةٍ من قِبل طبيبٍ مختص. الكود منشورٌ بالكامل مفتوح المصدر، ومفتوحٌ للتحسين والتطوير."
+            },
+            en: {
+                lead: "An AI-powered digital stethoscope that screens heart sounds entirely on-device — no internet required — and explains its reasoning on screen and in a PDF report.",
+                sections: [{
+                        h: "The idea",
+                        p: "Let anyone — a nurse, a doctor, or someone in a resource-limited setting — use a relatively cheap Raspberry Pi-based stethoscope to get an immediate first-pass screening: normal, murmur, extra heart sound (S3/S4), or recording artifact, before deciding whether to refer to a cardiologist."
+                    },
+                    {
+                        h: "Signal pipeline",
+                        flow: [
+                            "8s capture @ 44100 Hz",
+                            "Downsample to 2000 Hz",
+                            "Bandpass + 50Hz notch filter",
+                            "Noise gate + best 3s window",
+                            "Mel Spectrogram (64 bands)",
+                            "Quantized CNN (INT8 TFLite)"
+                        ]
+                    },
+                    {
+                        h: "Technical decisions",
+                        steps: [{
+                                t: "\"Murmur-first\" decision rule",
+                                d: "Instead of a plain argmax, the model first checks the murmur probability against a conservative threshold. A deliberate choice after a threshold sweep, reaching 100% recall on real murmur cases (versus 75% overall accuracy) — because missing a real murmur is far more dangerous than a false alarm."
+                            },
+                            {
+                                t: "INT8 model quantization",
+                                d: "The model was converted from full TensorFlow to TensorFlow Lite with INT8 quantization so it runs fast enough on the Raspberry Pi's limited processor, after 9+ different training iterations."
+                            },
+                            {
+                                t: "Full codebase restructure",
+                                d: "The original code was one 1700+ line GUI file hardcoded to a specific Raspberry Pi's file paths. It was split into an organized Python package (signal processing, inference, audio capture, PDF report, GUI) testable with no hardware attached, with environment-variable configuration replacing the hardcoded paths."
+                            }
+                        ]
+                    },
+                    {
+                        h: "Finding and fixing a bug in the training dataset",
+                        p: "While preparing this project for release, we noticed the label files shipped with the popular PASCAL \"Heartbeat Sounds\" dataset on Kaggle contain a systematic filename-matching bug (phantom prefixes and inconsistent naming) that leaves a large fraction of rows unmatchable to the real audio file. We fully corrected it (176/176 and 656/656 rows) and verified every fix programmatically, publishing only the corrected mapping table (filenames + labels, no audio) in the repository — without redistributing the copyrighted dataset itself."
+                    }
+                ],
+                results: [{
+                        k: "Murmur recall",
+                        v: "100%"
+                    },
+                    {
+                        k: "Overall accuracy",
+                        v: "75%"
+                    },
+                    {
+                        k: "Classes",
+                        v: "4"
+                    },
+                    {
+                        k: "Training iterations",
+                        v: "9+"
+                    }
+                ],
+                note: "For educational and research purposes only — not a certified medical device. Any result must be confirmed by a qualified clinician. Fully open source and open to further improvement."
+            }
+        }
+    },
+    {
+        id: "smart-door-guardian",
+        categories: ["raspberrypi", "python-ai"],
+        featured: false,
+        image: "assets/images/smart-door-guardian.png",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/smart-door-guardian",
+        tags: ["Python", "OpenCV", "Raspberry Pi", "Face Recognition", "IoT"],
+        title: {
+            ar: "Guardian Gate — نظام تحكّم ذكي بالدخول متعدد العوامل",
+            en: "Guardian Gate — Multi-Factor Smart Door Access Control",
+        },
+        desc: {
+            ar: "نظام تحكّم فعلي بالدخول لباب، مبني على Raspberry Pi، يجمع بين التعرّف على الوجه والبصمة وبطاقة RFID ورمز PIN كأربعة عوامل توثيق مستقلة، مع تسجيل كامل لكل محاولة دخول وإشعارات فورية اختيارية.",
+            en: "A Raspberry Pi-based physical door access-control system combining face recognition, fingerprint, RFID card, and PIN as four independent authentication factors, with full access logging and optional real-time notifications.",
+        },
+        details: {
+            ar: "مشروعٌ شخصيٌّ بدأ كمجموعة سكريبتات منفصلة لاختبار كل قطعة عتاد على حدة (لوحة مفاتيح، حساس فوق صوتي، شاشة OLED، قارئ RFID، كاميرا)، ثم أُعيد بناؤه بالكامل كنظامٍ واحدٍ متماسك: كل حساس وكل قناة إشعار خلف واجهة برمجية موحّدة، وكل الأسرار والقيم القابلة للتغيير انتقلت من الكود إلى ملفات إعداد، مع وضع محاكاة كامل عبر الطرفية (--simulate) يتيح تجربة منطق القرار بالكامل دون أي عتاد حقيقي. يرصد النظام اقتراب شخص بحساسٍ فوق صوتي، يحاول التعرّف على وجهه أولًا، وإن فشل يعرض بدائل: بصمة، أو بطاقة RFID، أو رمز PIN — ونجاح أيٍّ منها يفتح القفل الكهربائي عبر مُرحّل.",
+            en: "A personal project that started as a set of individual hardware bring-up scripts (keypad, ultrasonic sensor, OLED, RFID reader, camera), then was fully rebuilt as one coherent system: every sensor and notification channel sits behind a unified interface, every secret and tunable value moved from source code into configuration files, and a full console simulation mode (--simulate) lets you exercise the entire decision logic with no real hardware attached. The system watches for someone approaching with an ultrasonic sensor, tries face recognition first, and if that fails offers fingerprint, RFID card, or PIN as fallbacks — any one of which unlocks an electric strike through a relay.",
+        },
+        article: {
+            ar: {
+                lead: "نظام تحكّم فعلي بدخول باب، بأربعة عوامل توثيق مستقلة (وجه، بصمة، بطاقة، رمز)، وسجل دخول واحد شفّاف لكل محاولة.",
+                sections: [{
+                        h: "الفكرة",
+                        p: "الهدف تأمين باب منزل أو مكتب صغير بعدة طبقات توثيق مستقلة بدل الاعتماد على عاملٍ واحد: يُعطى الأولوية للتعرّف على الوجه بوصفه الأسرع، وفي حال فشله تتاح ثلاثة بدائل (بصمة، بطاقة RFID، رمز PIN) — أيٌّ منها كافٍ لفتح الباب، مع تسجيل كل محاولة وإشعارٍ فوري اختياري للهاتف."
+                    },
+                    {
+                        h: "تدفّق القرار",
+                        flow: [
+                            "حساس فوق صوتي يرصد الاقتراب",
+                            "محاولة التعرّف على الوجه",
+                            "بديل: بصمة / بطاقة RFID / رمز PIN",
+                            "فتح المُرحّل عند نجاح أي عامل",
+                            "تسجيل + إشعار فوري اختياري"
+                        ]
+                    },
+                    {
+                        h: "القرارات التقنية",
+                        steps: [{
+                                t: "حسم تناقض قطبية المُرحّل (Relay) بالدليل العتادي",
+                                d: "كانت نسخ الكود الأصلية تختلف فعليًا حول طريقة فتح القفل (إشارة HIGH على منفذٍ، أو LOW على منفذٍ آخر) — تناقضٌ حقيقي في سلوك العتاد لا مجرد اختلاف أسلوب. حُسم الخلاف بالرجوع إلى اختبار العتاد الفعلي، وأصبحت القطبية حقل إعدادٍ صريحًا، مع أداة ذاتية (relay_selftest.py) للتحقق قبل التوصيل بقفلٍ حقيقي."
+                            },
+                            {
+                                t: "إصلاح خلل نطاق متغيّر (scoping) في جلسة الضيف",
+                                d: "إسناد قيمة لعلَمٍ داخل دالة دون كلمة global جعل بايثون يُنشئ متغيّرًا محليًا جديدًا بصمتٍ بدل تحديث الحالة الفعلية — ما كان يمنع خيط المعاينة الحية من التوقف كما هو متوقع. أُصلح الخلل واستُبدل العلَم الضمني بحالةٍ صريحة تُمرَّر عبر الواجهة، بحيث يستحيل تكرار العطل بنيويًا."
+                            },
+                            {
+                                t: "فصل العتاد عن منطق القرار بالكامل",
+                                d: "كل استدعاء لمكتبات العتاد (lgpio، picamera2، spidev) صار خلف واجهة تجريدية، بحيث يعمل النظام بالكامل في وضع محاكاة عبر الطرفية دون أي راسبيري باي حقيقي — ما يسهّل الاختبار والتطوير خارج الجهاز الفعلي."
+                            }
+                        ]
+                    },
+                    {
+                        h: "مفاضلة موثّقة صراحةً: \"أو\" لا \"و\"",
+                        p: "سياسة النظام قائمة على نجاح أيّ عاملٍ واحد (بصمة أو بطاقة أو رمز أو وجه)، لا اشتراط كل العوامل معًا. قرارٌ متعلقٌ بسهولة الاستخدام لا معيار أمانٍ أعلى، مذكورٌ صراحةً في التوثيق بدل ترك القارئ يكتشفه بنفسه."
+                    }
+                ],
+                results: [{
+                        k: "عوامل التوثيق",
+                        v: "4"
+                    },
+                    {
+                        k: "أخطاء عتاد حقيقية أُصلحت",
+                        v: "2"
+                    },
+                    {
+                        k: "وضع تشغيل بدون عتاد",
+                        v: "متاح"
+                    }
+                ],
+                note: "مشروع هواةٍ للأمان الفيزيائي المنزلي، وليس منتج تحكّم دخولٍ معتمَدًا — عوامل التوثيق هنا عوامل راحة لا حماية تشفيرية، وموثّقة صراحةً كذلك في المستودع."
+            },
+            en: {
+                lead: "A physical door access-control system with four independent authentication factors (face, fingerprint, card, PIN) and one honest access log for every attempt.",
+                sections: [{
+                        h: "The idea",
+                        p: "Secure a home or small-office door with several independent authentication layers instead of relying on one: face recognition is tried first as the fastest option, and if it fails three fallbacks are offered (fingerprint, RFID card, PIN) — any one of which is enough to unlock the door, with every attempt logged and an optional real-time phone notification."
+                    },
+                    {
+                        h: "Decision flow",
+                        flow: [
+                            "Ultrasonic sensor detects approach",
+                            "Face recognition attempt",
+                            "Fallback: fingerprint / RFID card / PIN",
+                            "Relay unlocks on any factor success",
+                            "Logging + optional instant notification"
+                        ]
+                    },
+                    {
+                        h: "Technical decisions",
+                        steps: [{
+                                t: "Resolving the relay polarity contradiction with hardware evidence",
+                                d: "The original code drafts genuinely disagreed on how the lock opens (HIGH on one pin, or LOW on another) — a real hardware-behavior contradiction, not just a style difference. It was resolved by going back to the actual hardware test, polarity became an explicit config field, and a self-test tool (relay_selftest.py) verifies it before wiring to a real lock."
+                            },
+                            {
+                                t: "Fixing a variable-scoping bug in the guest session",
+                                d: "Assigning a flag inside a function without the global keyword made Python silently create a new local variable instead of updating the real state — which kept the live-preview thread from stopping as expected. The bug was fixed and the implicit global flag replaced with explicit state passed through the interface, making the failure mode structurally impossible to repeat."
+                            },
+                            {
+                                t: "Fully decoupling hardware from decision logic",
+                                d: "Every call to hardware libraries (lgpio, picamera2, spidev) now sits behind an abstract interface, so the entire system runs in a console simulation mode with no real Raspberry Pi — making testing and development off-device much easier."
+                            }
+                        ]
+                    },
+                    {
+                        h: "An explicitly documented trade-off: \"OR\", not \"AND\"",
+                        p: "The system's policy succeeds when any single factor succeeds (fingerprint OR card OR PIN OR face), not when all factors succeed together. This is a usability decision, not a higher-security standard, and it's stated explicitly in the documentation rather than left for the reader to discover."
+                    }
+                ],
+                results: [{
+                        k: "Authentication factors",
+                        v: "4"
+                    },
+                    {
+                        k: "Real hardware bugs fixed",
+                        v: "2"
+                    },
+                    {
+                        k: "Hardware-free run mode",
+                        v: "Available"
+                    }
+                ],
+                note: "A hobbyist home physical-security project, not a certified access-control product — the authentication factors here are convenience factors, not cryptographic protection, and this is stated explicitly in the repository."
+            }
         }
     },
     {
@@ -150,122 +295,116 @@ const projectsData = [{
             en: "Built in Python with a Gradio web interface and the Stockfish engine as an AI opponent across three difficulty levels (Easy, Medium, Hard). Supports two modes, Player vs Player and Player vs Computer, with full move-history tracking and standard PGN export for later analysis in any chess program. A practical example of wiring a professional UCI chess engine into a lightweight, instantly deployable web UI on Hugging Face Spaces.",
         },
         article: {
-          ar: {
-            lead: "لعبة شطرنجٍ كاملة تعمل بالكامل داخل المتصفح — ضدّ محرك Stockfish بثلاث مستويات، أو ضدّ صديقٍ على نفس الجهاز، وكل جلسةٍ مستقلةٌ تمامًا عن غيرها.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "شطرنجٌ احترافي بلا تثبيتٍ ولا حساب: تفتح الرابط وتلعب فورًا. تختار مستوى الصعوبة (سهل / متوسط / صعب)، أو تتحدّى صديقًا وجهًا لوجهٍ على نفس الشاشة."
-              },
-              {
-                h: "آلية العمل",
-                flow: [
-                  "إدخال الحركة",
-                  "python-chess يتحقق من صحّتها",
-                  "محرك Stockfish يردّ",
-                  "تحديث الرقعة"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "محرك شطرنجٍ كامل بـ python-chess",
-                    d: "كل حركةٍ تُفحَص للتأكد من قانونيّتها قبل تنفيذها — لا حركاتٍ غير شرعية، ولا حالاتٍ شاذّة. المكتبة تتكفّل بقواعد الشطرنج كاملةً بما فيها التبييت والترقية والكِش."
-                  },
-                  {
-                    t: "خصمٌ ذكيٌّ بمحرك Stockfish",
-                    d: "من أقوى محركات الشطرنج المفتوحة، بمستوى صعوبةٍ قابلٍ للضبط — من خصمٍ ودودٍ للمبتدئ إلى تحدٍّ حقيقيٍّ للاعب المتمرّس."
-                  },
-                  {
-                    t: "حالة لعبٍ منفصلةٌ لكل جلسة",
-                    d: "كل متصفحٍ يحتفظ بلعبته الخاصة، فيمكن لعشرات الأشخاص اللعب في الوقت نفسه دون أي تداخل — تصميمٌ آمنٌ للّعب المتزامن."
-                  }
-                ]
-              },
-              {
-                h: "مدخلاتٌ مرنة",
-                p: "تُدخِل الحركة بالصيغة القياسية (<em>e2e4</em>، <em>Nf3</em>) أو بلغةٍ طبيعية (<em>e2 to e4</em>). مع أزرارٍ للتراجع وإعادة الضبط وقلب الرقعة، وسجلٍّ للحركات وتصديرٍ بصيغة PGN."
-              }
-            ],
-            results: [
-              {
-                k: "مستويات الصعوبة",
-                v: "3"
-              },
-              {
-                k: "المحرك",
-                v: "Stockfish"
-              },
-              {
-                k: "لاعبون متزامنون",
-                v: "غير محدود"
-              },
-              {
-                k: "التثبيت",
-                v: "صفر"
-              }
-            ],
-            note: "مشروعٌ مفتوح المصدر بالكامل، يعمل داخل المتصفح عبر Gradio — الكود متاحٌ للتجربة والتعديل."
-          },
-          en: {
-            lead: "A full chess game running entirely in the browser — against Stockfish at three levels, or a friend on the same device, each session fully independent.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Serious chess with no install and no account: open the link and play. Pick a difficulty (Easy / Medium / Hard), or challenge a friend face-to-face on the same screen."
-              },
-              {
-                h: "How it works",
-                flow: [
-                  "Move input",
-                  "python-chess validates it",
-                  "Stockfish replies",
-                  "Board updates"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "A full engine with python-chess",
-                    d: "Every move is checked for legality before it's applied — no illegal moves, no edge cases. The library handles all of chess including castling, promotion and check."
-                  },
-                  {
-                    t: "A smart opponent with Stockfish",
-                    d: "One of the strongest open chess engines, with adjustable difficulty — from a gentle opponent for beginners to a real challenge for experienced players."
-                  },
-                  {
-                    t: "Per-session game state",
-                    d: "Each browser keeps its own game, so dozens can play at once with zero interference — designed to be safe for concurrent play."
-                  }
-                ]
-              },
-              {
-                h: "Flexible input",
-                p: "Enter moves in standard notation (<em>e2e4</em>, <em>Nf3</em>) or plain language (<em>e2 to e4</em>). With undo, reset and flip controls, move history and PGN export."
-              }
-            ],
-            results: [
-              {
-                k: "Difficulty levels",
-                v: "3"
-              },
-              {
-                k: "Engine",
-                v: "Stockfish"
-              },
-              {
-                k: "Concurrent players",
-                v: "Unlimited"
-              },
-              {
-                k: "Install",
-                v: "None"
-              }
-            ],
-            note: "Fully open source, running in the browser via Gradio — the code is available to run and modify."
-          }
+            ar: {
+                lead: "لعبة شطرنجٍ كاملة تعمل بالكامل داخل المتصفح — ضدّ محرك Stockfish بثلاث مستويات، أو ضدّ صديقٍ على نفس الجهاز، وكل جلسةٍ مستقلةٌ تمامًا عن غيرها.",
+                sections: [{
+                        h: "الفكرة",
+                        p: "شطرنجٌ احترافي بلا تثبيتٍ ولا حساب: تفتح الرابط وتلعب فورًا. تختار مستوى الصعوبة (سهل / متوسط / صعب)، أو تتحدّى صديقًا وجهًا لوجهٍ على نفس الشاشة."
+                    },
+                    {
+                        h: "آلية العمل",
+                        flow: [
+                            "إدخال الحركة",
+                            "python-chess يتحقق من صحّتها",
+                            "محرك Stockfish يردّ",
+                            "تحديث الرقعة"
+                        ]
+                    },
+                    {
+                        h: "القرارات التقنية",
+                        steps: [{
+                                t: "محرك شطرنجٍ كامل بـ python-chess",
+                                d: "كل حركةٍ تُفحَص للتأكد من قانونيّتها قبل تنفيذها — لا حركاتٍ غير شرعية، ولا حالاتٍ شاذّة. المكتبة تتكفّل بقواعد الشطرنج كاملةً بما فيها التبييت والترقية والكِش."
+                            },
+                            {
+                                t: "خصمٌ ذكيٌّ بمحرك Stockfish",
+                                d: "من أقوى محركات الشطرنج المفتوحة، بمستوى صعوبةٍ قابلٍ للضبط — من خصمٍ ودودٍ للمبتدئ إلى تحدٍّ حقيقيٍّ للاعب المتمرّس."
+                            },
+                            {
+                                t: "حالة لعبٍ منفصلةٌ لكل جلسة",
+                                d: "كل متصفحٍ يحتفظ بلعبته الخاصة، فيمكن لعشرات الأشخاص اللعب في الوقت نفسه دون أي تداخل — تصميمٌ آمنٌ للّعب المتزامن."
+                            }
+                        ]
+                    },
+                    {
+                        h: "مدخلاتٌ مرنة",
+                        p: "تُدخِل الحركة بالصيغة القياسية (<em>e2e4</em>، <em>Nf3</em>) أو بلغةٍ طبيعية (<em>e2 to e4</em>). مع أزرارٍ للتراجع وإعادة الضبط وقلب الرقعة، وسجلٍّ للحركات وتصديرٍ بصيغة PGN."
+                    }
+                ],
+                results: [{
+                        k: "مستويات الصعوبة",
+                        v: "3"
+                    },
+                    {
+                        k: "المحرك",
+                        v: "Stockfish"
+                    },
+                    {
+                        k: "لاعبون متزامنون",
+                        v: "غير محدود"
+                    },
+                    {
+                        k: "التثبيت",
+                        v: "صفر"
+                    }
+                ],
+                note: "مشروعٌ مفتوح المصدر بالكامل، يعمل داخل المتصفح عبر Gradio — الكود متاحٌ للتجربة والتعديل."
+            },
+            en: {
+                lead: "A full chess game running entirely in the browser — against Stockfish at three levels, or a friend on the same device, each session fully independent.",
+                sections: [{
+                        h: "The idea",
+                        p: "Serious chess with no install and no account: open the link and play. Pick a difficulty (Easy / Medium / Hard), or challenge a friend face-to-face on the same screen."
+                    },
+                    {
+                        h: "How it works",
+                        flow: [
+                            "Move input",
+                            "python-chess validates it",
+                            "Stockfish replies",
+                            "Board updates"
+                        ]
+                    },
+                    {
+                        h: "Technical decisions",
+                        steps: [{
+                                t: "A full engine with python-chess",
+                                d: "Every move is checked for legality before it's applied — no illegal moves, no edge cases. The library handles all of chess including castling, promotion and check."
+                            },
+                            {
+                                t: "A smart opponent with Stockfish",
+                                d: "One of the strongest open chess engines, with adjustable difficulty — from a gentle opponent for beginners to a real challenge for experienced players."
+                            },
+                            {
+                                t: "Per-session game state",
+                                d: "Each browser keeps its own game, so dozens can play at once with zero interference — designed to be safe for concurrent play."
+                            }
+                        ]
+                    },
+                    {
+                        h: "Flexible input",
+                        p: "Enter moves in standard notation (<em>e2e4</em>, <em>Nf3</em>) or plain language (<em>e2 to e4</em>). With undo, reset and flip controls, move history and PGN export."
+                    }
+                ],
+                results: [{
+                        k: "Difficulty levels",
+                        v: "3"
+                    },
+                    {
+                        k: "Engine",
+                        v: "Stockfish"
+                    },
+                    {
+                        k: "Concurrent players",
+                        v: "Unlimited"
+                    },
+                    {
+                        k: "Install",
+                        v: "None"
+                    }
+                ],
+                note: "Fully open source, running in the browser via Gradio — the code is available to run and modify."
+            }
         }
     },
     {
@@ -289,122 +428,116 @@ const projectsData = [{
             en: "A full evolution of the original Universal Market Predictor: instead of a separate model per ticker, one shared LSTM backbone with per-ticker embeddings covers US, Gulf/MENA, UK, Germany, Japan, Hong Kong, India markets, and major cryptocurrencies. The prediction target is percentage return rather than a scaled price, avoiding extrapolation failures on strongly-trending stocks. Every forecast is benchmarked against a naive persistence baseline with a binomial significance test and a 95% Wilson confidence interval on directional accuracy — rather than trusting a raw accuracy percentage that could just be statistical noise. Limitations are documented honestly in the README, including where the model currently does not beat a coin flip.",
         },
         article: {
-          ar: {
-            lead: "نموذج LSTM موحّدٌ لكل الأسهم والعملات، بتقييمٍ صادق: كل رقمٍ يُعرض إلى جانب مقياسٍ مرجعيٍّ «لا يفعل شيئًا» — لأن نظام التنبؤ لا يفوق في مصداقيته المقياسَ الذي يُقارَن به.",
-            sections: [
-              {
-                h: "المبدأ الأساسي",
-                p: "سعر إغلاق الغد لسهمٍ كبيرٍ عادةً قريبٌ من سعر اليوم. فأي نموذجٍ — حتى العديم الفائدة — قد يُظهر دقةً برّاقةً لمجرّد اعتماده على هذه الحقيقة. الطريقة الوحيدة لمعرفة إن كان النموذج تعلّم شيئًا حقيقيًا: أن نضع خطأه ودقّته إلى جانب مقياسٍ ساذجٍ لا يستخدم أي تعلّمٍ آلي."
-              },
-              {
-                h: "النموذج المشترك",
-                flow: [
-                  "تسلسل سعري (60 يوم × 12 ميزة)",
-                  "LSTM ثلاثي الطبقات",
-                  "+ تضمين لكل سهم",
-                  "إخراج: 1/3/7 أيام دفعةً واحدة"
-                ]
-              },
-              {
-                h: "القرارات الهندسية",
-                steps: [
-                  {
-                    t: "لماذا نموذجٌ مشتركٌ لا نموذجٌ لكل سهم؟",
-                    d: "العمود الفقري يرى سلوك السوق عبر كل سهمٍ وبورصةٍ وعملة — الانهيارات والصعودات والتقلّبات — أكثر بكثيرٍ مما يعلّمه تاريخ سهمٍ واحد. والتضمين (embedding) يتيح التخصّص لكل أصلٍ دون شبكةٍ منفصلة."
-                  },
-                  {
-                    t: "لماذا إخراجٌ متعددٌ لا تكراري؟",
-                    d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ بما بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
-                  },
-                  {
-                    t: "ثغرةٌ حقيقية: تنبؤٌ بالنسبة لا بالسعر",
-                    d: "أول نسخةٍ تنبّأت بسعرٍ مُعايَرٍ مباشرةً، فخسرت أمام المقياس الساذج في الأسهم الصاعدة — لأن أسعار الاختبار خرجت عن النطاق الذي رآه النموذج. الحلّ: التنبؤ بنسبة عائدٍ مئوية، وكل الميزات صارت نِسَبًا محدودةً لا مستوياتِ سعرٍ خام."
-                  }
-                ]
-              },
-              {
-                h: "هل الميزة حقيقيةٌ أم ضوضاء؟",
-                p: "دقة اتجاهٍ في نطاق 52–58% قد تكون مجرّد صدفةٍ إحصائية. لذلك يُجري التقرير <strong>اختبار دلالةٍ إحصائية</strong> على كل صف: لا تُعامَل النتيجة كميزةٍ حقيقية إلا إذا استبعدت فترة الثقة خطّ الـ50% تمامًا. والنتيجة صادقة: ميزةٌ واضحةٌ في أسهمٍ أمريكيةٍ كبرى، وغائبةٌ في أسهم الخليج — والمشروع يوثّق هذا بدل إخفائه."
-              }
-            ],
-            results: [
-              {
-                k: "آفاق التنبؤ",
-                v: "1/3/7 أيام"
-              },
-              {
-                k: "نموذج واحد",
-                v: "كل الأسهم"
-              },
-              {
-                k: "مقاييس مرجعية",
-                v: "3"
-              },
-              {
-                k: "اختبار الدلالة",
-                v: "✓"
-              }
-            ],
-            note: "مشروعٌ بحثيٌّ تعليمي — لا شيء فيه نصيحةٌ مالية. الأسواق تنطوي على مخاطرةٍ حقيقية. الكود مفتوحٌ بالكامل."
-          },
-          en: {
-            lead: "One shared LSTM for every stock and coin, with honest evaluation: every number sits next to a 'does-nothing' baseline — because a prediction system is only as trustworthy as the baseline it's compared against.",
-            sections: [
-              {
-                h: "The core principle",
-                p: "Tomorrow's close for a large stock is usually near today's. So any model — even a useless one — can show a flattering accuracy just by leaning on that. The only way to know if the model learned something real: place its error and accuracy next to a naive baseline that uses no ML at all."
-              },
-              {
-                h: "The shared model",
-                flow: [
-                  "Price sequence (60d × 12 features)",
-                  "3-layer LSTM",
-                  "+ per-ticker embedding",
-                  "Output: 1/3/7-day at once"
-                ]
-              },
-              {
-                h: "Engineering decisions",
-                steps: [
-                  {
-                    t: "Why shared, not one model per ticker?",
-                    d: "The backbone sees market behavior across every stock, exchange and coin — crashes, rallies, volatility — far more than any single ticker's history teaches. The embedding lets it specialize per asset without a separate network."
-                  },
-                  {
-                    t: "Why multi-output, not recursive?",
-                    d: "Predicting day+1 then feeding it back to predict day+2 compounds error fast. A single pass emitting all horizons at once avoids it entirely."
-                  },
-                  {
-                    t: "A real bug: predict % return, not price",
-                    d: "The first version predicted a scaled price directly and lost to the naive baseline on trending stocks — test prices fell outside the range the model had seen. The fix: predict a percentage return, and express every feature as a bounded ratio, not a raw price level."
-                  }
-                ]
-              },
-              {
-                h: "Real edge, or noise?",
-                p: "Directional accuracy of 52–58% could just be luck. So the report runs a <strong>significance test</strong> on every row: a result counts only if the confidence interval excludes the 50% line entirely. And the finding is honest: a clear edge on large US names, absent on Gulf tickers — the project documents this rather than hiding it."
-              }
-            ],
-            results: [
-              {
-                k: "Forecast horizons",
-                v: "1/3/7 days"
-              },
-              {
-                k: "One model",
-                v: "All tickers"
-              },
-              {
-                k: "Baselines",
-                v: "3"
-              },
-              {
-                k: "Significance test",
-                v: "✓"
-              }
-            ],
-            note: "An educational research project — none of it is financial advice. Markets carry real risk. Fully open source."
-          }
+            ar: {
+                lead: "نموذج LSTM موحّدٌ لكل الأسهم والعملات، بتقييمٍ صادق: كل رقمٍ يُعرض إلى جانب مقياسٍ مرجعيٍّ «لا يفعل شيئًا» — لأن نظام التنبؤ لا يفوق في مصداقيته المقياسَ الذي يُقارَن به.",
+                sections: [{
+                        h: "المبدأ الأساسي",
+                        p: "سعر إغلاق الغد لسهمٍ كبيرٍ عادةً قريبٌ من سعر اليوم. فأي نموذجٍ — حتى العديم الفائدة — قد يُظهر دقةً برّاقةً لمجرّد اعتماده على هذه الحقيقة. الطريقة الوحيدة لمعرفة إن كان النموذج تعلّم شيئًا حقيقيًا: أن نضع خطأه ودقّته إلى جانب مقياسٍ ساذجٍ لا يستخدم أي تعلّمٍ آلي."
+                    },
+                    {
+                        h: "النموذج المشترك",
+                        flow: [
+                            "تسلسل سعري (60 يوم × 12 ميزة)",
+                            "LSTM ثلاثي الطبقات",
+                            "+ تضمين لكل سهم",
+                            "إخراج: 1/3/7 أيام دفعةً واحدة"
+                        ]
+                    },
+                    {
+                        h: "القرارات الهندسية",
+                        steps: [{
+                                t: "لماذا نموذجٌ مشتركٌ لا نموذجٌ لكل سهم؟",
+                                d: "العمود الفقري يرى سلوك السوق عبر كل سهمٍ وبورصةٍ وعملة — الانهيارات والصعودات والتقلّبات — أكثر بكثيرٍ مما يعلّمه تاريخ سهمٍ واحد. والتضمين (embedding) يتيح التخصّص لكل أصلٍ دون شبكةٍ منفصلة."
+                            },
+                            {
+                                t: "لماذا إخراجٌ متعددٌ لا تكراري؟",
+                                d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ بما بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
+                            },
+                            {
+                                t: "ثغرةٌ حقيقية: تنبؤٌ بالنسبة لا بالسعر",
+                                d: "أول نسخةٍ تنبّأت بسعرٍ مُعايَرٍ مباشرةً، فخسرت أمام المقياس الساذج في الأسهم الصاعدة — لأن أسعار الاختبار خرجت عن النطاق الذي رآه النموذج. الحلّ: التنبؤ بنسبة عائدٍ مئوية، وكل الميزات صارت نِسَبًا محدودةً لا مستوياتِ سعرٍ خام."
+                            }
+                        ]
+                    },
+                    {
+                        h: "هل الميزة حقيقيةٌ أم ضوضاء؟",
+                        p: "دقة اتجاهٍ في نطاق 52–58% قد تكون مجرّد صدفةٍ إحصائية. لذلك يُجري التقرير <strong>اختبار دلالةٍ إحصائية</strong> على كل صف: لا تُعامَل النتيجة كميزةٍ حقيقية إلا إذا استبعدت فترة الثقة خطّ الـ50% تمامًا. والنتيجة صادقة: ميزةٌ واضحةٌ في أسهمٍ أمريكيةٍ كبرى، وغائبةٌ في أسهم الخليج — والمشروع يوثّق هذا بدل إخفائه."
+                    }
+                ],
+                results: [{
+                        k: "آفاق التنبؤ",
+                        v: "1/3/7 أيام"
+                    },
+                    {
+                        k: "نموذج واحد",
+                        v: "كل الأسهم"
+                    },
+                    {
+                        k: "مقاييس مرجعية",
+                        v: "3"
+                    },
+                    {
+                        k: "اختبار الدلالة",
+                        v: "✓"
+                    }
+                ],
+                note: "مشروعٌ بحثيٌّ تعليمي — لا شيء فيه نصيحةٌ مالية. الأسواق تنطوي على مخاطرةٍ حقيقية. الكود مفتوحٌ بالكامل."
+            },
+            en: {
+                lead: "One shared LSTM for every stock and coin, with honest evaluation: every number sits next to a 'does-nothing' baseline — because a prediction system is only as trustworthy as the baseline it's compared against.",
+                sections: [{
+                        h: "The core principle",
+                        p: "Tomorrow's close for a large stock is usually near today's. So any model — even a useless one — can show a flattering accuracy just by leaning on that. The only way to know if the model learned something real: place its error and accuracy next to a naive baseline that uses no ML at all."
+                    },
+                    {
+                        h: "The shared model",
+                        flow: [
+                            "Price sequence (60d × 12 features)",
+                            "3-layer LSTM",
+                            "+ per-ticker embedding",
+                            "Output: 1/3/7-day at once"
+                        ]
+                    },
+                    {
+                        h: "Engineering decisions",
+                        steps: [{
+                                t: "Why shared, not one model per ticker?",
+                                d: "The backbone sees market behavior across every stock, exchange and coin — crashes, rallies, volatility — far more than any single ticker's history teaches. The embedding lets it specialize per asset without a separate network."
+                            },
+                            {
+                                t: "Why multi-output, not recursive?",
+                                d: "Predicting day+1 then feeding it back to predict day+2 compounds error fast. A single pass emitting all horizons at once avoids it entirely."
+                            },
+                            {
+                                t: "A real bug: predict % return, not price",
+                                d: "The first version predicted a scaled price directly and lost to the naive baseline on trending stocks — test prices fell outside the range the model had seen. The fix: predict a percentage return, and express every feature as a bounded ratio, not a raw price level."
+                            }
+                        ]
+                    },
+                    {
+                        h: "Real edge, or noise?",
+                        p: "Directional accuracy of 52–58% could just be luck. So the report runs a <strong>significance test</strong> on every row: a result counts only if the confidence interval excludes the 50% line entirely. And the finding is honest: a clear edge on large US names, absent on Gulf tickers — the project documents this rather than hiding it."
+                    }
+                ],
+                results: [{
+                        k: "Forecast horizons",
+                        v: "1/3/7 days"
+                    },
+                    {
+                        k: "One model",
+                        v: "All tickers"
+                    },
+                    {
+                        k: "Baselines",
+                        v: "3"
+                    },
+                    {
+                        k: "Significance test",
+                        v: "✓"
+                    }
+                ],
+                note: "An educational research project — none of it is financial advice. Markets carry real risk. Fully open source."
+            }
         }
     },
     {
@@ -428,144 +561,138 @@ const projectsData = [{
             en: "A YOLOv5s model trained on 40,000+ images (99% mAP@0.5), exported to ONNX for CPU inference. The tracking loop combines a Kalman filter (predicting the drone's position between frames) with a per-axis PID controller driving two pan/tilt servos via a PCA9685, keeping the drone centered in frame. Runs at 15–20 FPS on a stock Raspberry Pi 4.",
         },
         article: {
-          ar: {
-            lead: "نموذجٌ واحد مُدرَّب، يعمل لحظيًا على حاسوبٍ بـ 35 دولارًا، يُطارد الطائرات المسيّرة ويُبقيها في منتصف الكاميرا — بدون كرت شاشة، وبدون أي حلولٍ مختصرة.",
-            sections: [
-              {
-                h: "المشكلة",
-                p: "كشف الطائرات المسيّرة سهلٌ على خادمٍ بكرت شاشةٍ قوي. لكن أن يعمل النظام <strong>لحظيًا على Raspberry Pi 4 بلا GPU</strong>، ويتتبّع الطائرة فعليًا بموتوراتٍ تُحرّك الكاميرا خلفها — هذه هي المعادلة الصعبة. الهدف: نظامٌ كامل يكشف ويلاحق، على جهازٍ يتّسع لكفّ اليد."
-              },
-              {
-                h: "خط العمل",
-                p: "النظام سلسلةٌ مترابطة، كل حلقةٍ تُغذّي التي بعدها:",
-                flow: [
-                  "كاميرا USB",
-                  "YOLOv5s على ONNX (معالج فقط)",
-                  "فلتر كالمان",
-                  "وحدة تحكم PID",
-                  "PCA9685",
-                  "موتورات Pan/Tilt"
-                ]
-              },
-              {
-                h: "القرارات الهندسية",
-                steps: [
-                  {
-                    t: "لماذا ONNX بدل PyTorch؟",
-                    d: "الـRaspberry Pi 4 بلا GPU ولا CUDA. تصدير النموذج لصيغة ONNX وتشغيله بـ ONNXRuntime يُلغي الاعتماد على PyTorch كليًا، ويمنح استدلالًا مُحسَّنًا على المعالج وحده — يكفي لـ 15-20 إطارًا/ثانية على الجهاز نفسه."
-                  },
-                  {
-                    t: "لماذا فلتر كالمان فوق PID؟",
-                    d: "الكشف لا يعمل على كل فريمٍ بالسرعة الكاملة، فتصل النتائج متأخرةً ومهتزّة. فلتر كالمان يتتبّع الموقع والسرعة ويتنبأ بمكان الطائرة <em>الآن</em> بين عمليات الكشف، فتستجيب وحدة PID لتقديرٍ سلس بدل قيمةٍ قديمة — وهذا ما يمنع الموتورات من الاهتزاز في كل فجوة."
-                  },
-                  {
-                    t: "آلة حالاتٍ للسلوك",
-                    d: "أربع حالاتٍ تُدير النظام: بحث ← تتبّع ← فقدان ← عودة. أثناء البحث تمسح الكاميرا بحركةٍ جيبيةٍ بطيئة بدل الثبات، حتى تلتقط الهدف من جديد."
-                  }
-                ]
-              },
-              {
-                h: "القصة الحقيقية: ثغرةٌ كلّفتني إعادة التدريب",
-                p: "أول نموذجٍ بدا رائعًا على الورق (95% mAP)، لكنه في الواقع كان <strong>يقفل على صينيةٍ خشبية، وكرسي، ولمبة</strong>. السبب؟ مجموعة التدريب فيها 5 صور خلفيةٍ فقط من أصل 503 — النموذج لم يرَ تقريبًا كيف يبدو العالم <em>بدون</em> طائرة. الحل: دمجتُ ثلاثًا من أكبر مجموعات الدرونز (أكثر من 40 ألف صورة)، وأضفتُ خلفياتٍ صعبةً من COCO. النتيجة: mAP قفزت إلى 99%، والإيجابيات الخاطئة انهارت من ~100% إلى ~1%."
-              }
-            ],
-            results: [
-              {
-                k: "الدقة",
-                v: "94.8%"
-              },
-              {
-                k: "الاستدعاء",
-                v: "96.2%"
-              },
-              {
-                k: "mAP@0.5",
-                v: "99.0%"
-              },
-              {
-                k: "الأداء على Pi 4",
-                v: "15–20 إطار/ث"
-              },
-              {
-                k: "الإيجابيات الخاطئة",
-                v: "~1%"
-              },
-              {
-                k: "صور التدريب",
-                v: "+40,000"
-              }
-            ],
-            note: "المقاييس من مجموعة التحقق أثناء التدريب، لا من اختبارٍ ميداني مستقل. المشروع مفتوح المصدر بالكامل — كل الكود والأوزان متاحة للتجربة والتعديل."
-          },
-          en: {
-            lead: "One trained model, running in real time on a $35 computer, chasing drones and keeping them centered — no GPU, no shortcuts.",
-            sections: [
-              {
-                h: "The problem",
-                p: "Detecting drones is easy on a beefy GPU server. Getting it to run <strong>in real time on a GPU-less Raspberry Pi 4</strong>, and physically track the drone with servos that steer the camera — that is the hard part. The goal: a complete detect-and-follow system on a computer that fits in your palm."
-              },
-              {
-                h: "The pipeline",
-                p: "The system is a chain where each link feeds the next:",
-                flow: [
-                  "USB camera",
-                  "YOLOv5s on ONNX (CPU only)",
-                  "Kalman filter",
-                  "PID controller",
-                  "PCA9685",
-                  "Pan/Tilt servos"
-                ]
-              },
-              {
-                h: "Engineering decisions",
-                steps: [
-                  {
-                    t: "Why ONNX over PyTorch?",
-                    d: "The Pi 4 has no GPU and no CUDA. Exporting the model to ONNX and running it with ONNXRuntime removes the PyTorch dependency entirely and gives optimized CPU-only inference — enough for 15-20 FPS on-device."
-                  },
-                  {
-                    t: "Why a Kalman filter on top of PID?",
-                    d: "Inference doesn't run every frame at full speed, so detections arrive late and jittery. The Kalman filter tracks position and velocity and predicts where the drone <em>is now</em>, so the PID reacts to a smooth estimate instead of a stale one — this is what stops the servos jittering on every gap."
-                  },
-                  {
-                    t: "A state machine for behavior",
-                    d: "Four states run the system: searching → tracking → lost → returning. While searching, the camera does a slow sine-wave scan instead of standing still, to re-acquire the target."
-                  }
-                ]
-              },
-              {
-                h: "The real story: a bug that cost a retrain",
-                p: "The first model looked great on paper (95% mAP) but in reality <strong>locked onto a wooden tray, a chair, a lamp</strong>. Why? The training set had only 5 background images out of 503 — the model had barely seen what the world looks like <em>without</em> a drone. The fix: I merged three of the largest drone datasets (40,000+ images) and added hard COCO backgrounds. Result: mAP jumped to 99%, false positives collapsed from ~100% to ~1%."
-              }
-            ],
-            results: [
-              {
-                k: "Precision",
-                v: "94.8%"
-              },
-              {
-                k: "Recall",
-                v: "96.2%"
-              },
-              {
-                k: "mAP@0.5",
-                v: "99.0%"
-              },
-              {
-                k: "On Pi 4",
-                v: "15–20 FPS"
-              },
-              {
-                k: "False positives",
-                v: "~1%"
-              },
-              {
-                k: "Training images",
-                v: "40,000+"
-              }
-            ],
-            note: "Metrics are from the training validation split, not an independent field test. Fully open source — all code and weights available to run and modify."
-          }
+            ar: {
+                lead: "نموذجٌ واحد مُدرَّب، يعمل لحظيًا على حاسوبٍ بـ 35 دولارًا، يُطارد الطائرات المسيّرة ويُبقيها في منتصف الكاميرا — بدون كرت شاشة، وبدون أي حلولٍ مختصرة.",
+                sections: [{
+                        h: "المشكلة",
+                        p: "كشف الطائرات المسيّرة سهلٌ على خادمٍ بكرت شاشةٍ قوي. لكن أن يعمل النظام <strong>لحظيًا على Raspberry Pi 4 بلا GPU</strong>، ويتتبّع الطائرة فعليًا بموتوراتٍ تُحرّك الكاميرا خلفها — هذه هي المعادلة الصعبة. الهدف: نظامٌ كامل يكشف ويلاحق، على جهازٍ يتّسع لكفّ اليد."
+                    },
+                    {
+                        h: "خط العمل",
+                        p: "النظام سلسلةٌ مترابطة، كل حلقةٍ تُغذّي التي بعدها:",
+                        flow: [
+                            "كاميرا USB",
+                            "YOLOv5s على ONNX (معالج فقط)",
+                            "فلتر كالمان",
+                            "وحدة تحكم PID",
+                            "PCA9685",
+                            "موتورات Pan/Tilt"
+                        ]
+                    },
+                    {
+                        h: "القرارات الهندسية",
+                        steps: [{
+                                t: "لماذا ONNX بدل PyTorch؟",
+                                d: "الـRaspberry Pi 4 بلا GPU ولا CUDA. تصدير النموذج لصيغة ONNX وتشغيله بـ ONNXRuntime يُلغي الاعتماد على PyTorch كليًا، ويمنح استدلالًا مُحسَّنًا على المعالج وحده — يكفي لـ 15-20 إطارًا/ثانية على الجهاز نفسه."
+                            },
+                            {
+                                t: "لماذا فلتر كالمان فوق PID؟",
+                                d: "الكشف لا يعمل على كل فريمٍ بالسرعة الكاملة، فتصل النتائج متأخرةً ومهتزّة. فلتر كالمان يتتبّع الموقع والسرعة ويتنبأ بمكان الطائرة <em>الآن</em> بين عمليات الكشف، فتستجيب وحدة PID لتقديرٍ سلس بدل قيمةٍ قديمة — وهذا ما يمنع الموتورات من الاهتزاز في كل فجوة."
+                            },
+                            {
+                                t: "آلة حالاتٍ للسلوك",
+                                d: "أربع حالاتٍ تُدير النظام: بحث ← تتبّع ← فقدان ← عودة. أثناء البحث تمسح الكاميرا بحركةٍ جيبيةٍ بطيئة بدل الثبات، حتى تلتقط الهدف من جديد."
+                            }
+                        ]
+                    },
+                    {
+                        h: "القصة الحقيقية: ثغرةٌ كلّفتني إعادة التدريب",
+                        p: "أول نموذجٍ بدا رائعًا على الورق (95% mAP)، لكنه في الواقع كان <strong>يقفل على صينيةٍ خشبية، وكرسي، ولمبة</strong>. السبب؟ مجموعة التدريب فيها 5 صور خلفيةٍ فقط من أصل 503 — النموذج لم يرَ تقريبًا كيف يبدو العالم <em>بدون</em> طائرة. الحل: دمجتُ ثلاثًا من أكبر مجموعات الدرونز (أكثر من 40 ألف صورة)، وأضفتُ خلفياتٍ صعبةً من COCO. النتيجة: mAP قفزت إلى 99%، والإيجابيات الخاطئة انهارت من ~100% إلى ~1%."
+                    }
+                ],
+                results: [{
+                        k: "الدقة",
+                        v: "94.8%"
+                    },
+                    {
+                        k: "الاستدعاء",
+                        v: "96.2%"
+                    },
+                    {
+                        k: "mAP@0.5",
+                        v: "99.0%"
+                    },
+                    {
+                        k: "الأداء على Pi 4",
+                        v: "15–20 إطار/ث"
+                    },
+                    {
+                        k: "الإيجابيات الخاطئة",
+                        v: "~1%"
+                    },
+                    {
+                        k: "صور التدريب",
+                        v: "+40,000"
+                    }
+                ],
+                note: "المقاييس من مجموعة التحقق أثناء التدريب، لا من اختبارٍ ميداني مستقل. المشروع مفتوح المصدر بالكامل — كل الكود والأوزان متاحة للتجربة والتعديل."
+            },
+            en: {
+                lead: "One trained model, running in real time on a $35 computer, chasing drones and keeping them centered — no GPU, no shortcuts.",
+                sections: [{
+                        h: "The problem",
+                        p: "Detecting drones is easy on a beefy GPU server. Getting it to run <strong>in real time on a GPU-less Raspberry Pi 4</strong>, and physically track the drone with servos that steer the camera — that is the hard part. The goal: a complete detect-and-follow system on a computer that fits in your palm."
+                    },
+                    {
+                        h: "The pipeline",
+                        p: "The system is a chain where each link feeds the next:",
+                        flow: [
+                            "USB camera",
+                            "YOLOv5s on ONNX (CPU only)",
+                            "Kalman filter",
+                            "PID controller",
+                            "PCA9685",
+                            "Pan/Tilt servos"
+                        ]
+                    },
+                    {
+                        h: "Engineering decisions",
+                        steps: [{
+                                t: "Why ONNX over PyTorch?",
+                                d: "The Pi 4 has no GPU and no CUDA. Exporting the model to ONNX and running it with ONNXRuntime removes the PyTorch dependency entirely and gives optimized CPU-only inference — enough for 15-20 FPS on-device."
+                            },
+                            {
+                                t: "Why a Kalman filter on top of PID?",
+                                d: "Inference doesn't run every frame at full speed, so detections arrive late and jittery. The Kalman filter tracks position and velocity and predicts where the drone <em>is now</em>, so the PID reacts to a smooth estimate instead of a stale one — this is what stops the servos jittering on every gap."
+                            },
+                            {
+                                t: "A state machine for behavior",
+                                d: "Four states run the system: searching → tracking → lost → returning. While searching, the camera does a slow sine-wave scan instead of standing still, to re-acquire the target."
+                            }
+                        ]
+                    },
+                    {
+                        h: "The real story: a bug that cost a retrain",
+                        p: "The first model looked great on paper (95% mAP) but in reality <strong>locked onto a wooden tray, a chair, a lamp</strong>. Why? The training set had only 5 background images out of 503 — the model had barely seen what the world looks like <em>without</em> a drone. The fix: I merged three of the largest drone datasets (40,000+ images) and added hard COCO backgrounds. Result: mAP jumped to 99%, false positives collapsed from ~100% to ~1%."
+                    }
+                ],
+                results: [{
+                        k: "Precision",
+                        v: "94.8%"
+                    },
+                    {
+                        k: "Recall",
+                        v: "96.2%"
+                    },
+                    {
+                        k: "mAP@0.5",
+                        v: "99.0%"
+                    },
+                    {
+                        k: "On Pi 4",
+                        v: "15–20 FPS"
+                    },
+                    {
+                        k: "False positives",
+                        v: "~1%"
+                    },
+                    {
+                        k: "Training images",
+                        v: "40,000+"
+                    }
+                ],
+                note: "Metrics are from the training validation split, not an independent field test. Fully open source — all code and weights available to run and modify."
+            }
         }
     },
     {
@@ -589,122 +716,116 @@ const projectsData = [{
             en: "Receives real ADS-B signals at 1090MHz via dump1090 and renders them on a live radar-style dashboard. The live demo runs a browser-side simulation; the full version supports real hardware."
         },
         article: {
-          ar: {
-            lead: "رادار طيرانٍ حيٌّ يفكّ تشفير إشارات الطائرات الحقيقية على تردد 1090 ميجاهرتز بدونجل RTL-SDR، ويعرضها على واجهةٍ بطابع أبراج المراقبة — على أي لابتوبٍ أو راسبيري باي.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. وإن لم يكن لديك عتاد؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
-              },
-              {
-                h: "المعمارية",
-                flow: [
-                  "دونجل RTL-SDR (1090MHz)",
-                  "dump1090 يفكّ الإشارة",
-                  "خادم Flask (API + واجهة)",
-                  "خريطة Leaflet في المتصفح"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "وضعان دائمان: محاكاةٌ وحقيقي",
-                    d: "وضع المحاكاة يعمل في ثوانٍ بلا أي عتاد — هو ما يشتغل على النسخة الحية. والوضع الحقيقي يفكّ بثّ ADS-B فعليًا من الدونجل. الاثنان يتكلمان مع نفس الخادم ونفس الواجهة، فتبدّل بينهما بزرٍّ واحد."
-                  },
-                  {
-                    t: "كودٌ عابرٌ للمنصّات",
-                    d: "الخادم بايثون صافٍ بلا أي كودٍ خاصٍّ بالراسبيري باي — يعمل على ويندوز وماك ولينكس. الراسبيري باي مجرد خيارٍ مريحٍ للتشغيل الدائم 24 ساعة، لا شرط."
-                  },
-                  {
-                    t: "إثراءٌ آمنٌ من جهة الخادم",
-                    d: "بيانات الرحلات الإضافية تُجلَب عبر الخادم فقط — مفتاح الـAPI لا يصل للمتصفح إطلاقًا. خادمٌ واحدٌ على منفذٍ واحدٍ يخدم الواجهة والـAPI معًا."
-                  }
-                ]
-              },
-              {
-                h: "جاهزٌ للتشغيل الدائم",
-                p: "مع ملف systemd للتشغيل التلقائي عند الإقلاع، يتحوّل الراسبيري باي إلى كشك رادارٍ يعمل بلا توقّف. وكل الإعدادات عبر متغيّرات البيئة — لا شيء مثبّتٌ في الكود، فتغيّر المنطقة والمركز بسهولة."
-              }
-            ],
-            results: [
-              {
-                k: "التردد",
-                v: "1090 MHz"
-              },
-              {
-                k: "المنصّات",
-                v: "ويندوز/ماك/لينكس"
-              },
-              {
-                k: "وضع المحاكاة",
-                v: "بلا عتاد"
-              },
-              {
-                k: "المنافذ",
-                v: "واحد"
-              }
-            ],
-            note: "مشروعٌ مفتوح المصدر بالكامل، مع نسخةٍ حيةٍ على Hugging Face تعمل بوضع المحاكاة مباشرةً."
-          },
-          en: {
-            lead: "A live aircraft radar that decodes real ADS-B signals on 1090 MHz with an RTL-SDR dongle, rendering every plane on a retro ATC-style dashboard — on any laptop or Raspberry Pi.",
-            sections: [
-              {
-                h: "The idea",
-                p: "It picks up the ADS-B signals aircraft actually broadcast, decodes them, and shows each plane on a live map with heading-accurate icons and trails. No hardware? A built-in simulation runs the same UI with demo traffic."
-              },
-              {
-                h: "Architecture",
-                flow: [
-                  "RTL-SDR dongle (1090MHz)",
-                  "dump1090 decodes",
-                  "Flask server (API + UI)",
-                  "Leaflet map in browser"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Two first-class modes: sim and live",
-                    d: "Simulation runs in seconds with no hardware — it powers the live demo. Live mode decodes real ADS-B from the dongle. Both talk to the same server and UI, so you switch with one button."
-                  },
-                  {
-                    t: "Cross-platform code",
-                    d: "The server is pure Python with no Pi-specific code — it runs on Windows, macOS and Linux. A Raspberry Pi is just a convenient always-on box, not a requirement."
-                  },
-                  {
-                    t: "Safe server-side enrichment",
-                    d: "Extra flight data is fetched through the server only — the API key never reaches the browser. One server on one port serves both the UI and the API."
-                  }
-                ]
-              },
-              {
-                h: "Ready for permanent use",
-                p: "With a systemd unit for boot-time auto-start, the Pi becomes a 24/7 radar kiosk. All configuration is via environment variables — nothing is hardcoded, so you change region and center easily."
-              }
-            ],
-            results: [
-              {
-                k: "Frequency",
-                v: "1090 MHz"
-              },
-              {
-                k: "Platforms",
-                v: "Win/Mac/Linux"
-              },
-              {
-                k: "Sim mode",
-                v: "No hardware"
-              },
-              {
-                k: "Ports",
-                v: "One"
-              }
-            ],
-            note: "Fully open source, with a live Hugging Face demo running in simulation mode out of the box."
-          }
+            ar: {
+                lead: "رادار طيرانٍ حيٌّ يفكّ تشفير إشارات الطائرات الحقيقية على تردد 1090 ميجاهرتز بدونجل RTL-SDR، ويعرضها على واجهةٍ بطابع أبراج المراقبة — على أي لابتوبٍ أو راسبيري باي.",
+                sections: [{
+                        h: "الفكرة",
+                        p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. وإن لم يكن لديك عتاد؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
+                    },
+                    {
+                        h: "المعمارية",
+                        flow: [
+                            "دونجل RTL-SDR (1090MHz)",
+                            "dump1090 يفكّ الإشارة",
+                            "خادم Flask (API + واجهة)",
+                            "خريطة Leaflet في المتصفح"
+                        ]
+                    },
+                    {
+                        h: "القرارات التقنية",
+                        steps: [{
+                                t: "وضعان دائمان: محاكاةٌ وحقيقي",
+                                d: "وضع المحاكاة يعمل في ثوانٍ بلا أي عتاد — هو ما يشتغل على النسخة الحية. والوضع الحقيقي يفكّ بثّ ADS-B فعليًا من الدونجل. الاثنان يتكلمان مع نفس الخادم ونفس الواجهة، فتبدّل بينهما بزرٍّ واحد."
+                            },
+                            {
+                                t: "كودٌ عابرٌ للمنصّات",
+                                d: "الخادم بايثون صافٍ بلا أي كودٍ خاصٍّ بالراسبيري باي — يعمل على ويندوز وماك ولينكس. الراسبيري باي مجرد خيارٍ مريحٍ للتشغيل الدائم 24 ساعة، لا شرط."
+                            },
+                            {
+                                t: "إثراءٌ آمنٌ من جهة الخادم",
+                                d: "بيانات الرحلات الإضافية تُجلَب عبر الخادم فقط — مفتاح الـAPI لا يصل للمتصفح إطلاقًا. خادمٌ واحدٌ على منفذٍ واحدٍ يخدم الواجهة والـAPI معًا."
+                            }
+                        ]
+                    },
+                    {
+                        h: "جاهزٌ للتشغيل الدائم",
+                        p: "مع ملف systemd للتشغيل التلقائي عند الإقلاع، يتحوّل الراسبيري باي إلى كشك رادارٍ يعمل بلا توقّف. وكل الإعدادات عبر متغيّرات البيئة — لا شيء مثبّتٌ في الكود، فتغيّر المنطقة والمركز بسهولة."
+                    }
+                ],
+                results: [{
+                        k: "التردد",
+                        v: "1090 MHz"
+                    },
+                    {
+                        k: "المنصّات",
+                        v: "ويندوز/ماك/لينكس"
+                    },
+                    {
+                        k: "وضع المحاكاة",
+                        v: "بلا عتاد"
+                    },
+                    {
+                        k: "المنافذ",
+                        v: "واحد"
+                    }
+                ],
+                note: "مشروعٌ مفتوح المصدر بالكامل، مع نسخةٍ حيةٍ على Hugging Face تعمل بوضع المحاكاة مباشرةً."
+            },
+            en: {
+                lead: "A live aircraft radar that decodes real ADS-B signals on 1090 MHz with an RTL-SDR dongle, rendering every plane on a retro ATC-style dashboard — on any laptop or Raspberry Pi.",
+                sections: [{
+                        h: "The idea",
+                        p: "It picks up the ADS-B signals aircraft actually broadcast, decodes them, and shows each plane on a live map with heading-accurate icons and trails. No hardware? A built-in simulation runs the same UI with demo traffic."
+                    },
+                    {
+                        h: "Architecture",
+                        flow: [
+                            "RTL-SDR dongle (1090MHz)",
+                            "dump1090 decodes",
+                            "Flask server (API + UI)",
+                            "Leaflet map in browser"
+                        ]
+                    },
+                    {
+                        h: "Technical decisions",
+                        steps: [{
+                                t: "Two first-class modes: sim and live",
+                                d: "Simulation runs in seconds with no hardware — it powers the live demo. Live mode decodes real ADS-B from the dongle. Both talk to the same server and UI, so you switch with one button."
+                            },
+                            {
+                                t: "Cross-platform code",
+                                d: "The server is pure Python with no Pi-specific code — it runs on Windows, macOS and Linux. A Raspberry Pi is just a convenient always-on box, not a requirement."
+                            },
+                            {
+                                t: "Safe server-side enrichment",
+                                d: "Extra flight data is fetched through the server only — the API key never reaches the browser. One server on one port serves both the UI and the API."
+                            }
+                        ]
+                    },
+                    {
+                        h: "Ready for permanent use",
+                        p: "With a systemd unit for boot-time auto-start, the Pi becomes a 24/7 radar kiosk. All configuration is via environment variables — nothing is hardcoded, so you change region and center easily."
+                    }
+                ],
+                results: [{
+                        k: "Frequency",
+                        v: "1090 MHz"
+                    },
+                    {
+                        k: "Platforms",
+                        v: "Win/Mac/Linux"
+                    },
+                    {
+                        k: "Sim mode",
+                        v: "No hardware"
+                    },
+                    {
+                        k: "Ports",
+                        v: "One"
+                    }
+                ],
+                note: "Fully open source, with a live Hugging Face demo running in simulation mode out of the box."
+            }
         }
     },
     {
@@ -728,122 +849,116 @@ const projectsData = [{
             en: "Two lightweight CNNs trained from scratch (no transfer learning) on the UTKFace dataset, reaching 91.4% gender-classification accuracy and 78.6% 5-year age-range accuracy (measured on a 5,000-image batch test). Ships two ways: an interactive Gradio web demo (photo upload or webcam) and a fully offline Raspberry Pi 4 deployment with a live camera and Tkinter GUI. The project documents its honest limitations rather than hiding them — including weak exact-age accuracy (~29%) and lighting sensitivity.",
         },
         article: {
-          ar: {
-            lead: "شبكتان عصبونيتان خفيفتان — مُدرَّبتان من الصفر لا بالتعلّم المنقول — تتنبآن بالجنس الظاهري وبمدىً عمريٍّ من صورة وجهٍ واحدة، وتعملان على المتصفح وعلى راسبيري باي دون إنترنت.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "من صورةٍ واحدة، يتنبأ النظام بالجنس الظاهري وبفئةٍ عمريةٍ بخطوة 5 سنوات. نفس النموذجين يعملان بطريقتين: تطبيق ويبٍ تفاعليٍّ عبر Gradio، ونسخةٌ تعمل بالكامل دون اتصالٍ بالإنترنت على راسبيري باي مع كاميرا حية."
-              },
-              {
-                h: "النموذجان",
-                flow: [
-                  "صورة وجه (128×128)",
-                  "طبقات تلافيفية",
-                  "إخراج مزدوج",
-                  "الجنس + فئة عمرية"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "لماذا شبكتان منفصلتان لا شبكةٌ متعددة المهام؟",
-                    d: "دُرِّب الجنس والعمر وقُيِّما بشكلٍ مستقل، ما أبقى سطح الخلل بسيطًا — فلو أخطأ أحدهما، يكون واضحًا أيّهما، ويمكن إعادة تدريب أو استبدال أيٍّ منهما دون المساس بالآخر."
-                  },
-                  {
-                    t: "لماذا مدىً عمريٌّ لا رقمٌ دقيق؟ (قرارٌ بررته البيانات)",
-                    d: "دقة العمر الدقيق نحو <em>29%</em> فقط، بينما تصل الدقة عند التجميع بفئاتٍ من 5 سنوات إلى <strong>78.6%</strong>. فعرض مدىً عمريٍّ ليس خيارًا تجميليًا، بل ما يدعمه هامش الخطأ المقيس فعليًا."
-                  },
-                  {
-                    t: "لماذا شبكةٌ خفيفةٌ لا MobileNet؟",
-                    d: "استكشفت نسخةٌ سابقة التعلّم المنقول عبر MobileNet — دقةٌ أعلى لكن ثقلٌ يفوق ما يحتمله الراسبيري باي حيًّا. النماذج المشحونة صغيرةٌ ومدرّبةٌ من الصفر، تعمل بارتياحٍ على معالج الـPi بلا GPU — مقايضةٌ بين سقف الدقة والتشغيل الفعلي على العتاد."
-                  }
-                ]
-              },
-              {
-                h: "الصدق في النتائج",
-                p: "دقة تصنيف الجنس <strong>91.4%</strong>، والفئة العمرية <strong>78.6%</strong> — لكن قِيست على صورٍ مقصوصةٍ ومواجهةٍ مسبقًا. الوجه الصغير أو المائل في كاميرا حقيقية سيؤدي أضعف. المشروع يوثّق هذا صراحةً بدل إخفائه."
-              }
-            ],
-            results: [
-              {
-                k: "دقة الجنس",
-                v: "91.4%"
-              },
-              {
-                k: "الفئة العمرية",
-                v: "78.6%"
-              },
-              {
-                k: "العمر الدقيق",
-                v: "~29%"
-              },
-              {
-                k: "زمن الاستدلال",
-                v: "~0.28s"
-              }
-            ],
-            note: "مشروعٌ تعريفيٌّ بحثي، لا نظام قياسٍ حيويٍّ أو طبيٍّ أو أمنيّ. الكود والنماذج مفتوحةٌ بالكامل."
-          },
-          en: {
-            lead: "Two lightweight CNNs — trained from scratch, not transfer-learned — predict apparent gender and an age range from a single face photo, running in the browser and offline on a Raspberry Pi.",
-            sections: [
-              {
-                h: "The idea",
-                p: "From one photo, the system predicts apparent gender and a 5-year age range. The same two models ship two ways: an interactive Gradio web demo, and a fully offline Raspberry Pi build with a live camera."
-              },
-              {
-                h: "The two models",
-                flow: [
-                  "Face photo (128×128)",
-                  "Convolutional layers",
-                  "Dual output",
-                  "Gender + age range"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Why two separate nets, not one multi-task?",
-                    d: "Gender and age were trained and evaluated independently, keeping the failure surface simple — if one misbehaves it's obvious which, and either can be retrained or swapped without touching the other."
-                  },
-                  {
-                    t: "Why a range, not an exact number? (the data justified it)",
-                    d: "Exact-age accuracy is about <em>29%</em>, while the same model bucketed into 5-year ranges reaches <strong>78.6%</strong>. Reporting a range isn't cosmetic; it's what the measured error actually supports."
-                  },
-                  {
-                    t: "Why a lightweight net, not MobileNet?",
-                    d: "An earlier version explored MobileNet transfer learning — higher accuracy but too heavy for the Pi in real time. The shipped models are small, from-scratch CNNs that run comfortably on the Pi's CPU with no GPU — trading ceiling accuracy for actually running on the target hardware."
-                  }
-                ]
-              },
-              {
-                h: "Honesty in the results",
-                p: "Gender accuracy <strong>91.4%</strong>, age range <strong>78.6%</strong> — but measured on pre-cropped, front-facing images. A small or off-center face in a real webcam will perform worse. The project documents this openly rather than hiding it."
-              }
-            ],
-            results: [
-              {
-                k: "Gender accuracy",
-                v: "91.4%"
-              },
-              {
-                k: "Age range",
-                v: "78.6%"
-              },
-              {
-                k: "Exact age",
-                v: "~29%"
-              },
-              {
-                k: "Inference",
-                v: "~0.28s"
-              }
-            ],
-            note: "A portfolio/research project, not a biometric, medical or security-grade system. Code and models fully open source."
-          }
+            ar: {
+                lead: "شبكتان عصبونيتان خفيفتان — مُدرَّبتان من الصفر لا بالتعلّم المنقول — تتنبآن بالجنس الظاهري وبمدىً عمريٍّ من صورة وجهٍ واحدة، وتعملان على المتصفح وعلى راسبيري باي دون إنترنت.",
+                sections: [{
+                        h: "الفكرة",
+                        p: "من صورةٍ واحدة، يتنبأ النظام بالجنس الظاهري وبفئةٍ عمريةٍ بخطوة 5 سنوات. نفس النموذجين يعملان بطريقتين: تطبيق ويبٍ تفاعليٍّ عبر Gradio، ونسخةٌ تعمل بالكامل دون اتصالٍ بالإنترنت على راسبيري باي مع كاميرا حية."
+                    },
+                    {
+                        h: "النموذجان",
+                        flow: [
+                            "صورة وجه (128×128)",
+                            "طبقات تلافيفية",
+                            "إخراج مزدوج",
+                            "الجنس + فئة عمرية"
+                        ]
+                    },
+                    {
+                        h: "القرارات التقنية",
+                        steps: [{
+                                t: "لماذا شبكتان منفصلتان لا شبكةٌ متعددة المهام؟",
+                                d: "دُرِّب الجنس والعمر وقُيِّما بشكلٍ مستقل، ما أبقى سطح الخلل بسيطًا — فلو أخطأ أحدهما، يكون واضحًا أيّهما، ويمكن إعادة تدريب أو استبدال أيٍّ منهما دون المساس بالآخر."
+                            },
+                            {
+                                t: "لماذا مدىً عمريٌّ لا رقمٌ دقيق؟ (قرارٌ بررته البيانات)",
+                                d: "دقة العمر الدقيق نحو <em>29%</em> فقط، بينما تصل الدقة عند التجميع بفئاتٍ من 5 سنوات إلى <strong>78.6%</strong>. فعرض مدىً عمريٍّ ليس خيارًا تجميليًا، بل ما يدعمه هامش الخطأ المقيس فعليًا."
+                            },
+                            {
+                                t: "لماذا شبكةٌ خفيفةٌ لا MobileNet؟",
+                                d: "استكشفت نسخةٌ سابقة التعلّم المنقول عبر MobileNet — دقةٌ أعلى لكن ثقلٌ يفوق ما يحتمله الراسبيري باي حيًّا. النماذج المشحونة صغيرةٌ ومدرّبةٌ من الصفر، تعمل بارتياحٍ على معالج الـPi بلا GPU — مقايضةٌ بين سقف الدقة والتشغيل الفعلي على العتاد."
+                            }
+                        ]
+                    },
+                    {
+                        h: "الصدق في النتائج",
+                        p: "دقة تصنيف الجنس <strong>91.4%</strong>، والفئة العمرية <strong>78.6%</strong> — لكن قِيست على صورٍ مقصوصةٍ ومواجهةٍ مسبقًا. الوجه الصغير أو المائل في كاميرا حقيقية سيؤدي أضعف. المشروع يوثّق هذا صراحةً بدل إخفائه."
+                    }
+                ],
+                results: [{
+                        k: "دقة الجنس",
+                        v: "91.4%"
+                    },
+                    {
+                        k: "الفئة العمرية",
+                        v: "78.6%"
+                    },
+                    {
+                        k: "العمر الدقيق",
+                        v: "~29%"
+                    },
+                    {
+                        k: "زمن الاستدلال",
+                        v: "~0.28s"
+                    }
+                ],
+                note: "مشروعٌ تعريفيٌّ بحثي، لا نظام قياسٍ حيويٍّ أو طبيٍّ أو أمنيّ. الكود والنماذج مفتوحةٌ بالكامل."
+            },
+            en: {
+                lead: "Two lightweight CNNs — trained from scratch, not transfer-learned — predict apparent gender and an age range from a single face photo, running in the browser and offline on a Raspberry Pi.",
+                sections: [{
+                        h: "The idea",
+                        p: "From one photo, the system predicts apparent gender and a 5-year age range. The same two models ship two ways: an interactive Gradio web demo, and a fully offline Raspberry Pi build with a live camera."
+                    },
+                    {
+                        h: "The two models",
+                        flow: [
+                            "Face photo (128×128)",
+                            "Convolutional layers",
+                            "Dual output",
+                            "Gender + age range"
+                        ]
+                    },
+                    {
+                        h: "Technical decisions",
+                        steps: [{
+                                t: "Why two separate nets, not one multi-task?",
+                                d: "Gender and age were trained and evaluated independently, keeping the failure surface simple — if one misbehaves it's obvious which, and either can be retrained or swapped without touching the other."
+                            },
+                            {
+                                t: "Why a range, not an exact number? (the data justified it)",
+                                d: "Exact-age accuracy is about <em>29%</em>, while the same model bucketed into 5-year ranges reaches <strong>78.6%</strong>. Reporting a range isn't cosmetic; it's what the measured error actually supports."
+                            },
+                            {
+                                t: "Why a lightweight net, not MobileNet?",
+                                d: "An earlier version explored MobileNet transfer learning — higher accuracy but too heavy for the Pi in real time. The shipped models are small, from-scratch CNNs that run comfortably on the Pi's CPU with no GPU — trading ceiling accuracy for actually running on the target hardware."
+                            }
+                        ]
+                    },
+                    {
+                        h: "Honesty in the results",
+                        p: "Gender accuracy <strong>91.4%</strong>, age range <strong>78.6%</strong> — but measured on pre-cropped, front-facing images. A small or off-center face in a real webcam will perform worse. The project documents this openly rather than hiding it."
+                    }
+                ],
+                results: [{
+                        k: "Gender accuracy",
+                        v: "91.4%"
+                    },
+                    {
+                        k: "Age range",
+                        v: "78.6%"
+                    },
+                    {
+                        k: "Exact age",
+                        v: "~29%"
+                    },
+                    {
+                        k: "Inference",
+                        v: "~0.28s"
+                    }
+                ],
+                note: "A portfolio/research project, not a biometric, medical or security-grade system. Code and models fully open source."
+            }
         }
     },
     {
@@ -858,136 +973,130 @@ const projectsData = [{
             ar: "استوديو المشغّلات البصرية (Visual Trigger Studio)",
             en: "Visual Trigger Studio",
         },
-         desc: {
-           ar: "ارفع صورة مرجعية لأي شيء، وحدّد ما الذي يحدث عندما تتعرّف الكاميرا عليه — عرض صورة، تشغيل فيديو، أو جلب بيانات حية من الإنترنت — كل ذلك داخل المتصفح دون أي خادم أو عتاد إضافي.",
-           en: "Upload a reference photo of anything and decide what happens when the camera recognizes it — an image, a video, or live internet data — all inside the browser, no server or hardware required.",
-         },
-         details: {
-           ar: "تطبيق ويب ثابت بالكامل (دون خادم أو أدوات بناء) يعتمد على نموذج CLIP يعمل مباشرة داخل المتصفح (عبر WebAssembly) لحساب بصمة رقمية لأي صورة ومقارنتها بالصور المرجعية التي يرفعها المستخدم. وعند حدوث تطابق، يُنفَّذ فعل مخصّص يختاره المستخدم مسبقًا: عرض صورة، تشغيل فيديو، أو جلب بيانات حية من الإنترنت (كدرجة الحرارة والرطوبة عبر خدمة Open-Meteo). لا يعتمد المشروع على أي عتاد قياس أو خادم مركزي؛ إذ تُحفظ جميع البيانات محليًا داخل متصفح المستخدم فقط، مع إمكانية تصدير الإعدادات واستيرادها كملف JSON.",
-           en: "A fully static web app (no server, no build step) that runs a CLIP vision model directly in the browser via WebAssembly to fingerprint any photo and compare it against user-uploaded reference images. On a match, it runs a user-configured action: show an image, play a video, or fetch live internet data (like temperature and humidity via Open-Meteo). No measurement hardware or server required — everything is stored locally in the browser, with JSON export/import for backing up or sharing a trigger set.",
-         },
+        desc: {
+            ar: "ارفع صورة مرجعية لأي شيء، وحدّد ما الذي يحدث عندما تتعرّف الكاميرا عليه — عرض صورة، تشغيل فيديو، أو جلب بيانات حية من الإنترنت — كل ذلك داخل المتصفح دون أي خادم أو عتاد إضافي.",
+            en: "Upload a reference photo of anything and decide what happens when the camera recognizes it — an image, a video, or live internet data — all inside the browser, no server or hardware required.",
+        },
+        details: {
+            ar: "تطبيق ويب ثابت بالكامل (دون خادم أو أدوات بناء) يعتمد على نموذج CLIP يعمل مباشرة داخل المتصفح (عبر WebAssembly) لحساب بصمة رقمية لأي صورة ومقارنتها بالصور المرجعية التي يرفعها المستخدم. وعند حدوث تطابق، يُنفَّذ فعل مخصّص يختاره المستخدم مسبقًا: عرض صورة، تشغيل فيديو، أو جلب بيانات حية من الإنترنت (كدرجة الحرارة والرطوبة عبر خدمة Open-Meteo). لا يعتمد المشروع على أي عتاد قياس أو خادم مركزي؛ إذ تُحفظ جميع البيانات محليًا داخل متصفح المستخدم فقط، مع إمكانية تصدير الإعدادات واستيرادها كملف JSON.",
+            en: "A fully static web app (no server, no build step) that runs a CLIP vision model directly in the browser via WebAssembly to fingerprint any photo and compare it against user-uploaded reference images. On a match, it runs a user-configured action: show an image, play a video, or fetch live internet data (like temperature and humidity via Open-Meteo). No measurement hardware or server required — everything is stored locally in the browser, with JSON export/import for backing up or sharing a trigger set.",
+        },
         article: {
-          ar: {
-            lead: "شاهِد شيئًا ← نفّذ إجراءً. ارفع صورةً مرجعية، وحدّد ما يحدث عندما تراها الكاميرا من جديد — كل ذلك داخل متصفحك، بلا خادم، وبلا مفتاح، وبلا أن تغادر صورةٌ جهازك.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "ترفع صورةً لأي شيءٍ يهمّك، وتختار الإجراء: عرض صورة، تشغيل فيديو، جلب حالة الطقس، أو رسالةً نصية. وعندما تُشابه لقطةٌ جديدة صورتك المرجعية بدرجةٍ كافية — يُنفَّذ الإجراء تلقائيًا."
-              },
-              {
-                h: "آلية العمل",
-                flow: [
-                  "صورة مرجعية",
-                  "مُرمِّز CLIP في المتصفح",
-                  "لقطة جديدة → CLIP",
-                  "تشابه ≥ الحدّ؟",
-                  "نفّذ الإجراء"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "لماذا CLIP بدل تدريب مصنِّفٍ لكل صورة؟",
-                    d: "تدريب نموذجٍ مخصّص يحتاج أمثلةً كثيرة وإعادة تدريبٍ كلما أضفت شيئًا جديدًا. أما CLIP فيُنتج «بصمة» عامةً لأي صورة <strong>دون أي تدريب</strong> — ترفع الصورة فتصبح قابلةً للاستخدام فورًا. نفس مبدأ البحث بالصورة في الأدوات الحديثة."
-                  },
-                  {
-                    t: "لماذا المتصفح لا خادم Python؟",
-                    d: "تشغيل النموذج داخل المتصفح (عبر transformers.js و ONNX Runtime Web) يجعل المشروع كله موقعًا ثابتًا — استضافةٌ مجانيةٌ للأبد، بلا تكلفة خادم، وبلا أن تلمس صورةُ المستخدم أي سيرفر."
-                  },
-                  {
-                    t: "حدٌّ متحفّظٌ مبنيٌّ على قياس",
-                    d: "في الاختبار سجّل شكلان مختلفان تمامًا (دائرةٌ حمراء ومربعٌ أزرق) تشابهًا بلغ <em>0.86</em>، بينما سجّلت صورتان لنفس الدائرة <em>0.98</em>. لذلك ضُبط الحدّ الافتراضي عند <strong>0.82</strong> — لا أقل — لتقليل النتائج الإيجابية الزائفة."
-                  }
-                ]
-              },
-              {
-                h: "الخصوصية أولًا",
-                p: "كل شيء — بما فيه التعرّف — يعمل داخل تبويب المتصفح. المُحفِّزات تُخزَّن محليًا على جهازك فقط، مع أزرار تصديرٍ واستيرادٍ لأخذ نسخةٍ احتياطية. لا صورةَ تُرفَع تغادر جهازك إطلاقًا."
-              }
-            ],
-            results: [
-              {
-                k: "التشغيل",
-                v: "100% في المتصفح"
-              },
-              {
-                k: "مفاتيح API",
-                v: "صفر"
-              },
-              {
-                k: "تكلفة الخادم",
-                v: "صفر"
-              },
-              {
-                k: "الحدّ الافتراضي",
-                v: "0.82"
-              }
-            ],
-            note: "موقعٌ ثابتٌ مفتوح المصدر — يعمل على أي متصفحٍ حديثٍ يدعم WebAssembly، على الحاسوب والهاتف."
-          },
-          en: {
-            lead: "See something → do something. Upload a reference photo, decide what happens when the camera sees it again — all inside your browser, no server, no key, and no photo ever leaving your device.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Upload a photo of anything you care about and pick the action: show an image, play a video, fetch the weather, or a text message. When a new frame looks similar enough to your reference — the action fires automatically."
-              },
-              {
-                h: "How it works",
-                flow: [
-                  "Reference photo",
-                  "CLIP encoder in-browser",
-                  "New frame → CLIP",
-                  "similarity ≥ threshold?",
-                  "Run the action"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Why CLIP instead of training a classifier per photo?",
-                    d: "A custom model needs many examples and a retrain every time you add something. CLIP produces a general-purpose fingerprint for any photo <strong>with zero training</strong> — upload it and it's usable immediately. The same idea behind modern reverse-image search."
-                  },
-                  {
-                    t: "Why the browser, not a Python backend?",
-                    d: "Running the model client-side (via transformers.js + ONNX Runtime Web) makes the whole project a static site — free to host forever, no server cost, and no user photo ever touching a server."
-                  },
-                  {
-                    t: "A conservative, measured threshold",
-                    d: "In testing, two completely different shapes (a red circle and a blue square) scored <em>0.86</em> similarity, while two photos of the same circle scored <em>0.98</em>. So the default is a conservative <strong>0.82</strong> — not lower — to cut false positives."
-                  }
-                ]
-              },
-              {
-                h: "Privacy first",
-                p: "Everything — recognition included — runs in the browser tab. Triggers are stored locally on your device only, with export/import to back them up. No uploaded photo ever leaves your device."
-              }
-            ],
-            results: [
-              {
-                k: "Runs",
-                v: "100% in-browser"
-              },
-              {
-                k: "API keys",
-                v: "None"
-              },
-              {
-                k: "Server cost",
-                v: "Zero"
-              },
-              {
-                k: "Default threshold",
-                v: "0.82"
-              }
-            ],
-            note: "An open-source static site — works on any modern browser with WebAssembly, on desktop and mobile."
-          }
+            ar: {
+                lead: "شاهِد شيئًا ← نفّذ إجراءً. ارفع صورةً مرجعية، وحدّد ما يحدث عندما تراها الكاميرا من جديد — كل ذلك داخل متصفحك، بلا خادم، وبلا مفتاح، وبلا أن تغادر صورةٌ جهازك.",
+                sections: [{
+                        h: "الفكرة",
+                        p: "ترفع صورةً لأي شيءٍ يهمّك، وتختار الإجراء: عرض صورة، تشغيل فيديو، جلب حالة الطقس، أو رسالةً نصية. وعندما تُشابه لقطةٌ جديدة صورتك المرجعية بدرجةٍ كافية — يُنفَّذ الإجراء تلقائيًا."
+                    },
+                    {
+                        h: "آلية العمل",
+                        flow: [
+                            "صورة مرجعية",
+                            "مُرمِّز CLIP في المتصفح",
+                            "لقطة جديدة → CLIP",
+                            "تشابه ≥ الحدّ؟",
+                            "نفّذ الإجراء"
+                        ]
+                    },
+                    {
+                        h: "القرارات التقنية",
+                        steps: [{
+                                t: "لماذا CLIP بدل تدريب مصنِّفٍ لكل صورة؟",
+                                d: "تدريب نموذجٍ مخصّص يحتاج أمثلةً كثيرة وإعادة تدريبٍ كلما أضفت شيئًا جديدًا. أما CLIP فيُنتج «بصمة» عامةً لأي صورة <strong>دون أي تدريب</strong> — ترفع الصورة فتصبح قابلةً للاستخدام فورًا. نفس مبدأ البحث بالصورة في الأدوات الحديثة."
+                            },
+                            {
+                                t: "لماذا المتصفح لا خادم Python؟",
+                                d: "تشغيل النموذج داخل المتصفح (عبر transformers.js و ONNX Runtime Web) يجعل المشروع كله موقعًا ثابتًا — استضافةٌ مجانيةٌ للأبد، بلا تكلفة خادم، وبلا أن تلمس صورةُ المستخدم أي سيرفر."
+                            },
+                            {
+                                t: "حدٌّ متحفّظٌ مبنيٌّ على قياس",
+                                d: "في الاختبار سجّل شكلان مختلفان تمامًا (دائرةٌ حمراء ومربعٌ أزرق) تشابهًا بلغ <em>0.86</em>، بينما سجّلت صورتان لنفس الدائرة <em>0.98</em>. لذلك ضُبط الحدّ الافتراضي عند <strong>0.82</strong> — لا أقل — لتقليل النتائج الإيجابية الزائفة."
+                            }
+                        ]
+                    },
+                    {
+                        h: "الخصوصية أولًا",
+                        p: "كل شيء — بما فيه التعرّف — يعمل داخل تبويب المتصفح. المُحفِّزات تُخزَّن محليًا على جهازك فقط، مع أزرار تصديرٍ واستيرادٍ لأخذ نسخةٍ احتياطية. لا صورةَ تُرفَع تغادر جهازك إطلاقًا."
+                    }
+                ],
+                results: [{
+                        k: "التشغيل",
+                        v: "100% في المتصفح"
+                    },
+                    {
+                        k: "مفاتيح API",
+                        v: "صفر"
+                    },
+                    {
+                        k: "تكلفة الخادم",
+                        v: "صفر"
+                    },
+                    {
+                        k: "الحدّ الافتراضي",
+                        v: "0.82"
+                    }
+                ],
+                note: "موقعٌ ثابتٌ مفتوح المصدر — يعمل على أي متصفحٍ حديثٍ يدعم WebAssembly، على الحاسوب والهاتف."
+            },
+            en: {
+                lead: "See something → do something. Upload a reference photo, decide what happens when the camera sees it again — all inside your browser, no server, no key, and no photo ever leaving your device.",
+                sections: [{
+                        h: "The idea",
+                        p: "Upload a photo of anything you care about and pick the action: show an image, play a video, fetch the weather, or a text message. When a new frame looks similar enough to your reference — the action fires automatically."
+                    },
+                    {
+                        h: "How it works",
+                        flow: [
+                            "Reference photo",
+                            "CLIP encoder in-browser",
+                            "New frame → CLIP",
+                            "similarity ≥ threshold?",
+                            "Run the action"
+                        ]
+                    },
+                    {
+                        h: "Technical decisions",
+                        steps: [{
+                                t: "Why CLIP instead of training a classifier per photo?",
+                                d: "A custom model needs many examples and a retrain every time you add something. CLIP produces a general-purpose fingerprint for any photo <strong>with zero training</strong> — upload it and it's usable immediately. The same idea behind modern reverse-image search."
+                            },
+                            {
+                                t: "Why the browser, not a Python backend?",
+                                d: "Running the model client-side (via transformers.js + ONNX Runtime Web) makes the whole project a static site — free to host forever, no server cost, and no user photo ever touching a server."
+                            },
+                            {
+                                t: "A conservative, measured threshold",
+                                d: "In testing, two completely different shapes (a red circle and a blue square) scored <em>0.86</em> similarity, while two photos of the same circle scored <em>0.98</em>. So the default is a conservative <strong>0.82</strong> — not lower — to cut false positives."
+                            }
+                        ]
+                    },
+                    {
+                        h: "Privacy first",
+                        p: "Everything — recognition included — runs in the browser tab. Triggers are stored locally on your device only, with export/import to back them up. No uploaded photo ever leaves your device."
+                    }
+                ],
+                results: [{
+                        k: "Runs",
+                        v: "100% in-browser"
+                    },
+                    {
+                        k: "API keys",
+                        v: "None"
+                    },
+                    {
+                        k: "Server cost",
+                        v: "Zero"
+                    },
+                    {
+                        k: "Default threshold",
+                        v: "0.82"
+                    }
+                ],
+                note: "An open-source static site — works on any modern browser with WebAssembly, on desktop and mobile."
+            }
         }
     },
-   {
+    {
         id: "pendulum-gravity-lab",
         categories: ["python-physics"],
         featured: true,
@@ -1050,124 +1159,118 @@ const projectsData = [{
             en: "Combines an ESP32 with a Panasonic AMG8833 (Grid-EYE) sensor that only outputs a raw 8x8 grid. The real work is the processing pipeline: bilinear interpolation up to a 64x64 grid, exponential temporal smoothing to cut sensor noise, a dynamic color gradient that auto-scales to each frame's min/max temperature, and partial-redraw rendering via TFT_eSPI for flicker-free ~14 FPS with no blocking delay in the main loop. The repo also documents an earlier, simpler prototype (Thermalv1) showing how the project evolved.",
         },
         article: {
-          ar: {
-            lead: "حساسٌ حراريٌّ 8×8 لا يُخرج سوى 64 قراءة — لكن بفضل الاستيفاء والتنعيم الزمني والتدرّج اللوني الديناميكي، يتحوّل إلى بثٍّ حراريٍّ متصلٍ وسلسٍ بمعدل ~14 إطارًا/ثانية.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "حساس AMG8833 مع لوحة ESP32 وشاشة TFT = كاميرا حراريةٌ صغيرةٌ مستقلة. الحساس نفسه يعطي شبكةً خشنة 8×8 فقط — والمشروع كله يدور حول ما يحدث <em>بعد</em> ذلك ليجعلها تبدو صورةً حقيقية."
-              },
-              {
-                h: "خط المعالجة",
-                flow: [
-                  "AMG8833 (8×8 قراءة)",
-                  "استيفاء ثنائي → 64×64",
-                  "تنعيم زمني أُسّي",
-                  "تدرّج لوني ديناميكي",
-                  "شاشة TFT"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "استيفاءٌ وتنعيمٌ زمني",
-                    d: "الاستيفاء ثنائي الخطية يحوّل الـ64 خلية إلى 4096 خلية، والتنعيم الأُسّي يكبح ضوضاء الحساس بين الإطارات — فتختفي الرجفة وتصبح الصورة سلسة."
-                  },
-                  {
-                    t: "ثغرةٌ حقيقية: التدرّج اللوني الثابت",
-                    d: "النسخة الأولى استخدمت عتباتٍ ثابتة (أزرق تحت 24°، أحمر فوق 34°) — تبدو صحيحةً في مدىً واحدٍ فقط. وجّه الحساس لشيءٍ أبرد أو أسخن فتنهار الصورة للونٍ واحد. الحلّ: تدرّجٌ يُعاد معايرته وفق أقل وأعلى حرارةٍ في <strong>هذا الإطار تحديدًا</strong>، فيبقى التباين ذا معنى في أي بيئة."
-                  },
-                  {
-                    t: "إعادة رسمٍ جزئيةٌ وتوقيتٌ غير معيق",
-                    d: "تُعاد رسم الخلايا التي تغيّرت قيمتها فقط، وبتوقيتٍ يعتمد على millis() لا على delay() المعيق — فيثبت المعدّل عند ~14 إطارًا/ثانية بلا تجميد."
-                  }
-                ]
-              },
-              {
-                h: "من نموذجٍ أوّليٍّ إلى نسخةٍ احترافية",
-                p: "بدأ المشروع بنموذجٍ يعمل ثم أُعيد بناؤه بالكامل: من درايفرٍ بطيءٍ إلى SPI عتاديٍّ أسرع، ومن شبكة 256 خلية إلى 4096، ومن ألوانٍ ثابتةٍ إلى تدرّجٍ ديناميكي — قصة تطوّرٍ حقيقيةٌ موثّقةٌ في المستودع."
-              }
-            ],
-            results: [
-              {
-                k: "دقة الحساس",
-                v: "8×8"
-              },
-              {
-                k: "بعد الاستيفاء",
-                v: "64×64"
-              },
-              {
-                k: "المعدّل",
-                v: "~14 إطار/ث"
-              },
-              {
-                k: "التدرّج",
-                v: "ديناميكي"
-              }
-            ],
-            note: "الاستيفاء يجعل العرض أنعم لا الحساس أدق — حساسٌ منخفض الدقة من فئة Grid-EYE، لا تصويرٌ حراريٌّ بجودة FLIR. الكود مفتوحٌ بالكامل."
-          },
-          en: {
-            lead: "An 8×8 thermal sensor outputs just 64 readings — but through interpolation, temporal smoothing and a dynamic color gradient, it becomes a fluid, continuous thermal feed at ~14 FPS.",
-            sections: [
-              {
-                h: "The idea",
-                p: "An AMG8833 sensor + an ESP32 + a TFT screen = a small standalone thermal camera. The sensor only gives a coarse 8×8 grid — the whole project is what happens <em>after</em> that to make it look like a real image."
-              },
-              {
-                h: "The pipeline",
-                flow: [
-                  "AMG8833 (8×8 readings)",
-                  "Bilinear interp → 64×64",
-                  "Exponential smoothing",
-                  "Dynamic color mapping",
-                  "TFT screen"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Interpolation and temporal smoothing",
-                    d: "Bilinear interpolation turns 64 cells into 4,096, and exponential smoothing suppresses sensor noise between frames — so jitter disappears and the image flows."
-                  },
-                  {
-                    t: "A real bug: fixed color thresholds",
-                    d: "The first version used hard-coded bands (blue below 24°, red above 34°) — only right for one range. Point it at something colder or hotter and the image collapses to one color. The fix: a gradient rescaled to <strong>this frame's</strong> actual min/max, so contrast stays meaningful in any environment."
-                  },
-                  {
-                    t: "Partial redraw and non-blocking timing",
-                    d: "Only cells whose value changed are re-painted, with millis()-based pacing instead of a blocking delay() — so the rate holds at ~14 FPS with no freeze."
-                  }
-                ]
-              },
-              {
-                h: "From prototype to Pro",
-                p: "It started as a working prototype then was fully rebuilt: from a slow driver to faster hardware SPI, from a 256-cell grid to 4,096, and from fixed colors to a dynamic gradient — a real evolution story documented in the repo."
-              }
-            ],
-            results: [
-              {
-                k: "Sensor",
-                v: "8×8"
-              },
-              {
-                k: "After interpolation",
-                v: "64×64"
-              },
-              {
-                k: "Frame rate",
-                v: "~14 FPS"
-              },
-              {
-                k: "Gradient",
-                v: "Dynamic"
-              }
-            ],
-            note: "Interpolation makes the display smoother, not the sensor sharper — a low-res Grid-EYE class sensor, not FLIR-grade imaging. Fully open source."
-          }
+            ar: {
+                lead: "حساسٌ حراريٌّ 8×8 لا يُخرج سوى 64 قراءة — لكن بفضل الاستيفاء والتنعيم الزمني والتدرّج اللوني الديناميكي، يتحوّل إلى بثٍّ حراريٍّ متصلٍ وسلسٍ بمعدل ~14 إطارًا/ثانية.",
+                sections: [{
+                        h: "الفكرة",
+                        p: "حساس AMG8833 مع لوحة ESP32 وشاشة TFT = كاميرا حراريةٌ صغيرةٌ مستقلة. الحساس نفسه يعطي شبكةً خشنة 8×8 فقط — والمشروع كله يدور حول ما يحدث <em>بعد</em> ذلك ليجعلها تبدو صورةً حقيقية."
+                    },
+                    {
+                        h: "خط المعالجة",
+                        flow: [
+                            "AMG8833 (8×8 قراءة)",
+                            "استيفاء ثنائي → 64×64",
+                            "تنعيم زمني أُسّي",
+                            "تدرّج لوني ديناميكي",
+                            "شاشة TFT"
+                        ]
+                    },
+                    {
+                        h: "القرارات التقنية",
+                        steps: [{
+                                t: "استيفاءٌ وتنعيمٌ زمني",
+                                d: "الاستيفاء ثنائي الخطية يحوّل الـ64 خلية إلى 4096 خلية، والتنعيم الأُسّي يكبح ضوضاء الحساس بين الإطارات — فتختفي الرجفة وتصبح الصورة سلسة."
+                            },
+                            {
+                                t: "ثغرةٌ حقيقية: التدرّج اللوني الثابت",
+                                d: "النسخة الأولى استخدمت عتباتٍ ثابتة (أزرق تحت 24°، أحمر فوق 34°) — تبدو صحيحةً في مدىً واحدٍ فقط. وجّه الحساس لشيءٍ أبرد أو أسخن فتنهار الصورة للونٍ واحد. الحلّ: تدرّجٌ يُعاد معايرته وفق أقل وأعلى حرارةٍ في <strong>هذا الإطار تحديدًا</strong>، فيبقى التباين ذا معنى في أي بيئة."
+                            },
+                            {
+                                t: "إعادة رسمٍ جزئيةٌ وتوقيتٌ غير معيق",
+                                d: "تُعاد رسم الخلايا التي تغيّرت قيمتها فقط، وبتوقيتٍ يعتمد على millis() لا على delay() المعيق — فيثبت المعدّل عند ~14 إطارًا/ثانية بلا تجميد."
+                            }
+                        ]
+                    },
+                    {
+                        h: "من نموذجٍ أوّليٍّ إلى نسخةٍ احترافية",
+                        p: "بدأ المشروع بنموذجٍ يعمل ثم أُعيد بناؤه بالكامل: من درايفرٍ بطيءٍ إلى SPI عتاديٍّ أسرع، ومن شبكة 256 خلية إلى 4096، ومن ألوانٍ ثابتةٍ إلى تدرّجٍ ديناميكي — قصة تطوّرٍ حقيقيةٌ موثّقةٌ في المستودع."
+                    }
+                ],
+                results: [{
+                        k: "دقة الحساس",
+                        v: "8×8"
+                    },
+                    {
+                        k: "بعد الاستيفاء",
+                        v: "64×64"
+                    },
+                    {
+                        k: "المعدّل",
+                        v: "~14 إطار/ث"
+                    },
+                    {
+                        k: "التدرّج",
+                        v: "ديناميكي"
+                    }
+                ],
+                note: "الاستيفاء يجعل العرض أنعم لا الحساس أدق — حساسٌ منخفض الدقة من فئة Grid-EYE، لا تصويرٌ حراريٌّ بجودة FLIR. الكود مفتوحٌ بالكامل."
+            },
+            en: {
+                lead: "An 8×8 thermal sensor outputs just 64 readings — but through interpolation, temporal smoothing and a dynamic color gradient, it becomes a fluid, continuous thermal feed at ~14 FPS.",
+                sections: [{
+                        h: "The idea",
+                        p: "An AMG8833 sensor + an ESP32 + a TFT screen = a small standalone thermal camera. The sensor only gives a coarse 8×8 grid — the whole project is what happens <em>after</em> that to make it look like a real image."
+                    },
+                    {
+                        h: "The pipeline",
+                        flow: [
+                            "AMG8833 (8×8 readings)",
+                            "Bilinear interp → 64×64",
+                            "Exponential smoothing",
+                            "Dynamic color mapping",
+                            "TFT screen"
+                        ]
+                    },
+                    {
+                        h: "Technical decisions",
+                        steps: [{
+                                t: "Interpolation and temporal smoothing",
+                                d: "Bilinear interpolation turns 64 cells into 4,096, and exponential smoothing suppresses sensor noise between frames — so jitter disappears and the image flows."
+                            },
+                            {
+                                t: "A real bug: fixed color thresholds",
+                                d: "The first version used hard-coded bands (blue below 24°, red above 34°) — only right for one range. Point it at something colder or hotter and the image collapses to one color. The fix: a gradient rescaled to <strong>this frame's</strong> actual min/max, so contrast stays meaningful in any environment."
+                            },
+                            {
+                                t: "Partial redraw and non-blocking timing",
+                                d: "Only cells whose value changed are re-painted, with millis()-based pacing instead of a blocking delay() — so the rate holds at ~14 FPS with no freeze."
+                            }
+                        ]
+                    },
+                    {
+                        h: "From prototype to Pro",
+                        p: "It started as a working prototype then was fully rebuilt: from a slow driver to faster hardware SPI, from a 256-cell grid to 4,096, and from fixed colors to a dynamic gradient — a real evolution story documented in the repo."
+                    }
+                ],
+                results: [{
+                        k: "Sensor",
+                        v: "8×8"
+                    },
+                    {
+                        k: "After interpolation",
+                        v: "64×64"
+                    },
+                    {
+                        k: "Frame rate",
+                        v: "~14 FPS"
+                    },
+                    {
+                        k: "Gradient",
+                        v: "Dynamic"
+                    }
+                ],
+                note: "Interpolation makes the display smoother, not the sensor sharper — a low-res Grid-EYE class sensor, not FLIR-grade imaging. Fully open source."
+            }
         }
     },
     {
