@@ -151,7 +151,7 @@ const projectsData = [{
         id: "smart-door-guardian",
         categories: ["raspberrypi", "python-ai"],
         featured: false,
-        image: "assets/images/guardian-gate-hero.png",
+        image: "/assets/images/guardian-gate-hero.png",
         demoUrl: "",
         codeUrl: "https://github.com/eahmeddarwish/smart-door-guardian",
         tags: ["Python", "OpenCV", "Raspberry Pi", "Face Recognition", "IoT"],
