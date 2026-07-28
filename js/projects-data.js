@@ -1253,7 +1253,7 @@ const projectsData = [
         id: "pendulum-gravity-lab",
         categories: ["python-physics"],
         featured: true,
-        image: "assets/images/pendulum-gravity-lab.jpg",
+        image: "assets/images/pendulum-gravity-lab.png",
         demoUrl: "https://huggingface.co/spaces/engdarwish/pendulum-gravity-lab",
         codeUrl: "https://github.com/eahmeddarwish/pendulum-gravity-lab",
         tags: ["Python", "OpenCV", "Gradio", "NumPy", "SciPy"],
