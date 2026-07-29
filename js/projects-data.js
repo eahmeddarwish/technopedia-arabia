@@ -1,16 +1,9 @@
 /* ==========================================================================
    TECHNOPEDIA ARABIA — Projects data
-   Edit / add projects here. Each project needs:
-   - id: unique slug (no spaces)
-   - categories: array from ["arduino","raspberrypi","python-ai","robotics","iot"]
-   - featured: true = shows on the homepage
-   - image: path to a thumbnail (replace project-placeholder.svg with your own)
-   - demoUrl / codeUrl: leave "" to hide that link button
-   - tags: short tech labels shown on the card
-   - title / desc / details: each has {ar, en}
-
-   Ordered best-to-least by real engineering depth, documentation quality,
-   and global/professional polish.
+   Each project: id, categories (["arduino","raspberrypi","python-ai","robotics","iot"]),
+   featured (true = homepage), image, demoUrl/codeUrl (""=hidden), tags,
+   title/desc/details/article each {ar,en}.
+   Ordered best-to-least by engineering depth, documentation, and polish.
    ========================================================================== */
 
 const projectsData = [
@@ -1500,6 +1493,146 @@ const projectsData = [
         }
     },
     {
+        "id": "self-balancing-robot",
+        "categories": [
+            "arduino",
+            "robotics"
+        ],
+        "featured": false,
+        "image": "assets/images/self-balancing-robot.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/self-balancing-robot",
+        "tags": [
+            "Arduino",
+            "C++",
+            "MPU6050",
+            "PID",
+            "Control Systems"
+        ],
+        "title": {
+            "ar": "روبوت التوازن الذاتي",
+            "en": "Self-Balancing Robot"
+        },
+        "desc": {
+            "ar": "روبوتٌ بعجلتين يوازن نفسه كبندولٍ مقلوب: حسّاس MPU6050 يقرأ زاوية الميل عبر معالج الحركة الرقمي (DMP)، ومتحكّم PID يحرّك الموتورين (عبر L298N) ليقاوم أي ميلان.",
+            "en": "A two-wheeled robot that balances itself like an inverted pendulum: an MPU6050 reads the tilt angle via its on-chip Digital Motion Processor (DMP), and a PID controller drives both motors (through an L298N) to counter any lean."
+        },
+        "details": {
+            "ar": "أُعيدت هيكلة الكود إلى مستوى احترافي: كل الإعدادات (نقطة الاتزان، ثوابت PID، الأطراف، ومعايرة الموتورين) في بلوكٍ واحدٍ في الأعلى بدل الأرقام المبعثرة، وحلقة التحكّم تُشغّل PID والموتورات أثناء انتظار حزمة الحسّاس التالية لتبقى سريعة. زاوية الميل تأتي من الدمج داخل الشريحة (جيرو + تسارع) بدل مرشّحٍ يدوي. المكتبات الطرفية (MPU6050 و PID) موثّقة كـ dependencies تُثبَّت من مدير المكتبات، والمُعِين الصغير LMotorController مُرفقٌ بملف NOTICE ينسبه لأصحابه الأصليين — بلا نسبه لي.",
+            "en": "The code was restructured to a professional level: every setting (the upright set-point, PID gains, pins, and per-motor trim) lives in one config block at the top instead of scattered magic numbers, and the control loop runs the PID + motors while waiting on the next IMU packet to stay fast. The tilt angle comes from on-chip fusion (gyro + accel) rather than a hand-rolled filter. The third-party libraries (MPU6050, PID) are documented as Library-Manager dependencies, and the small LMotorController helper ships with a NOTICE crediting its original authors — not claimed as mine."
+        },
+        "article": {
+            "ar": {
+                "lead": "روبوتٌ بعجلتين يقف منتصبًا وحده بحلقة PID مغلقةٍ حول زاوية الميل من حسّاس MPU6050 — كودٌ أُعيدت هيكلته وثوابته مضبوطةٌ على الهيكل الحقيقي.",
+                "sections": [
+                    {
+                        "h": "الفكرة",
+                        "p": "بندولٌ مقلوبٌ بعجلتين: أي ميلانٍ يُقاس فورًا وتُحرَّك العجلتان في اتجاهه لتصحيحه. الزاوية تأتي من معالج الحركة الرقمي داخل الـ MPU6050 الذي يدمج الجيرو والتسارع في ميلٍ ثابتٍ بلا انجراف."
+                    },
+                    {
+                        "h": "المعمارية",
+                        "flow": [
+                            "MPU6050 (DMP) يعطي زاوية الميل",
+                            "PID يقارنها بنقطة الاتزان",
+                            "خرج PID → PWM للموتورين",
+                            "L298N يحرّك العجلتين لتصحيح الميل"
+                        ]
+                    },
+                    {
+                        "h": "القرارات التقنية",
+                        "steps": [
+                            {
+                                "t": "الدمج داخل الشريحة بدل مرشّحٍ يدوي",
+                                "d": "استخدام DMP داخل الحسّاس يعطي زاوية ميلٍ مستقرة دون ضبط مرشّح تكميلي/كالمان يدويًا على الأردوينو."
+                            },
+                            {
+                                "t": "بلوك إعدادات واحد",
+                                "d": "نقطة الاتزان والثوابت والأطراف ومعايرة الموتورين كلها في الأعلى — بلا أرقامٍ سحريةٍ متناثرةٍ في المنطق، فالضبط لهيكلٍ جديدٍ يصير سهلًا."
+                            },
+                            {
+                                "t": "نسبةٌ صادقة للمكتبات",
+                                "d": "MPU6050 و PID تُثبَّت من مدير المكتبات، والمُعِين LMotorController مُرفقٌ بملف NOTICE ينسبه لأصحابه — لا يُقدَّم كشغلٍ أصليٍّ لي."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "حدودٌ صادقة",
+                        "p": "الثوابت مضبوطةٌ لهذا الهيكل تحديدًا (وزن، عجلات، بطارية) فهي نقطة بداية لا قاعدة عامة، وإزاحات الجيرو خاصةٌ بكل شريحة (شغّل سكربت المعايرة). اتّزانٌ فقط بلا تحكّمٍ عن بُعدٍ بعد، والـ L298N يكفي للتعلّم لا لبناءٍ جادّ."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "حلقة التحكّم",
+                        "v": "PID (مضبوط)"
+                    },
+                    {
+                        "k": "الحسّاس",
+                        "v": "MPU6050 DMP"
+                    },
+                    {
+                        "k": "المحاور",
+                        "v": "زاوية الميل"
+                    }
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. المكتبات الطرفية منسوبةٌ لأصحابها الأصليين في ملف NOTICE."
+            },
+            "en": {
+                "lead": "A two-wheeled robot that stands upright on its own with a PID loop closed around the tilt angle from an MPU6050 — restructured code with gains tuned on the real chassis.",
+                "sections": [
+                    {
+                        "h": "The idea",
+                        "p": "A two-wheeled inverted pendulum: any lean is measured instantly and the wheels drive into it to correct. The angle comes from the MPU6050's on-chip Digital Motion Processor, which fuses gyro + accel into a drift-free tilt."
+                    },
+                    {
+                        "h": "Architecture",
+                        "flow": [
+                            "MPU6050 (DMP) gives the tilt angle",
+                            "PID compares it to the set-point",
+                            "PID output → motor PWM",
+                            "L298N drives both wheels to correct the lean"
+                        ]
+                    },
+                    {
+                        "h": "Technical decisions",
+                        "steps": [
+                            {
+                                "t": "On-chip fusion over a manual filter",
+                                "d": "Using the MPU6050's DMP gives a stable tilt angle without hand-tuning a complementary/Kalman filter on the Arduino."
+                            },
+                            {
+                                "t": "One config block",
+                                "d": "Set-point, gains, pins, and per-motor trim all live at the top — no magic numbers scattered through the logic, so retuning for a new chassis is easy."
+                            },
+                            {
+                                "t": "Honest library attribution",
+                                "d": "MPU6050 and PID install from the Library Manager, and the LMotorController helper ships with a NOTICE crediting its authors — it's not presented as original work of mine."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "Honest limitations",
+                        "p": "The gains are tuned to this specific chassis (weight, wheels, battery), so they're a starting point, not universal, and gyro offsets are per-chip (run the calibration sketch). Balance only, no remote control yet, and an L298N is fine for learning but not a serious build."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "Control loop",
+                        "v": "PID (tuned)"
+                    },
+                    {
+                        "k": "Sensor",
+                        "v": "MPU6050 DMP"
+                    },
+                    {
+                        "k": "Axis",
+                        "v": "Tilt angle"
+                    }
+                ],
+                "note": "An open-source educational project. The third-party libraries are credited to their original authors in a NOTICE file."
+            }
+        }
+    },
+    {
         "id": "universal-market-predictor-deluxe",
         "categories": [
             "python-ai"
@@ -1931,6 +2064,146 @@ const projectsData = [
         }
     },
     {
+        "id": "pid-motor-control",
+        "categories": [
+            "arduino",
+            "robotics"
+        ],
+        "featured": false,
+        "image": "assets/images/pid-motor-control.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/pid-motor-control",
+        "tags": [
+            "Arduino",
+            "C++",
+            "PID",
+            "Encoder",
+            "Control Systems"
+        ],
+        "title": {
+            "ar": "التحكّم في الموتور بـ PID",
+            "en": "PID Motor Control"
+        },
+        "desc": {
+            "ar": "تطبيقان للتحكّم في الموضع بحلقةٍ مغلقة: موتور DC مع encoder رباعي الطور، وموتور stepper بـ PID مكتوبٍ يدويًا. تضبط الهدف بمقاومةٍ متغيّرة فيتبعه المحور.",
+            "en": "Two takes on closed-loop position control: a DC motor with a quadrature encoder, and a stepper with a hand-written PID. Set the target with a potentiometer and the shaft follows."
+        },
+        "details": {
+            "ar": "ريبو واحد بمشروعين نظيفين. سكربت موتور DC يفكّ الـ encoder فكًّا رباعيًا كاملًا على المقاطعات فلا تُفقَد نبضاتٌ عند السرعة، ويرفع تردد الـ PWM إلى 31 كيلوهرتز لإسكات طنين الموتور. وسكربت الـ stepper يحسب حدود P وI وD يدويًا لتظهر معادلة المتحكّم بوضوحٍ لا مخبّأةً في مكتبة. الأطراف والثوابت في بلوكاتٍ واضحة، والملاحظات التقنية موثّقة (بما فيها حدود التطوير مثل حماية التشبّع).",
+            "en": "One repo, two clean projects. The DC-motor sketch does a full quadrature decode on interrupts so counts aren't lost at speed, and raises the PWM to 31 kHz to silence motor whine. The stepper sketch computes the P, I, and D terms by hand so the controller's maths is visible, not hidden in a library. Pins and constants sit in clear blocks, and the technical notes are documented (including future work such as anti-windup)."
+        },
+        "article": {
+            "ar": {
+                "lead": "التحكّم في الموضع بحلقةٍ مغلقة على موتورين مختلفين — DC بـ encoder، و stepper بـ PID مكتوبٍ يدويًا — تدير الهدف بمقاومةٍ فيتبعه المحور.",
+                "sections": [
+                    {
+                        "h": "الفكرة",
+                        "p": "تضبط موضعًا هدفًا بمقاومةٍ متغيّرة، وحسّاسٌ يبلّغ الموضع الحقيقي، ومتحكّم PID يدير الموتور حتى يتطابقا. طريقتان لنفس المبدأ: موتور DC بـ encoder، وموتور stepper."
+                    },
+                    {
+                        "h": "كيف يعمل",
+                        "flow": [
+                            "مقاومةٌ متغيّرة تحدّد الموضع الهدف",
+                            "encoder (أو خطوات) يبلّغ الموضع الحالي",
+                            "PID يحسب الخرج",
+                            "اتجاه + PWM (أو خطوة) للموتور"
+                        ]
+                    },
+                    {
+                        "h": "القرارات التقنية",
+                        "steps": [
+                            {
+                                "t": "فكّ encoder رباعي على المقاطعات",
+                                "d": "يُفكّ الـ encoder من جدول انتقالاتٍ رباعي على مقاطعات تغيّر الطرف، فلا تُفقَد نبضاتٌ عند السرعة العالية."
+                            },
+                            {
+                                "t": "PWM بتردد 31 كيلوهرتز",
+                                "d": "تعديلٌ من سطرٍ واحدٍ على Timer1 يرفع تردد الـ PWM فوق مدى السمع، فيختفي طنين الموتور الحاد."
+                            },
+                            {
+                                "t": "PID ظاهرٌ لا مخبّأ",
+                                "d": "سكربت الـ stepper يحسب P وI وD يدويًا فيصير المتحكّم أداةً تعليميةً واضحةً لا صندوقًا أسود."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "حدودٌ صادقة",
+                        "p": "الثوابت تحتاج ضبطًا لكل موتورٍ وحملٍ وتعشيق، وبلا حماية تشبّع (wind-up) للتكامل في سكربت الـ stepper بعد، وتغذية المقاومة من أطرافٍ تناظرية في سكربت الـ stepper للتجربة فقط (الأفضل أطراف 5V/GND الحقيقية)."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "أنواع الموتورات",
+                        "v": "DC + Stepper"
+                    },
+                    {
+                        "k": "التغذية الراجعة",
+                        "v": "encoder رباعي"
+                    },
+                    {
+                        "k": "تردد الـ PWM",
+                        "v": "31 kHz"
+                    }
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. يعتمد على مكتبتَي PID و AccelStepper من مدير المكتبات."
+            },
+            "en": {
+                "lead": "Closed-loop position control on two different motors — a DC motor with an encoder, and a stepper with a hand-written PID — turn a knob and the shaft follows.",
+                "sections": [
+                    {
+                        "h": "The idea",
+                        "p": "You set a target position with a potentiometer, a sensor reports the real position, and a PID controller drives the motor until they match. Two takes on the same principle: a DC motor with an encoder, and a stepper."
+                    },
+                    {
+                        "h": "How it works",
+                        "flow": [
+                            "A potentiometer sets the target position",
+                            "An encoder (or steps) reports the current position",
+                            "PID computes the output",
+                            "Direction + PWM (or a step) to the motor"
+                        ]
+                    },
+                    {
+                        "h": "Technical decisions",
+                        "steps": [
+                            {
+                                "t": "Interrupt-driven quadrature decode",
+                                "d": "The encoder is decoded from a 4-state transition table on pin-change interrupts, so counts aren't lost at high speed."
+                            },
+                            {
+                                "t": "31 kHz PWM",
+                                "d": "A one-line Timer1 change pushes the PWM frequency above the audible range, removing the motor's high-pitched whine."
+                            },
+                            {
+                                "t": "PID made visible",
+                                "d": "The stepper sketch computes P, I, and D by hand, making the controller a clear teaching artifact rather than a black box."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "Honest limitations",
+                        "p": "Gains need tuning per motor, load, and gearing; there's no anti-windup on the hand-written stepper integral yet; and the pot-as-power hack in the stepper sketch is for breadboarding only (prefer the real 5V/GND rails)."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "Motor types",
+                        "v": "DC + Stepper"
+                    },
+                    {
+                        "k": "Feedback",
+                        "v": "Quadrature encoder"
+                    },
+                    {
+                        "k": "PWM frequency",
+                        "v": "31 kHz"
+                    }
+                ],
+                "note": "An open-source educational project. Uses the PID and AccelStepper libraries from the Library Manager."
+            }
+        }
+    },
+    {
         "id": "voice-chess-pro",
         "categories": [
             "python-ai"
@@ -2072,6 +2345,146 @@ const projectsData = [
                     }
                 ],
                 "note": "Fully open source, running in the browser via Gradio — the code is available to run and modify."
+            }
+        }
+    },
+    {
+        "id": "color-sorting-machine",
+        "categories": [
+            "arduino",
+            "robotics"
+        ],
+        "featured": false,
+        "image": "assets/images/color-sorting-machine.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/color-sorting-machine",
+        "tags": [
+            "Arduino",
+            "C++",
+            "TCS3200",
+            "Servo",
+            "Mechatronics"
+        ],
+        "title": {
+            "ar": "آلة الفرز بالألوان",
+            "en": "Color Sorting Machine"
+        },
+        "desc": {
+            "ar": "آلة ميكاترونكس تقرأ لون الجسم بحسّاس TCS3200 وتوجّهه للصندوق المطابق بذراعَي servo: واحدة تُدخِله تحت الحسّاس، وأخرى تدفعه للصندوق. الألوان تُطابَق بجدولٍ قابلٍ للتعديل.",
+            "en": "A mechatronics rig that reads an object's color with a TCS3200 sensor and routes it to the matching bin with two servos: one brings it under the sensor, the other flicks it toward the bin. Colors are matched against an editable table."
+        },
+        "details": {
+            "ar": "نُظِّف الكود إلى مستوى احترافي: استُبدلت سلسلة if/else الطويلة بجدول ألوانٍ واحدٍ (اسم اللون + زاوية الصندوق + نوافذ R/G/B) فإضافة لونٍ جديدٍ صارت سطرًا واحدًا، وحركة الـ servo صارت سلسةً درجةً درجة، وطريقة المعايرة موثّقة. تغذية الحسّاس من أطرافٍ تناظرية مُعلَّمةٌ صراحةً كحلٍّ للتجربة مع البديل النظيف.",
+            "en": "The code was cleaned to a professional level: the long if/else chain became a single color table (name + bin angle + R/G/B windows), so teaching it a new color is one line; the servo motion is smooth (degree by degree); and calibration is documented. The sensor's power-from-analog-pins is explicitly flagged as a breadboard convenience with the clean-build alternative."
+        },
+        "article": {
+            "ar": {
+                "lead": "آلة فرزٍ صغيرة تقرأ لون الجسم وتوجّهه للصندوق الصحيح — بجدول ألوانٍ قابلٍ للتعديل بدل سلسلة شروطٍ طويلة.",
+                "sections": [
+                    {
+                        "h": "الفكرة",
+                        "p": "ذراع servo تُدخِل الجسم تحت حسّاس TCS3200 الذي يقرأ استجابة الأحمر والأخضر والأزرق، ثم تدفعه ذراعٌ ثانيةٌ نحو الصندوق المطابق. الألوان تُعرَّف بجدولٍ صغيرٍ قابلٍ للتعديل."
+                    },
+                    {
+                        "h": "كيف يعمل",
+                        "flow": [
+                            "الذراع تُدخِل الجسم تحت الحسّاس",
+                            "قراءة R/G/B عبر مرشّحات S2/S3",
+                            "مطابقةٌ بجدول الألوان",
+                            "الذراع الثانية تدفعه للصندوق الصحيح"
+                        ]
+                    },
+                    {
+                        "h": "القرارات التقنية",
+                        "steps": [
+                            {
+                                "t": "جدولٌ لا سلسلة شروط",
+                                "d": "انتقلت الألوان من سلسلة if/else طويلة إلى مصفوفة struct واحدة، فإضافة لونٍ أو إعادة ضبطه صارت سطرًا واحدًا."
+                            },
+                            {
+                                "t": "حركة servo سلسة",
+                                "d": "تتحرّك الذراع درجةً واحدةً في كل مرة بدل القفز، وهو ألطف على الميكانيكا وعلى الجسم."
+                            },
+                            {
+                                "t": "حلّ التغذية موثّق",
+                                "d": "تُغذَّى أطراف VCC/GND للحسّاس من أطرافٍ تناظريةٍ للتجربة، مُعلَّمًا في الكود مع البديل النظيف (أطراف 5V/GND الحقيقية)."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "حدودٌ صادقة",
+                        "p": "حسّاسٌ للإضاءة (يجب إعادة المعايرة لو تغيّر الضوء)، ومجموعة ألوانٍ ثابتةٌ في الجدول (الباقي 'غير معروف')، وحركةٌ بالتوقيت (delay) فزمن الدورة ثابتٌ لا مغلقٌ بالحسّاس."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "الحسّاس",
+                        "v": "TCS3200"
+                    },
+                    {
+                        "k": "الأذرع",
+                        "v": "2 servo"
+                    },
+                    {
+                        "k": "المطابقة",
+                        "v": "جدولٌ قابلٌ للتعديل"
+                    }
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. يعتمد على مكتبة Servo المدمجة."
+            },
+            "en": {
+                "lead": "A small sorting machine that reads an object's color and routes it to the right bin — with an editable color table instead of a long chain of conditions.",
+                "sections": [
+                    {
+                        "h": "The idea",
+                        "p": "A servo arm brings an object under a TCS3200 color sensor, which reads its red/green/blue response, then a second servo flicks it toward the matching bin. Colors are defined in a small, editable table."
+                    },
+                    {
+                        "h": "How it works",
+                        "flow": [
+                            "The arm brings the object under the sensor",
+                            "Read R/G/B via the S2/S3 filters",
+                            "Match against the color table",
+                            "The second servo flicks it to the right bin"
+                        ]
+                    },
+                    {
+                        "h": "Technical decisions",
+                        "steps": [
+                            {
+                                "t": "A table, not an if-ladder",
+                                "d": "Colors moved from a long if/else chain to a single struct array, so adding or retuning a color is one line."
+                            },
+                            {
+                                "t": "Smooth servo motion",
+                                "d": "The arm moves one degree at a time instead of jumping, which is gentler on the mechanism and the object."
+                            },
+                            {
+                                "t": "Documented power hack",
+                                "d": "The sensor's VCC/GND are driven from analog pins for breadboarding, flagged in the code with the clean-build alternative (real 5V/GND rails)."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "Honest limitations",
+                        "p": "Lighting-sensitive (recalibrate if the ambient light changes), a fixed color set in the table (everything else is 'unknown'), and timing-based motion (delay), so the cycle time is fixed rather than sensor-closed."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "Sensor",
+                        "v": "TCS3200"
+                    },
+                    {
+                        "k": "Arms",
+                        "v": "2 servos"
+                    },
+                    {
+                        "k": "Matching",
+                        "v": "Editable table"
+                    }
+                ],
+                "note": "An open-source educational project. Uses the built-in Servo library."
             }
         }
     },
@@ -2372,6 +2785,146 @@ const projectsData = [
         }
     },
     {
+        "id": "wearable-activity-detector",
+        "categories": [
+            "arduino",
+            "iot"
+        ],
+        "featured": false,
+        "image": "assets/images/wearable-activity-detector.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/wearable-activity-detector",
+        "tags": [
+            "Arduino",
+            "C++",
+            "MPU6050",
+            "Accelerometer",
+            "Wearables"
+        ],
+        "title": {
+            "ar": "كاشف النشاط المحمول",
+            "en": "Wearable Activity Detector"
+        },
+        "desc": {
+            "ar": "جهازٌ محمول يقرأ تسارع MPU6050 ويصنّف النشاط تصنيفًا خشنًا (وقوف / سقوط / حركة) من متوسّط مقدار التسارع، مع إشارةٍ بمصابيح وجرس.",
+            "en": "A wearable that reads an MPU6050 accelerometer and classifies coarse activity (Stand / Drop / Moving) from the average acceleration magnitude, with LED + buzzer feedback."
+        },
+        "details": {
+            "ar": "نُظِّف الكود وأُصلح فيه باجٌ حقيقي: المتوسّط ما كانش بيتصفّر بين القراءات فكان بينحرف لأعلى مع الوقت — دلوقتي كل نافذةٍ تبدأ من الصفر. العتبات صارت ثوابت مسمّاةً قابلةً للمعايرة، وإشارة المصابيح صارت غير حاجزة بـ millis(). المشروع يوثّق صراحةً إنه مُصنِّف عتباتٍ ساذجٌ لا تعلّم آلي.",
+            "en": "The code was cleaned and a real bug was fixed: the running average was never reset between reads, so it drifted upward over time — now each window starts at zero. The thresholds became named, calibratable constants, and the LED feedback became non-blocking via millis(). The project states plainly that it's a naive threshold classifier, not machine learning."
+        },
+        "article": {
+            "ar": {
+                "lead": "جهازٌ محمول يصنّف النشاط من تسارع MPU6050 — نُظِّف الكود وأُصلح فيه باجٌ حقيقيٌّ كان يجعل المتوسّط ينحرف مع الوقت.",
+                "sections": [
+                    {
+                        "h": "الفكرة",
+                        "p": "بما أن الجاذبية وحدها تُقرأ ~9.8 م/ث²، يبقى الجهاز الساكن قرب تلك القيمة بينما تدفعها الحركة أعلى. فيُحسَب متوسّط مقدار التسارع خلال نافذةٍ قصيرة، وتُطابِق عتباتٌ بسيطةٌ القراءة إلى وقوف / سقوط / حركة."
+                    },
+                    {
+                        "h": "كيف يعمل",
+                        "flow": [
+                            "قراءة تسارع MPU6050",
+                            "متوسّط المقدار على 10 عيّنات",
+                            "مطابقةٌ بعتباتٍ مضبوطة",
+                            "مصابيح + جرس حسب الحالة"
+                        ]
+                    },
+                    {
+                        "h": "القرارات التقنية",
+                        "steps": [
+                            {
+                                "t": "إصلاح باجٍ حقيقي",
+                                "d": "النسخة الأصلية لم تصفّر المتوسّط بين القراءات فكان ينحرف لأعلى مع الوقت. الآن تبدأ كل نافذةٍ من الصفر — تصحيحٌ موثّقٌ في الكود."
+                            },
+                            {
+                                "t": "وميضٌ غير حاجز",
+                                "d": "تتبدّل المصابيح على فترة millis() بدل delay()، فيستمر التصنيف في أخذ العيّنات بسلاسة."
+                            },
+                            {
+                                "t": "عتباتٌ كثوابت مسمّاة",
+                                "d": "انتقلت الأرقام السحرية إلى بلوك إعداداتٍ واضحٍ مخصّصٍ للمعايرة."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "حدودٌ صادقة",
+                        "p": "مُصنِّف عتباتٍ ساذجٌ لا تعلّم آلي — النوافذ الضيّقة هشّةٌ وتلتبس مع تغيّر الوضعية، ويعتمد على مكان الارتداء (المعصم يختلف عن الجيب)، وحالاتٌ خشنةٌ فقط بلا عدّ خطوات."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "الحالات",
+                        "v": "وقوف/سقوط/حركة"
+                    },
+                    {
+                        "k": "نافذة المتوسّط",
+                        "v": "10 عيّنات"
+                    },
+                    {
+                        "k": "باجٌ أُصلح",
+                        "v": "انحراف المتوسّط"
+                    }
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. يعتمد على مكتبات Adafruit MPU6050."
+            },
+            "en": {
+                "lead": "A wearable that classifies activity from an MPU6050 accelerometer — the code was cleaned and a real bug that made the average drift over time was fixed.",
+                "sections": [
+                    {
+                        "h": "The idea",
+                        "p": "Because gravity alone reads ~9.8 m/s², a still device sits near that value while movement pushes it higher. The average acceleration magnitude over a short window is computed, and simple thresholds map the reading to Stand / Drop / Moving."
+                    },
+                    {
+                        "h": "How it works",
+                        "flow": [
+                            "Read MPU6050 acceleration",
+                            "Average the magnitude over 10 samples",
+                            "Match against tuned thresholds",
+                            "LEDs + buzzer per state"
+                        ]
+                    },
+                    {
+                        "h": "Technical decisions",
+                        "steps": [
+                            {
+                                "t": "A real bug fix",
+                                "d": "The original never reset the average between reads, so it drifted upward over time. Each window now starts at zero — a correctness fix documented in the code."
+                            },
+                            {
+                                "t": "Non-blocking blink",
+                                "d": "LEDs toggle on a millis() interval instead of delay(), so the classifier keeps sampling smoothly."
+                            },
+                            {
+                                "t": "Thresholds as named constants",
+                                "d": "The magic numbers moved to a clearly labeled config block meant for calibration."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "Honest limitations",
+                        "p": "A naive threshold classifier, not machine learning — the narrow windows are brittle and confused by orientation changes, it's placement-dependent (wrist differs from pocket), and it reports coarse states only, with no step counting."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "States",
+                        "v": "Stand/Drop/Moving"
+                    },
+                    {
+                        "k": "Average window",
+                        "v": "10 samples"
+                    },
+                    {
+                        "k": "Bug fixed",
+                        "v": "Average drift"
+                    }
+                ],
+                "note": "An open-source educational project. Uses the Adafruit MPU6050 libraries."
+            }
+        }
+    },
+    {
         "id": "vein-detection",
         "categories": [
             "python-ai",
@@ -2540,6 +3093,145 @@ const projectsData = [
         "details": {
             "ar": "أداة رؤية حاسوبية مبنية بلغة Python وOpenCV تتتبّع بندولًا حقيقيًا عبر الكاميرا (تحويل هَف للدوائر) وتوقّت أرجحاته لحساب عجلة الجاذبية g = 4π²L/T²، مدعومة بميزانية كاملة لعدم اليقين وانحدار خطي متعدد الأطوال بدل الاكتفاء بمتوسط بسيط. تم اكتشاف وإصلاح علّتين برمجيتين حقيقيتين أثناء التطوير: فيضان عددي صامت (uint16 overflow) كان يُنتج قيمًا خيالية لـ g، وعلة توقيت عند تحليل الفيديوهات المسجَّلة. يرافق التجربة محاكاة تفاعلية مبنية بـ Gradio تحل معادلة البندول اللاخطي عدديًا (RK4) وتقارنها بالحل التحليلي الدقيق عبر التكامل الإهليلجي — لا تحتاج كاميرا أو عتادًا، وتعمل من أي متصفح عبر Hugging Face Spaces.",
             "en": "A Python + OpenCV computer-vision tool that tracks a real pendulum through a camera (Hough Circle Transform) and times its oscillations to compute g = 4π²L/T², backed by a full uncertainty budget and multi-length linear regression rather than a single flattering average. Two real bugs were found and fixed during development: a silent uint16 numeric overflow that produced nonsensical g values, and a timing bug affecting analysis of recorded video files. An interactive Gradio simulation accompanies the experiment, numerically solving the nonlinear pendulum equation (RK4) and cross-checking it against the exact analytic solution via the elliptic integral — no camera or hardware required, runs from any browser on Hugging Face Spaces."
+        }
+    },
+    {
+        "id": "pov-fan-display",
+        "categories": [
+            "arduino"
+        ],
+        "featured": false,
+        "image": "assets/images/pov-fan-display.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/pov-fan-display",
+        "tags": [
+            "Arduino",
+            "C++",
+            "Persistence of Vision",
+            "Hall Sensor",
+            "LEDs"
+        ],
+        "title": {
+            "ar": "شاشة المروحة بثبات الرؤية (POV)",
+            "en": "POV Fan Display"
+        },
+        "desc": {
+            "ar": "عمودٌ من 5 مصابيح على ذراعٍ دوّار يبدو وكأنه يكتب نصًّا في الهواء: حسّاس هول يزامن بداية الرسالة كل دورة، ثم تُومَض المصابيح عمودًا عمودًا فيجمع ثبات الرؤية الحروف. النص قابلٌ للتخصيص بالكامل.",
+            "en": "A column of 5 LEDs on a spinning arm appears to write text in the air: a Hall sensor syncs the message once per revolution, then the LEDs strobe column-by-column so persistence of vision assembles the letters. The text is fully configurable."
+        },
+        "details": {
+            "ar": "أُعيد بناء المشروع بالكامل: النسخة الأصلية كانت تكتب كلمةً واحدةً مزروعةً في الكود؛ النسخة الجديدة تعرض أي نصٍّ من A إلى Z من فونت 5×5 سهل القراءة (كل حرفٍ خمسة صفوفٍ ثنائية تبدو كالحرف في الكود). تغيّر الرسالة بتعديل سطرٍ واحد، والبداية مُزامَنةٌ على الحافة الصاعدة لحسّاس هول كل دورة فيثبت النص في الهواء. التوقيت (زمن العمود والإزاحة) قابلٌ للضبط حسب سرعة المروحة.",
+            "en": "The project was fully rebuilt: the original wrote one hardcoded word; the new version displays any A-Z text from a readable 5x5 font (each glyph is five binary rows that look like the letter in the source). You change the message by editing one line, and drawing is synced to the Hall sensor's rising edge each revolution so the text holds still in the air. The timing (column on-time and offset) is tunable to your fan's RPM."
+        },
+        "article": {
+            "ar": {
+                "lead": "عمودٌ من 5 مصابيح على ذراعٍ دوّار يكتب نصًّا معلّقًا في الهواء بثبات الرؤية — أُعيد بناؤه من كلمةٍ واحدةٍ ثابتةٍ إلى فونتٍ كامل A–Z ونصٍّ قابلٍ للتخصيص.",
+                "sections": [
+                    {
+                        "h": "الفكرة",
+                        "p": "حسّاس هول يلتقط مغناطيسًا ثابتًا مرةً كل دورة لمزامنة بداية الرسالة، ثم تُومَض الـ 5 مصابيح عمودًا عمودًا فيجمع ثبات الرؤية الحروف في الهواء."
+                    },
+                    {
+                        "h": "كيف يعمل",
+                        "flow": [
+                            "حسّاس هول يكشف المغناطيس (دورةٌ واحدة)",
+                            "قراءة الرسالة حرفًا حرفًا",
+                            "رسم كل حرفٍ عمودًا عمودًا",
+                            "ثبات الرؤية يجمّع النص"
+                        ]
+                    },
+                    {
+                        "h": "القرارات التقنية",
+                        "steps": [
+                            {
+                                "t": "فونتٌ حقيقي لا ثلاثة حروفٍ ثابتة",
+                                "d": "النسخة الأصلية كتبت كلمةً واحدةً؛ هذه النسخة تعرض أي نصٍّ A–Z من جدول فونت 5×5 قابلٍ للتعديل."
+                            },
+                            {
+                                "t": "ترميزٌ بصريٌّ للحروف",
+                                "d": "كل حرفٍ خمسة صفوفٍ ثنائيةٍ تبدو كالحرف في الكود، فتعديل الفونت لا يحتاج عبثًا يدويًا بالبتّات."
+                            },
+                            {
+                                "t": "بدايةٌ مُزامَنةٌ بحسّاس هول",
+                                "d": "يبدأ الرسم على الحافة الصاعدة للمغناطيس كل دورة، فيبقى النص في موضعٍ ثابتٍ في الهواء."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "حدودٌ صادقة",
+                        "p": "التوقيت يعتمد على سرعة المروحة ومضبوطٌ يدويًا لسرعةٍ واحدة (بلا تتبّع RPM مغلق)، وحروفٌ كبيرة A–Z ومسافة فقط في الفونت المرفق، وعمودٌ نصيٌّ واحدٌ بارتفاع 5 بكسل. وانتبه للميكانيكا: الإلكترونيات الدوّارة تحتاج ذراعًا متزنًا وتوصيلًا آمنًا."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "الفونت",
+                        "v": "A–Z (5×5)"
+                    },
+                    {
+                        "k": "المزامنة",
+                        "v": "حسّاس هول"
+                    },
+                    {
+                        "k": "النص",
+                        "v": "قابلٌ للتخصيص"
+                    }
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. لا يحتوي على أي نصٍّ أو إشارةٍ مزروعةٍ من نسخته السابقة."
+            },
+            "en": {
+                "lead": "A column of 5 LEDs on a spinning arm writes text floating in the air with persistence of vision — rebuilt from one fixed word into a full A–Z font with configurable text.",
+                "sections": [
+                    {
+                        "h": "The idea",
+                        "p": "A Hall sensor catches a fixed magnet once per revolution to sync the message start, then the 5 LEDs strobe column-by-column so persistence of vision assembles the letters in the air."
+                    },
+                    {
+                        "h": "How it works",
+                        "flow": [
+                            "Hall sensor detects the magnet (one revolution)",
+                            "Read the message character by character",
+                            "Draw each letter column by column",
+                            "Persistence of vision assembles the text"
+                        ]
+                    },
+                    {
+                        "h": "Technical decisions",
+                        "steps": [
+                            {
+                                "t": "A real font, not three fixed letters",
+                                "d": "The original wrote one hardcoded word; this version displays any A–Z text from an editable 5×5 font table."
+                            },
+                            {
+                                "t": "Visual glyph encoding",
+                                "d": "Each letter is five binary rows that look like the letter in the source, so editing the font needs no manual bit-twiddling."
+                            },
+                            {
+                                "t": "Hall-synced start",
+                                "d": "Drawing begins on the magnet's rising edge each revolution, so the text holds a stable position in the air."
+                            }
+                        ]
+                    },
+                    {
+                        "h": "Honest limitations",
+                        "p": "The timing depends on fan speed and is tuned by hand to one RPM (no closed-loop RPM tracking), the bundled font is uppercase A–Z + space only, and it's a single 5-pixel-tall text column. Mind the mechanics: spinning electronics need a balanced arm and safe wiring."
+                    }
+                ],
+                "results": [
+                    {
+                        "k": "Font",
+                        "v": "A–Z (5×5)"
+                    },
+                    {
+                        "k": "Sync",
+                        "v": "Hall sensor"
+                    },
+                    {
+                        "k": "Text",
+                        "v": "Configurable"
+                    }
+                ],
+                "note": "An open-source educational project. It contains no hardcoded text or reference carried over from its earlier version."
+            }
         }
     },
     {
@@ -3088,6 +3780,5 @@ const projectsData = [
     }
 ];
 
-// Expose for both browser (window) and Node (module) without breaking either.
 if (typeof window !== "undefined") { window.projectsData = projectsData; }
 if (typeof module !== "undefined" && module.exports) { module.exports = projectsData; }
