@@ -916,7 +916,7 @@ const projectsData = [
         id: "nfc-attendance-system",
         categories: ["arduino", "iot"],
         featured: true,
-        image: "assets/images/nfc-attendance-system.jpg",
+        image: "assets/images/nfc-attendence-system.png",
         demoUrl: "",
         codeUrl: "https://github.com/eahmeddarwish/nfc-attendance-system",
         tags: ["ESP32", "C++", "NFC", "IoT", "Google Sheets"],
