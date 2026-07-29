@@ -3777,6 +3777,305 @@ const projectsData = [
                 "note": "An open-source project for educational purposes. It contains no real person's name and no path hardcoded to a specific machine."
             }
         }
+    },
+    {
+        "id": "driver-drowsiness-detection",
+        "categories": ["python-ai", "raspberrypi"],
+        "featured": false,
+        "image": "assets/images/driver-drowsiness-detection.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/driver-drowsiness-detection",
+        "tags": ["Python", "OpenCV", "dlib", "Raspberry Pi", "Computer Vision"],
+        "title": {
+            "ar": "كاشف نعاس السائق (Driver Drowsiness Detection)",
+            "en": "Driver Drowsiness Detection"
+        },
+        "desc": {
+            "ar": "نظام ذكاءٍ اصطناعيٍّ طرفيٌّ على Raspberry Pi يراقب وجه السائق، ويحسب نسبة أبعاد العين (EAR) ومسافة التثاؤب من 68 نقطةً مرجعية، ثم يُطلق تنبيهًا صوتيًّا واهتزازيًّا وجرسًا عند النعاس — بالكامل محليًّا وبلا إنترنت.",
+            "en": "An on-device AI system on a Raspberry Pi that watches the driver's face, computes the Eye Aspect Ratio (EAR) and a yawn metric from 68 landmarks, and raises a voice + buzzer + vibration alert on drowsiness — fully local, no internet."
+        },
+        "details": {
+            "ar": "أُعيدت هيكلة الكود من سكربتٍ واحدٍ بمساراتٍ ثابتةٍ على جهازٍ معيّن إلى برنامجٍ نظيفٍ قابلٍ للتخصيص: كل العتبات في بلوك إعدادات (أو عبر أوامر سطر الأوامر ومتغيرات البيئة)، وجُرِّدت طبقة الـ GPIO حتى يعمل نفس البرنامج على لابتوب بكاميرا ويب في وضع محاكاة. أُضيف عدّاد إطاراتٍ متتاليةٍ لكشف إغلاق العين، ما ألغى الإنذارات الكاذبة الناتجة عن رمشةٍ عابرةٍ في النسخة الأصلية. يعمل بالكامل على الجهاز دون أي اتصالٍ بالشبكة.",
+            "en": "The code was refactored from a single script with device-specific hard-coded paths into a clean, configurable program: every threshold lives in a config block (or CLI flags / env vars), and the GPIO layer is abstracted so the same program runs on a laptop webcam in simulation mode. A consecutive-frame counter was added for eye-closure, removing the false alarms a single blink caused in the original. It runs entirely on-device with no network connection."
+        },
+        "article": {
+            "ar": {
+                "lead": "نظامٌ يراقب عيني السائق وفمه لحظةً بلحظة، فإن أطبق عينيه لفترةٍ أو تثاءب، حذّره صوتًا واهتزازًا وجرسًا — كلّه على Raspberry Pi وبلا إنترنت.",
+                "sections": [
+                    {"h": "الفكرة", "p": "كثيرٌ من حوادث الطرق سببها النعاس. الحل: كاميرا رخيصةٌ على الـ Pi تراقب الوجه، وتقيس انغلاق العين والتثاؤب، وتنبّه السائق قبل أن يغفو — محليًّا ودون الحاجة لأي شبكة."},
+                    {"h": "المعمارية", "flow": ["كاميرا Pi/ويب", "كشف الوجه بمُصنّف Haar", "68 نقطةً مرجعيةً (dlib)", "حساب EAR + مسافة التثاؤب", "تنعيم بعدّاد إطاراتٍ متتالية", "صوت + جرس + اهتزاز"]},
+                    {"h": "القرارات التقنية", "steps": [
+                        {"t": "Haar بدل كاشف dlib", "d": "اختير مُصنّف Haar للوجه لأنه أسرع بكثيرٍ على معالج الـ Pi المحدود من كاشف HOG في dlib، مع دقةٍ كافيةٍ للغرض."},
+                        {"t": "تنعيم بعدّاد إطارات", "d": "لا يُطلق الإنذار إلا بعد بقاء EAR تحت العتبة لعددٍ متتالٍ من الإطارات، ما ألغى الإنذارات الكاذبة من رمشةٍ عابرةٍ كانت في النسخة الأصلية."},
+                        {"t": "يعمل على أي جهاز", "d": "جُرِّدت طبقة الـ GPIO؛ فإن غاب عتاد الـ Pi يعمل نفس الكود على لابتوب بكاميرا ويب ويطبع الإنذار في الطرفية — تطويرٌ واختبارٌ بلا عتاد."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "قائمٌ على عتباتٍ لا على نموذجٍ مُدرَّب؛ يفترض وجهًا أماميًّا وسائقًا واحدًا؛ عتبة EAR شبه شخصيةٍ قد تحتاج ضبطًا لكل سائق؛ وليس جهاز سلامةٍ معتمدًا بل عرضٌ توضيحيٌّ لمساعدة السائق."}
+                ],
+                "results": [
+                    {"k": "المعالجة", "v": "على الجهاز"},
+                    {"k": "الاتصال", "v": "بلا إنترنت"},
+                    {"k": "الإشارات", "v": "EAR + تثاؤب"}
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. لا يحتوي على أي أسرارٍ حقيقيةٍ أو مساراتٍ ثابتةٍ لجهازٍ معيّن، ويعمل محليًّا بلا شبكة."
+            },
+            "en": {
+                "lead": "A system that watches the driver's eyes and mouth frame by frame; if the eyes stay shut too long or a yawn appears, it warns with voice, vibration, and a buzzer — all on a Raspberry Pi, no internet.",
+                "sections": [
+                    {"h": "The idea", "p": "Drowsiness causes a large share of road accidents. The fix: a cheap camera on the Pi watches the face, measures eye closure and yawning, and warns the driver before they nod off — locally, with no network."},
+                    {"h": "Architecture", "flow": ["Pi / web camera", "Haar face detection", "68 landmarks (dlib)", "EAR + yawn distance", "consecutive-frame debounce", "voice + buzzer + vibration"]},
+                    {"h": "Technical decisions", "steps": [
+                        {"t": "Haar over dlib's detector", "d": "A Haar cascade was chosen for face detection because it is far faster on the Pi's limited CPU than dlib's HOG detector, with accuracy that's good enough here."},
+                        {"t": "Consecutive-frame debounce", "d": "The alarm only fires after EAR stays below threshold for N consecutive frames, removing the false alarms a single blink produced in the original."},
+                        {"t": "Runs anywhere", "d": "The GPIO layer is abstracted; with no Pi hardware the same code runs on a laptop webcam and prints alerts to the console — develop and test with no hardware."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Threshold-based, not a trained fatigue model; assumes a single frontal face; the EAR threshold is somewhat per-person; and it is a driver-assistance demonstrator, not a certified safety device."}
+                ],
+                "results": [
+                    {"k": "Inference", "v": "On-device"},
+                    {"k": "Connectivity", "v": "Offline"},
+                    {"k": "Signals", "v": "EAR + yawn"}
+                ],
+                "note": "An open-source educational project. It contains no real secrets and no path hardcoded to a specific machine, and runs locally with no network."
+            }
+        }
+    },
+    {
+        "id": "pixy-follow-robot",
+        "categories": ["arduino", "robotics"],
+        "featured": false,
+        "image": "assets/images/pixy-follow-robot.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/pixy-follow-robot",
+        "tags": ["Arduino", "C++", "Pixy2", "Computer Vision", "Robotics"],
+        "title": {
+            "ar": "روبوت التتبّع البصري (Pixy Follow Robot)",
+            "en": "Pixy Follow Robot"
+        },
+        "desc": {
+            "ar": "روبوتٌ بعجلتين يتتبّع جسمًا مدرَّبًا على لونه باستخدام كاميرا Pixy2 الذكية: تُنفّذ الرؤية على معالجها، ويحوّل الأردوينو موضع الكتلة وحجمها إلى قيادةٍ تفاضليةٍ عبر L298N ليُبقي الجسم في المنتصف وعلى مسافةٍ ثابتة.",
+            "en": "A two-wheeled robot that follows a colour-trained object with a Pixy2 smart camera: vision runs on the camera, and the Arduino turns the block's position and size into differential drive through an L298N to keep the object centred and at a fixed distance."
+        },
+        "details": {
+            "ar": "أُعيدت كتابة الكود إلى نسخةٍ نظيفةٍ ببلوك إعداداتٍ واحد: كل الأطراف والسرعة والمنطقة الميتة ومسافة المتابعة في الأعلى. يبحث الكود عن أكبر كتلةٍ مطابقةٍ للتوقيع المطلوب فلا يخطفه غبارٌ لونيٌّ عابر، وتأخذ التوجيه أولويةً على المسافة، ومع فترة سماحٍ عند فقد الهدف يتوقّف بأمان. أُزيلت كل الإشارات لأسماء أشخاصٍ أو علاماتٍ خارجيةٍ من النسخ القديمة.",
+            "en": "The code was rewritten into a clean version with one config block: pins, speed, dead-zone, and follow distance all at the top. It locks onto the largest block matching the target signature so a stray colour speck can't hijack it, steering takes priority over distance, and a lost-target timeout stops it safely. All references to people's names or external brands from the old copies were removed."
+        },
+        "article": {
+            "ar": {
+                "lead": "روبوتٌ يُبقي جسمًا مختارًا في منتصف الكاميرا وعلى مسافةٍ ثابتة: Pixy2 ترى، والأردوينو يقود.",
+                "sections": [
+                    {"h": "الفكرة", "p": "كاميرا Pixy2 تتعلّم لونًا مرةً واحدة، ثم تُرسل موضع وحجم أكبر كتلةٍ مطابقة. يوجّه الأردوينو الروبوت نحو الموضع أفقيًّا، ويستخدم مساحة الكتلة كمؤشّرٍ على المسافة."},
+                    {"h": "المعمارية", "flow": ["Pixy2 (CCC) تُرسل x وw وh", "الأردوينو يقرّر", "توجيهٌ حسب x", "تقدّم/تراجع حسب المساحة", "L298N يحرّك الموتورين"]},
+                    {"h": "القرارات التقنية", "steps": [
+                        {"t": "قفلٌ على أكبر كتلة", "d": "يمرّ الكود على كل الكتل ويختار الأكبر ذات التوقيع المطلوب، فلا يخدعه نقطةٌ لونيةٌ صغيرة."},
+                        {"t": "منطقةٌ ميتةٌ للتوجيه", "d": "شريطٌ حول المنتصف يُعتبر 'مستقيمًا' يمنع التذبذب يمينًا ويسارًا، والتوجيه له أولويةٌ على المسافة."},
+                        {"t": "المساحة كمسافة مع تباطؤ (Hysteresis)", "d": "المساحة المستهدفة مع هامشٍ حول القيمة تُبقي مسافةً ثابتةً دون اهتزازٍ متكرّرٍ للأمام والخلف."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "تتبّعٌ لونيٌّ تخدعه الألوان المتشابهة وتغيّر الإضاءة؛ المساحة ≈ المسافة تقريبيًّا؛ تحكّمٌ ثنائيٌّ لا PID فالحركة حادّةٌ قرب الحدود؛ وL298N للتعلّم لا لبناءٍ جادّ."}
+                ],
+                "results": [
+                    {"k": "الرؤية", "v": "على الكاميرا"},
+                    {"k": "القيادة", "v": "تفاضلية"},
+                    {"k": "التوجيه", "v": "منطقةٌ ميتة"}
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية، بكودٍ أُعيدت كتابته وخالٍ من أي أسماء أشخاصٍ أو علاماتٍ خارجية."
+            },
+            "en": {
+                "lead": "A robot that keeps a chosen object centred in the camera and at a fixed distance: Pixy2 sees, the Arduino drives.",
+                "sections": [
+                    {"h": "The idea", "p": "The Pixy2 learns a colour once, then streams the position and size of the largest matching block. The Arduino steers toward its horizontal position and uses the block's area as a distance proxy."},
+                    {"h": "Architecture", "flow": ["Pixy2 (CCC) sends x, w, h", "Arduino decides", "steer by x", "forward/back by area", "L298N drives both motors"]},
+                    {"h": "Technical decisions", "steps": [
+                        {"t": "Lock on the largest block", "d": "The code scans all blocks and picks the largest one with the target signature, so a small colour speck can't fool it."},
+                        {"t": "Steering dead-zone", "d": "A band around centre counts as 'straight' to stop left/right jitter, and steering takes priority over distance."},
+                        {"t": "Area-as-distance with hysteresis", "d": "A target area plus a margin holds a steady follow distance without constant forward/back chatter."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Colour tracking is fooled by similar colours and changing light; area ≈ distance is approximate; it's bang-bang control, not PID, so motion is abrupt near boundaries; and an L298N is for learning, not a serious build."}
+                ],
+                "results": [
+                    {"k": "Vision", "v": "On-camera"},
+                    {"k": "Drive", "v": "Differential"},
+                    {"k": "Steering", "v": "Dead-zone"}
+                ],
+                "note": "An open-source educational project with rewritten code and no people's names or external brands."
+            }
+        }
+    },
+    {
+        "id": "heartbeat-pulse-monitor",
+        "categories": ["arduino", "iot"],
+        "featured": false,
+        "image": "assets/images/heartbeat-pulse-monitor.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/heartbeat-pulse-monitor",
+        "tags": ["Arduino", "C++", "IR Sensor", "I2C LCD", "Biomedical"],
+        "title": {
+            "ar": "مِقياس نبض القلب (Heartbeat Pulse Monitor)",
+            "en": "Heartbeat Pulse Monitor"
+        },
+        "desc": {
+            "ar": "مِقياسٌ لمعدّل ضربات القلب بالأردوينو مع حسّاس نبضٍ ضوئي: يكتشف كل نبضةٍ كقمّةٍ في الإشارة ويحسب BPM من الزمن بين النبضتين، ويعرضها على شاشة I²C، ويُطلق جرسًا خارج النطاق الطبيعي.",
+            "en": "An Arduino heart-rate monitor with an analog pulse sensor: it detects each beat as a signal peak, computes BPM from the time between beats, shows it on an I²C LCD, and beeps when the rate leaves the normal band."
+        },
+        "details": {
+            "ar": "النسخة السابقة لم تكن تقيس نبضًا فعلًا؛ كانت تُسقِط قيمة الـ ADC خطيًّا على المدى 60–100، فكان 'الـ BPM' جهدًا مُعاد تحجيمه لا يعكس نبضةً حقيقية، كما كانت تُغذّي الحسّاس من أطرافٍ تناظريةٍ كمصدر جهد. تصلح هذه النسخة ذلك: كشفٌ حقيقيٌّ للنبضة على الحافة الصاعدة مع فترة خمولٍ تمنع العدّ المزدوج، وحساب BPM = 60000 / الزمن بين النبضتين، وتغذيةٌ سليمةٌ من 5V/GND، وبلوك إعداداتٍ واحد.",
+            "en": "The earlier version did not actually measure a pulse; it mapped the raw ADC value linearly onto 60–100, so the 'BPM' was a rescaled voltage, and it powered the sensor from analog pins used as rails. This version fixes that: real beat detection on the rising edge with a refractory gate against double counts, BPM = 60000 / beat interval, proper 5V/GND power, and one config block."
+        },
+        "article": {
+            "ar": {
+                "lead": "مِقياسٌ يكتشف نبضات القلب فعليًّا ويحسب المعدّل من الزمن بينها — لا مجرد جهدٍ مُعاد تحجيمه كالنسخة القديمة.",
+                "sections": [
+                    {"h": "الفكرة", "p": "حسّاسٌ ضوئيٌّ رخيصٌ يلتقط تدفّق الدم في الإصبع؛ كل نبضةٍ قمّةٌ في الإشارة. نقيس الزمن بين قمّتين لنحسب معدّل الضربات."},
+                    {"h": "المنطق المصحّح", "steps": [
+                        {"t": "كشفٌ حقيقيٌّ للنبضة", "d": "تُسجَّل النبضة على الحافة الصاعدة عبر عتبة، مع فترة خمولٍ (Refractory) تمنع عدّ نبضةٍ واحدةٍ مرتين."},
+                        {"t": "BPM من التوقيت", "d": "BPM = 60000 / الزمن بالمللي ثانية بين نبضتين — التعريف الفيزيائي الصحيح، لا جهدٌ مُعاد تحجيمه."},
+                        {"t": "تغذيةٌ سليمة", "d": "يُوصَّل الحسّاس بـ 5V/GND الحقيقيين بدل أطرافٍ تناظريةٍ استُخدمت كمصدر جهدٍ في النسخة القديمة."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "ليس جهازًا طبيًّا؛ العتبة تعتمد على الحسّاس ويجب ضبطها؛ لا ترشيح بعد فالقراءة حسّاسةٌ للحركة وضوء البيئة؛ وBPM لحظيٌّ من فترةٍ واحدةٍ فيتذبذب — متوسّط عدّة فتراتٍ سيُنعّمه."}
+                ],
+                "results": [
+                    {"k": "الكشف", "v": "قمم النبض"},
+                    {"k": "المعدّل", "v": "من التوقيت"},
+                    {"k": "العرض", "v": "شاشة I²C"}
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية، وليس جهازًا طبيًّا."
+            },
+            "en": {
+                "lead": "A monitor that actually detects heartbeats and computes the rate from the time between them — not a rescaled voltage like the old version.",
+                "sections": [
+                    {"h": "The idea", "p": "A cheap optical sensor picks up blood flow in the fingertip; each beat is a peak in the signal. We time the gap between two peaks to compute the rate."},
+                    {"h": "Corrected logic", "steps": [
+                        {"t": "Real beat detection", "d": "A beat is registered on the rising edge across a threshold, with a refractory period so one beat isn't counted twice."},
+                        {"t": "BPM from timing", "d": "BPM = 60000 / ms between beats — the physically correct definition, not a rescaled voltage."},
+                        {"t": "Proper power", "d": "The sensor connects to real 5V/GND instead of analog pins used as power rails in the old version."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Not a medical device; the threshold is sensor-dependent and must be tuned; no filtering yet so it's sensitive to motion and ambient light; and BPM is instantaneous from a single interval, so it jitters — averaging several intervals would smooth it."}
+                ],
+                "results": [
+                    {"k": "Detection", "v": "Signal peaks"},
+                    {"k": "Rate", "v": "From timing"},
+                    {"k": "Display", "v": "I²C LCD"}
+                ],
+                "note": "An open-source educational project, not a medical device."
+            }
+        }
+    },
+    {
+        "id": "voice-controlled-motor",
+        "categories": ["arduino", "robotics"],
+        "featured": false,
+        "image": "assets/images/voice-controlled-motor.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/voice-controlled-motor",
+        "tags": ["Arduino", "C++", "Voice Recognition", "I2C LCD", "HMI"],
+        "title": {
+            "ar": "موتور يُتحكَّم به بالصوت (Voice-Controlled Motor)",
+            "en": "Voice-Controlled Motor"
+        },
+        "desc": {
+            "ar": "تحكّمٌ في سرعة موتور DC بالأوامر الصوتية عبر وحدة Elechouse Voice Recognition V3 التي تتعرّف على الكلام على شريحتها؛ يربط الأردوينو كل أمرٍ بمستوى PWM ويعرض الحالة على شاشة I²C، مع عبارة مرورٍ لفتح النظام.",
+            "en": "Control a DC motor's speed with spoken commands via an Elechouse Voice Recognition V3 module that recognises speech on-chip; the Arduino maps each command to a PWM level and shows the state on an I²C LCD, with a pass-phrase to unlock."
+        },
+        "details": {
+            "ar": "أُعيدت هيكلة الكود إلى بلوك إعداداتٍ نظيفٍ (فهارس الأوامر المُدرَّبة، عنوان الشاشة، ومستويات PWM لكل سرعة) وآلة حالةٍ بسيطةٍ من حالتين: مقفول (يُقبل فيه نطق عبارة المرور فقط) ثم مفتوح (تُقبل أوامر السرعة). قول 'off' يوقف الموتور ويعيد القفل. التعرّف كلّه على شريحة الوحدة بلا سحابةٍ ولا إنترنت.",
+            "en": "The code was refactored into a clean config block (trained-command indices, LCD address, per-speed PWM levels) and a simple two-state machine: locked (only the pass-phrase is accepted) then unlocked (speed commands accepted). Saying 'off' stops the motor and re-locks. Recognition runs entirely on the module's chip — no cloud, no internet."
+        },
+        "article": {
+            "ar": {
+                "lead": "قل عبارة المرور لفتح النظام، ثم مرّر أوامر السرعة صوتًا: on / low / medium / high، و off للإيقاف.",
+                "sections": [
+                    {"h": "الفكرة", "p": "وحدة تعرّفٍ صوتيٍّ تتعلّم أوامرك وتطابقها على شريحتها. يحوّل الأردوينو كل أمرٍ إلى مستوى PWM يقود الموتور، ويعرض الحالة على الشاشة."},
+                    {"h": "المعمارية", "flow": ["كلامٌ → وحدة VR3 (مطابقةٌ على الشريحة)", "فهرس الأمر → الأردوينو", "PWM → مشغّل الموتور", "شاشة I²C تعرض الحالة"]},
+                    {"h": "القرارات التقنية", "steps": [
+                        {"t": "آلة حالةٍ من حالتين", "d": "مقفول يقبل عبارة المرور فقط، ومفتوح يقبل أوامر السرعة، وقول off يعيد القفل — منطقٌ واضحٌ سهل التتبّع."},
+                        {"t": "بلوك إعداداتٍ واحد", "d": "فهارس الأوامر وعنوان الشاشة ومستويات PWM لكل سرعةٍ كلها في الأعلى بدل أرقامٍ متناثرة."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "'عبارة المرور' ليست أمانًا حقيقيًّا بل أمرٌ صوتيٌّ مُدرَّبٌ آخر يمنع التشغيل العرضي لا المتطفّلين؛ التعرّف يعتمد على المتحدّث والضوضاء تُضعفه؛ والمفردات ثابتةٌ على الأوامر المُدرَّبة؛ وأربع سرعاتٍ منفصلةٌ لا تحكّمٌ مغلق الحلقة."}
+                ],
+                "results": [
+                    {"k": "التعرّف", "v": "على الشريحة"},
+                    {"k": "السرعات", "v": "4 مستويات"},
+                    {"k": "الحالة", "v": "شاشة I²C"}
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية بكودٍ أُعيدت هيكلته."
+            },
+            "en": {
+                "lead": "Say the pass-phrase to unlock, then give speed commands by voice: on / low / medium / high, and off to stop.",
+                "sections": [
+                    {"h": "The idea", "p": "A voice-recognition module learns your commands and matches them on its own chip. The Arduino turns each command into a PWM level that drives the motor, and shows the state on the LCD."},
+                    {"h": "Architecture", "flow": ["speech → VR3 module (on-chip match)", "command index → Arduino", "PWM → motor driver", "I²C LCD shows state"]},
+                    {"h": "Technical decisions", "steps": [
+                        {"t": "Two-state machine", "d": "Locked accepts only the pass-phrase, unlocked accepts speed commands, and saying off re-locks — clear, easy-to-follow logic."},
+                        {"t": "One config block", "d": "Command indices, LCD address, and per-speed PWM levels are all at the top instead of scattered numbers."}
+                    ]},
+                    {"h": "Honest limitations", "p": "The 'pass-phrase' is not real security — it's just another trained voice command that gates accidental starts, not intruders; recognition is speaker-dependent and noise degrades it; the vocabulary is fixed to the trained commands; and it's four discrete speeds, not closed-loop control."}
+                ],
+                "results": [
+                    {"k": "Recognition", "v": "On-chip"},
+                    {"k": "Speeds", "v": "4 levels"},
+                    {"k": "State", "v": "I²C LCD"}
+                ],
+                "note": "An open-source educational project with refactored code."
+            }
+        }
+    },
+    {
+        "id": "vhdl-alarm-clock",
+        "categories": ["digital-logic"],
+        "featured": false,
+        "image": "assets/images/vhdl-alarm-clock.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/vhdl-alarm-clock",
+        "tags": ["VHDL", "FPGA", "RTL", "Digital Design", "GHDL"],
+        "title": {
+            "ar": "ساعةٌ رقميةٌ بمنبّه (VHDL Alarm Clock)",
+            "en": "VHDL Alarm Clock"
+        },
+        "desc": {
+            "ar": "ساعةٌ رقميةٌ عتاديةٌ بلغة VHDL لشريحة FPGA/CPLD: مقسّم ترددٍ عام يعطي نبضة 1 هرتز، وعدّاداتٌ بعرضٍ صحيحٍ تحفظ الثواني/الدقائق (0–59) والساعات (0–23)، ومنبّهٌ قابلٌ للضبط، وعرض 24/12 ساعة — مع منصّة اختبار.",
+            "en": "A hardware digital clock in VHDL for an FPGA/CPLD: a generic clock divider gives a 1 Hz tick, correct-width counters keep seconds/minutes (0–59) and hours (0–23), a settable alarm, and 24/12-hour display — with a testbench."
+        },
+        "details": {
+            "ar": "إعادة بناءٍ كاملةٍ لنسخةٍ سابقةٍ لم تكن تحفظ الوقت الحقيقي: كانت تخزّن الثواني/الدقائق/الساعات في إشاراتٍ بعرض 4-بت (حدّها 15) فتفيض عند 16 ولا تصل 59 أو 23، وكانت تزيد الثواني كل حافة ساعةٍ لا كل ثانية، وفيها جملٌ مبتورةٌ تمنع التصريف. النسخة الجديدة تصلح ذلك: عدّاداتٌ 6-بت/5-بت مع التفافٍ صحيح، ومقسّمٌ عامٌّ إلى 1 هرتز، وأوضاع ضبطٍ ومنبّهٍ نظيفةٌ بكشف حافةٍ للأزرار، ومنصّة اختبار GHDL تتحقّق من العدّ والالتفاف والمنبّه.",
+            "en": "A from-scratch rebuild of an earlier version that could not keep real time: it stored seconds/minutes/hours in 4-bit signals (max 15) that overflow at 16 and never reach 59 or 23, incremented seconds every clock edge rather than every second, and had truncated statements that wouldn't compile. The new version fixes all of that: 6-bit/5-bit counters with correct rollover, a generic 1 Hz divider, clean set/alarm modes with edge-detected buttons, and a GHDL testbench that checks counting, rollover, and the alarm."
+        },
+        "article": {
+            "ar": {
+                "lead": "ساعةٌ رقميةٌ على FPGA تحفظ الوقت الحقيقي فعلًا وتُطلق منبّهًا في وقتٍ مضبوط — إعادة بناءٍ صحّحت أخطاءً جوهريةً في النسخة القديمة.",
+                "sections": [
+                    {"h": "الفكرة", "p": "وصف عتادٍ بلغة VHDL يحوّل ساعة اللوحة إلى نبضة 1 هرتز، ثم يعدّ الثواني والدقائق والساعات ويقارنها بوقت منبّهٍ مضبوط."},
+                    {"h": "المنطق المصحّح", "steps": [
+                        {"t": "عدّاداتٌ بعرضٍ كافٍ لـ 0–59", "d": "النسخة القديمة استخدمت 4-بت (حدّها 15) فكانت الساعة مستحيلةً بنيويًّا. الآن الثواني/الدقائق 6-بت والساعات 5-بت مع التفافٍ عند 59 و23."},
+                        {"t": "قاعدة زمنٍ حقيقية", "d": "بدل زيادة الثواني كل حافة ساعة (ملايين 'الثواني' في الثانية)، يوفّر مقسّمٌ عامٌّ نبضة 1 هرتز فيتقدّم الوقت مرةً كل ثانيةٍ حقيقية."},
+                        {"t": "كودٌ يُصرَّف", "d": "أُصلحت جملٌ مبتورةٌ كانت تمنع التصريف، وأُضيفت أوضاع ضبطٍ ومنبّهٍ نظيفةٌ بكشف حافةٍ للأزرار، وعرض 12/24 ساعة."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "المخارج ثنائيةٌ بلا فاكّ عرضٍ بعد (BCD→7-قطعة خطوةٌ تالية)؛ الأزرار مفترَضٌ إزالة ارتدادها؛ واجهة الضبط بسيطةٌ بزر زيادةٍ لكل حقل؛ ولا بطارية/RTC فيُصفَّر الوقت عند انقطاع الطاقة."}
+                ],
+                "results": [
+                    {"k": "قاعدة الزمن", "v": "مقسّم 1 هرتز"},
+                    {"k": "العدّادات", "v": "0–59 / 0–23"},
+                    {"k": "التحقّق", "v": "منصّة GHDL"}
+                ],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية بكودٍ أُعيد بناؤه وتصحيحه."
+            },
+            "en": {
+                "lead": "A digital clock on an FPGA that actually keeps real time and rings an alarm at a set time — a rebuild that fixed structural errors in the old version.",
+                "sections": [
+                    {"h": "The idea", "p": "A hardware description in VHDL turns the board clock into a 1 Hz tick, then counts seconds, minutes, and hours and compares them against a set alarm time."},
+                    {"h": "Corrected logic", "steps": [
+                        {"t": "Counters wide enough for 0–59", "d": "The old version used 4-bit signals (max 15), making the clock structurally impossible. Now seconds/minutes are 6-bit and hours 5-bit, with rollover at 59 and 23."},
+                        {"t": "A real time base", "d": "Instead of incrementing seconds every clock edge (millions of 'seconds' per second), a generic divider provides a 1 Hz tick so time advances once per real second."},
+                        {"t": "Code that compiles", "d": "Truncated statements that blocked compilation were fixed, clean set/alarm modes with edge-detected buttons were added, plus 12/24-hour display."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Outputs are binary with no display decoder yet (BCD → 7-segment is the next step); buttons are assumed debounced; the setting UI is simple (one increment button per field); and there's no battery/RTC backup, so time resets on power loss."}
+                ],
+                "results": [
+                    {"k": "Time base", "v": "1 Hz divider"},
+                    {"k": "Counters", "v": "0–59 / 0–23"},
+                    {"k": "Verification", "v": "GHDL testbench"}
+                ],
+                "note": "An open-source educational project with rebuilt, corrected code."
+            }
+        }
     }
 ];
 
