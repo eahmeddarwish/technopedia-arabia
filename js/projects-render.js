@@ -5,6 +5,18 @@
 const CATEGORY_LIST = ["arduino", "raspberrypi", "python-ai", "robotics", "iot"];
 let activeFilter = "all";
 
+// Cache the homepage's random pick so language toggles (ta:langchange) don't
+// reshuffle mid-visit — a fresh 3-of-top-10 sample is drawn once per page load.
+let _featuredPicks = null;
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 function projectCardHtml(p, lang, i) {
   const tagsHtml = p.tags.map((tg) => `<span class="tag tag-cyan">${tg}</span>`).join("");
   const links = [];
@@ -32,8 +44,15 @@ function renderFeaturedProjects() {
   const grid = document.getElementById("featured-projects-grid");
   if (!grid) return;
   const lang = getStoredLang();
-  const featured = projectsData.filter((p) => p.featured);
-  grid.innerHTML = featured.map((p, i) => projectCardHtml(p, lang, i)).join("");
+
+  // Homepage shows 3 random picks drawn from the top-10 "featured" pool,
+  // re-rolled on every fresh page load so repeat visitors see new projects.
+  if (!_featuredPicks) {
+    const pool = projectsData.filter((p) => p.featured);
+    _featuredPicks = shuffleArray(pool.slice()).slice(0, 3);
+  }
+
+  grid.innerHTML = _featuredPicks.map((p, i) => projectCardHtml(p, lang, i)).join("");
   attachProjectCardEvents(grid, lang);
   if (window.refreshScrollReveal) window.refreshScrollReveal();
 }

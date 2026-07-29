@@ -16,7 +16,7 @@
    ========================================================================== */
 
 const projectsData = [
-    {
+{
         id: "smart-stethoscope",
         categories: ["python-ai", "raspberrypi"],
         featured: true,
@@ -134,8 +134,145 @@ const projectsData = [
             note: "For educational and research purposes only — not a certified medical device. Any result must be confirmed by a qualified clinician. Fully open source and open to further improvement."
           }
         }
-    },
-    {
+    },{
+        id: "adsb-flight-tracker",
+        categories: ["iot", "python-ai"],
+        featured: true,
+        image: "assets/images/adsb-radar-screenshot.png",
+        demoUrl: "https://engdarwish-adsb-flight-tracker.static.hf.space",
+        codeUrl: "https://github.com/eahmeddarwish/adsb-flight-tracker",
+        tags: ["Python", "Flask", "RTL-SDR", "ADS-B", "Raspberry Pi"],
+        title: {
+            ar: "متتبع رحلات ADS-B",
+            en: "ADS-B Flight Tracker"
+        },
+        desc: {
+            ar: "رادار طيران حي بتصميم ATC كلاسيكي، يشتغل بأي دونجل RTL-SDR على أي لابتوب أو Raspberry Pi.",
+            en: "A live ATC-style flight radar that runs with any RTL-SDR dongle on a laptop or Raspberry Pi."
+        },
+        details: {
+            ar: "يستقبل إشارات ADS-B الحقيقية على 1090MHz عبر dump1090، ويعرضها على واجهة رادار حية ببصمة كلاسيكية. الديمو المباشر يعمل بمحاكاةٍ داخل المتصفح؛ النسخة الكاملة تدعم عتادًا حقيقيًا.",
+            en: "Receives real ADS-B signals at 1090MHz via dump1090 and renders them on a live radar-style dashboard. The live demo runs a browser-side simulation; the full version supports real hardware."
+        },
+        article: {
+          ar: {
+            lead: "رادار طيرانٍ حيٌّ يفكّ تشفير إشارات الطائرات الحقيقية على تردد 1090 ميجاهرتز بدونجل RTL-SDR، ويعرضها على واجهةٍ بطابع أبراج المراقبة — على أي لابتوبٍ أو راسبيري باي.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. وإن لم يكن لديك عتاد؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
+              },
+              {
+                h: "المعمارية",
+                flow: [
+                  "دونجل RTL-SDR (1090MHz)",
+                  "dump1090 يفكّ الإشارة",
+                  "خادم Flask (API + واجهة)",
+                  "خريطة Leaflet في المتصفح"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "وضعان دائمان: محاكاةٌ وحقيقي",
+                    d: "وضع المحاكاة يعمل في ثوانٍ بلا أي عتاد — هو ما يشتغل على النسخة الحية. والوضع الحقيقي يفكّ بثّ ADS-B فعليًا من الدونجل. الاثنان يتكلمان مع نفس الخادم ونفس الواجهة، فتبدّل بينهما بزرٍّ واحد."
+                  },
+                  {
+                    t: "كودٌ عابرٌ للمنصّات",
+                    d: "الخادم بايثون صافٍ بلا أي كودٍ خاصٍّ بالراسبيري باي — يعمل على ويندوز وماك ولينكس. الراسبيري باي مجرد خيارٍ مريحٍ للتشغيل الدائم 24 ساعة، لا شرط."
+                  },
+                  {
+                    t: "إثراءٌ آمنٌ من جهة الخادم",
+                    d: "بيانات الرحلات الإضافية تُجلَب عبر الخادم فقط — مفتاح الـAPI لا يصل للمتصفح إطلاقًا. خادمٌ واحدٌ على منفذٍ واحدٍ يخدم الواجهة والـAPI معًا."
+                  }
+                ]
+              },
+              {
+                h: "جاهزٌ للتشغيل الدائم",
+                p: "مع ملف systemd للتشغيل التلقائي عند الإقلاع، يتحوّل الراسبيري باي إلى كشك رادارٍ يعمل بلا توقّف. وكل الإعدادات عبر متغيّرات البيئة — لا شيء مثبّتٌ في الكود، فتغيّر المنطقة والمركز بسهولة."
+              }
+            ],
+            results: [
+              {
+                k: "التردد",
+                v: "1090 MHz"
+              },
+              {
+                k: "المنصّات",
+                v: "ويندوز/ماك/لينكس"
+              },
+              {
+                k: "وضع المحاكاة",
+                v: "بلا عتاد"
+              },
+              {
+                k: "المنافذ",
+                v: "واحد"
+              }
+            ],
+            note: "مشروعٌ مفتوح المصدر بالكامل، مع نسخةٍ حيةٍ على Hugging Face تعمل بوضع المحاكاة مباشرةً."
+          },
+          en: {
+            lead: "A live aircraft radar that decodes real ADS-B signals on 1090 MHz with an RTL-SDR dongle, rendering every plane on a retro ATC-style dashboard — on any laptop or Raspberry Pi.",
+            sections: [
+              {
+                h: "The idea",
+                p: "It picks up the ADS-B signals aircraft actually broadcast, decodes them, and shows each plane on a live map with heading-accurate icons and trails. No hardware? A built-in simulation runs the same UI with demo traffic."
+              },
+              {
+                h: "Architecture",
+                flow: [
+                  "RTL-SDR dongle (1090MHz)",
+                  "dump1090 decodes",
+                  "Flask server (API + UI)",
+                  "Leaflet map in browser"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "Two first-class modes: sim and live",
+                    d: "Simulation runs in seconds with no hardware — it powers the live demo. Live mode decodes real ADS-B from the dongle. Both talk to the same server and UI, so you switch with one button."
+                  },
+                  {
+                    t: "Cross-platform code",
+                    d: "The server is pure Python with no Pi-specific code — it runs on Windows, macOS and Linux. A Raspberry Pi is just a convenient always-on box, not a requirement."
+                  },
+                  {
+                    t: "Safe server-side enrichment",
+                    d: "Extra flight data is fetched through the server only — the API key never reaches the browser. One server on one port serves both the UI and the API."
+                  }
+                ]
+              },
+              {
+                h: "Ready for permanent use",
+                p: "With a systemd unit for boot-time auto-start, the Pi becomes a 24/7 radar kiosk. All configuration is via environment variables — nothing is hardcoded, so you change region and center easily."
+              }
+            ],
+            results: [
+              {
+                k: "Frequency",
+                v: "1090 MHz"
+              },
+              {
+                k: "Platforms",
+                v: "Win/Mac/Linux"
+              },
+              {
+                k: "Sim mode",
+                v: "No hardware"
+              },
+              {
+                k: "Ports",
+                v: "One"
+              }
+            ],
+            note: "Fully open source, with a live Hugging Face demo running in simulation mode out of the box."
+          }
+        }
+    },{
         id: "drone-detection-yolov5",
         categories: ["python-ai"], // عندك فئة مخصصة للروبوتكس/embedded ضيفها هنا كمان
         featured: true,
@@ -295,150 +432,10 @@ const projectsData = [
             note: "Metrics are from the training validation split, not an independent field test. Fully open source — all code and weights available to run and modify."
           }
         }
-    },
-    {
-        id: "universal-market-predictor-deluxe",
-        categories: ["python-ai"],
-        featured: true,
-        image: "assets/images/universal-market-predictor-deluxe.png",
-        demoUrl: "https://huggingface.co/spaces/engdarwish/universal-market-predictor-deluxe",
-        codeUrl: "https://github.com/eahmeddarwish/universal-market-predictor-deluxe",
-        tags: ["Python", "TensorFlow", "LSTM", "Gradio"],
-        title: {
-            ar: "متنبئ الأسواق الشامل — إصدار Deluxe",
-            en: "Universal Market Predictor — Deluxe Edition",
-        },
-        desc: {
-            ar: "نموذج LSTM واحد مشترك يتنبأ بأي سهم أو عملة رقمية عالمياً على مدى 1/3/7 أيام، مع اختبار دلالة إحصائية يوضح هل فيه ميزة تنبؤية حقيقية أم مجرد ضوضاء.",
-            en: "A single shared LSTM backbone forecasting any global stock or cryptocurrency over 1/3/7-day horizons, with a statistical significance test to show whether the predictive edge is real or just noise.",
-        },
-        details: {
-            ar: "تطوير كامل لمشروع متنبئ الأسواق الأصلي: بدلًا من نموذجٍ منفصلٍ لكل سهم، نموذج LSTM واحد مشترك بـembeddings خاصةٍ بكل سهمٍ تُغطّي أمريكا والخليج والمملكة المتحدة وألمانيا واليابان وهونج كونج والهند والعملات الرقمية. الهدف هو النسبة المئوية للعائد بدل السعر المُقيّس، لتفادي مشاكل الاستقراء على الأسهم شديدة الاتجاه. كل تنبؤ يُقارن بخط أساس بسيط (naive persistence) مع اختبار ثنائي الحدين (binomial test) وفاصل ثقة Wilson 95% على دقة الاتجاه، بدل الاكتفاء بنسبة دقة مجردة قد تكون مجرد صدفة إحصائية. القيود موثّقة بصراحة في الـREADME، بما فيها الحالات التي لا يزال النموذج فيها عاجزًا عن التفوّق علىش رمي العملة.",
-            en: "A full evolution of the original Universal Market Predictor: instead of a separate model per ticker, one shared LSTM backbone with per-ticker embeddings covers US, Gulf/MENA, UK, Germany, Japan, Hong Kong, India markets, and major cryptocurrencies. The prediction target is percentage return rather than a scaled price, avoiding extrapolation failures on strongly-trending stocks. Every forecast is benchmarked against a naive persistence baseline with a binomial significance test and a 95% Wilson confidence interval on directional accuracy — rather than trusting a raw accuracy percentage that could just be statistical noise. Limitations are documented honestly in the README, including where the model currently does not beat a coin flip.",
-        },
-        article: {
-          ar: {
-            lead: "نموذج LSTM موحّدٌ لكل الأسهم والعملات، بتقييمٍ صادق: كل رقمٍ يُعرض إلى جانب مقياسٍ مرجعيٍّ «لا يفعل شيئًا» — لأن نظام التنبؤ لا يفوق في مصداقيته المقياسَ الذي يُقارَن به.",
-            sections: [
-              {
-                h: "المبدأ الأساسي",
-                p: "سعر إغلاق الغد لسهمٍ كبيرٍ عادةً قريبٌ من سعر اليوم. فأي نموذجٍ — حتى العديم الفائدة — قد يُظهر دقةً برّاقةً لمجرّد اعتماده على هذه الحقيقة. الطريقة الوحيدة لمعرفة إن كان النموذج تعلّم شيئًا حقيقيًا: أن نضع خطأه ودقّته إلى جانب مقياسٍ ساذجٍ لا يستخدم أي تعلّمٍ آلي."
-              },
-              {
-                h: "النموذج المشترك",
-                flow: [
-                  "تسلسل سعري (60 يوم × 12 ميزة)",
-                  "LSTM ثلاثي الطبقات",
-                  "+ تضمين لكل سهم",
-                  "إخراج: 1/3/7 أيام دفعةً واحدة"
-                ]
-              },
-              {
-                h: "القرارات الهندسية",
-                steps: [
-                  {
-                    t: "لماذا نموذجٌ مشتركٌ لا نموذجٌ لكل سهم؟",
-                    d: "العمود الفقري يرى سلوك السوق عبر كل سهمٍ وبورصةٍ وعملة — الانهيارات والصعودات والتقلّبات — أكثر بكثيرٍ مما يعلّمه تاريخ سهمٍ واحد. والتضمين (embedding) يتيح التخصّص لكل أصلٍ دون شبكةٍ منفصلة."
-                  },
-                  {
-                    t: "لماذا إخراجٌ متعددٌ لا تكراري؟",
-                    d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ بما بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
-                  },
-                  {
-                    t: "ثغرةٌ حقيقية: تنبؤٌ بالنسبة لا بالسعر",
-                    d: "أول نسخةٍ تنبّأت بسعرٍ مُعايَرٍ مباشرةً، فخسرت أمام المقياس الساذج في الأسهم الصاعدة — لأن أسعار الاختبار خرجت عن النطاق الذي رآه النموذج. الحلّ: التنبؤ بنسبة عائدٍ مئوية، وكل الميزات صارت نِسَبًا محدودةً لا مستوياتِ سعرٍ خام."
-                  }
-                ]
-              },
-              {
-                h: "هل الميزة حقيقيةٌ أم ضوضاء؟",
-                p: "دقة اتجاهٍ في نطاق 52–58% قد تكون مجرّد صدفةٍ إحصائية. لذلك يُجري التقرير <strong>اختبار دلالةٍ إحصائية</strong> على كل صف: لا تُعامَل النتيجة كميزةٍ حقيقية إلا إذا استبعدت فترة الثقة خطّ الـ50% تمامًا. والنتيجة صادقة: ميزةٌ واضحةٌ في أسهمٍ أمريكيةٍ كبرى، وغائبةٌ في أسهم الخليج — والمشروع يوثّق هذا بدل إخفائه."
-              }
-            ],
-            results: [
-              {
-                k: "آفاق التنبؤ",
-                v: "1/3/7 أيام"
-              },
-              {
-                k: "نموذج واحد",
-                v: "كل الأسهم"
-              },
-              {
-                k: "مقاييس مرجعية",
-                v: "3"
-              },
-              {
-                k: "اختبار الدلالة",
-                v: "✓"
-              }
-            ],
-            note: "مشروعٌ بحثيٌّ تعليمي — لا شيء فيه نصيحةٌ مالية. الأسواق تنطوي على مخاطرةٍ حقيقية. الكود مفتوحٌ بالكامل."
-          },
-          en: {
-            lead: "One shared LSTM for every stock and coin, with honest evaluation: every number sits next to a 'does-nothing' baseline — because a prediction system is only as trustworthy as the baseline it's compared against.",
-            sections: [
-              {
-                h: "The core principle",
-                p: "Tomorrow's close for a large stock is usually near today's. So any model — even a useless one — can show a flattering accuracy just by leaning on that. The only way to know if the model learned something real: place its error and accuracy next to a naive baseline that uses no ML at all."
-              },
-              {
-                h: "The shared model",
-                flow: [
-                  "Price sequence (60d × 12 features)",
-                  "3-layer LSTM",
-                  "+ per-ticker embedding",
-                  "Output: 1/3/7-day at once"
-                ]
-              },
-              {
-                h: "Engineering decisions",
-                steps: [
-                  {
-                    t: "Why shared, not one model per ticker?",
-                    d: "The backbone sees market behavior across every stock, exchange and coin — crashes, rallies, volatility — far more than any single ticker's history teaches. The embedding lets it specialize per asset without a separate network."
-                  },
-                  {
-                    t: "Why multi-output, not recursive?",
-                    d: "Predicting day+1 then feeding it back to predict day+2 compounds error fast. A single pass emitting all horizons at once avoids it entirely."
-                  },
-                  {
-                    t: "A real bug: predict % return, not price",
-                    d: "The first version predicted a scaled price directly and lost to the naive baseline on trending stocks — test prices fell outside the range the model had seen. The fix: predict a percentage return, and express every feature as a bounded ratio, not a raw price level."
-                  }
-                ]
-              },
-              {
-                h: "Real edge, or noise?",
-                p: "Directional accuracy of 52–58% could just be luck. So the report runs a <strong>significance test</strong> on every row: a result counts only if the confidence interval excludes the 50% line entirely. And the finding is honest: a clear edge on large US names, absent on Gulf tickers — the project documents this rather than hiding it."
-              }
-            ],
-            results: [
-              {
-                k: "Forecast horizons",
-                v: "1/3/7 days"
-              },
-              {
-                k: "One model",
-                v: "All tickers"
-              },
-              {
-                k: "Baselines",
-                v: "3"
-              },
-              {
-                k: "Significance test",
-                v: "✓"
-              }
-            ],
-            note: "An educational research project — none of it is financial advice. Markets carry real risk. Fully open source."
-          }
-        }
-    },
-    {
+    },{
         id: "arabic-emotion-detector",
         categories: ["python-ai"],
-        featured: false,
+        featured: true,
         image: "assets/images/arabic-emotion-detector.png",
         demoUrl: "",
         codeUrl: "https://github.com/eahmeddarwish/arabic-emotion-detector",
@@ -549,8 +546,121 @@ const projectsData = [
             note: "A personal, open-source project for educational and portfolio purposes, not a certified content-moderation product — every number above is a real, unfabricated test result, including the weaker performance on rare classes, and it's documented in full in the repository along with a complete training guide for reproducing it."
           }
         }
-    },
-    {
+    },{
+        id: "smart-medication-queue",
+        categories: ["arduino"],
+        featured: true,
+        image: "assets/images/smart-medication-queue.jpg",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/smart-medication-queue",
+        tags: ["Arduino", "C++", "Embedded", "State Machine", "Concurrency"],
+        title: {
+            ar: "طابور صرف الجرعات الدوائية الذكي (Smart Medication Queue)",
+            en: "Smart Medication Queue",
+        },
+        desc: {
+            ar: "نظام تذكير بجرعاتٍ دوائيةٍ لعدة مرضى في آنٍ واحد على Arduino Mega — أعيدت كتابته بالكامل ليصلح علّة تزامنٍ حقيقية كانت تُجمّد الأنظمة الأخرى كل مرة يتأخر فيها مريضٌ واحد عن تأكيد جرعته.",
+            en: "A multi-patient medication reminder on an Arduino Mega — fully rewritten to fix a real concurrency bug that froze every other patient's timer whenever one patient was slow to acknowledge their dose.",
+        },
+        details: {
+            ar: "إعادة بناءٍ كاملة لنموذجٍ مخبريٍّ سابق. النموذج الأصلي كان يستخدم استدعاء `while (digitalRead(...) == HIGH);` حاجزًا لانتظار ضغط الزر — ما كان يوقف الحلقة الرئيسية بأكملها، فيُجمِّد عدّادات كل المرضى الآخرين حتى يُؤكَّد ذلك الزر تحديدًا. أُعيدت كتابة النظام بالكامل باستخدام علمٍ (`alertActive`) لكل مريضٍ يُفحص مرة واحدة في كل دورة loop، وتوقيتٍ مبنيٍّ على millis() بدل delay()، بحيث تتقدّم عدّادات خمسة مرضى مستقلين بالتوازي فعليًا، ويمكن تأكيد أيّ جرعةٍ بأيّ ترتيب دون التأثير على الآخرين.",
+            en: "A full rebuild of an earlier bench prototype. The original used a blocking `while (digitalRead(...) == HIGH);` call to wait for a button press — freezing the entire main loop, including every other patient's countdown, until that one button was pressed. The system was rewritten around a per-patient `alertActive` flag checked once per loop pass and millis()-based timing instead of delay(), so five independent patient timers genuinely progress in parallel and any dose can be acknowledged in any order without affecting the others.",
+        },
+        article: {
+          ar: {
+            lead: "نظامٌ صُمِّم ليتابع خمسة مرضى في آنٍ واحد، لكنه في الواقع كان يتسلسل لمريضٍ واحدٍ بسبب استدعاءٍ حاجزٍ واحد — وهذه قصة إصلاحه.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "نظام تذكيرٍ بمواعيد الجرعات لعدة مرضى في آنٍ واحد على Arduino Mega، بمؤشر LED وزر تأكيدٍ مستقلّين لكل مريض، وشاشة LCD مشتركة تعرض من يحتاج انتباهًا الآن."
+              },
+              {
+                h: "خط العمل",
+                flow: [
+                  "إضافة مريض (Serial) + ضبط الفاصل الزمني",
+                  "عدّادات millis() مستقلة لكل مريض",
+                  "تنبيه LED+جرس عند استحقاق الجرعة",
+                  "تأكيدٌ بأي ترتيب (alertActive flag)",
+                  "إتمام الجرعات + مسح غير حاجز"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "علّة تزامنٍ حقيقية، اكتُشفت وأُصلحت",
+                    d: "النسخة الأصلية استخدمت `while (digitalRead(buttonPins[patientIndex]) == HIGH);` — سطرٌ واحدٌ كان يُجمّد الحلقة الرئيسية بأكملها بما فيها عدّادات المرضى الآخرين، حتى يُضغط ذلك الزر تحديدًا. نظامٌ صُمم صراحةً ليتابع خمسة مرضى باستقلالية كان عمليًا يعمل لمريضٍ واحدٍ في كل مرة."
+                  },
+                  {
+                    t: "الإصلاح: علمٌ لكل مريض بدل حلقة انتظارٍ حاجزة",
+                    d: "استُبدل كل `while` حاجزٍ بعلَم `alertActive` يُفحص مرةً واحدة في كل دورة loop، وتلاشي (fade) LED الإتمام أصبح مبنيًا على millis() بدل delay() — فتستمر عدّادات كل المرضى الآخرين بالعمل بالضبط في موعدها بينما يُؤكَّد أي مريضٍ آخر جرعته."
+                  },
+                  {
+                    t: "استثناءٌ متعمَّد وموثَّق",
+                    d: "`flashMessage()` ما زالت تستخدم `delay()` حاجزًا قصيرًا، لكن فقط لرسائل تأكيدٍ لمرةٍ واحدة (مريضٌ أُضيف / اكتمل / لا مساحة) — أبدًا في مسار التنبيه أو الإتمام، حتى لا يتكرر نفس الخلل عن طريق الخطأ."
+                  }
+                ]
+              },
+              {
+                h: "حدودٌ صادقة",
+                p: "الفواصل الزمنية بالثواني (20–300 ثانية) لا بالساعات، لتتّسع لعرضٍ مخبري — موثّقٌ صراحةً في الكود. لا استمرارية بيانات (RAM فقط)، وجرسٌ واحدٌ مشتركٌ بين كل المرضى. هذا مشروعٌ تعليميٌّ لمفاهيم التزامن في الأنظمة المدمجة، وليس جهازًا طبيًّا معتمدًا."
+              }
+            ],
+            results: [
+              { k: "مرضى مستقلّون بالتوازي", v: "5" },
+              { k: "استدعاءات while حاجزة أُزيلت", v: "2" },
+              { k: "استمراريّة البيانات", v: "RAM فقط" }
+            ],
+            note: "مشروعٌ هوايةٍ تعليمي لمفاهيم التزامن غير الحاجز في الأنظمة المدمجة، وليس جهازًا طبيًّا معتمدًا — يتابع تذكيراتٍ فقط، لا هوية الدواء أو مقداره أو تفاعلاته. الكود مفتوحٌ بالكامل."
+          },
+          en: {
+            lead: "A system designed to track five patients at once, but which actually serialized to one patient at a time because of a single blocking call — this is the fix.",
+            sections: [
+              {
+                h: "The idea",
+                p: "A multi-patient medication reminder on an Arduino Mega, with an independent LED and confirm button per patient, and a shared LCD showing whoever needs attention right now."
+              },
+              {
+                h: "How it works",
+                flow: [
+                  "Add patient (Serial) + set interval",
+                  "Independent millis() timers per patient",
+                  "LED+buzzer alert when dose is due",
+                  "Acknowledge in any order (alertActive flag)",
+                  "Course completion + non-blocking clear"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "A real concurrency bug, found and fixed",
+                    d: "The original used `while (digitalRead(buttonPins[patientIndex]) == HIGH);` — one line that froze the entire main loop, including every other patient's countdown, until that specific button was pressed. A system explicitly designed to track five patients independently was, in practice, serialized to one at a time."
+                  },
+                  {
+                    t: "The fix: a per-patient flag instead of a blocking wait loop",
+                    d: "Every blocking `while` was replaced with an `alertActive` flag checked once per loop pass, and the completion LED fade moved to millis()-based timing instead of delay() — so every other patient's timer keeps running exactly on schedule while any patient's dose is acknowledged."
+                  },
+                  {
+                    t: "A deliberate, documented exception",
+                    d: "`flashMessage()` still uses a short blocking `delay()`, but only for one-off confirmation messages (patient added / completed / queue full) — never on the due-alert or completion path, so the same bug can't quietly reappear."
+                  }
+                ]
+              },
+              {
+                h: "Honest limitations",
+                p: "Intervals are in seconds (20-300s), not hours, so the demo fits on a bench — documented directly in the code. No data persistence (RAM only), and one buzzer shared across all patients. This is an educational demonstration of embedded concurrency, not a certified medical device."
+              }
+            ],
+            results: [
+              { k: "Independent parallel patients", v: "5" },
+              { k: "Blocking while-loops removed", v: "2" },
+              { k: "Data persistence", v: "RAM only" }
+            ],
+            note: "A hobbyist/educational project about non-blocking concurrency in embedded systems, not a certified medical device — it tracks reminders only, not medication identity, dosage, or drug interactions. Fully open source."
+          }
+        }
+    },{
         id: "age-gender-ai-detection",
         categories: ["python-ai", "raspberrypi"],
         featured: true,
@@ -688,11 +798,743 @@ const projectsData = [
             note: "A portfolio/research project, not a biometric, medical or security-grade system. Code and models fully open source."
           }
         }
+    },{
+        id: "lifi-optical-link",
+        categories: ["arduino", "iot"],
+        featured: true,
+        image: "assets/images/lifi-optical-link.jpg",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/lifi-optical-link",
+        tags: ["Arduino", "Python", "Optical Communication", "UART", "Air-Gapped"],
+        title: {
+            ar: "رابط LiFi ضوئي لنقل بياناتٍ بلا اتصالٍ شبكي",
+            en: "LiFi Optical Link — Air-Gapped Byte Transfer",
+        },
+        desc: {
+            ar: "منفذٌ تسلسليٌّ برمجيٌّ يعمل عبر الضوء المرئي: يرسل ملفًّا أو رسالةً بايتًا بايتًا من Arduino إلى آخر عبر الغرفة، بإطارٍ يشبه UART وبتّ تعادلٍ لكشف الأخطاء — لا واي فاي، لا بلوتوث، ولا أي سلكٍ بين اللوحتين.",
+            en: "A software UART running over visible light: sends a file or message byte-by-byte from one Arduino to another across the room, framed like a UART byte with a parity bit for error detection — no WiFi, Bluetooth, or wire between the boards.",
+        },
+        details: {
+            ar: "إعادة بناءٍ كاملة لنموذجٍ أوّليٍّ كان يرسل رمزًا واحدًا فقط من لوحة مفاتيحٍ ثابتة (أحد 16 رمزًا) في كل مرة. هذه النسخة تعمم البروتوكول إلى بايتاتٍ كاملة من 8 بتات بإطار `[START] [8 بتات] [تعادل] [STOP]`، فيمكنها نقل أي نصٍّ ASCII. أداتا بايثون على طرفَي الرابط تتيحان إرسال ملفٍّ فعليٍّ من حاسوبٍ واستقباله على حاسوبٍ آخر عبر الضوء، مع تسجيل أخطاء التعادل بدل إسقاط البيانات المشكوك فيها صامتًا.",
+            en: "A full rebuild of a prototype that could only send one fixed keypad symbol (one of 16) at a time. This version generalizes the protocol to full 8-bit bytes framed as `[START] [8 bits] [parity] [STOP]`, so it carries arbitrary ASCII text. Python tools on each end let you send a real file from one PC and receive it on another entirely via light, logging parity errors instead of silently dropping suspect data.",
+        },
+        article: {
+          ar: {
+            lead: "من إرسال رقمٍ واحدٍ من لوحة مفاتيح، إلى نقل ملفٍّ كاملٍ عبر الضوء فقط — بإطارٍ يشبه UART وبتّ تعادلٍ لا يُخفي الأخطاء.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "اكتب رسالةً أو أشِر إلى ملفٍّ نصيٍّ، فيرسلها Arduino كومضاتٍ ضوئية، يلتقطها Arduino ثانٍ بمقاومةٍ ضوئية ويعيد بناءها بايتًا بايتًا — رابطٌ بلا أي اتصالٍ شبكي، فقط خط رؤيةٍ ضوئي."
+              },
+              {
+                h: "تدفّق البيانات",
+                flow: [
+                  "PC: send_message.py",
+                  "Arduino TX → LED يومض",
+                  "هواءٌ مفتوح (لا شبكة)",
+                  "LDR → Arduino RX",
+                  "PC: receive_message.py"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "إطارٌ يشبه UART بدل رمز لوحة مفاتيحٍ ثابت",
+                    d: "البروتوكول الأصلي: 16 رمزًا فقط بنمط 5 بتاتٍ خام دون كشف أخطاء. هذه النسخة: بايتٌ كاملٌ من 8 بتات بإطار `[START=1] [8 بتات LSB أولًا] [تعادل] [STOP=0]`، فيعمل مع أي نصّ ASCII."
+                  },
+                  {
+                    t: "بت تعادلٍ لا يُسقِط البايتات الفاسدة صامتًا",
+                    d: "عند عدم تطابق التعادل، يُسلَّم البايت مع تعليق `[parity mismatch]` بدل إسقاطه — كي لا يُخفى نمط الفشل الحقيقي (ضوضاء الإضاءة، سوء المحاذاة)."
+                  },
+                  {
+                    t: "توقيتٌ في أداة الإرسال يطابق سرعة الومض الفعلية",
+                    d: "كل بايتٍ يستغرق ~150 مللي ثانية للومض. أداة `send_message.py` تُوقِّت كتاباتها لتطابق ذلك، وإلا تفيض ذاكرة استقبال Arduino الصغيرة لأي رسالةٍ أطول من بضع عشرات بايت."
+                  }
+                ]
+              },
+              {
+                h: "حدودٌ صادقة",
+                p: "المعدّل ~6-7 بايت/ثانية فقط — يوضّح مفهوم الرابط الضوئي، لا سرعة Li-Fi الحقيقية. لا استعادة ساعةٍ داخل البايت، والتعادل يكشف الأخطاء الفردية فقط دون تصحيحها، والرابط باتجاهٍ واحدٍ لكل زوج لوحات."
+              }
+            ],
+            results: [
+              { k: "بتات الإطار لكل بايت", v: "11" },
+              { k: "معدّل النقل", v: "~6-7 بايت/ث" },
+              { k: "كشف الأخطاء", v: "بت تعادل" }
+            ],
+            note: "عرضٌ تعليميٌّ لمفهوم النقل الضوئي بلا اتصالٍ شبكي، لا رابط اتصالاتٍ عالي السرعة معتمَد. الكود مفتوحٌ بالكامل."
+          },
+          en: {
+            lead: "From sending one digit from a keypad, to transferring a whole file through light alone — framed like a UART byte, with a parity bit that doesn't hide errors.",
+            sections: [
+              {
+                h: "The idea",
+                p: "Type a message or point at a text file, and an Arduino sends it as light flashes; a second Arduino picks it up with a photoresistor and reconstructs it byte by byte — a link with no network connection at all, only an optical line of sight."
+              },
+              {
+                h: "Data flow",
+                flow: [
+                  "PC: send_message.py",
+                  "Arduino TX → LED flashing",
+                  "Open air (no network)",
+                  "LDR → Arduino RX",
+                  "PC: receive_message.py"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "A UART-style frame instead of one fixed keypad code",
+                    d: "The original protocol: 16 symbols only, a bare 5-bit pattern with no error checking. This version: a full 8-bit byte framed as `[START=1] [8 bits LSB-first] [parity] [STOP=0]`, so it carries any ASCII text."
+                  },
+                  {
+                    t: "A parity bit that doesn't silently drop bad bytes",
+                    d: "On a parity mismatch, the byte is still delivered, annotated `[parity mismatch]`, instead of discarded — so the real failure mode (ambient light noise, misalignment) isn't hidden."
+                  },
+                  {
+                    t: "Sender pacing matched to the real flash rate",
+                    d: "Each byte takes ~150ms to flash out. `send_message.py` paces its writes to match, otherwise Arduino's small receive buffer overflows on any message longer than a few dozen bytes."
+                  }
+                ]
+              },
+              {
+                h: "Honest limitations",
+                p: "Only ~6-7 bytes/sec — this demonstrates the optical-link concept, not real Li-Fi speeds. No clock recovery mid-byte, parity only detects odd-numbered errors without correcting them, and the link is one-directional per board pair."
+              }
+            ],
+            results: [
+              { k: "Frame bits per byte", v: "11" },
+              { k: "Transfer rate", v: "~6-7 bytes/sec" },
+              { k: "Error detection", v: "Parity bit" }
+            ],
+            note: "An educational demonstration of air-gapped optical data transfer, not a certified high-speed communication link. Fully open source."
+          }
+        }
+    },{
+        id: "smart-door-guardian",
+        categories: ["raspberrypi", "python-ai"],
+        featured: true,
+        image: "assets/images/smart-door-guardian.png",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/smart-door-guardian",
+        tags: ["Python", "OpenCV", "Raspberry Pi", "Face Recognition", "IoT"],
+        title: {
+            ar: "Guardian Gate — نظام تحكّم ذكي بالدخول متعدد العوامل",
+            en: "Guardian Gate — Multi-Factor Smart Door Access Control",
+        },
+        desc: {
+            ar: "نظام تحكّم فعلي بالدخول لباب، مبني على Raspberry Pi، يجمع بين التعرّف على الوجه والبصمة وبطاقة RFID ورمز PIN كأربعة عوامل توثيق مستقلة، مع تسجيل كامل لكل محاولة دخول وإشعارات فورية اختيارية.",
+            en: "A Raspberry Pi-based physical door access-control system combining face recognition, fingerprint, RFID card, and PIN as four independent authentication factors, with full access logging and optional real-time notifications.",
+        },
+        details: {
+            ar: "مشروعٌ شخصيٌّ بدأ كمجموعة سكريبتات منفصلة لاختبار كل قطعة عتاد على حدة (لوحة مفاتيح، حساس فوق صوتي، شاشة OLED، قارئ RFID، كاميرا)، ثم أُعيد بناؤه بالكامل كنظامٍ واحدٍ متماسك: كل حساس وكل قناة إشعار خلف واجهة برمجية موحّدة، وكل الأسرار والقيم القابلة للتغيير انتقلت من الكود إلى ملفات إعداد، مع وضع محاكاة كامل عبر الطرفية (--simulate) يتيح تجربة منطق القرار بالكامل دون أي عتاد حقيقي. يرصد النظام اقتراب شخص بحساسٍ فوق صوتي، يحاول التعرّف على وجهه أولًا، وإن فشل يعرض بدائل: بصمة، أو بطاقة RFID، أو رمز PIN — ونجاح أيٍّ منها يفتح القفل الكهربائي عبر مُرحّل.",
+            en: "A personal project that started as a set of individual hardware bring-up scripts (keypad, ultrasonic sensor, OLED, RFID reader, camera), then was fully rebuilt as one coherent system: every sensor and notification channel sits behind a unified interface, every secret and tunable value moved from source code into configuration files, and a full console simulation mode (--simulate) lets you exercise the entire decision logic with no real hardware attached. The system watches for someone approaching with an ultrasonic sensor, tries face recognition first, and if that fails offers fingerprint, RFID card, or PIN as fallbacks — any one of which unlocks an electric strike through a relay.",
+        },
+        article: {
+          ar: {
+            lead: "نظام تحكّم فعلي بدخول باب، بأربعة عوامل توثيق مستقلة (وجه، بصمة، بطاقة، رمز)، وسجل دخول واحد شفّاف لكل محاولة.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "الهدف تأمين باب منزل أو مكتب صغير بعدة طبقات توثيق مستقلة بدل الاعتماد على عاملٍ واحد: يُعطى الأولوية للتعرّف على الوجه بوصفه الأسرع، وفي حال فشله تتاح ثلاثة بدائل (بصمة، بطاقة RFID، رمز PIN) — أيٌّ منها كافٍ لفتح الباب، مع تسجيل كل محاولة وإشعارٍ فوري اختياري للهاتف."
+              },
+              {
+                h: "تدفّق القرار",
+                flow: [
+                  "حساس فوق صوتي يرصد الاقتراب",
+                  "محاولة التعرّف على الوجه",
+                  "بديل: بصمة / بطاقة RFID / رمز PIN",
+                  "فتح المُرحّل عند نجاح أي عامل",
+                  "تسجيل + إشعار فوري اختياري"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "حسم تناقض قطبية المُرحّل (Relay) بالدليل العتادي",
+                    d: "كانت نسخ الكود الأصلية تختلف فعليًا حول طريقة فتح القفل (إشارة HIGH على منفذٍ، أو LOW على منفذٍ آخر) — تناقضٌ حقيقي في سلوك العتاد لا مجرد اختلاف أسلوب. حُسم الخلاف بالرجوع إلى اختبار العتاد الفعلي، وأصبحت القطبية حقل إعدادٍ صريحًا، مع أداة ذاتية (relay_selftest.py) للتحقق قبل التوصيل بقفلٍ حقيقي."
+                  },
+                  {
+                    t: "إصلاح خلل نطاق متغيّر (scoping) في جلسة الضيف",
+                    d: "إسناد قيمة لعلَمٍ داخل دالة دون كلمة global جعل بايثون يُنشئ متغيّرًا محليًا جديدًا بصمتٍ بدل تحديث الحالة الفعلية — ما كان يمنع خيط المعاينة الحية من التوقف كما هو متوقع. أُصلح الخلل واستُبدل العلَم الضمني بحالةٍ صريحة تُمرَّر عبر الواجهة، بحيث يستحيل تكرار العطل بنيويًا."
+                  },
+                  {
+                    t: "فصل العتاد عن منطق القرار بالكامل",
+                    d: "كل استدعاء لمكتبات العتاد (lgpio، picamera2، spidev) صار خلف واجهة تجريدية، بحيث يعمل النظام بالكامل في وضع محاكاة عبر الطرفية دون أي راسبيري باي حقيقي — ما يسهّل الاختبار والتطوير خارج الجهاز الفعلي."
+                  }
+                ]
+              },
+              {
+                h: "مفاضلة موثّقة صراحةً: \"أو\" لا \"و\"",
+                p: "سياسة النظام قائمة على نجاح أيّ عاملٍ واحد (بصمة أو بطاقة أو رمز أو وجه)، لا اشتراط كل العوامل معًا. قرارٌ متعلقٌ بسهولة الاستخدام لا معيار أمانٍ أعلى، مذكورٌ صراحةً في التوثيق بدل ترك القارئ يكتشفه بنفسه."
+              }
+            ],
+            results: [
+              { k: "عوامل التوثيق", v: "4" },
+              { k: "أخطاء عتاد حقيقية أُصلحت", v: "2" },
+              { k: "وضع تشغيل بدون عتاد", v: "متاح" }
+            ],
+            note: "مشروع هواةٍ للأمان الفيزيائي المنزلي، وليس منتج تحكّم دخولٍ معتمَدًا — عوامل التوثيق هنا عوامل راحة لا حماية تشفيرية، وموثّقة صراحةً كذلك في المستودع."
+          },
+          en: {
+            lead: "A physical door access-control system with four independent authentication factors (face, fingerprint, card, PIN) and one honest access log for every attempt.",
+            sections: [
+              {
+                h: "The idea",
+                p: "Secure a home or small-office door with several independent authentication layers instead of relying on one: face recognition is tried first as the fastest option, and if it fails three fallbacks are offered (fingerprint, RFID card, PIN) — any one of which is enough to unlock the door, with every attempt logged and an optional real-time phone notification."
+              },
+              {
+                h: "Decision flow",
+                flow: [
+                  "Ultrasonic sensor detects approach",
+                  "Face recognition attempt",
+                  "Fallback: fingerprint / RFID card / PIN",
+                  "Relay unlocks on any factor success",
+                  "Logging + optional instant notification"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "Resolving the relay polarity contradiction with hardware evidence",
+                    d: "The original code drafts genuinely disagreed on how the lock opens (HIGH on one pin, or LOW on another) — a real hardware-behavior contradiction, not just a style difference. It was resolved by going back to the actual hardware test, polarity became an explicit config field, and a self-test tool (relay_selftest.py) verifies it before wiring to a real lock."
+                  },
+                  {
+                    t: "Fixing a variable-scoping bug in the guest session",
+                    d: "Assigning a flag inside a function without the global keyword made Python silently create a new local variable instead of updating the real state — which kept the live-preview thread from stopping as expected. The bug was fixed and the implicit global flag replaced with explicit state passed through the interface, making the failure mode structurally impossible to repeat."
+                  },
+                  {
+                    t: "Fully decoupling hardware from decision logic",
+                    d: "Every call to hardware libraries (lgpio, picamera2, spidev) now sits behind an abstract interface, so the entire system runs in a console simulation mode with no real Raspberry Pi — making testing and development off-device much easier."
+                  }
+                ]
+              },
+              {
+                h: "An explicitly documented trade-off: \"OR\", not \"AND\"",
+                p: "The system's policy succeeds when any single factor succeeds (fingerprint OR card OR PIN OR face), not when all factors succeed together. This is a usability decision, not a higher-security standard, and it's stated explicitly in the documentation rather than left for the reader to discover."
+              }
+            ],
+            results: [
+              { k: "Authentication factors", v: "4" },
+              { k: "Real hardware bugs fixed", v: "2" },
+              { k: "Hardware-free run mode", v: "Available" }
+            ],
+            note: "A hobbyist home physical-security project, not a certified access-control product — the authentication factors here are convenience factors, not cryptographic protection, and this is stated explicitly in the repository."
+          }
+        }
     },
     {
-        id: "visual-trigger-studio",
+        id: "co2-scrubber-rig",
+        categories: ["arduino", "iot"],
+        featured: true,
+        image: "assets/images/co2-scrubber-rig.jpg",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/co2-scrubber-rig",
+        tags: ["Arduino", "Python", "CCS811", "Matplotlib", "Instrumentation"],
+        title: {
+            ar: "جهاز اختبار كفاءة فلترة ثاني أكسيد الكربون (CO2 Scrubber Rig)",
+            en: "CO2 Scrubber / Filtration Test Rig",
+        },
+        desc: {
+            ar: "جهازٌ فيزيائيٌّ من ثلاث حجرات يقيس ما إذا كانت مادة فلترةٍ تُزيل فعليًا ثاني أكسيد الكربون، عبر مستشعرَي CCS811 قبل الفلتر وبعده وأداة بايثون تحسب نسبة التخفيض الفعلية بدل افتراضها.",
+            en: "A 3-chamber physical rig that measures whether a candidate filter medium actually removes CO2, using CCS811 sensors before and after the filter and a Python tool that computes the real reduction percentage instead of assuming one.",
+        },
+        details: {
+            ar: "بدأ المشروع كعرضٍ توضيحيٍّ لحصة كيمياءٍ عن فلترة الغازات: صندوقٌ من ثلاث حجراتٍ يُولّد ثاني أكسيد الكربون كيميائيًا في الحجرة الأولى، تدفعه مروحةٌ عبر مادة فلترةٍ في الحجرة الوسطى، ليُجمع في الحجرة الأخيرة. مستشعرا CCS811 يستخدمان نفس عنوان I2C الافتراضي، فحُلّ التعارض ببين WAKE يُخفِّض كل مستشعرٍ بدوره بدل مشاركة الناقل في آنٍ واحد. أداة بايثون تُدمج سكربتَي رسمٍ بيانيٍّ أصليَّين (لا يحفظان أي بيانات) في أداةٍ واحدة تسجّل كل قراءةٍ بوقتها ونسبة تخفيضها.",
+            en: "The project started as a demonstration for a chemistry class on gas filtration: a 3-chamber box chemically generates CO2 in the first chamber, a fan pushes it through a filter medium in the middle chamber, and it collects in the last. Both CCS811 sensors default to the same I2C address, so the conflict is resolved by toggling each sensor's WAKE pin in turn rather than sharing the bus simultaneously. A Python tool consolidates two original plotting scripts (neither of which saved any data) into one tool that timestamps every reading and its reduction percentage.",
+        },
+        article: {
+          ar: {
+            lead: "صندوقٌ من ثلاث حجرات يقيس أثر فلترٍ حقيقيٍّ على ثاني أكسيد الكربون — لا يفترض كفاءته، بل يقيسها بمستشعرَين قبل وبعد.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "الحجرة الأولى تُولّد ثاني أكسيد الكربون كيميائيًا، مروحةٌ تدفعه عبر مادة فلترةٍ قيد الاختبار في الحجرة الوسطى، والحجرة الأخيرة تجمع ما عبر الفلتر. مستشعرٌ في كل طرف يقيس التركيز قبل وبعد — والفرق بينهما هو الأثر الفعلي المقيس، لا افتراضًا نظريًا."
+              },
+              {
+                h: "تدفّق النظام",
+                flow: [
+                  "الحجرة A: توليد CO2 كيميائيًا",
+                  "مروحة PWM",
+                  "الحجرة B: مادة الفلترة",
+                  "الحجرة C: غاز مُفلتر",
+                  "مستشعرا CCS811 (قبل/بعد) ← Arduino ← بايثون"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "تعدّد إرسالٍ عبر بين WAKE، بسبب تعارض عناوين I2C",
+                    d: "كلا مستشعرَي CCS811 بنفس عنوان I2C الثابت (0x5A) دون وسيلة عتاديةٍ لتغييره على هذه اللوحة. أُخفِض بين WAKE لكل مستشعرٍ فقط أثناء قراءته، بينما يبقى الآخر نائمًا وصامتًا — حلٌّ متعمَّدٌ موثَّق، لا محدوديةً عرَضية."
+                  },
+                  {
+                    t: "تحكّمٌ غير حاجزٍ بالمروحة مع قراءاتٍ موقّتة",
+                    d: "سرعة المروحة تُحدَّث كل دورة loop لاستجابةٍ سلسة، بينما تحدث قراءات CCS811 على فاصل millis() مدته 3 ثوانٍ — وقت استقرار المستشعر نفسه — دون أي delay() يُجمّد استجابة المروحة."
+                  },
+                  {
+                    t: "دمج سكربتَي رسمٍ لا يحفظان بيانات في أداةٍ واحدةٍ تُسجّل",
+                    d: "السكربتان الأصليان يرسمان القراءات حيًّا فقط؛ إغلاق النافذة يفقد التجربة كاملة. الأداة الموحّدة تضيف علم `--log` يختم كل قراءةٍ بوقتها ويحسب نسبة تخفيض الفلترة لكل عينة، ووضع `--simulate` لتجربة الأداة دون الجهاز الفعلي."
+                  }
+                ]
+              },
+              {
+                h: "لا رقم كفاءةٍ مُدَّعى",
+                p: "جوهر الجهاز قياس أثر مادة فلترةٍ محددة، لا الادّعاء برقمٍ عام. النتيجة تعتمد كليًا على المادة والتفاعل الكيميائي المستخدَمين في كل تجربة، ولا يثبّت هذا المستودع أو يدّعي قيمةً لذلك."
+              }
+            ],
+            results: [
+              { k: "حجرات القياس", v: "3" },
+              { k: "مستشعرا قبل/بعد", v: "2 (CCS811)" },
+              { k: "سكربتاتٌ دُمجت", v: "2 → 1" }
+            ],
+            note: "أداةٌ تعليميةٌ لمقارنة موادّ الفلترة على منضدة عمل، لا جهاز سلامةٍ أو فلترةٍ صناعيةٍ معتمَد. الكود مفتوحٌ بالكامل."
+          },
+          en: {
+            lead: "A 3-chamber box that measures the real effect of a filter on CO2 — not assuming its efficiency, but measuring it with sensors on both sides.",
+            sections: [
+              {
+                h: "The idea",
+                p: "The first chamber chemically generates CO2, a fan pushes it through a candidate filter medium in the middle chamber, and the last chamber collects whatever gets through. A sensor on each end measures concentration before and after — the difference is the real, measured effect, not a theoretical assumption."
+              },
+              {
+                h: "System flow",
+                flow: [
+                  "Chamber A: CO2 generated chemically",
+                  "PWM fan",
+                  "Chamber B: filter medium",
+                  "Chamber C: filtered gas",
+                  "CCS811 sensors (before/after) → Arduino → Python"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "WAKE-pin multiplexing, forced by an I2C address collision",
+                    d: "Both CCS811 sensors share the same fixed I2C address (0x5A) with no hardware way to change it on this board. Each sensor's WAKE pin is pulled low only while it's being read, while the other stays asleep and silent — a deliberate, documented workaround, not an accidental limitation."
+                  },
+                  {
+                    t: "Non-blocking fan control alongside timed sensor reads",
+                    d: "Fan speed updates every loop iteration for smooth response, while CCS811 reads happen on a 3-second millis()-based interval — the sensor's own settling time — with no delay() freezing fan responsiveness in between."
+                  },
+                  {
+                    t: "Consolidating two non-logging plotters into one tool that records",
+                    d: "The original scripts only plotted live; closing the window lost the whole run. The unified tool adds a `--log` flag that timestamps every reading and computes its filtration reduction percentage, plus a `--simulate` mode to try the tool with no physical rig."
+                  }
+                ]
+              },
+              {
+                h: "No efficiency number claimed",
+                p: "The point of the rig is to measure a specific filter medium's effect, not to assert a general number. The result depends entirely on the medium and chemical reaction used in a given run, and this repository does not fix or claim a value for it."
+              }
+            ],
+            results: [
+              { k: "Measurement chambers", v: "3" },
+              { k: "Before/after sensors", v: "2 (CCS811)" },
+              { k: "Scripts consolidated", v: "2 → 1" }
+            ],
+            note: "An educational instrument for comparing filter media on a bench, not a certified safety or industrial filtration product. Fully open source."
+          }
+        }
+    },{
+        id: "universal-market-predictor-deluxe",
         categories: ["python-ai"],
         featured: true,
+        image: "assets/images/universal-market-predictor-deluxe.png",
+        demoUrl: "https://huggingface.co/spaces/engdarwish/universal-market-predictor-deluxe",
+        codeUrl: "https://github.com/eahmeddarwish/universal-market-predictor-deluxe",
+        tags: ["Python", "TensorFlow", "LSTM", "Gradio"],
+        title: {
+            ar: "متنبئ الأسواق الشامل — إصدار Deluxe",
+            en: "Universal Market Predictor — Deluxe Edition",
+        },
+        desc: {
+            ar: "نموذج LSTM واحد مشترك يتنبأ بأي سهم أو عملة رقمية عالمياً على مدى 1/3/7 أيام، مع اختبار دلالة إحصائية يوضح هل فيه ميزة تنبؤية حقيقية أم مجرد ضوضاء.",
+            en: "A single shared LSTM backbone forecasting any global stock or cryptocurrency over 1/3/7-day horizons, with a statistical significance test to show whether the predictive edge is real or just noise.",
+        },
+        details: {
+            ar: "تطوير كامل لمشروع متنبئ الأسواق الأصلي: بدلًا من نموذجٍ منفصلٍ لكل سهم، نموذج LSTM واحد مشترك بـembeddings خاصةٍ بكل سهمٍ تُغطّي أمريكا والخليج والمملكة المتحدة وألمانيا واليابان وهونج كونج والهند والعملات الرقمية. الهدف هو النسبة المئوية للعائد بدل السعر المُقيّس، لتفادي مشاكل الاستقراء على الأسهم شديدة الاتجاه. كل تنبؤ يُقارن بخط أساس بسيط (naive persistence) مع اختبار ثنائي الحدين (binomial test) وفاصل ثقة Wilson 95% على دقة الاتجاه، بدل الاكتفاء بنسبة دقة مجردة قد تكون مجرد صدفة إحصائية. القيود موثّقة بصراحة في الـREADME، بما فيها الحالات التي لا يزال النموذج فيها عاجزًا عن التفوّق علىش رمي العملة.",
+            en: "A full evolution of the original Universal Market Predictor: instead of a separate model per ticker, one shared LSTM backbone with per-ticker embeddings covers US, Gulf/MENA, UK, Germany, Japan, Hong Kong, India markets, and major cryptocurrencies. The prediction target is percentage return rather than a scaled price, avoiding extrapolation failures on strongly-trending stocks. Every forecast is benchmarked against a naive persistence baseline with a binomial significance test and a 95% Wilson confidence interval on directional accuracy — rather than trusting a raw accuracy percentage that could just be statistical noise. Limitations are documented honestly in the README, including where the model currently does not beat a coin flip.",
+        },
+        article: {
+          ar: {
+            lead: "نموذج LSTM موحّدٌ لكل الأسهم والعملات، بتقييمٍ صادق: كل رقمٍ يُعرض إلى جانب مقياسٍ مرجعيٍّ «لا يفعل شيئًا» — لأن نظام التنبؤ لا يفوق في مصداقيته المقياسَ الذي يُقارَن به.",
+            sections: [
+              {
+                h: "المبدأ الأساسي",
+                p: "سعر إغلاق الغد لسهمٍ كبيرٍ عادةً قريبٌ من سعر اليوم. فأي نموذجٍ — حتى العديم الفائدة — قد يُظهر دقةً برّاقةً لمجرّد اعتماده على هذه الحقيقة. الطريقة الوحيدة لمعرفة إن كان النموذج تعلّم شيئًا حقيقيًا: أن نضع خطأه ودقّته إلى جانب مقياسٍ ساذجٍ لا يستخدم أي تعلّمٍ آلي."
+              },
+              {
+                h: "النموذج المشترك",
+                flow: [
+                  "تسلسل سعري (60 يوم × 12 ميزة)",
+                  "LSTM ثلاثي الطبقات",
+                  "+ تضمين لكل سهم",
+                  "إخراج: 1/3/7 أيام دفعةً واحدة"
+                ]
+              },
+              {
+                h: "القرارات الهندسية",
+                steps: [
+                  {
+                    t: "لماذا نموذجٌ مشتركٌ لا نموذجٌ لكل سهم؟",
+                    d: "العمود الفقري يرى سلوك السوق عبر كل سهمٍ وبورصةٍ وعملة — الانهيارات والصعودات والتقلّبات — أكثر بكثيرٍ مما يعلّمه تاريخ سهمٍ واحد. والتضمين (embedding) يتيح التخصّص لكل أصلٍ دون شبكةٍ منفصلة."
+                  },
+                  {
+                    t: "لماذا إخراجٌ متعددٌ لا تكراري؟",
+                    d: "التنبؤ باليوم التالي ثم إعادة تغذيته للتنبؤ بما بعده يُراكم الخطأ بسرعة. تمريرةٌ واحدة تُخرج كل الآفاق دفعةً واحدة تتجنّب المشكلة كليًا."
+                  },
+                  {
+                    t: "ثغرةٌ حقيقية: تنبؤٌ بالنسبة لا بالسعر",
+                    d: "أول نسخةٍ تنبّأت بسعرٍ مُعايَرٍ مباشرةً، فخسرت أمام المقياس الساذج في الأسهم الصاعدة — لأن أسعار الاختبار خرجت عن النطاق الذي رآه النموذج. الحلّ: التنبؤ بنسبة عائدٍ مئوية، وكل الميزات صارت نِسَبًا محدودةً لا مستوياتِ سعرٍ خام."
+                  }
+                ]
+              },
+              {
+                h: "هل الميزة حقيقيةٌ أم ضوضاء؟",
+                p: "دقة اتجاهٍ في نطاق 52–58% قد تكون مجرّد صدفةٍ إحصائية. لذلك يُجري التقرير <strong>اختبار دلالةٍ إحصائية</strong> على كل صف: لا تُعامَل النتيجة كميزةٍ حقيقية إلا إذا استبعدت فترة الثقة خطّ الـ50% تمامًا. والنتيجة صادقة: ميزةٌ واضحةٌ في أسهمٍ أمريكيةٍ كبرى، وغائبةٌ في أسهم الخليج — والمشروع يوثّق هذا بدل إخفائه."
+              }
+            ],
+            results: [
+              {
+                k: "آفاق التنبؤ",
+                v: "1/3/7 أيام"
+              },
+              {
+                k: "نموذج واحد",
+                v: "كل الأسهم"
+              },
+              {
+                k: "مقاييس مرجعية",
+                v: "3"
+              },
+              {
+                k: "اختبار الدلالة",
+                v: "✓"
+              }
+            ],
+            note: "مشروعٌ بحثيٌّ تعليمي — لا شيء فيه نصيحةٌ مالية. الأسواق تنطوي على مخاطرةٍ حقيقية. الكود مفتوحٌ بالكامل."
+          },
+          en: {
+            lead: "One shared LSTM for every stock and coin, with honest evaluation: every number sits next to a 'does-nothing' baseline — because a prediction system is only as trustworthy as the baseline it's compared against.",
+            sections: [
+              {
+                h: "The core principle",
+                p: "Tomorrow's close for a large stock is usually near today's. So any model — even a useless one — can show a flattering accuracy just by leaning on that. The only way to know if the model learned something real: place its error and accuracy next to a naive baseline that uses no ML at all."
+              },
+              {
+                h: "The shared model",
+                flow: [
+                  "Price sequence (60d × 12 features)",
+                  "3-layer LSTM",
+                  "+ per-ticker embedding",
+                  "Output: 1/3/7-day at once"
+                ]
+              },
+              {
+                h: "Engineering decisions",
+                steps: [
+                  {
+                    t: "Why shared, not one model per ticker?",
+                    d: "The backbone sees market behavior across every stock, exchange and coin — crashes, rallies, volatility — far more than any single ticker's history teaches. The embedding lets it specialize per asset without a separate network."
+                  },
+                  {
+                    t: "Why multi-output, not recursive?",
+                    d: "Predicting day+1 then feeding it back to predict day+2 compounds error fast. A single pass emitting all horizons at once avoids it entirely."
+                  },
+                  {
+                    t: "A real bug: predict % return, not price",
+                    d: "The first version predicted a scaled price directly and lost to the naive baseline on trending stocks — test prices fell outside the range the model had seen. The fix: predict a percentage return, and express every feature as a bounded ratio, not a raw price level."
+                  }
+                ]
+              },
+              {
+                h: "Real edge, or noise?",
+                p: "Directional accuracy of 52–58% could just be luck. So the report runs a <strong>significance test</strong> on every row: a result counts only if the confidence interval excludes the 50% line entirely. And the finding is honest: a clear edge on large US names, absent on Gulf tickers — the project documents this rather than hiding it."
+              }
+            ],
+            results: [
+              {
+                k: "Forecast horizons",
+                v: "1/3/7 days"
+              },
+              {
+                k: "One model",
+                v: "All tickers"
+              },
+              {
+                k: "Baselines",
+                v: "3"
+              },
+              {
+                k: "Significance test",
+                v: "✓"
+              }
+            ],
+            note: "An educational research project — none of it is financial advice. Markets carry real risk. Fully open source."
+          }
+        }
+    },{
+        id: "air-quality-monitor",
+        categories: ["arduino", "iot"],
+        featured: false,
+        image: "assets/images/air-quality-monitor.jpg",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/air-quality-monitor",
+        tags: ["Arduino", "Python", "Tkinter", "Blynk", "OpenAI API"],
+        title: {
+            ar: "مراقب الجو الذكي (Air Quality Monitor)",
+            en: "Air Quality Monitor",
+        },
+        desc: {
+            ar: "منصة مراقبةٍ بيئيةٍ بسبعة مستشعرات (حرارة، رطوبة، أشعة فوق بنفسجية، غبار، CO2، TVOC، H2S)، تُبَث من Arduino إلى لوحة تحكمٍ Python، مع رفعٍ سحابيٍّ وتحليلٍ ذكيٍّ اختياريَّين — أُعيد بناؤها بالكامل بعد اكتشاف مفاتيح API حقيقية كانت مثبَّتة في الكود.",
+            en: "A 7-sensor environmental monitoring bench (temperature, humidity, UV, dust, CO2, TVOC, H2S) streamed from an Arduino to a Python dashboard, with optional cloud upload and AI analysis — fully rebuilt after discovering live API keys hardcoded in the original source.",
+        },
+        details: {
+            ar: "النموذج الأصلي كان قد تضخّم إلى نحو 15 سكربتًا شبه مكرر، سكربتٌ لكل توليفة ميزات (DHT فقط، +Blynk، +UV، +ThingSpeak، +OpenAI)، وكان أحدها يحتوي على مفتاح OpenAI API ورمز مصادقة Blynk حقيقيَّين مكتوبَين مباشرةً في الكود. أُعيد بناء المشروع كسكربتٍ واحدٍ بميزاتٍ تُفعَّل عبر متغيرات البيئة، مع وضع `--simulate` يتيح تجربته دون أي عتادٍ فعلي، وتحديثٍ لاستدعاءات OpenAI إلى واجهة العميل الحالية بعد أن كان الكود الأصلي يستخدم واجهةً مُهمَلة.",
+            en: "The original prototype had grown into roughly 15 near-duplicate scripts, one per feature combination (DHT-only, +Blynk, +UV, +ThingSpeak, +OpenAI), and one of them had a live OpenAI API key and a live Blynk auth token written directly into the source. The project was rebuilt as a single script with environment-variable feature flags, a `--simulate` mode for trying it with no hardware attached, and an update of the OpenAI calls to the current client interface after the original used a since-removed one.",
+        },
+        article: {
+          ar: {
+            lead: "سبعة مستشعرات، سكربتٌ واحد، وقصة إصلاحٍ أمنيٍّ حقيقية: مفتاح API ورمز مصادقةٍ حيّان كانا مكتوبَين مباشرةً في الكود، والآن كل بيانات الاعتماد تأتي من متغيرات البيئة فقط.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "منصة مراقبةٍ بيئيةٍ لمعمل أو غرفة: تقرأ سبعة مقاييس عبر خمسة مستشعرات، تعرضها حيًّا على لوحة Tkinter، وترفعها اختياريًا لسحابة Blynk، وتطلب اختياريًا ملخصًا بيئيًّا بلغةٍ طبيعيةٍ من نموذج ذكاءٍ اصطناعي كل بضع دقائق."
+              },
+              {
+                h: "تدفّق البيانات",
+                flow: [
+                  "5 مستشعرات (DHT11, UV, H2S, Dust, CCS811)",
+                  "عقدة Arduino",
+                  "JSON عبر Serial (115200 baud)",
+                  "لوحة Python/Tkinter",
+                  "Blynk + تحليل OpenAI (اختياريّان)"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "أسرارٌ حقيقيةٌ وُجدت مثبَّتة، واختفت في هذه النسخة",
+                    d: "احتوى أحد السكربتات الأصلية على مفتاح OpenAI API ورمز مصادقة Blynk حقيقيَّين مكتوبَين مباشرةً في الملف. أعادت هذه النسخة قراءة كل بيانات الاعتماد من متغيرات البيئة أو ملف `.env` مستثنًى من Git، وإن غاب أحد المفاتيح تُعطَّل ميزته تلقائيًا بدل التعطل أو استخدام قيمةٍ صامتة."
+                  },
+                  {
+                    t: "سكربتٌ واحد بميزاتٍ قابلةٍ للتفعيل بدل خمسة عشر سكربتًا",
+                    d: "تراكم الكود الأصلي إلى سكربتٍ منفصلٍ لكل توليفة ميزات. أصبحت كل واحدةٍ منها فحص شرطٍ وقت التشغيل (وجود التوكن أم لا) داخل لوحة تحكمٍ واحدة، فمنطق القراءة والعرض موجودٌ في مكانٍ واحدٍ فقط."
+                  },
+                  {
+                    t: "الانتقال من واجهة OpenAI المُهمَلة، ووضعٌ للتجربة بلا عتاد",
+                    d: "استُبدل الاستدعاء القديم `openai.ChatCompletion.create` بواجهة العميل الحالية. وأُضيف وضع `--simulate` يولّد قراءاتٍ عشوائيةً معقولة على نفس مسار الكود، فيمكن تجربة اللوحة والرفع السحابي والتحليل الذكي دون أي Arduino متصل."
+                  }
+                ]
+              },
+              {
+                h: "حدودٌ صادقة",
+                p: "معايرة H2S والأشعة فوق البنفسجية تحويلٌ خطيٌّ تقريبي لا منحنى مخبريٌّ دقيق، ولا يوجد تسجيلٌ محليٌّ للبيانات فيما وراء العرض الحي والرفع السحابي الاختياري. هذا مشروع مراقبةٍ بيئيةٍ للهواة، لا جهاز قياس هواءٍ معتمَد."
+              }
+            ],
+            results: [
+              { k: "مقاييسٌ بيئية", v: "7" },
+              { k: "سكربتاتٌ دُمجت إلى واحد", v: "~15 → 1" },
+              { k: "أسرارٌ مُزالة من الكود", v: "2 (OpenAI + Blynk)" }
+            ],
+            note: "مشروع هوايةٍ تعليمي لمراقبة الجو، وليس جهاز قياسٍ معتمَدًا. الكود مفتوحٌ بالكامل، وكل بيانات الاعتماد تُقرأ من متغيرات البيئة فقط."
+          },
+          en: {
+            lead: "Seven environmental metrics, one script, and a real security fix: a live API key and auth token that were hardcoded in the source are now sourced entirely from environment variables.",
+            sections: [
+              {
+                h: "The idea",
+                p: "An environmental monitoring bench for a lab or room: reads seven metrics from five sensors, shows them live on a Tkinter dashboard, optionally uploads to Blynk, and optionally asks an LLM for a short plain-language summary every few minutes."
+              },
+              {
+                h: "Data flow",
+                flow: [
+                  "5 sensors (DHT11, UV, H2S, Dust, CCS811)",
+                  "Arduino sensor node",
+                  "JSON over Serial (115200 baud)",
+                  "Python/Tkinter dashboard",
+                  "Blynk + OpenAI analysis (both optional)"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "Real secrets were found hardcoded, and are gone from this version",
+                    d: "One of the original scripts had a live OpenAI API key and a live Blynk auth token written directly into the file. This version reads every credential from environment variables or a git-ignored `.env` file, and if a key is missing, that feature simply turns itself off instead of crashing or silently using a placeholder."
+                  },
+                  {
+                    t: "One script with feature flags, not fifteen scripts",
+                    d: "The original code had accumulated a separate script per feature combination. Each one is now a runtime check (is the token present or not) inside a single dashboard, so the reading and display logic exists in exactly one place."
+                  },
+                  {
+                    t: "Migrated off the deprecated OpenAI interface, plus a hardware-free mode",
+                    d: "The old `openai.ChatCompletion.create` call was replaced with the current client interface. A `--simulate` mode was added that generates plausible random readings on the same code path, so the dashboard, cloud upload, and AI analysis can all be exercised with no Arduino attached."
+                  }
+                ]
+              },
+              {
+                h: "Honest limitations",
+                p: "H2S and UV calibration is an approximate linear mapping, not a lab-calibrated curve, and there's no local data logging beyond the live display and optional cloud upload. This is a hobbyist environmental-monitoring project, not a certified air-quality instrument."
+              }
+            ],
+            results: [
+              { k: "Environmental metrics", v: "7" },
+              { k: "Scripts consolidated", v: "~15 → 1" },
+              { k: "Hardcoded secrets removed", v: "2 (OpenAI + Blynk)" }
+            ],
+            note: "A hobbyist/educational environmental-monitoring project, not a certified measurement instrument. Fully open source, with every credential read from environment variables only."
+          }
+        }
+    },{
+        id: "voice-chess-pro",
+        categories: ["python-ai"],
+        featured: false,
+        image: "assets/images/voice-chess-pro.png",
+        demoUrl: "https://huggingface.co/spaces/engdarwish/voice-chess-pro",
+        codeUrl: "https://github.com/eahmeddarwish/voice-chess-pro",
+        tags: ["Python", "Gradio", "Stockfish"],
+        title: {
+            ar: "شطرنج تفاعلي احترافي (Voice Chess Pro)",
+            en: "Voice Chess Pro — Interactive Web Chess",
+        },
+        desc: {
+            ar: "لعبة شطرنج تفاعلية كاملة تعمل في المتصفح، بوضعين: التحدي ضد محرك Stockfish أو اللعب بين شخصين، مع تصدير النقلات بصيغة PGN.",
+            en: "A full interactive browser-based chess game with two modes: challenge the Stockfish engine or play against another player, plus PGN move export.",
+        },
+        details: {
+            ar: "بُني المشروع بلغة Python باستخدام Gradio لواجهة الويب، ومحرك Stockfish كخصم ذكاء اصطناعي بثلاث مستويات صعوبة (سهل، متوسط، صعب). يدعم وضعين للعب: لاعب ضد لاعب، أو لاعب ضد الحاسوب، مع تتبع كامل لسجل النقلات وإمكانية تصدير المباراة بصيغة PGN القياسية لتحليلها لاحقاً في أي برنامج شطرنج. تجربة تُظهر كيفية دمج محرك شطرنج احترافي (UCI) مع واجهة ويب تفاعلية بسيطة وسريعة النشر عبر Hugging Face Spaces.",
+            en: "Built in Python with a Gradio web interface and the Stockfish engine as an AI opponent across three difficulty levels (Easy, Medium, Hard). Supports two modes, Player vs Player and Player vs Computer, with full move-history tracking and standard PGN export for later analysis in any chess program. A practical example of wiring a professional UCI chess engine into a lightweight, instantly deployable web UI on Hugging Face Spaces.",
+        },
+        article: {
+          ar: {
+            lead: "لعبة شطرنجٍ كاملة تعمل بالكامل داخل المتصفح — ضدّ محرك Stockfish بثلاث مستويات، أو ضدّ صديقٍ على نفس الجهاز، وكل جلسةٍ مستقلةٌ تمامًا عن غيرها.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "شطرنجٌ احترافي بلا تثبيتٍ ولا حساب: تفتح الرابط وتلعب فورًا. تختار مستوى الصعوبة (سهل / متوسط / صعب)، أو تتحدّى صديقًا وجهًا لوجهٍ على نفس الشاشة."
+              },
+              {
+                h: "آلية العمل",
+                flow: [
+                  "إدخال الحركة",
+                  "python-chess يتحقق من صحّتها",
+                  "محرك Stockfish يردّ",
+                  "تحديث الرقعة"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "محرك شطرنجٍ كامل بـ python-chess",
+                    d: "كل حركةٍ تُفحَص للتأكد من قانونيّتها قبل تنفيذها — لا حركاتٍ غير شرعية، ولا حالاتٍ شاذّة. المكتبة تتكفّل بقواعد الشطرنج كاملةً بما فيها التبييت والترقية والكِش."
+                  },
+                  {
+                    t: "خصمٌ ذكيٌّ بمحرك Stockfish",
+                    d: "من أقوى محركات الشطرنج المفتوحة، بمستوى صعوبةٍ قابلٍ للضبط — من خصمٍ ودودٍ للمبتدئ إلى تحدٍّ حقيقيٍّ للاعب المتمرّس."
+                  },
+                  {
+                    t: "حالة لعبٍ منفصلةٌ لكل جلسة",
+                    d: "كل متصفحٍ يحتفظ بلعبته الخاصة، فيمكن لعشرات الأشخاص اللعب في الوقت نفسه دون أي تداخل — تصميمٌ آمنٌ للّعب المتزامن."
+                  }
+                ]
+              },
+              {
+                h: "مدخلاتٌ مرنة",
+                p: "تُدخِل الحركة بالصيغة القياسية (<em>e2e4</em>، <em>Nf3</em>) أو بلغةٍ طبيعية (<em>e2 to e4</em>). مع أزرارٍ للتراجع وإعادة الضبط وقلب الرقعة، وسجلٍّ للحركات وتصديرٍ بصيغة PGN."
+              }
+            ],
+            results: [
+              {
+                k: "مستويات الصعوبة",
+                v: "3"
+              },
+              {
+                k: "المحرك",
+                v: "Stockfish"
+              },
+              {
+                k: "لاعبون متزامنون",
+                v: "غير محدود"
+              },
+              {
+                k: "التثبيت",
+                v: "صفر"
+              }
+            ],
+            note: "مشروعٌ مفتوح المصدر بالكامل، يعمل داخل المتصفح عبر Gradio — الكود متاحٌ للتجربة والتعديل."
+          },
+          en: {
+            lead: "A full chess game running entirely in the browser — against Stockfish at three levels, or a friend on the same device, each session fully independent.",
+            sections: [
+              {
+                h: "The idea",
+                p: "Serious chess with no install and no account: open the link and play. Pick a difficulty (Easy / Medium / Hard), or challenge a friend face-to-face on the same screen."
+              },
+              {
+                h: "How it works",
+                flow: [
+                  "Move input",
+                  "python-chess validates it",
+                  "Stockfish replies",
+                  "Board updates"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "A full engine with python-chess",
+                    d: "Every move is checked for legality before it's applied — no illegal moves, no edge cases. The library handles all of chess including castling, promotion and check."
+                  },
+                  {
+                    t: "A smart opponent with Stockfish",
+                    d: "One of the strongest open chess engines, with adjustable difficulty — from a gentle opponent for beginners to a real challenge for experienced players."
+                  },
+                  {
+                    t: "Per-session game state",
+                    d: "Each browser keeps its own game, so dozens can play at once with zero interference — designed to be safe for concurrent play."
+                  }
+                ]
+              },
+              {
+                h: "Flexible input",
+                p: "Enter moves in standard notation (<em>e2e4</em>, <em>Nf3</em>) or plain language (<em>e2 to e4</em>). With undo, reset and flip controls, move history and PGN export."
+              }
+            ],
+            results: [
+              {
+                k: "Difficulty levels",
+                v: "3"
+              },
+              {
+                k: "Engine",
+                v: "Stockfish"
+              },
+              {
+                k: "Concurrent players",
+                v: "Unlimited"
+              },
+              {
+                k: "Install",
+                v: "None"
+              }
+            ],
+            note: "Fully open source, running in the browser via Gradio — the code is available to run and modify."
+          }
+        }
+    },{
+        id: "visual-trigger-studio",
+        categories: ["python-ai"],
+        featured: false,
         image: "assets/images/Visual-Trigger.png",
         demoUrl: "https://eahmeddarwish.github.io/visual-trigger-studio/",
         codeUrl: "https://github.com/eahmeddarwish/visual-trigger-studio",
@@ -829,150 +1671,10 @@ const projectsData = [
             note: "An open-source static site — works on any modern browser with WebAssembly, on desktop and mobile."
           }
         }
-    },
-    {
-        id: "adsb-flight-tracker",
-        categories: ["iot", "python-ai"],
-        featured: false,
-        image: "assets/images/adsb-radar-screenshot.png",
-        demoUrl: "https://engdarwish-adsb-flight-tracker.static.hf.space",
-        codeUrl: "https://github.com/eahmeddarwish/adsb-flight-tracker",
-        tags: ["Python", "Flask", "RTL-SDR", "ADS-B", "Raspberry Pi"],
-        title: {
-            ar: "متتبع رحلات ADS-B",
-            en: "ADS-B Flight Tracker"
-        },
-        desc: {
-            ar: "رادار طيران حي بتصميم ATC كلاسيكي، يشتغل بأي دونجل RTL-SDR على أي لابتوب أو Raspberry Pi.",
-            en: "A live ATC-style flight radar that runs with any RTL-SDR dongle on a laptop or Raspberry Pi."
-        },
-        details: {
-            ar: "يستقبل إشارات ADS-B الحقيقية على 1090MHz عبر dump1090، ويعرضها على واجهة رادار حية ببصمة كلاسيكية. الديمو المباشر يعمل بمحاكاةٍ داخل المتصفح؛ النسخة الكاملة تدعم عتادًا حقيقيًا.",
-            en: "Receives real ADS-B signals at 1090MHz via dump1090 and renders them on a live radar-style dashboard. The live demo runs a browser-side simulation; the full version supports real hardware."
-        },
-        article: {
-          ar: {
-            lead: "رادار طيرانٍ حيٌّ يفكّ تشفير إشارات الطائرات الحقيقية على تردد 1090 ميجاهرتز بدونجل RTL-SDR، ويعرضها على واجهةٍ بطابع أبراج المراقبة — على أي لابتوبٍ أو راسبيري باي.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "تلتقط إشارات ADS-B التي تبثّها الطائرات فعليًا، وتفكّها وتعرض كل طائرةٍ على خريطةٍ حيةٍ بأيقوناتٍ دقيقة الاتجاه ومساراتٍ خلفها. وإن لم يكن لديك عتاد؟ وضع محاكاةٍ جاهزٌ يشغّل نفس الواجهة ببياناتٍ تجريبية."
-              },
-              {
-                h: "المعمارية",
-                flow: [
-                  "دونجل RTL-SDR (1090MHz)",
-                  "dump1090 يفكّ الإشارة",
-                  "خادم Flask (API + واجهة)",
-                  "خريطة Leaflet في المتصفح"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "وضعان دائمان: محاكاةٌ وحقيقي",
-                    d: "وضع المحاكاة يعمل في ثوانٍ بلا أي عتاد — هو ما يشتغل على النسخة الحية. والوضع الحقيقي يفكّ بثّ ADS-B فعليًا من الدونجل. الاثنان يتكلمان مع نفس الخادم ونفس الواجهة، فتبدّل بينهما بزرٍّ واحد."
-                  },
-                  {
-                    t: "كودٌ عابرٌ للمنصّات",
-                    d: "الخادم بايثون صافٍ بلا أي كودٍ خاصٍّ بالراسبيري باي — يعمل على ويندوز وماك ولينكس. الراسبيري باي مجرد خيارٍ مريحٍ للتشغيل الدائم 24 ساعة، لا شرط."
-                  },
-                  {
-                    t: "إثراءٌ آمنٌ من جهة الخادم",
-                    d: "بيانات الرحلات الإضافية تُجلَب عبر الخادم فقط — مفتاح الـAPI لا يصل للمتصفح إطلاقًا. خادمٌ واحدٌ على منفذٍ واحدٍ يخدم الواجهة والـAPI معًا."
-                  }
-                ]
-              },
-              {
-                h: "جاهزٌ للتشغيل الدائم",
-                p: "مع ملف systemd للتشغيل التلقائي عند الإقلاع، يتحوّل الراسبيري باي إلى كشك رادارٍ يعمل بلا توقّف. وكل الإعدادات عبر متغيّرات البيئة — لا شيء مثبّتٌ في الكود، فتغيّر المنطقة والمركز بسهولة."
-              }
-            ],
-            results: [
-              {
-                k: "التردد",
-                v: "1090 MHz"
-              },
-              {
-                k: "المنصّات",
-                v: "ويندوز/ماك/لينكس"
-              },
-              {
-                k: "وضع المحاكاة",
-                v: "بلا عتاد"
-              },
-              {
-                k: "المنافذ",
-                v: "واحد"
-              }
-            ],
-            note: "مشروعٌ مفتوح المصدر بالكامل، مع نسخةٍ حيةٍ على Hugging Face تعمل بوضع المحاكاة مباشرةً."
-          },
-          en: {
-            lead: "A live aircraft radar that decodes real ADS-B signals on 1090 MHz with an RTL-SDR dongle, rendering every plane on a retro ATC-style dashboard — on any laptop or Raspberry Pi.",
-            sections: [
-              {
-                h: "The idea",
-                p: "It picks up the ADS-B signals aircraft actually broadcast, decodes them, and shows each plane on a live map with heading-accurate icons and trails. No hardware? A built-in simulation runs the same UI with demo traffic."
-              },
-              {
-                h: "Architecture",
-                flow: [
-                  "RTL-SDR dongle (1090MHz)",
-                  "dump1090 decodes",
-                  "Flask server (API + UI)",
-                  "Leaflet map in browser"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Two first-class modes: sim and live",
-                    d: "Simulation runs in seconds with no hardware — it powers the live demo. Live mode decodes real ADS-B from the dongle. Both talk to the same server and UI, so you switch with one button."
-                  },
-                  {
-                    t: "Cross-platform code",
-                    d: "The server is pure Python with no Pi-specific code — it runs on Windows, macOS and Linux. A Raspberry Pi is just a convenient always-on box, not a requirement."
-                  },
-                  {
-                    t: "Safe server-side enrichment",
-                    d: "Extra flight data is fetched through the server only — the API key never reaches the browser. One server on one port serves both the UI and the API."
-                  }
-                ]
-              },
-              {
-                h: "Ready for permanent use",
-                p: "With a systemd unit for boot-time auto-start, the Pi becomes a 24/7 radar kiosk. All configuration is via environment variables — nothing is hardcoded, so you change region and center easily."
-              }
-            ],
-            results: [
-              {
-                k: "Frequency",
-                v: "1090 MHz"
-              },
-              {
-                k: "Platforms",
-                v: "Win/Mac/Linux"
-              },
-              {
-                k: "Sim mode",
-                v: "No hardware"
-              },
-              {
-                k: "Ports",
-                v: "One"
-              }
-            ],
-            note: "Fully open source, with a live Hugging Face demo running in simulation mode out of the box."
-          }
-        }
-    },
-    {
+    },{
         id: "esp32-thermal-camera",
         categories: ["arduino"],
-        featured: true,
+        featured: false,
         image: "assets/images/esp32-thermal-camera.png",
         demoUrl: "",
         codeUrl: "https://github.com/eahmeddarwish/esp32-thermal-camera",
@@ -1109,151 +1811,11 @@ const projectsData = [
             note: "Interpolation makes the display smoother, not the sensor sharper — a low-res Grid-EYE class sensor, not FLIR-grade imaging. Fully open source."
           }
         }
-    },
-    {
-        id: "voice-chess-pro",
-        categories: ["python-ai"],
-        featured: true,
-        image: "assets/images/voice-chess-pro.png",
-        demoUrl: "https://huggingface.co/spaces/engdarwish/voice-chess-pro",
-        codeUrl: "https://github.com/eahmeddarwish/voice-chess-pro",
-        tags: ["Python", "Gradio", "Stockfish"],
-        title: {
-            ar: "شطرنج تفاعلي احترافي (Voice Chess Pro)",
-            en: "Voice Chess Pro — Interactive Web Chess",
-        },
-        desc: {
-            ar: "لعبة شطرنج تفاعلية كاملة تعمل في المتصفح، بوضعين: التحدي ضد محرك Stockfish أو اللعب بين شخصين، مع تصدير النقلات بصيغة PGN.",
-            en: "A full interactive browser-based chess game with two modes: challenge the Stockfish engine or play against another player, plus PGN move export.",
-        },
-        details: {
-            ar: "بُني المشروع بلغة Python باستخدام Gradio لواجهة الويب، ومحرك Stockfish كخصم ذكاء اصطناعي بثلاث مستويات صعوبة (سهل، متوسط، صعب). يدعم وضعين للعب: لاعب ضد لاعب، أو لاعب ضد الحاسوب، مع تتبع كامل لسجل النقلات وإمكانية تصدير المباراة بصيغة PGN القياسية لتحليلها لاحقاً في أي برنامج شطرنج. تجربة تُظهر كيفية دمج محرك شطرنج احترافي (UCI) مع واجهة ويب تفاعلية بسيطة وسريعة النشر عبر Hugging Face Spaces.",
-            en: "Built in Python with a Gradio web interface and the Stockfish engine as an AI opponent across three difficulty levels (Easy, Medium, Hard). Supports two modes, Player vs Player and Player vs Computer, with full move-history tracking and standard PGN export for later analysis in any chess program. A practical example of wiring a professional UCI chess engine into a lightweight, instantly deployable web UI on Hugging Face Spaces.",
-        },
-        article: {
-          ar: {
-            lead: "لعبة شطرنجٍ كاملة تعمل بالكامل داخل المتصفح — ضدّ محرك Stockfish بثلاث مستويات، أو ضدّ صديقٍ على نفس الجهاز، وكل جلسةٍ مستقلةٌ تمامًا عن غيرها.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "شطرنجٌ احترافي بلا تثبيتٍ ولا حساب: تفتح الرابط وتلعب فورًا. تختار مستوى الصعوبة (سهل / متوسط / صعب)، أو تتحدّى صديقًا وجهًا لوجهٍ على نفس الشاشة."
-              },
-              {
-                h: "آلية العمل",
-                flow: [
-                  "إدخال الحركة",
-                  "python-chess يتحقق من صحّتها",
-                  "محرك Stockfish يردّ",
-                  "تحديث الرقعة"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "محرك شطرنجٍ كامل بـ python-chess",
-                    d: "كل حركةٍ تُفحَص للتأكد من قانونيّتها قبل تنفيذها — لا حركاتٍ غير شرعية، ولا حالاتٍ شاذّة. المكتبة تتكفّل بقواعد الشطرنج كاملةً بما فيها التبييت والترقية والكِش."
-                  },
-                  {
-                    t: "خصمٌ ذكيٌّ بمحرك Stockfish",
-                    d: "من أقوى محركات الشطرنج المفتوحة، بمستوى صعوبةٍ قابلٍ للضبط — من خصمٍ ودودٍ للمبتدئ إلى تحدٍّ حقيقيٍّ للاعب المتمرّس."
-                  },
-                  {
-                    t: "حالة لعبٍ منفصلةٌ لكل جلسة",
-                    d: "كل متصفحٍ يحتفظ بلعبته الخاصة، فيمكن لعشرات الأشخاص اللعب في الوقت نفسه دون أي تداخل — تصميمٌ آمنٌ للّعب المتزامن."
-                  }
-                ]
-              },
-              {
-                h: "مدخلاتٌ مرنة",
-                p: "تُدخِل الحركة بالصيغة القياسية (<em>e2e4</em>، <em>Nf3</em>) أو بلغةٍ طبيعية (<em>e2 to e4</em>). مع أزرارٍ للتراجع وإعادة الضبط وقلب الرقعة، وسجلٍّ للحركات وتصديرٍ بصيغة PGN."
-              }
-            ],
-            results: [
-              {
-                k: "مستويات الصعوبة",
-                v: "3"
-              },
-              {
-                k: "المحرك",
-                v: "Stockfish"
-              },
-              {
-                k: "لاعبون متزامنون",
-                v: "غير محدود"
-              },
-              {
-                k: "التثبيت",
-                v: "صفر"
-              }
-            ],
-            note: "مشروعٌ مفتوح المصدر بالكامل، يعمل داخل المتصفح عبر Gradio — الكود متاحٌ للتجربة والتعديل."
-          },
-          en: {
-            lead: "A full chess game running entirely in the browser — against Stockfish at three levels, or a friend on the same device, each session fully independent.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Serious chess with no install and no account: open the link and play. Pick a difficulty (Easy / Medium / Hard), or challenge a friend face-to-face on the same screen."
-              },
-              {
-                h: "How it works",
-                flow: [
-                  "Move input",
-                  "python-chess validates it",
-                  "Stockfish replies",
-                  "Board updates"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "A full engine with python-chess",
-                    d: "Every move is checked for legality before it's applied — no illegal moves, no edge cases. The library handles all of chess including castling, promotion and check."
-                  },
-                  {
-                    t: "A smart opponent with Stockfish",
-                    d: "One of the strongest open chess engines, with adjustable difficulty — from a gentle opponent for beginners to a real challenge for experienced players."
-                  },
-                  {
-                    t: "Per-session game state",
-                    d: "Each browser keeps its own game, so dozens can play at once with zero interference — designed to be safe for concurrent play."
-                  }
-                ]
-              },
-              {
-                h: "Flexible input",
-                p: "Enter moves in standard notation (<em>e2e4</em>, <em>Nf3</em>) or plain language (<em>e2 to e4</em>). With undo, reset and flip controls, move history and PGN export."
-              }
-            ],
-            results: [
-              {
-                k: "Difficulty levels",
-                v: "3"
-              },
-              {
-                k: "Engine",
-                v: "Stockfish"
-              },
-              {
-                k: "Concurrent players",
-                v: "Unlimited"
-              },
-              {
-                k: "Install",
-                v: "None"
-              }
-            ],
-            note: "Fully open source, running in the browser via Gradio — the code is available to run and modify."
-          }
-        }
-    },
-    {
+    },{
         id: "pendulum-gravity-lab",
         categories: ["python-physics"],
-        featured: true,
-        image: "assets/images/pendulum-gravity-lab.png",
+        featured: false,
+        image: "assets/images/pendulum-gravity-lab.jpg",
         demoUrl: "https://huggingface.co/spaces/engdarwish/pendulum-gravity-lab",
         codeUrl: "https://github.com/eahmeddarwish/pendulum-gravity-lab",
         tags: ["Python", "OpenCV", "Gradio", "NumPy", "SciPy"],
@@ -1270,121 +1832,6 @@ const projectsData = [
             en: "A Python + OpenCV computer-vision tool that tracks a real pendulum through a camera (Hough Circle Transform) and times its oscillations to compute g = 4π²L/T², backed by a full uncertainty budget and multi-length linear regression rather than a single flattering average. Two real bugs were found and fixed during development: a silent uint16 numeric overflow that produced nonsensical g values, and a timing bug affecting analysis of recorded video files. An interactive Gradio simulation accompanies the experiment, numerically solving the nonlinear pendulum equation (RK4) and cross-checking it against the exact analytic solution via the elliptic integral — no camera or hardware required, runs from any browser on Hugging Face Spaces.",
         },
     },
-    {
-        id: "smart-door-guardian",
-        categories: ["raspberrypi", "python-ai"],
-        featured: false,
-        image: "assets/images/guardian-gate-hero.png",
-        demoUrl: "",
-        codeUrl: "https://github.com/eahmeddarwish/smart-door-guardian",
-        tags: ["Python", "OpenCV", "Raspberry Pi", "Face Recognition", "IoT"],
-        title: {
-            ar: "Guardian Gate — نظام تحكّم ذكي بالدخول متعدد العوامل",
-            en: "Guardian Gate — Multi-Factor Smart Door Access Control",
-        },
-        desc: {
-            ar: "نظام تحكّم فعلي بالدخول لباب، مبني على Raspberry Pi، يجمع بين التعرّف على الوجه والبصمة وبطاقة RFID ورمز PIN كأربعة عوامل توثيق مستقلة، مع تسجيل كامل لكل محاولة دخول وإشعارات فورية اختيارية.",
-            en: "A Raspberry Pi-based physical door access-control system combining face recognition, fingerprint, RFID card, and PIN as four independent authentication factors, with full access logging and optional real-time notifications.",
-        },
-        details: {
-            ar: "مشروعٌ شخصيٌّ بدأ كمجموعة سكريبتات منفصلة لاختبار كل قطعة عتاد على حدة (لوحة مفاتيح، حساس فوق صوتي، شاشة OLED، قارئ RFID، كاميرا)، ثم أُعيد بناؤه بالكامل كنظامٍ واحدٍ متماسك: كل حساس وكل قناة إشعار خلف واجهة برمجية موحّدة، وكل الأسرار والقيم القابلة للتغيير انتقلت من الكود إلى ملفات إعداد، مع وضع محاكاة كامل عبر الطرفية (--simulate) يتيح تجربة منطق القرار بالكامل دون أي عتاد حقيقي. يرصد النظام اقتراب شخص بحساسٍ فوق صوتي، يحاول التعرّف على وجهه أولًا، وإن فشل يعرض بدائل: بصمة، أو بطاقة RFID، أو رمز PIN — ونجاح أيٍّ منها يفتح القفل الكهربائي عبر مُرحّل.",
-            en: "A personal project that started as a set of individual hardware bring-up scripts (keypad, ultrasonic sensor, OLED, RFID reader, camera), then was fully rebuilt as one coherent system: every sensor and notification channel sits behind a unified interface, every secret and tunable value moved from source code into configuration files, and a full console simulation mode (--simulate) lets you exercise the entire decision logic with no real hardware attached. The system watches for someone approaching with an ultrasonic sensor, tries face recognition first, and if that fails offers fingerprint, RFID card, or PIN as fallbacks — any one of which unlocks an electric strike through a relay.",
-        },
-        article: {
-          ar: {
-            lead: "نظام تحكّم فعلي بدخول باب، بأربعة عوامل توثيق مستقلة (وجه، بصمة، بطاقة، رمز)، وسجل دخول واحد شفّاف لكل محاولة.",
-            sections: [
-              {
-                h: "الفكرة",
-                p: "الهدف تأمين باب منزل أو مكتب صغير بعدة طبقات توثيق مستقلة بدل الاعتماد على عاملٍ واحد: يُعطى الأولوية للتعرّف على الوجه بوصفه الأسرع، وفي حال فشله تتاح ثلاثة بدائل (بصمة، بطاقة RFID، رمز PIN) — أيٌّ منها كافٍ لفتح الباب، مع تسجيل كل محاولة وإشعارٍ فوري اختياري للهاتف."
-              },
-              {
-                h: "تدفّق القرار",
-                flow: [
-                  "حساس فوق صوتي يرصد الاقتراب",
-                  "محاولة التعرّف على الوجه",
-                  "بديل: بصمة / بطاقة RFID / رمز PIN",
-                  "فتح المُرحّل عند نجاح أي عامل",
-                  "تسجيل + إشعار فوري اختياري"
-                ]
-              },
-              {
-                h: "القرارات التقنية",
-                steps: [
-                  {
-                    t: "حسم تناقض قطبية المُرحّل (Relay) بالدليل العتادي",
-                    d: "كانت نسخ الكود الأصلية تختلف فعليًا حول طريقة فتح القفل (إشارة HIGH على منفذٍ، أو LOW على منفذٍ آخر) — تناقضٌ حقيقي في سلوك العتاد لا مجرد اختلاف أسلوب. حُسم الخلاف بالرجوع إلى اختبار العتاد الفعلي، وأصبحت القطبية حقل إعدادٍ صريحًا، مع أداة ذاتية (relay_selftest.py) للتحقق قبل التوصيل بقفلٍ حقيقي."
-                  },
-                  {
-                    t: "إصلاح خلل نطاق متغيّر (scoping) في جلسة الضيف",
-                    d: "إسناد قيمة لعلَمٍ داخل دالة دون كلمة global جعل بايثون يُنشئ متغيّرًا محليًا جديدًا بصمتٍ بدل تحديث الحالة الفعلية — ما كان يمنع خيط المعاينة الحية من التوقف كما هو متوقع. أُصلح الخلل واستُبدل العلَم الضمني بحالةٍ صريحة تُمرَّر عبر الواجهة، بحيث يستحيل تكرار العطل بنيويًا."
-                  },
-                  {
-                    t: "فصل العتاد عن منطق القرار بالكامل",
-                    d: "كل استدعاء لمكتبات العتاد (lgpio، picamera2، spidev) صار خلف واجهة تجريدية، بحيث يعمل النظام بالكامل في وضع محاكاة عبر الطرفية دون أي راسبيري باي حقيقي — ما يسهّل الاختبار والتطوير خارج الجهاز الفعلي."
-                  }
-                ]
-              },
-              {
-                h: "مفاضلة موثّقة صراحةً: \"أو\" لا \"و\"",
-                p: "سياسة النظام قائمة على نجاح أيّ عاملٍ واحد (بصمة أو بطاقة أو رمز أو وجه)، لا اشتراط كل العوامل معًا. قرارٌ متعلقٌ بسهولة الاستخدام لا معيار أمانٍ أعلى، مذكورٌ صراحةً في التوثيق بدل ترك القارئ يكتشفه بنفسه."
-              }
-            ],
-            results: [
-              { k: "عوامل التوثيق", v: "4" },
-              { k: "أخطاء عتاد حقيقية أُصلحت", v: "2" },
-              { k: "وضع تشغيل بدون عتاد", v: "متاح" }
-            ],
-            note: "مشروع هواةٍ للأمان الفيزيائي المنزلي، وليس منتج تحكّم دخولٍ معتمَدًا — عوامل التوثيق هنا عوامل راحة لا حماية تشفيرية، وموثّقة صراحةً كذلك في المستودع."
-          },
-          en: {
-            lead: "A physical door access-control system with four independent authentication factors (face, fingerprint, card, PIN) and one honest access log for every attempt.",
-            sections: [
-              {
-                h: "The idea",
-                p: "Secure a home or small-office door with several independent authentication layers instead of relying on one: face recognition is tried first as the fastest option, and if it fails three fallbacks are offered (fingerprint, RFID card, PIN) — any one of which is enough to unlock the door, with every attempt logged and an optional real-time phone notification."
-              },
-              {
-                h: "Decision flow",
-                flow: [
-                  "Ultrasonic sensor detects approach",
-                  "Face recognition attempt",
-                  "Fallback: fingerprint / RFID card / PIN",
-                  "Relay unlocks on any factor success",
-                  "Logging + optional instant notification"
-                ]
-              },
-              {
-                h: "Technical decisions",
-                steps: [
-                  {
-                    t: "Resolving the relay polarity contradiction with hardware evidence",
-                    d: "The original code drafts genuinely disagreed on how the lock opens (HIGH on one pin, or LOW on another) — a real hardware-behavior contradiction, not just a style difference. It was resolved by going back to the actual hardware test, polarity became an explicit config field, and a self-test tool (relay_selftest.py) verifies it before wiring to a real lock."
-                  },
-                  {
-                    t: "Fixing a variable-scoping bug in the guest session",
-                    d: "Assigning a flag inside a function without the global keyword made Python silently create a new local variable instead of updating the real state — which kept the live-preview thread from stopping as expected. The bug was fixed and the implicit global flag replaced with explicit state passed through the interface, making the failure mode structurally impossible to repeat."
-                  },
-                  {
-                    t: "Fully decoupling hardware from decision logic",
-                    d: "Every call to hardware libraries (lgpio, picamera2, spidev) now sits behind an abstract interface, so the entire system runs in a console simulation mode with no real Raspberry Pi — making testing and development off-device much easier."
-                  }
-                ]
-              },
-              {
-                h: "An explicitly documented trade-off: \"OR\", not \"AND\"",
-                p: "The system's policy succeeds when any single factor succeeds (fingerprint OR card OR PIN OR face), not when all factors succeed together. This is a usability decision, not a higher-security standard, and it's stated explicitly in the documentation rather than left for the reader to discover."
-              }
-            ],
-            results: [
-              { k: "Authentication factors", v: "4" },
-              { k: "Real hardware bugs fixed", v: "2" },
-              { k: "Hardware-free run mode", v: "Available" }
-            ],
-            note: "A hobbyist home physical-security project, not a certified access-control product — the authentication factors here are convenience factors, not cryptographic protection, and this is stated explicitly in the repository."
-          }
-        }
-    }
 ];
 
 if (typeof window !== "undefined") window.projectsData = projectsData;
