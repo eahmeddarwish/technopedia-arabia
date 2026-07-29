@@ -913,6 +913,132 @@ const projectsData = [
           }
         }
     },{
+        id: "nfc-attendance-system",
+        categories: ["arduino", "iot"],
+        featured: true,
+        image: "assets/images/nfc-attendance-system.jpg",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/nfc-attendance-system",
+        tags: ["ESP32", "C++", "NFC", "IoT", "Google Sheets"],
+        title: {
+            ar: "نظام حضور وتحكّم دخول بالـ NFC (NFC Attendance & Access Control)",
+            en: "NFC Attendance & Access Control System",
+        },
+        desc: {
+            ar: "نظام حضور على ESP32: لمسة كارت NFC تسجّل الحضور بوقتٍ حقيقي (NTP) في Google Sheet عبر الواي فاي، مع منع تكرار البصمة، ووضع تسجيل كروت بالكيباد، وسيرفو لفتح الباب للكروت المصرّح لها.",
+            en: "An ESP32 attendance system: a tap of an NFC card logs attendance with a real NTP timestamp to a Google Sheet over Wi-Fi, with duplicate-scan protection, keypad-based card enrollment, and a servo that opens the gate for authorized cards.",
+        },
+        details: {
+            ar: "إعادة بناءٍ كاملة لنموذجٍ مخبريٍّ سابق كان يعمل على Arduino Uno. النموذج الأصلي كان يعتمد على حلقات انتظارٍ حاجزة (‎while (true)‎) لقراءة الكيباد فتُجمّد القارئ، وكان يختم الحضور بساعةٍ برمجيةٍ بلا مرجعٍ زمنيٍّ حقيقي فتخرج تواريخ غير صحيحة. أُعيدت كتابة النظام بالكامل على ESP32 بآلة حالاتٍ غير حاجزة، ويجلب الوقت الصحيح من خادم NTP عبر الواي فاي، ويمنع تكرار تسجيل نفس الكارت خلال فترة تهدئةٍ قابلةٍ للضبط، ويرفع كل صفٍّ (تاريخ، وقت، رقم الكارت، الاسم) تلقائيًا إلى Google Sheet عبر باك-إند خفيف على Apps Script. حُفِظت مميزات النسخة الأصلية: قراءة/كتابة اسمٍ أو رقمٍ على الكارت بصيغة NDEF، ووضعا الحضور والتسجيل عبر الكيباد، وسيرفو للتحكم في الدخول للكروت المصرّح لها، مع ردٍّ فوريٍّ على شاشة LCD وLED وجرس. الأسرار (بيانات الواي فاي ورابط الخدمة) معزولةٌ في ملف إعداداتٍ منفصلٍ لا يُرفَع، وكل القيود موثّقةٌ بصراحة.",
+            en: "A full rebuild of an earlier bench prototype that ran on an Arduino Uno. The original relied on blocking `while (true)` loops to read the keypad, freezing the reader, and stamped attendance with a software clock that had no real time reference, producing incorrect dates. The system was rewritten entirely on an ESP32 with a non-blocking state machine, pulls the correct time from an NTP server over Wi-Fi, ignores repeat scans of the same card within a configurable cooldown window, and automatically uploads each row (date, time, UID, name) to a Google Sheet through a lightweight Apps Script backend. The original features were preserved: reading/writing a name or ID onto the card as NDEF, keypad-driven attendance and enrollment modes, and a servo for access control on authorized cards, with instant feedback on an LCD, LEDs, and a buzzer. Secrets (Wi-Fi credentials and the service URL) are isolated in a separate config file that is never committed, and every limitation is documented honestly.",
+        },
+        article: {
+          ar: {
+            lead: "لمسةٌ واحدة تسجّل الحضور بوقتٍ حقيقيٍّ في السحابة وتفتح الباب — نظامٌ مدمجٌ على ESP32 أُعيد بناؤه من نموذجٍ مخبريٍّ كان يُجمِّد القارئ ويختم بوقتٍ غير صحيح.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "بدل تسجيل الحضور يدويًا، يقرأ ESP32 رقم الكارت عبر قارئ PN532، يختمه بوقتٍ دقيقٍ من خادم NTP، ويضيف صفًّا في Google Sheet مباشرةً. الكيباد يبدّل بين وضع الحضور ووضع تسجيل الكروت، والشاشة تعطي ردًّا فوريًا، والسيرفو يفتح الباب فقط للكروت المصرّح لها."
+              },
+              {
+                h: "خط العمل",
+                flow: [
+                  "لمس كارت NFC (PN532)",
+                  "قراءة الرقم + الاسم (NDEF)",
+                  "ختم وقتٍ حقيقيٍّ من NTP",
+                  "فحص تكرار البصمة (فترة تهدئة)",
+                  "رفع الصف إلى Google Sheet",
+                  "فتح الباب للكروت المصرّح لها"
+                ]
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  {
+                    t: "وقتٌ حقيقيٌّ من NTP بدل ساعةٍ برمجيةٍ وهمية",
+                    d: "النسخة الأولى ختمت الصفوف بعدّادٍ حرٍّ بلا أي مرجعٍ زمنيٍّ حقيقي، فكانت التواريخ بلا معنى. الانتقال إلى ESP32 + NTP يعطي ختمَ وقتٍ صحيحًا فعليًا كلما توفّر الواي فاي — تحسينٌ جوهريٌّ لا مجرد تلميع."
+                  },
+                  {
+                    t: "آلة حالاتٍ غير حاجزة بدل حلقات الانتظار",
+                    d: "أُزيلت كل حلقات ‎while (true)‎ التي كانت تُجمّد الحلقة الرئيسية بانتظار ضغطة كيباد، واستُبدلت بقراءةٍ غير حاجزةٍ للمفاتيح وتوقيتٍ مبنيٍّ على millis()، فيبقى القارئ مستجيبًا طوال الوقت."
+                  },
+                  {
+                    t: "منع تكرار البصمة بجدولٍ في الذاكرة",
+                    d: "جدولٌ دائريٌّ صغيرٌ للأرقام المقروءة مؤخرًا يمنع تسجيل نفس الشخص مرتين خلال فترةٍ قابلةٍ للضبط — حلٌّ كافٍ بلا تعقيد قاعدة بيانات."
+                  },
+                  {
+                    t: "Google Sheets كباك-إند بلا خادم",
+                    d: "سكربت Apps Script يستقبل الحضور ويكتبه في جدولٍ مجاني يمكن الوصول إليه من أي مكان — لا خادمٌ يُصان، مناسبٌ لنظامٍ محمولٍ مكتفٍ بذاته."
+                  }
+                ]
+              },
+              {
+                h: "حدودٌ صادقة",
+                p: "بدون واي فاي يسجّل النظام محليًا فقط ويعلّم الوقت بأنه غير متوفّر، ولا يُخزِّن الصفوف مؤقتًا لرفعها لاحقًا (مُدرَجٌ في خارطة الطريق). ونداء HTTPS في العرض يستخدم setInsecure()‎ ويجب تثبيت الشهادة في التشغيل الفعلي. وكأي نظامٍ يعتمد على رقم الكارت فقط، الكروت العادية قابلةٌ للاستنساخ — للأمان الأعلى تُستخدم كروتٌ بمصادقةٍ متبادلة."
+              }
+            ],
+            results: [
+              { k: "مصدر الوقت", v: "NTP" },
+              { k: "منع التكرار", v: "فترة قابلة للضبط" },
+              { k: "التسجيل", v: "Google Sheet" },
+              { k: "الأوضاع", v: "حضور + تسجيل" }
+            ],
+            note: "مشروعٌ شخصيٌّ مفتوح المصدر لأغراضٍ تعليميةٍ وportfolio. الأسرار placeholders في ملف الإعداد، والكود كامل مع دليل توصيلٍ وباك-إند جاهز."
+          },
+          en: {
+            lead: "One tap logs attendance to the cloud with a real timestamp and opens the door — an embedded ESP32 system rebuilt from a bench prototype that used to freeze the reader and stamp the wrong time.",
+            sections: [
+              {
+                h: "The idea",
+                p: "Instead of taking attendance by hand, the ESP32 reads a card's UID over a PN532 reader, stamps it with an accurate NTP time, and appends a row to a Google Sheet directly. The keypad toggles attendance and enrollment modes, the LCD gives instant feedback, and the servo opens the door only for authorized cards."
+              },
+              {
+                h: "How it works",
+                flow: [
+                  "Tap an NFC card (PN532)",
+                  "Read UID + name (NDEF)",
+                  "Stamp real time from NTP",
+                  "Duplicate-scan check (cooldown)",
+                  "Upload the row to a Google Sheet",
+                  "Open the gate for authorized cards"
+                ]
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  {
+                    t: "Real NTP time instead of a fake software clock",
+                    d: "The first version stamped rows with a free-running counter that had no real time reference, so the dates were meaningless. Moving to ESP32 + NTP gives genuinely correct timestamps whenever Wi-Fi is available — a substantive improvement, not just polish."
+                  },
+                  {
+                    t: "A non-blocking state machine instead of wait loops",
+                    d: "Every `while (true)` that froze the main loop waiting for a keypress was removed and replaced with non-blocking key reads and millis()-based timing, so the reader stays responsive at all times."
+                  },
+                  {
+                    t: "Duplicate-scan protection with an in-memory table",
+                    d: "A small ring buffer of recently seen UIDs stops the same person being counted twice within a configurable window — enough without the complexity of a database."
+                  },
+                  {
+                    t: "Google Sheets as a serverless backend",
+                    d: "An Apps Script endpoint receives attendance and writes it to a free, universally accessible sheet — no server to maintain, ideal for a portable, self-contained system."
+                  }
+                ]
+              },
+              {
+                h: "Honest limitations",
+                p: "With no Wi-Fi the device logs locally only and marks the time as unavailable; rows are not queued for later upload (on the roadmap). The demo HTTPS call uses setInsecure() and should use certificate pinning in the field. And like any UID-only system, standard cards can be cloned — for higher security use cards with mutual authentication."
+              }
+            ],
+            results: [
+              { k: "Time source", v: "NTP" },
+              { k: "Dedup", v: "Configurable window" },
+              { k: "Logging", v: "Google Sheet" },
+              { k: "Modes", v: "Attendance + Enroll" }
+            ],
+            note: "A personal, open-source project for educational and portfolio purposes. Secrets are placeholders in the config file, and the code ships complete with a wiring guide and a ready backend."
+          }
+        }
+    },{
         id: "smart-door-guardian",
         categories: ["raspberrypi", "python-ai"],
         featured: true,
@@ -1144,7 +1270,7 @@ const projectsData = [
     },{
         id: "universal-market-predictor-deluxe",
         categories: ["python-ai"],
-        featured: true,
+        featured: false,
         image: "assets/images/universal-market-predictor-deluxe.png",
         demoUrl: "https://huggingface.co/spaces/engdarwish/universal-market-predictor-deluxe",
         codeUrl: "https://github.com/eahmeddarwish/universal-market-predictor-deluxe",
@@ -1831,6 +1957,164 @@ const projectsData = [
             ar: "أداة رؤية حاسوبية مبنية بلغة Python وOpenCV تتتبّع بندولًا حقيقيًا عبر الكاميرا (تحويل هَف للدوائر) وتوقّت أرجحاته لحساب عجلة الجاذبية g = 4π²L/T²، مدعومة بميزانية كاملة لعدم اليقين وانحدار خطي متعدد الأطوال بدل الاكتفاء بمتوسط بسيط. تم اكتشاف وإصلاح علّتين برمجيتين حقيقيتين أثناء التطوير: فيضان عددي صامت (uint16 overflow) كان يُنتج قيمًا خيالية لـ g، وعلة توقيت عند تحليل الفيديوهات المسجَّلة. يرافق التجربة محاكاة تفاعلية مبنية بـ Gradio تحل معادلة البندول اللاخطي عدديًا (RK4) وتقارنها بالحل التحليلي الدقيق عبر التكامل الإهليلجي — لا تحتاج كاميرا أو عتادًا، وتعمل من أي متصفح عبر Hugging Face Spaces.",
             en: "A Python + OpenCV computer-vision tool that tracks a real pendulum through a camera (Hough Circle Transform) and times its oscillations to compute g = 4π²L/T², backed by a full uncertainty budget and multi-length linear regression rather than a single flattering average. Two real bugs were found and fixed during development: a silent uint16 numeric overflow that produced nonsensical g values, and a timing bug affecting analysis of recorded video files. An interactive Gradio simulation accompanies the experiment, numerically solving the nonlinear pendulum equation (RK4) and cross-checking it against the exact analytic solution via the elliptic integral — no camera or hardware required, runs from any browser on Hugging Face Spaces.",
         },
+    },{
+        id: "telescope-optical-designer",
+        categories: ["python-physics"],
+        featured: false,
+        image: "assets/images/telescope-optical-designer.jpg",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/telescope-optical-designer",
+        tags: ["MATLAB", "Optics", "Ray Matrix", "Simulation"],
+        title: {
+            ar: "مصمّم التلسكوب الضوئي (Telescope Optical Designer)",
+            en: "Telescope Optical Designer",
+        },
+        desc: {
+            ar: "أداة MATLAB/Octave عامة تصمّم تلسكوبًا كاسرًا من عدساته: تحسب التكبير الزاوي، والمسافة الأفوكال، ومصفوفة نقل الشعاع (ABCD)، وترسم مخطط الأشعة — لنوعَي جاليلي وكبلري.",
+            en: "A general MATLAB/Octave tool that designs a refracting telescope from its lenses: it computes the angular magnification, the afocal spacing, the ABCD ray-transfer matrix, and draws the ray diagram — for both Galilean and Keplerian types.",
+        },
+        details: {
+            ar: "إعادة بناءٍ كاملة لنسخةٍ سابقة كانت غير صحيحةٍ فيزيائيًا. تُعطى الأداة الأبعاد البؤرية مباشرةً أو أنصاف أقطار العدسات ومعامل الانكسار، فتحسب التكبير الزاوي M=-fo/fe والمسافة الأفوكال d=fo+fe ومصفوفة ABCD للنظام كله، وتتحقق من شرط الأفوكال (C≈0)، وترسم مخطط أشعة بارَاكسي يوضّح أن الأشعة المتوازية تدخل وتخرج متوازية. دوال التصميم والرسم منفصلة عن سكربت الأمثلة بحيث يمكن لأي GUI مستقبلي استدعاؤها مباشرةً.",
+            en: "A from-scratch rebuild of an earlier version that was physically incorrect. The tool takes focal lengths directly, or lens radii and a refractive index, then computes the angular magnification M=-fo/fe, the afocal spacing d=fo+fe, and the whole-system ABCD matrix, checks the afocal condition (C≈0), and draws a paraxial ray diagram showing parallel rays in and parallel rays out. The design and drawing functions are separated from the examples script so a future GUI can call them directly.",
+        },
+        article: {
+          ar: {
+            lead: "أداة MATLAB تصمّم تلسكوبًا كاسرًا من عدساته — التكبير وطول الأنبوب ومصفوفة الشعاع والرسم — بعد تصحيح أخطاء فيزيائية حقيقية كانت في النسخة القديمة.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "تعطيها الأبعاد البؤرية (أو أنصاف الأقطار ومعامل الانكسار) فتحسب التكبير الزاوي M=-fo/fe، والمسافة الأفوكال d=fo+fe، ومصفوفة ABCD للنظام، وترسم مخطط أشعة بارَاكسي. تدعم جاليلي (صورة معتدلة) وكبلري (صورة مقلوبة)."
+              },
+              {
+                h: "الأخطاء التي صُحِّحت",
+                steps: [
+                  { t: "قسمةٌ على صفر في معادلة العدسة", d: "النسخة القديمة ساوت نصفَي القطر فصار البعد البؤري لا نهائيًّا وكل رقمٍ بعده باطل؛ الآن يُفرض اختلاف الانحناءين واصطلاح الإشارة الصحيح." },
+                  { t: "عينية الجاليلي يجب أن تكون مفرّقة", d: "العينية سالبة (مقعّرة)؛ الكود القديم استخدم عدستين محدّبتين متطابقتين، والمسافة الصحيحة d=fo+fe أقصر من البعد البؤري للشيئية." },
+                  { t: "التكبير لم يُحسب أبدًا", d: "أهمّ ناتجٍ كان مفقودًا؛ الآن M=-fo/fe، وهو يساوي عنصر D في مصفوفة النظام الأفوكال." },
+                  { t: "مصفوفة ABCD صحيحة", d: "مبنيةٌ على المسافة بين العدستين لا سُمك كل عدسة، مع عرض عنصر C للتأكد أن النظام أفوكال." }
+                ]
+              },
+              {
+                h: "حدودٌ صادقة",
+                p: "نموذجٌ بارَاكسي رفيع العدسة يتجاهل السُمك والزيوغ ومجال الرؤية؛ أداة تصميم/تعليم لا برنامج تصميمٍ ضوئيٍّ كامل، ولأنظمة عدستين فقط."
+              }
+            ],
+            results: [
+              { k: "النوعان", v: "جاليلي/كبلري" },
+              { k: "التكبير", v: "M = -fo/fe" },
+              { k: "المصفوفة", v: "ABCD أفوكال" },
+              { k: "التحقق العددي", v: "C ≈ 0" }
+            ],
+            note: "مشروع محاكاةٍ مفتوح المصدر لأغراضٍ تعليميةٍ وportfolio؛ تم التحقق من الأرقام عدديًا (مثال: fo=900, fe=-100 ⇒ M=9× معتدلة، C≈0)."
+          },
+          en: {
+            lead: "A MATLAB tool that designs a refracting telescope from its lenses — magnification, tube length, ray matrix and diagram — after fixing real physics errors in the old version.",
+            sections: [
+              {
+                h: "The idea",
+                p: "Give it focal lengths (or radii + refractive index) and it computes the angular magnification M=-fo/fe, the afocal spacing d=fo+fe, and the system ABCD matrix, and draws a paraxial ray diagram. It supports Galilean (upright) and Keplerian (inverted) telescopes."
+              },
+              {
+                h: "The errors that were fixed",
+                steps: [
+                  { t: "Lensmaker division-by-zero", d: "The old code set both radii equal, making the focal length infinite and every downstream number invalid; it now enforces different curvatures and the correct sign convention." },
+                  { t: "The Galilean eyepiece must diverge", d: "The eyepiece is negative (concave); the old code used two identical converging lenses, and the correct spacing d=fo+fe is shorter than the objective focal length." },
+                  { t: "Magnification was never computed", d: "The single most important output was missing; it is now M=-fo/fe, equal to the D element of the afocal system matrix." },
+                  { t: "Correct ABCD matrix", d: "Built from the lens spacing, not each lens's thickness, and the C element is reported to confirm the system is afocal." }
+                ]
+              },
+              {
+                h: "Honest limitations",
+                p: "A paraxial, thin-lens model that ignores thickness, aberrations and field of view; a design/teaching tool, not full optical-design software, and for two-lens systems only."
+              }
+            ],
+            results: [
+              { k: "Types", v: "Galilean/Keplerian" },
+              { k: "Magnification", v: "M = -fo/fe" },
+              { k: "Matrix", v: "ABCD afocal" },
+              { k: "Numeric check", v: "C ≈ 0" }
+            ],
+            note: "An open-source simulation project for educational/portfolio purposes; the numbers were verified numerically (e.g. fo=900, fe=-100 ⇒ M=9× upright, C≈0)."
+          }
+        }
+    },{
+        id: "puck-robot",
+        categories: ["robotics", "arduino"],
+        featured: false,
+        image: "assets/images/puck-robot.jpg",
+        demoUrl: "",
+        codeUrl: "https://github.com/eahmeddarwish/puck-robot",
+        tags: ["Arduino", "C++", "Robotics", "State Machine", "Sensors"],
+        title: {
+            ar: "روبوت جامع الأقراص الملوّنة (Puck Robot)",
+            en: "Puck-Collecting Robot",
+        },
+        desc: {
+            ar: "روبوت ذاتي القيادة يبحث في ساحة، يميّز قرصًا ملوّنًا بحسّاس لون، يمسكه بجريبر سيرفو، ويرجّعه لمنطقة home ملوّنة — مكتوب كآلة حالاتٍ نضيفة. مشروع مفهومي لم يُطبّق على عتاد.",
+            en: "An autonomous robot that searches an arena, identifies a colored puck with a color sensor, grabs it with a servo gripper, and returns it to a colored home zone — written as a clean state machine. A concept design, not yet built on hardware.",
+        },
+        details: {
+            ar: "إعادة كتابةٍ كاملة لنموذجٍ سابق كآلة حالاتٍ صريحة (بحث ← اقتراب ← مسك ← عودة ← تجنّب). حسّاس مسافة (ultrasonic) يقاطع أي حالة قيادةٍ لتجنّب العوائق، وحسّاس لون TCS3200 يميّز القرص المستهدف عن منطقة الـhome، وجريبر سيرفو يمسك ويطلق. النموذج الأصلي كانت دالة فحص الحسّاسات فيه تستدعي نفسها تكراريًا (recursion) وقد تُفيض مكدّس الـArduino؛ أُزيل هذا بالكامل. المشروع مفهوميٌّ صريح: مكتوبٌ ليكون صحيحًا وقابلًا للقراءة، لكنه لم يُبنَ أو يُختبَر على عتاد، وعتبات الألوان تحتاج معايرة.",
+            en: "A full rewrite of an earlier prototype as an explicit state machine (SEARCH → APPROACH → GRAB → RETURN → AVOID). An ultrasonic sensor interrupts any driving state for obstacle avoidance, a TCS3200 color sensor distinguishes the target puck from the home pad, and a servo gripper grabs and releases. In the original, the sensor-check routine called itself recursively and could overflow the Arduino's stack; that is removed. The project is explicitly a concept: written to be correct and readable, but not built or tested on hardware, and the color thresholds need calibration.",
+        },
+        article: {
+          ar: {
+            lead: "روبوت ذاتي يبحث عن قرصٍ ملوّن، يمسكه بجريبر، ويرجّعه لمنطقة الـhome — أُعيد بناؤه كآلة حالاتٍ نضيفة. مشروعٌ مفهوميٌّ لم يُطبّق على عتاد.",
+            sections: [
+              {
+                h: "الفكرة",
+                p: "آلة حالاتٍ صريحة: بحث ← اقتراب ← مسك ← عودة ← تجنّب. حسّاس مسافةٍ للعوائق، وحسّاس لون TCS3200 لتمييز القرص عن منطقة الـhome، وجريبر سيرفو يمسك ويطلق."
+              },
+              {
+                h: "القرارات التقنية",
+                steps: [
+                  { t: "آلة حالاتٍ بدل الـrecursion", d: "النموذج القديم كانت دالة الحسّاسات تستدعي نفسها تكراريًا وقد تُفيض المكدّس على Arduino؛ الآن FSM مسطّحة تقرأ الحسّاسات مرةً كل دورة loop." },
+                  { t: "قراراتُ لونٍ معايَرة", d: "مقارنة قنوات اللون ببعضها وبحدودٍ معايَرة بدل عتبة ترددٍ خامٍ واحدةٍ هشّة، أمتن مع تغيّر الإضاءة." },
+                  { t: "تجنّب العوائق كأولوية", d: "فحص المسافة يسبق تبديل الحالة، وأفعال الرجوع/اللف موقوتةٌ بـmillis() بدل delay()، فتبقى الحلقة مستجيبة." }
+                ]
+              },
+              {
+                h: "حدودٌ صادقة",
+                p: "مشروعٌ مفهوميٌّ لم يُبنَ أو يُختبَر على عتاد. عتبات الألوان مبدئيةٌ وتحتاج معايرة، والحركة مفتوحة الحلقة (بلا إنكودرات) فالدقة الواقعية ستنحرف."
+              }
+            ],
+            results: [
+              { k: "الحالة", v: "مفهوم/نظري" },
+              { k: "عدد الحالات", v: "5" },
+              { k: "الحسّاسات", v: "مسافة + لون" },
+              { k: "التطبيق العملي", v: "لم يُطبّق بعد" }
+            ],
+            note: "مشروعٌ مفهوميٌّ (Concept) مفتوح المصدر — الكود مكتوبٌ بشكلٍ صحيحٍ واحترافي، لكنه لم يُطبّق عمليًا على عتاد."
+          },
+          en: {
+            lead: "An autonomous robot that searches for a colored puck, grabs it, and returns it home — rebuilt as a clean state machine. A concept project, not built on hardware.",
+            sections: [
+              {
+                h: "The idea",
+                p: "An explicit state machine: SEARCH → APPROACH → GRAB → RETURN → AVOID. An ultrasonic sensor for obstacles, a TCS3200 color sensor to tell the puck from the home pad, and a servo gripper that grabs and releases."
+              },
+              {
+                h: "Technical decisions",
+                steps: [
+                  { t: "A state machine instead of recursion", d: "The old prototype's sensor routine called itself recursively and could overflow the Arduino stack; it is now a flat FSM that reads the sensors once per loop pass." },
+                  { t: "Calibrated color decisions", d: "Comparing color channels against each other and against calibrated bounds instead of one fragile raw threshold, far more robust to lighting." },
+                  { t: "Obstacle avoidance as priority", d: "The distance check runs before the state switch, and reverse/turn actions are time-bounded with millis() instead of delay(), keeping the loop responsive." }
+                ]
+              },
+              {
+                h: "Honest limitations",
+                p: "A concept project, not built or tested on hardware. Color thresholds are placeholders needing calibration, and motion is open-loop (no encoders) so real-world accuracy will drift."
+              }
+            ],
+            results: [
+              { k: "Status", v: "Concept / theoretical" },
+              { k: "States", v: "5" },
+              { k: "Sensors", v: "Distance + color" },
+              { k: "Hardware run", v: "Not yet built" }
+            ],
+            note: "An open-source concept project — the code is written correctly and professionally, but has not been run on physical hardware."
+          }
+        }
     },
 ];
 
