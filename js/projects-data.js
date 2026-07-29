@@ -4076,6 +4076,295 @@ const projectsData = [
                 "note": "An open-source educational project with rebuilt, corrected code."
             }
         }
+    },
+    {
+        "id": "rpi-biometric-access",
+        "categories": ["python-ai", "raspberrypi"],
+        "featured": false,
+        "image": "assets/images/rpi-biometric-access.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/rpi-biometric-access",
+        "tags": ["Python", "face_recognition", "Raspberry Pi", "Fingerprint", "Access Control"],
+        "title": {
+            "ar": "تحكّم وصولٍ بيومتري على Raspberry Pi",
+            "en": "Raspberry Pi Biometric Access"
+        },
+        "desc": {
+            "ar": "نظام تحكّمٍ في الوصول متعدّد العوامل على Raspberry Pi يجمع التعرّف على الوجه (face_recognition/dlib) وبصمةً ضوئيةً عبر UART ورمزًا رقميًّا احتياطيًّا — أي عاملٍ مُتعرَّفٍ عليه يمنح الوصول، وكله على الجهاز وأوفلاين.",
+            "en": "A multi-factor access-control system on a Raspberry Pi combining face recognition (face_recognition/dlib), an optical fingerprint over UART, and a numeric passcode fallback — any recognised factor grants access, all on-device and offline."
+        },
+        "details": {
+            "ar": "كانت النسخة الأصلية سكربتًا واحدًا فوضويًّا فيه أسماء أشخاصٍ ورموزٌ مكتوبةٌ صراحةً ومنطقٌ مكسور. أُعيدت هيكلته: أُزيلت كل الهويات الثابتة وتُحمَّل المستخدمون الآن من ملف users.json مُستبعَدٍ من git، وقُسِّم لعوامل نظيفةٍ قابلةٍ للاختبار (وجه/بصمة/رمز)، وأُصلح المنطق، وصار العتاد اختياريًّا مع بديلٍ على كاميرا اللابتوب.",
+            "en": "The original was a single messy script with real names and passcodes hardcoded and broken control flow. It was refactored: all fixed identities removed (users now load from a git-ignored users.json), split into clean testable factors (face/fingerprint/passcode), the flow fixed, and the hardware made optional with a laptop-webcam fallback."
+        },
+        "article": {
+            "ar": {
+                "lead": "أي عاملٍ من ثلاثة — وجهٌ أو بصمةٌ أو رمز — يفتح الوصول ويحدّد المستخدم، على الجهاز وبلا إنترنت.",
+                "sections": [
+                    {"h": "الفكرة", "p": "تحكّمٌ في الوصول لا يعتمد على عاملٍ واحد: يتعرّف على الوجه حيًّا، ويقرأ بصمةً من وحدةٍ ضوئية، ويقبل رمزًا رقميًّا كاحتياط — أي عاملٍ ناجحٍ يمنح الدخول."},
+                    {"h": "المعمارية", "flow": ["كاميرا → متجهات وجهٍ 128-بُعد → مطابقة", "وحدة بصمةٍ عبر UART", "رمزٌ من users.json", "أي عاملٍ ناجح → دخول + تحديد الهوية"]},
+                    {"h": "ما الذي نُظِّف", "steps": [
+                        {"t": "إزالة الهويات الثابتة", "d": "بدل أسماءٍ ورموزٍ مكتوبةٍ في الكود، تُحمَّل من users.json المُستبعَد من git، مع نسخة users.example.json نائبة."},
+                        {"t": "عوامل نظيفة", "d": "FaceRecognizer وFingerprintReader ومسار الرمز وحداتٌ منفصلةٌ قابلةٌ للاختبار."},
+                        {"t": "عتادٌ اختياري", "d": "البصمة وكاميرا الـ Pi تُكتشفان تلقائيًّا؛ على لابتوب يعمل على كاميرا ويب."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "عرضٌ توضيحيٌّ لا منتج أمان: مسار الرمز نصيٌّ صريح وبلا كشف حياةٍ فقد تخدع صورةٌ عامل الوجه؛ ودقة الوجه تعتمد على الإضاءة والتسجيل؛ والبصمة تحتاج الوحدة الفعلية."}
+                ],
+                "results": [{"k": "العوامل", "v": "وجه+بصمة+رمز"}, {"k": "المعالجة", "v": "على الجهاز"}, {"k": "الاتصال", "v": "أوفلاين"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. الهويات والرموز في users.json المُستبعَد من git، وصور الوجوه والنموذج المُدرَّب مُستبعَدةٌ أيضًا كبياناتٍ شخصية."
+            },
+            "en": {
+                "lead": "Any one of three factors — face, fingerprint, or passcode — unlocks access and names the user, on-device and offline.",
+                "sections": [
+                    {"h": "The idea", "p": "Access control that doesn't rely on a single factor: it recognises a face live, reads a fingerprint from an optical module, and accepts a numeric passcode as backup — any successful factor grants entry."},
+                    {"h": "Architecture", "flow": ["camera → 128-d face embeddings → match", "fingerprint module over UART", "passcode from users.json", "any success → entry + identify"]},
+                    {"h": "What was cleaned up", "steps": [
+                        {"t": "Removed fixed identities", "d": "Instead of names/passcodes hardcoded, users load from a git-ignored users.json with a users.example.json placeholder."},
+                        {"t": "Clean factors", "d": "FaceRecognizer, FingerprintReader, and the passcode path are separate, testable units."},
+                        {"t": "Optional hardware", "d": "Fingerprint and the Pi camera auto-detect; on a laptop it runs on a webcam."}
+                    ]},
+                    {"h": "Honest limitations", "p": "A demonstrator, not a security product: the passcode path is plaintext and there's no liveness check, so a photo can spoof the face factor; face accuracy depends on lighting/enrolment; the fingerprint needs the physical module."}
+                ],
+                "results": [{"k": "Factors", "v": "face+finger+code"}, {"k": "Inference", "v": "On-device"}, {"k": "Connectivity", "v": "Offline"}],
+                "note": "An open-source educational project. Identities and passcodes live in a git-ignored users.json; face photos and the trained model are also excluded as personal data."
+            }
+        }
+    },
+    {
+        "id": "dual-axis-solar-tracker",
+        "categories": ["arduino", "iot"],
+        "featured": false,
+        "image": "assets/images/dual-axis-solar-tracker.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/dual-axis-solar-tracker",
+        "tags": ["Arduino", "C++", "LDR", "Servo", "Renewable Energy"],
+        "title": {"ar": "متعقّب شمسيٌّ ثنائي المحور", "en": "Dual-Axis Solar Tracker"},
+        "desc": {
+            "ar": "متعقّب شمسيٌّ ثنائي المحور: أربع مقاوماتٍ ضوئيةٍ في أركان اللوح وموتوران سيرفو يميلان اللوح حتى يواجه الشمس، بموازنة زوجَي الأعلى/الأسفل واليسار/اليمين.",
+            "en": "A two-axis solar tracker: four corner LDRs and two servos tilt the panel to face the sun by balancing the top/bottom and left/right LDR pairs."
+        },
+        "details": {
+            "ar": "النسخة الأصلية أعادت استخدام طرفٍ تناظريٍّ واحدٍ لركنَين مختلفَين (فصارت قراءتان نفس الإشارة وتعذّر حسم محور)، وتركت طرفًا بلا استخدام. هذه النسخة تعطي كل ركنٍ طرفَه (A0–A3)، وتضيف نطاق تسامحٍ وحدود constrain، وتضع كل الأطراف والمديات في بلوك إعداداتٍ واحد.",
+            "en": "The original reused one analog pin for two different corners (two readings became the same signal, so one axis couldn't resolve) and left another pin unused. This version gives each corner its own pin (A0–A3), adds a tolerance band and constrain() limits, and puts all pins and ranges in one config block."
+        },
+        "article": {
+            "ar": {
+                "lead": "أربع مقاوماتٍ ضوئيةٍ تخبر أين الشمس، وموتوران يميلان اللوح نحوها حتى تتوازن الأركان — بعد تصحيح خطأ طرفٍ مكرّر.",
+                "sections": [
+                    {"h": "الفكرة", "p": "أركان اللوح الأربعة تستشعر الضوء؛ موازنة الأعلى/الأسفل تحرّك الارتفاع، والموازنة يسار/يمين تحرّك السمت، حتى يواجه اللوح الشمس."},
+                    {"h": "المنطق المصحّح", "steps": [
+                        {"t": "طرفٌ لكل ركن", "d": "كل LDR على A0–A3 بدل مشاركة A1 بين ركنَين كما في الأصل."},
+                        {"t": "نطاق تسامح", "d": "يتجاهل الفروق الصغيرة فلا يهتزّ السيرفو عند التوازن."},
+                        {"t": "حدود آمنة", "d": "constrain يبقي كل محورٍ ضمن مداه."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "الاتجاه يعتمد على توصيل الـ LDR فقد تحتاج قلب إشارة خطوةٍ مرة؛ تحكّمٌ ثنائيٌّ لا PID؛ بلا وضع ليلٍ بعد؛ وسيرفوهات صغيرةٌ للعرض لا للوحٍ ثقيل."}
+                ],
+                "results": [{"k": "المحاور", "v": "2 (سمت+ارتفاع)"}, {"k": "الحسّاسات", "v": "4 LDR"}, {"k": "التشغيل", "v": "سيرفو"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية بكودٍ صُحِّح ونُظِّف."
+            },
+            "en": {
+                "lead": "Four LDRs report where the sun is and two servos tilt the panel toward it until the corners balance — after fixing a duplicate-pin bug.",
+                "sections": [
+                    {"h": "The idea", "p": "The panel's four corners sense light; balancing top/bottom drives elevation and left/right drives azimuth until the panel faces the sun."},
+                    {"h": "Corrected logic", "steps": [
+                        {"t": "A pin per corner", "d": "Each LDR on A0–A3 instead of sharing A1 across two corners as in the original."},
+                        {"t": "Tolerance band", "d": "Ignores tiny differences so the servos don't buzz when balanced."},
+                        {"t": "Safe limits", "d": "constrain() keeps each axis within range."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Direction depends on LDR wiring (you may flip a step sign once); bang-bang control, not PID; no night park yet; small servos suit a demo panel, not a heavy one."}
+                ],
+                "results": [{"k": "Axes", "v": "2 (az+el)"}, {"k": "Sensors", "v": "4 LDR"}, {"k": "Actuation", "v": "Servos"}],
+                "note": "An open-source educational project with corrected, cleaned code."
+            }
+        }
+    },
+    {
+        "id": "arduino-fft-frequency-detector",
+        "categories": ["arduino"],
+        "featured": false,
+        "image": "assets/images/arduino-fft-frequency-detector.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/arduino-fft-frequency-detector",
+        "tags": ["Arduino", "C++", "FFT", "DSP", "Signal Processing"],
+        "title": {"ar": "كاشف تردّدٍ بتحويل فورييه (FFT)", "en": "Arduino FFT Frequency Detector"},
+        "desc": {
+            "ar": "يأخذ عيّناتٍ من حسّاس صوت ويُجري FFT حقيقيًّا ليقرأ التردّد المهيمن بالهرتز مباشرةً، مع إنذار تردّدٍ مستهدفٍ اختياريّ يُضيء LED داخل نطاقٍ محدّد.",
+            "en": "Samples a sound sensor and runs a real FFT to read the dominant frequency in Hz live, with an optional target-tone alarm that lights an LED inside a chosen band."
+        },
+        "details": {
+            "ar": "النسخة الأصلية كانت تُغذّي الحسّاس عبر طرفَين تناظريَّين كمصدر جهد — حيلةٌ هشّة. هذه النسخة تُوصّله بـ 5V/GND الحقيقيين، وتضيف بلوك إعداداتٍ (معدّل العيّنات، الأطراف، النطاق المستهدف)، وإنذار تردّدٍ مستهدفٍ بفحص عتبةٍ نظيف. مبنيٌّ على مكتبة arduinoFFT مع حدّ نايكويست.",
+            "en": "The original powered the sensor from two analog pins used as VCC/GND — a fragile hack. This version wires it to real 5V/GND, adds a config block (sampling rate, pins, target band), and a clean target-tone alarm. Built on arduinoFFT with the Nyquist limit."
+        },
+        "article": {
+            "ar": {
+                "lead": "صافرةٌ أو نغمةٌ تدخل الميكروفون فيخرج ترددها بالهرتز فورًا — مع إنذارٍ عند نطاقٍ مستهدف.",
+                "sections": [
+                    {"h": "الفكرة", "p": "أخذ عيّناتٍ بمعدّلٍ ثابت ثم FFT لإيجاد القمّة الطيفية = التردّد المهيمن. النطاق المُتاح حتى نصف معدّل العيّنات (نايكويست)."},
+                    {"h": "المعمارية", "flow": ["حسّاس صوت (A0)", "أخذ عيّنات @ Fs", "نافذة Hamming", "FFT + قدر", "MajorPeak → هرتز", "داخل النطاق؟ → LED"]},
+                    {"h": "ما الذي نُظِّف", "steps": [
+                        {"t": "تغذيةٌ سليمة", "d": "5V/GND الحقيقيين بدل تشغيل الحسّاس من أطرافٍ تناظرية."},
+                        {"t": "بلوك إعدادات", "d": "عدد العيّنات ومعدّلها والأطراف والنطاق المستهدف في الأعلى."},
+                        {"t": "إنذار تردّد", "d": "LED يُضيء عندما تقع القمّة داخل [منخفض، مرتفع]."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "محدودٌ بنايكويست؛ خاناتٌ خشنة (Fs/عدد العيّنات)؛ أخذ عيّناتٍ برمجيّ التوقيت غير دقيقٍ للمعدّلات العالية؛ وقمّةٌ مهيمنةٌ واحدةٌ لا طيفٌ كامل."}
+                ],
+                "results": [{"k": "التحويل", "v": "FFT 128"}, {"k": "المدى", "v": "حتى Fs/2"}, {"k": "الإنذار", "v": "نطاقٌ مستهدف"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية مبنيٌّ على مكتبة arduinoFFT المنسوبة لأصحابها."
+            },
+            "en": {
+                "lead": "A whistle or tone into the mic and its frequency comes out in Hz instantly — with an alarm when it lands in a target band.",
+                "sections": [
+                    {"h": "The idea", "p": "Sample at a fixed rate, then FFT to find the spectral peak = dominant frequency. Range is up to half the sampling rate (Nyquist)."},
+                    {"h": "Architecture", "flow": ["sound sensor (A0)", "sample @ Fs", "Hamming window", "FFT + magnitude", "MajorPeak → Hz", "in band? → LED"]},
+                    {"h": "What was cleaned up", "steps": [
+                        {"t": "Proper power", "d": "Real 5V/GND instead of powering the sensor from analog pins."},
+                        {"t": "Config block", "d": "Samples, sampling rate, pins, and target band at the top."},
+                        {"t": "Target-tone alarm", "d": "LED lights when the peak lands inside [low, high]."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Nyquist-limited; coarse bins (Fs/samples); software-timed sampling is imprecise at high rates; and it reports a single dominant peak, not a full spectrum."}
+                ],
+                "results": [{"k": "Transform", "v": "FFT 128"}, {"k": "Range", "v": "up to Fs/2"}, {"k": "Alarm", "v": "target band"}],
+                "note": "An open-source educational project built on the arduinoFFT library, credited to its authors."
+            }
+        }
+    },
+    {
+        "id": "keypad-countdown-timer",
+        "categories": ["arduino"],
+        "featured": false,
+        "image": "assets/images/keypad-countdown-timer.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/keypad-countdown-timer",
+        "tags": ["Arduino", "C++", "Keypad", "I2C LCD", "Relay"],
+        "title": {"ar": "مؤقّت عدٍّ تنازليٍّ بكيباد", "en": "Keypad Countdown Timer"},
+        "desc": {
+            "ar": "مؤقّت عدٍّ تنازليٍّ: اكتب الوقت HHMMSS على كيباد واضغط # للبدء، فيبقى طرف التحكّم (ريلاي/حِمل) مرتفعًا أثناء العدّ على شاشة I²C ثم ينخفض عند الصفر، و* للمسح.",
+            "en": "A countdown timer: type HHMMSS on a keypad and press # to start; a control pin (relay/load) stays HIGH while it counts down on an I²C LCD, then LOW at zero; * clears."
+        },
+        "details": {
+            "ar": "النسخة الأصلية كانت تستدعي loop() تعاوديًّا (خطر مكدس) وتضع الكيباد على طرفَي المنفذ التسلسلي (0/1). هذه النسخة تستخدم آلة حالةٍ غير حاجبةٍ نظيفة، ونبضة ثانيةٍ مبنيةٍ على millis() بلا تعطيل، وتُبقي طرفَي التسلسل فارغَين، وتُترجم التعليقات للإنجليزية.",
+            "en": "The original called loop() recursively (a stack risk) and put the keypad on the hardware-serial pins (0/1). This version uses a clean non-blocking state machine, a millis()-based one-second tick with no delay() stalls, keeps the serial pins free, and translates the comments to English."
+        },
+        "article": {
+            "ar": {
+                "lead": "اكتب الوقت، اضغط #، فيعمل الحِمل حتى ينتهي العدّ — بمنطقٍ نظيفٍ غير حاجب.",
+                "sections": [
+                    {"h": "الفكرة", "p": "إدخال HHMMSS بإزاحة الأرقام في مخزن، تحويلها لثوانٍ، ثم عدٌّ تنازليٌّ بنبضة millis() مع تشغيل طرف تحكّمٍ أثناء العمل."},
+                    {"h": "ما الذي نُظِّف", "steps": [
+                        {"t": "بلا loop تعاودي", "d": "آلة حالةٍ ENTERING→RUNNING→IDLE بدل استدعاء loop() نفسه."},
+                        {"t": "توقيتٌ غير حاجب", "d": "نبضة ثانيةٍ من millis() بلا delay() يوقف النظام."},
+                        {"t": "أطرافٌ آمنة", "d": "الكيباد بعيدٌ عن طرفَي التسلسل 0/1."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "أقصى 99:59:59؛ بلا تحقّقٍ من الإدخال؛ ساعةٌ برمجيةٌ تنحرف قليلًا على المدى الطويل؛ بدّل الأحمال عبر ريلاي مناسب."}
+                ],
+                "results": [{"k": "الإدخال", "v": "كيباد HHMMSS"}, {"k": "التوقيت", "v": "millis()"}, {"k": "الخرج", "v": "ريلاي/حِمل"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية بكودٍ نُظِّف وتُرجم."
+            },
+            "en": {
+                "lead": "Type the time, press #, and the load runs until the count ends — with clean, non-blocking logic.",
+                "sections": [
+                    {"h": "The idea", "p": "Shift HHMMSS digits into a buffer, convert to seconds, then count down on a millis() tick while a control pin drives a load."},
+                    {"h": "What was cleaned up", "steps": [
+                        {"t": "No recursive loop", "d": "An ENTERING→RUNNING→IDLE state machine instead of calling loop() itself."},
+                        {"t": "Non-blocking timing", "d": "A one-second millis() tick with no delay() stalling the system."},
+                        {"t": "Safe pins", "d": "The keypad is kept off the serial pins 0/1."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Max 99:59:59; no input validation; a software clock that drifts slightly over long periods; switch real loads through a proper relay."}
+                ],
+                "results": [{"k": "Input", "v": "keypad HHMMSS"}, {"k": "Timing", "v": "millis()"}, {"k": "Output", "v": "relay/load"}],
+                "note": "An open-source educational project with cleaned and translated code."
+            }
+        }
+    },
+    {
+        "id": "keypad-door-lock",
+        "categories": ["arduino", "iot"],
+        "featured": false,
+        "image": "assets/images/keypad-door-lock.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/keypad-door-lock",
+        "tags": ["Arduino", "C++", "Keypad", "Servo", "Access Control"],
+        "title": {"ar": "قفل بابٍ بكيباد", "en": "Keypad Door Lock"},
+        "desc": {
+            "ar": "قفل بابٍ محميٌّ بكلمة مرور: رمزٌ صحيحٌ يفتح مزلاج سيرفو ويعرض ترحيبًا على شاشة I²C ثم يعيد القفل، وثلاث محاولاتٍ خاطئةٍ متتالية تُطلق جرس إنذار، مع إخفاء الأرقام كـ *.",
+            "en": "A password door lock: a correct code drives a servo latch open and shows a welcome on an I²C LCD then re-locks, while three wrong tries in a row trigger a buzzer alarm; digits are masked as *."
+        },
+        "details": {
+            "ar": "أُعيدت هيكلته إلى بلوك إعداداتٍ (كلمة المرور كقيمةٍ نائبةٍ تُغيَّر، الأطراف، الزوايا، عدد المحاولات، ومدّة الفتح) وإدخالٍ مُدارٍ بالأحداث عبر مستمع الكيباد، مع مزلاج سيرفو حقيقيٍّ بدل مجرد LED، وقفلٍ تلقائيٍّ بعد مهلة.",
+            "en": "Refactored into a config block (password as a placeholder to change, pins, angles, max tries, unlock duration) and event-driven input via the keypad listener, with a real servo latch instead of just an LED and an automatic re-lock after a timeout."
+        },
+        "article": {
+            "ar": {
+                "lead": "رمزٌ صحيحٌ يفتح المزلاج ويرحّب، وثلاث محاولاتٍ خاطئةٍ تُطلق الإنذار.",
+                "sections": [
+                    {"h": "الفكرة", "p": "إدخالٌ مُدارٌ بالأحداث: تُضاف الأرقام للكلمة (مُخفاةً كـ *)، و# يتحقّق: صحيحٌ → فتح سيرفو + ترحيب ثم قفل؛ خاطئٌ → رسالة، والثالث → جرس."},
+                    {"h": "المزايا", "steps": [
+                        {"t": "مزلاج سيرفو", "d": "يفتح عند النجاح ويعيد القفل تلقائيًّا بعد مهلة."},
+                        {"t": "إنذار ثلاث محاولات", "d": "الجرس يُطلق بعد MAX_TRIES محاولاتٍ خاطئة."},
+                        {"t": "بلوك إعدادات", "d": "كلمة المرور والأطراف والزوايا وعدد المحاولات والمهلة في الأعلى."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "أمان راحةٍ لا أمانٍ قوي: الرمز نصيٌّ في الفلاش، والمزلاج ليس تُرسًا حقيقيًّا؛ بلا رموزٍ لكل مستخدمٍ أو سجل؛ واستخدم مزلاجًا آمنًا عند الفشل للأبواب الحقيقية."}
+                ],
+                "results": [{"k": "الفتح", "v": "مزلاج سيرفو"}, {"k": "الإنذار", "v": "3 محاولات"}, {"k": "الإدخال", "v": "مُخفى *"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. كلمة المرور قيمةٌ نائبةٌ تُغيَّر، والمكتبات الطرفية منسوبةٌ لأصحابها."
+            },
+            "en": {
+                "lead": "A correct code opens the latch and welcomes you; three wrong tries raise the alarm.",
+                "sections": [
+                    {"h": "The idea", "p": "Event-driven input: digits append to the Password (masked as *), and # evaluates: correct → servo unlock + welcome then re-lock; wrong → message, and the third → buzzer."},
+                    {"h": "Features", "steps": [
+                        {"t": "Servo latch", "d": "Opens on success and auto-relocks after a timeout."},
+                        {"t": "3-strike alarm", "d": "The buzzer fires after MAX_TRIES wrong attempts."},
+                        {"t": "Config block", "d": "Password, pins, angles, tries, and timeout at the top."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Convenience security, not strong: the code is plaintext in flash and a servo latch isn't a real deadbolt; no per-user codes or log; use a fail-secure latch for real doors."}
+                ],
+                "results": [{"k": "Unlock", "v": "servo latch"}, {"k": "Alarm", "v": "3 strikes"}, {"k": "Input", "v": "masked *"}],
+                "note": "An open-source educational project. The password is a placeholder to change; the third-party libraries are credited to their authors."
+            }
+        }
+    },
+    {
+        "id": "smart-safety-bicycle",
+        "categories": ["arduino", "iot", "robotics"],
+        "featured": false,
+        "image": "assets/images/smart-safety-bicycle.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/smart-safety-bicycle",
+        "tags": ["Arduino", "GPS", "GSM", "IoT", "Wearable Safety"],
+        "title": {"ar": "درّاجةٌ ذكيةٌ للسلامة", "en": "Smart Safety Bicycle"},
+        "desc": {
+            "ar": "نظام سلامةٍ لراكب الدرّاجة من ست وحدات: GPS للموقع، وGSM لإرسال تنبيهٍ برسالة، ومقياس تسارعٍ يُسجَّل على SD، ومقياس أكسجة نبض، وفوق صوتيٍّ للاقتراب الخلفي، وتنبيهٍ LED واهتزاز.",
+            "en": "A rider-safety system built from six modules: GPS location, a GSM link for SMS alerts, an accelerometer logged to SD, a pulse-oximeter, an ultrasonic rear-approach warning, and an LED + vibration alert."
+        },
+        "details": {
+            "ar": "كل وحدةٍ مُقدَّمةٌ كسكتش أردوينو مُختبَرٍ مستقل (GPS، GSM، تسجيل تسارع، أكسجة، فوق صوتي، تنبيه لمسي)، بعد تنظيفٍ وإضافة عتباتٍ وأطرافٍ واضحة. الدمج في فيرموير واحدٍ وكشف الاصطدام الفعلي مذكوران بصدقٍ كخطواتٍ تالية لا كأمرٍ منجَز.",
+            "en": "Each subsystem is provided as its own tested Arduino sketch (GPS, GSM, accelerometer logging, oximeter, ultrasonic, haptic alert), after cleanup and clear thresholds/pins. Integrating them into one firmware and actual crash detection are stated honestly as next steps, not as done."
+        },
+        "article": {
+            "ar": {
+                "lead": "تعرف أين الراكب، وتحذّره من سيارةٍ خلفه، وتراقب مؤشّراته، وتُسجّل الحركة — بستّ وحداتٍ مُختبَرة.",
+                "sections": [
+                    {"h": "الفكرة", "p": "سلامة الراكب: GPS للموقع، فوق صوتيٌّ يحذّر من اقترابٍ خلفيٍّ باهتزاز، أكسجةٌ للمؤشّرات، وتسجيل حركةٍ يمهّد لكشف اصطدامٍ يرسل الموقع بـ SMS."},
+                    {"h": "الوحدات", "flow": ["GPS → موقع", "GSM (SIM800) → SMS", "تسارع ثلاثي → SD", "أكسجة نبض (MAX3010x)", "فوق صوتي → تحذير < 60سم", "LED + اهتزاز"]},
+                    {"h": "بصدق: الحالة", "p": "الوحدات مُختبَرةٌ منفصلةً؛ دمجها على لوحةٍ واحدة (توزيع الأطراف والتوقيت) ومنطق كشف الاصطدام الذي يرسل SMS عملٌ مستقبليٌّ صريحٌ في الخارطة."},
+                    {"h": "حدودٌ صادقة", "p": "ليس فيرموير مُدمجًا بعد؛ كشف الاصطدام غير مُنفَّذ (الوحدة تُسجّل فقط)؛ GSM يحتاج شريحةً حيّةً ورقمك أنت؛ ومؤشّرات الأكسجة إرشاديةٌ لا طبية."}
+                ],
+                "results": [{"k": "الوحدات", "v": "6"}, {"k": "الاتصال", "v": "GPS+GSM"}, {"k": "الحالة", "v": "دمجٌ قيد العمل"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. لا رقم هاتفٍ حقيقيٍّ مرفوع (ALERT_NUMBER قيمةٌ نائبة)، والمكتبات الطرفية منسوبةٌ لأصحابها."
+            },
+            "en": {
+                "lead": "It knows where the rider is, warns of a car behind, watches their vitals, and logs motion — with six tested modules.",
+                "sections": [
+                    {"h": "The idea", "p": "Rider safety: GPS for location, ultrasonic warns of a rear approach via haptics, an oximeter for vitals, and motion logging that lays the groundwork for crash detection that texts the location via SMS."},
+                    {"h": "Modules", "flow": ["GPS → location", "GSM (SIM800) → SMS", "3-axis accel → SD", "pulse-oximeter (MAX3010x)", "ultrasonic → warn < 60 cm", "LED + vibration"]},
+                    {"h": "Honestly: the status", "p": "The modules are tested separately; merging them onto one board (pin budget, timing) and the crash-detection logic that sends an SMS are explicit future work in the roadmap."},
+                    {"h": "Honest limitations", "p": "Not an integrated firmware yet; crash detection is not implemented (the module only logs); GSM needs a live SIM and your own number; and the oximeter vitals are indicative, not medical."}
+                ],
+                "results": [{"k": "Modules", "v": "6"}, {"k": "Connectivity", "v": "GPS+GSM"}, {"k": "Status", "v": "integration WIP"}],
+                "note": "An open-source educational project. No real phone number is committed (ALERT_NUMBER is a placeholder); the third-party libraries are credited to their authors."
+            }
+        }
     }
 ];
 
