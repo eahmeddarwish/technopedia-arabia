@@ -4365,6 +4365,246 @@ const projectsData = [
                 "note": "An open-source educational project. No real phone number is committed (ALERT_NUMBER is a placeholder); the third-party libraries are credited to their authors."
             }
         }
+    },
+    {
+        "id": "esp8266-fingerprint-mqtt",
+        "categories": ["arduino", "iot"],
+        "featured": false,
+        "image": "assets/images/esp8266-fingerprint-mqtt.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/esp8266-fingerprint-mqtt",
+        "tags": ["ESP8266", "MQTT", "Fingerprint", "IoT", "Home Automation"],
+        "title": {"ar": "بصمة عبر MQTT على ESP8266", "en": "ESP8266 Fingerprint over MQTT"},
+        "desc": {
+            "ar": "عقدة دخولٍ بالبصمة على Wemos/ESP8266 بثلاثة أوضاعٍ تُبدَّل عن بُعدٍ عبر MQTT: قراءة (تنشر من طابقت بصمته كـ JSON)، وتعلّم (تسجيل بصمة)، وحذف — تتكامل مع مركز أتمتةٍ منزلي.",
+            "en": "A Wemos/ESP8266 fingerprint access node with three modes switched remotely over MQTT: reading (publishes matches as JSON), learning (enrol a finger), and delete — integrates with a home-automation hub."
+        },
+        "details": {
+            "ar": "نسخةٌ سابقةٌ من الكود كانت فيها كلمة سر واي فاي حقيقية وتوكن MQTT حقيقيٌّ مكتوبان صراحةً؛ أُزيلا تمامًا وصار المستودع بقيمٍ نائبةٍ فقط مع منع secrets.h في git. أُعيدت هيكلة الكود لآلة حالةٍ (قراءة/تعلّم/حذف)، ونشر نتائج JSON، وإتاحةٍ عبر MQTT LWT، وإسناد المكتبات لأصحابها.",
+            "en": "An earlier version had a real Wi-Fi password and a real MQTT token hardcoded; both were removed and the repo now ships placeholders only, with a git-ignored secrets.h. The code was refactored into a mode state machine (reading/learning/delete), JSON result publishing, availability via MQTT LWT, and library attribution."
+        },
+        "article": {
+            "ar": {
+                "lead": "بصمةٌ تُقرأ محليًّا وتُنشَر نتيجتها عبر MQTT، مع تسجيلٍ وحذفٍ عن بُعد — بعد إزالة أسرارٍ حقيقيةٍ كانت مكتوبةً في الكود.",
+                "sections": [
+                    {"h": "الفكرة", "p": "عقدةٌ على ESP8266 تقرأ البصمة وتخبر المركز (Home Assistant/Node-RED) من طابق، ويستطيع المركز تسجيل أو حذف بصماتٍ عن بُعدٍ عبر مواضيع MQTT."},
+                    {"h": "المعمارية", "flow": ["بصمة → حسّاس → ESP8266", "قراءة → نشر {id,state,confidence} JSON", "المركز ينشر ID → تعلّم/حذف", "إتاحة online/offline عبر MQTT LWT"]},
+                    {"h": "الأمان والتنظيف", "steps": [
+                        {"t": "إزالة الأسرار الحقيقية", "d": "كلمة سر الواي فاي وتوكن MQTT الحقيقيان أُزيلا؛ قيمٌ نائبةٌ فقط و.gitignore يمنع secrets.h."},
+                        {"t": "آلة حالة الأوضاع", "d": "قراءة/تعلّم/حذف تُبدَّل عبر مواضيع MQTT بمنطقٍ واضح."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "MQTT بلا مصادقةٍ على مستوى التطبيق (ضعه خلف TLS وACL)؛ القوالب على الحسّاس بحدّ سعته؛ ولا قرار وصولٍ محليٌّ (المنطق على المركز)."}
+                ],
+                "results": [{"k": "الأوضاع", "v": "قراءة/تعلّم/حذف"}, {"k": "النقل", "v": "MQTT JSON"}, {"k": "الأسرار", "v": "قيمٌ نائبة"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية. لا أسرار حقيقية في المستودع، والمكتبات منسوبةٌ لأصحابها."
+            },
+            "en": {
+                "lead": "A fingerprint read locally and its result published over MQTT, with remote enrol/delete — after removing real secrets that had been hardcoded.",
+                "sections": [
+                    {"h": "The idea", "p": "An ESP8266 node reads the fingerprint and tells a hub (Home Assistant/Node-RED) who matched; the hub can enrol or delete fingerprints remotely over MQTT topics."},
+                    {"h": "Architecture", "flow": ["finger → sensor → ESP8266", "reading → publish {id,state,confidence} JSON", "hub publishes ID → learn/delete", "availability online/offline via MQTT LWT"]},
+                    {"h": "Security & cleanup", "steps": [
+                        {"t": "Removed real secrets", "d": "The real Wi-Fi password and MQTT token were removed; placeholders only, and .gitignore blocks secrets.h."},
+                        {"t": "Mode state machine", "d": "reading/learning/delete switched over MQTT topics with clear logic."}
+                    ]},
+                    {"h": "Honest limitations", "p": "MQTT is unauthenticated at the app layer (put it behind TLS + ACLs); templates live on the sensor up to its capacity; and there's no local access decision (that logic lives on the hub)."}
+                ],
+                "results": [{"k": "Modes", "v": "read/learn/delete"}, {"k": "Transport", "v": "MQTT JSON"}, {"k": "Secrets", "v": "placeholders"}],
+                "note": "An open-source educational project. No real secrets in the repo; the libraries are credited to their authors."
+            }
+        }
+    },
+    {
+        "id": "smart-parking-system",
+        "categories": ["arduino", "iot"],
+        "featured": false,
+        "image": "assets/images/smart-parking-system.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/smart-parking-system",
+        "tags": ["Arduino", "Mega", "IR Sensors", "Servo", "Smart City"],
+        "title": {"ar": "نظام موقفٍ ذكي", "en": "Smart Parking System"},
+        "desc": {
+            "ar": "موقفٌ ذكيٌّ بـ15 مكانًا (3 أقسام) على Arduino Mega: حسّاس IR وLED أحمر/أخضر لكل مكان، وبوابتا سيرفو للمدخل والمخرج، وشاشة 20×4 تعرض الأماكن الفارغة في كل قسم.",
+            "en": "A 15-slot smart car park (3 sections) on an Arduino Mega: an IR sensor and a Red/Green LED per slot, servo gates at entrance/exit, and a 20x4 LCD showing free slots per section."
+        },
+        "details": {
+            "ar": "النسخة الأصلية كرّرت نفس بلوك القراءة 15 مرة (~200 سطر) بربطٍ متشابك. أُعيدت هيكلتها لمصفوفاتٍ وخريطة أماكن، فتعمل الأماكن الـ15 في حلقةٍ صغيرة، والبوابات دالةٌ واحدة، وعدّ الأماكن الفارغة لكل قسمٍ يُحسب مباشرة — نفس التوصيل بجزءٍ يسيرٍ من الكود.",
+            "en": "The original repeated the same read block 15 times (~200 lines) with a tangled mapping. It was refactored to arrays + a slot map, so all 15 slots run in one small loop, the gates are one function, and free-slot counts per section are computed directly — same wiring, a fraction of the code."
+        },
+        "article": {
+            "ar": {
+                "lead": "15 مكانًا بأضواء حالةٍ وبواباتٍ أوتوماتيكيةٍ وعدّادٍ مباشرٍ على الشاشة — بعد إعادة هيكلةٍ من 200 سطرٍ مكرّرٍ إلى مصفوفات.",
+                "sections": [
+                    {"h": "الفكرة", "p": "كل مكانٍ حسّاس IR يقرّر مشغولٌ/فارغ فيضيء أحمر/أخضر، وبوابتا سيرفو تُرفَعان عند المدخل/المخرج، والشاشة تعرض الفارغ لكل قسم."},
+                    {"h": "ما الذي نُظِّف", "steps": [
+                        {"t": "مصفوفات بدل تكرار", "d": "أطراف الحسّاسات والـ LEDs في مصفوفاتٍ وخريطة أماكن بدل 15 بلوكًا متطابقًا."},
+                        {"t": "بوابة كدالة", "d": "دالةٌ واحدةٌ تتعامل مع بوابتَي المدخل والمخرج."},
+                        {"t": "عدّ مباشر", "d": "الأماكن الفارغة لكل قسمٍ تُحسب من مجموع الحسّاسات مباشرة."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "البوابات حاجبةٌ بـ delay (الحل جدولة millis)؛ حسّاسات IR ثنائيةٌ وحسّاسةٌ للشمس؛ ويحتاج Mega لعدد الأطراف."}
+                ],
+                "results": [{"k": "الأماكن", "v": "15 (3 أقسام)"}, {"k": "لكل مكان", "v": "IR + LED"}, {"k": "العرض", "v": "LCD 20×4"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية بكودٍ أُعيدت هيكلته."
+            },
+            "en": {
+                "lead": "15 slots with status lights, automatic gates, and a live LCD count — after refactoring 200 repeated lines into arrays.",
+                "sections": [
+                    {"h": "The idea", "p": "Each slot's IR sensor decides occupied/free and lights red/green; two servo gates open at entrance/exit; the LCD shows free slots per section."},
+                    {"h": "What was cleaned up", "steps": [
+                        {"t": "Arrays over repetition", "d": "Sensor and LED pins in arrays + a slot map instead of 15 identical blocks."},
+                        {"t": "Gate as a function", "d": "One function handles both entrance and exit gates."},
+                        {"t": "Direct counting", "d": "Free slots per section computed straight from the sensor sum."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Gates block via delay (a millis scheduler is the fix); IR sensors are binary and sunlight-sensitive; and it needs a Mega for the pin count."}
+                ],
+                "results": [{"k": "Slots", "v": "15 (3 sections)"}, {"k": "Per slot", "v": "IR + LED"}, {"k": "Display", "v": "LCD 20×4"}],
+                "note": "An open-source educational project with refactored code."
+            }
+        }
+    },
+    {
+        "id": "orb-image-classifier",
+        "categories": ["python-ai", "raspberrypi"],
+        "featured": false,
+        "image": "assets/images/orb-image-classifier.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/orb-image-classifier",
+        "tags": ["Python", "OpenCV", "ORB", "Computer Vision", "Raspberry Pi"],
+        "title": {"ar": "مُصنِّف صورٍ بـ ORB", "en": "ORB Image Classifier"},
+        "desc": {
+            "ar": "مُصنِّف صورٍ خفيفٌ بلا تدريبٍ ولا شبكةٍ عصبية: يصف كل صورةٍ مرجعيةٍ بوصّافات ORB، ويطابق إطار الكاميرا باختبار نسبة Lowe، ويُبلّغ عن الصنف صاحب أكثر تطابقاتٍ أو 'Unknown' — يعمل على Raspberry Pi بلا GPU.",
+            "en": "A lightweight, training-free image classifier with no neural network: it describes each reference with ORB descriptors, matches the camera frame with Lowe's ratio test, and reports the best class or 'Unknown' — runs on a Raspberry Pi with no GPU."
+        },
+        "details": {
+            "ar": "كانت النسخة الأصلية غير مكتملة: دالة التصنيف لم تُرجِع نتيجةً أبدًا، ومسار الصور نصٌّ خاطئ، والمطابق بمعيارٍ خاطئٍ للوصّافات الثنائية. أُعيد بناؤها: تُرجِع قرارًا حقيقيًّا (أفضل صنف/Unknown)، وتستخدم BFMatcher(NORM_HAMMING) الصحيح، واختبار نسبةٍ متينًا، وإعداداتٍ وواجهة أوامر وأداة التقاط مراجع.",
+            "en": "The original was unfinished: the classify function never returned, the reference path was a broken literal, and the matcher used the wrong norm for binary descriptors. It was rebuilt: it returns a real decision (best class / 'Unknown'), uses the correct BFMatcher(NORM_HAMMING), a robust ratio test, config + CLI, and a reference-capture tool."
+        },
+        "article": {
+            "ar": {
+                "lead": "تعرّفٌ على الأجسام بلا تدريبٍ عصبي: ضع صورةً مرجعيةً لكل صنفٍ فيتعرّف عليها حيًّا — بعد إصلاح كودٍ كان لا يُرجِع نتيجة.",
+                "sections": [
+                    {"h": "الفكرة", "p": "ORB يصف نقاطًا مميزةً في كل صورةٍ مرجعية، ولكل إطارٍ يطابق بالقوة الغاشمة مع اختبار نسبة Lowe، ويختار الصنف صاحب أكثر تطابقاتٍ جيدة أو 'Unknown' تحت العتبة."},
+                    {"h": "ما الذي أُصلح", "steps": [
+                        {"t": "إرجاع قرارٍ حقيقي", "d": "الدالة الأصلية لم تُرجِع شيئًا؛ الآن أفضل صنف + درجة أو Unknown."},
+                        {"t": "مطابقٌ صحيح", "d": "BFMatcher(NORM_HAMMING) لأن ORB وصّافٌ ثنائي."},
+                        {"t": "إعدادات + التقاط", "d": "مجلد المراجع والكاميرا والنسبة والعتبة قابلةٌ للضبط + أداة التقاط مراجع."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "تعرّفٌ على العين لا فئةٍ مجرّدة (ممتازٌ للشعارات والأغلفة والأجسام ذات النقوش)؛ صورةٌ مرجعيةٌ لكل صنفٍ هنا؛ وحسّاسٌ للإضاءة والحجم؛ والعتبة تعتمد على المشهد."}
+                ],
+                "results": [{"k": "التدريب", "v": "بلا"}, {"k": "الوصّاف", "v": "ORB"}, {"k": "الرفض", "v": "فئة Unknown"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية مبنيٌّ على OpenCV (ORB حرّ الاستخدام)."
+            },
+            "en": {
+                "lead": "Object recognition with no neural training: drop in one reference image per class and it recognises them live — after fixing code that never returned a result.",
+                "sections": [
+                    {"h": "The idea", "p": "ORB describes distinctive points in each reference; for every frame it brute-force matches with Lowe's ratio test and picks the class with the most good matches, or 'Unknown' below a threshold."},
+                    {"h": "What was fixed", "steps": [
+                        {"t": "Returns a real decision", "d": "The original function returned nothing; now best class + score or Unknown."},
+                        {"t": "Correct matcher", "d": "BFMatcher(NORM_HAMMING) because ORB is a binary descriptor."},
+                        {"t": "Config + capture", "d": "References dir, camera, ratio, and threshold are tunable, plus a reference-capture tool."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Instance recognition, not abstract categories (great for logos/covers/textured objects); one reference per class here; sensitive to lighting and scale; and the threshold is scene-dependent."}
+                ],
+                "results": [{"k": "Training", "v": "None"}, {"k": "Descriptor", "v": "ORB"}, {"k": "Reject", "v": "Unknown class"}],
+                "note": "An open-source educational project built on OpenCV (ORB is free to use)."
+            }
+        }
+    },
+    {
+        "id": "rf-remote-car",
+        "categories": ["arduino", "robotics"],
+        "featured": false,
+        "image": "assets/images/rf-remote-car.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/rf-remote-car",
+        "tags": ["Arduino", "C++", "433MHz", "RadioHead", "Robotics"],
+        "title": {"ar": "سيارةٌ لاسلكيةٌ بـ RF", "en": "RF Remote Car"},
+        "desc": {
+            "ar": "سيارةٌ يُتحكَّم بها لاسلكيًّا عبر وصلة راديو 433 ميجاهرتز ASK: مُرسِلٌ بعصا تحكّمٍ يرسل أوامر الاتجاه، ومستقبِلٌ على السيارة يفكّها ويحرّك موتورَي DC عبر جسر H — بمكتبة RadioHead.",
+            "en": "A wirelessly controlled car over a 433 MHz ASK radio link: a joystick transmitter sends direction commands and a receiver on the car decodes them and drives two DC motors through an H-bridge — with the RadioHead library."
+        },
+        "details": {
+            "ar": "منطق أوامر المُرسِل كان متداخلًا بعمقٍ مع خطأ صياغةٍ عابر؛ صار مجموعة عتباتٍ مسطّحةً بدالة send() واحدة، وسلسلة if/else في المستقبِل صارت switch نظيفة، ويتشارك السكتشان نفس مفردات الأوامر وبلوك إعداداتٍ واضح.",
+            "en": "The sender's command logic was deeply nested with a stray syntax slip; it became a flat set of thresholds with one send() helper, the receiver's if/else chain became a clean switch, and both sketches share the same command vocabulary and a clear config block."
+        },
+        "article": {
+            "ar": {
+                "lead": "عصا تحكّمٍ ترسل الاتجاه عبر راديو 433، والسيارة تفكّه وتتحرّك — بلا واي فاي ولا إقران.",
+                "sections": [
+                    {"h": "الفكرة", "p": "المُرسِل يقرأ العصا ويرسل 'تقدّم/تراجع/يسار/يمين/إيقاف' عبر RH_ASK، والمستقبِل يفكّها ويقود موتورَين عبر جسر H."},
+                    {"h": "ما الذي نُظِّف", "steps": [
+                        {"t": "عتباتٌ مسطّحة", "d": "منطق التداخل العميق صار عتباتٍ واضحةً بدالة send() واحدة (وأُصلح خطأ الصياغة)."},
+                        {"t": "switch نظيف", "d": "سلسلة if/else في المستقبِل صارت switch على أول حرف."},
+                        {"t": "إرسالٌ مُؤمَّن", "d": "لا يرسل إلا أثناء الضغط على زر العصا."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "وصلةٌ أحاديةٌ غير مشفّرة؛ مدى قصيرٌ بلا هوائيات؛ موتورات ثنائيةٌ بلا PWM للسرعة."}
+                ],
+                "results": [{"k": "الوصلة", "v": "433MHz ASK"}, {"k": "الأوامر", "v": "5"}, {"k": "التشغيل", "v": "جسر H"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية مبنيٌّ على مكتبة RadioHead المنسوبة لأصحابها."
+            },
+            "en": {
+                "lead": "A joystick sends direction over a 433 MHz radio and the car decodes and moves — no Wi-Fi, no pairing.",
+                "sections": [
+                    {"h": "The idea", "p": "The transmitter reads the joystick and sends 'Forward/Backward/Left/Right/Stop' over RH_ASK; the receiver decodes it and drives two motors through an H-bridge."},
+                    {"h": "What was cleaned up", "steps": [
+                        {"t": "Flat thresholds", "d": "The deeply nested logic became clear thresholds with one send() helper (and the syntax slip fixed)."},
+                        {"t": "Clean switch", "d": "The receiver's if/else chain became a switch on the first character."},
+                        {"t": "Armed sending", "d": "It transmits only while the joystick button is held."}
+                    ]},
+                    {"h": "Honest limitations", "p": "A one-way, unencrypted link; short range without antennas; and bang-bang motors with no PWM speed yet."}
+                ],
+                "results": [{"k": "Link", "v": "433MHz ASK"}, {"k": "Commands", "v": "5"}, {"k": "Drive", "v": "H-bridge"}],
+                "note": "An open-source educational project built on the RadioHead library, credited to its authors."
+            }
+        }
+    },
+    {
+        "id": "railway-crossing-gate",
+        "categories": ["arduino"],
+        "featured": false,
+        "image": "assets/images/railway-crossing-gate.png",
+        "demoUrl": "",
+        "codeUrl": "https://github.com/eahmeddarwish/railway-crossing-gate",
+        "tags": ["Arduino", "C++", "IR Sensor", "Servo", "Automation"],
+        "title": {"ar": "بوابة مزلقان قطارٍ أوتوماتيكية", "en": "Automatic Railway Crossing Gate"},
+        "desc": {
+            "ar": "بوابة مزلقانٍ مصغّرة: حسّاسا IR على جانبَي القضبان؛ عند مرور القطار تُغلَق بوابة السيرفو ويومض LED تحذيري، وبعد أن يتجاوز القطار تُفتح — تعمل في الاتجاهين.",
+            "en": "A model level-crossing gate: two IR sensors either side of the track; when a train passes, the servo gate closes and a warning LED flashes, and once the train clears it reopens — works in both directions."
+        },
+        "details": {
+            "ar": "النسخة الأصلية استخدمت تسميات goto وتأخيراتٍ حاجبةً للقفز بين الحالات. أُعيدت كتابتها كآلة حالةٍ غير حاجبة (OPEN⇄CLOSED) بوميضٍ مؤقَّتٍ بالـ millis وقاعدة 'خلوّ الشعاعَين N مللي ثانية' قبل الفتح، فلا تُفتح تحت قطارٍ متوقّف.",
+            "en": "The original used goto labels and blocking delays to jump between states. It was rewritten as a non-blocking state machine (OPEN⇄CLOSED) with a millis-timed warning blink and a 'both beams clear for N ms' rule before reopening, so it never reopens under a stationary train."
+        },
+        "article": {
+            "ar": {
+                "lead": "القطار يقطع الشعاع فتُغلق البوابة ويومض التحذير، وبعد مروره تُفتح — بمنطقٍ نظيفٍ بلا goto.",
+                "sections": [
+                    {"h": "الفكرة", "p": "حسّاسان على جانبَي القضبان؛ أيّ شعاعٍ يُقطَع يُغلق البوابة، وبعد خلوّ الشعاعَين للحظةٍ تُفتح — في الاتجاهين."},
+                    {"h": "ما الذي نُظِّف", "steps": [
+                        {"t": "بلا goto", "d": "آلة حالةٍ OPEN⇄CLOSED بدل تسميات goto."},
+                        {"t": "وميضٌ غير حاجب", "d": "LED يومض بتوقيت millis بلا delay يوقف النظام."},
+                        {"t": "قاعدة خلوٍّ", "d": "لا تُفتح إلا بعد خلوّ الشعاعَين N مللي ثانية."}
+                    ]},
+                    {"h": "حدودٌ صادقة", "p": "حضورٌ لا سرعة/طول؛ أشعة IR حسّاسةٌ للمحاذاة والشمس؛ بوابةٌ وقضيبٌ واحد؛ بناءٌ نموذجيٌّ لا بمعايير السكك الحقيقية."}
+                ],
+                "results": [{"k": "الحالات", "v": "OPEN⇄CLOSED"}, {"k": "الاتجاه", "v": "ثنائي"}, {"k": "التحذير", "v": "وميض millis"}],
+                "note": "مشروعٌ مفتوح المصدر لأغراضٍ تعليمية بكودٍ أُعيدت هيكلته."
+            },
+            "en": {
+                "lead": "The train breaks the beam so the gate closes and the warning flashes, and after it passes the gate reopens — clean logic, no goto.",
+                "sections": [
+                    {"h": "The idea", "p": "Two sensors either side of the track; any broken beam closes the gate, and after both beams stay clear briefly it reopens — in both directions."},
+                    {"h": "What was cleaned up", "steps": [
+                        {"t": "No goto", "d": "An OPEN⇄CLOSED state machine instead of goto labels."},
+                        {"t": "Non-blocking blink", "d": "The LED blinks on a millis timer with no delay stalling the system."},
+                        {"t": "Clear rule", "d": "It only reopens after both beams are clear for N ms."}
+                    ]},
+                    {"h": "Honest limitations", "p": "Presence, not speed/length; IR beams are alignment- and sunlight-sensitive; single gate and track; a model build, not rail-grade."}
+                ],
+                "results": [{"k": "States", "v": "OPEN⇄CLOSED"}, {"k": "Direction", "v": "Both"}, {"k": "Warning", "v": "millis blink"}],
+                "note": "An open-source educational project with refactored code."
+            }
+        }
     }
 ];
 
